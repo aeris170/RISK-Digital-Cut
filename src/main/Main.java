@@ -24,9 +24,7 @@ public class Main {
 
 		DoaHandler.instantiateDoaObject(TestObject.class, 200f, 200f);
 
-		SwingUtilities.invokeLater(() -> {
-			configureGUI();
-		});
+		SwingUtilities.invokeLater(() -> configureGUI());
 	}
 
 	private static void configureGUI() {
