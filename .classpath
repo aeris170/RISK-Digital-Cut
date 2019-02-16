@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="src" path="doc"/>
 	<classpathentry kind="lib" path="lib/DoaEngine 2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
