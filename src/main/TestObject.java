@@ -29,7 +29,7 @@ public class TestObject extends DoaObject {
 		if (DoaKeyboard.W) {
 			position.y -= 6f;
 		}
-		if (DoaKeyboard.F) {
+		if (DoaKeyboard.S) {
 			position.y += 6f;
 		}
 	}
