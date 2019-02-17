@@ -1,6 +1,6 @@
 # Project: Risk Tabletop Game Implementation for Desktop Machines
 
-## Board Game Description
+## Description
 
 Risk is a strategy board game of diplomacy, conflict and conquest for two to six players.
 The standard version is played on a board depicting a political map of Earth, divided into forty-two territories,
@@ -8,12 +8,7 @@ which are grouped into six continents. Turn rotates among players who control ar
 they attempt to capture territories from other players, with results determined by dice rolls. Players may form
 and dissolve alliances during the course of the game. The goal of the game is to occupy every territory on the
 board and in doing so, eliminate the other players. The game can be lengthy, requiring several hours to multiple
-days to finish. (Cut & Pasted from "wikipedia.com", original sources are:
--  Gordon, David. "Risk vs Diplomacy". TotalDiplomacy.: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
-- "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24.: https://www.hasbro.com/common/instruct/Risk1963.PDF)
-
-## Features to be Implemented (Rough)
-The entirety of the board game will be implemented. Beyond that, the primary objectives of this project is adding multiplayer, AI opponents and new maps to the game. Depending on time left after these. More content will be added.
+days to finish. (Cut&Pasted from "wikipedia.com")
 
 ## Group 1.I Members
 
