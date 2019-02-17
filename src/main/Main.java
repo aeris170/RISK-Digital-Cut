@@ -19,6 +19,9 @@ public class Main {
 	static DoaEngine e;
 
 	public static void main(final String[] args) {
+		DoaEngine.DEBUG_ENABLED = true;
+		DoaEngine.MULTI_THREAD_ENABLED = true;
+
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
 

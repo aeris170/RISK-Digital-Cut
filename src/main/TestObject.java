@@ -9,22 +9,29 @@ import com.doa.engine.input.DoaKeyboard;
 
 public class TestObject extends DoaObject {
 
+	private static final long serialVersionUID = -781062122233404639L;
+
 	public TestObject(Float x, Float y) {
 		super(x, y);
 	}
 
 	@Override
-	public void tick() {
-		position.x += 0.1f;
+	public synchronized void tick() {
 		if (DoaKeyboard.ESCAPE) {
 			System.exit(0);
+		}
+		if (DoaKeyboard.A) {
+			position.x -= 6f;
+		}
+		if (DoaKeyboard.D) {
+			position.x += 6f;
 		}
 	}
 
 	@Override
-	public void render(DoaGraphicsContext g) {
+	public synchronized void render(DoaGraphicsContext g) {
 		g.setColor(Color.RED);
-		g.fillRect(position.x, position.y, 20, 20);
+		g.fillRect(position.x, position.y, 200, 200);
 	}
 
 	@Override
