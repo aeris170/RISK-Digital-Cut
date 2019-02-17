@@ -26,6 +26,12 @@ public class TestObject extends DoaObject {
 		if (DoaKeyboard.D) {
 			position.x += 6f;
 		}
+		if (DoaKeyboard.W) {
+			position.y -= 6f;
+		}
+		if (DoaKeyboard.F) {
+			position.y += 6f;
+		}
 	}
 
 	@Override
