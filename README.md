@@ -11,7 +11,7 @@ board and in doing so, eliminate the other players. The game can be lengthy, req
 days to finish. (Cut & Pasted from "wikipedia.com")
 ### Original Sources
 * Gordon, David. "Risk vs Diplomacy". TotalDiplomacy.: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
-* "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24.: https://www.hasbro.com/common/instruct/Risk1963.PDF
+* "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24: https://www.hasbro.com/common/instruct/Risk1963.PDF
 
 ## Features to be Implemented (Rough)
 The entirety of the board game will be implemented. Beyond that, the primary objectives of this project is adding multiplayer, 
