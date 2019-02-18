@@ -1,4 +1,4 @@
-﻿# Project: Risk Tabletop Game Implementation for Desktop Machines
+# Project: Risk Tabletop Game Implementation for Desktop Machines
 
 ## Description
 
@@ -13,7 +13,7 @@ days to finish. (Cut & Pasted from "wikipedia.com", original sources are:
 Gordon, David. "Risk vs Diplomacy". TotalDiplomacy.: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
 "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24.: https://www.hasbro.com/common/instruct/Risk1963.PDF)
 
-##Features to be Implemented (Rough)
+## Features to be Implemented (Rough)
 The entirety of the board game will be implemented. Beyond that, the primary objectives of this project is adding multiplayer, 
 AI opponents and new maps to the game. Depending on time left after these. More content will be added. 
 
