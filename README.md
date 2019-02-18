@@ -11,8 +11,8 @@
 > days to finish. (Cut & Pasted from "wikipedia.com")
 
 ### Original Sources
-* Gordon, David. "Risk vs Diplomacy". TotalDiplomacy: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
-* "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24: https://www.hasbro.com/common/instruct/Risk1963.PDF
+* Gordon, David. "Risk vs Diplomacy". TotalDiplomacy: [link][1]
+* "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24: [link][2]
 
 ## Features to be Implemented (Rough)
 The entirety of the board game will be implemented. Beyond that, the primary objectives of this project is adding **_multiplayer_**, 
@@ -46,3 +46,6 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 * Monday 13.40 - 15.40
 * Friday 13.40 - 15.40
+
+[1]: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
+[2]: https://www.hasbro.com/common/instruct/Risk1963.PDF
