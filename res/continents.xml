@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<continents>
+	<continent>
+		<name>north america</name>
+		<provinces>
+			<province>
+				<name>alaska</name>
+				<neighbours>
+					<neighbour>kamchatka</neighbour>
+					<neighbour>northwest territory</neighbour>
+					<neighbour>alberta</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>northwest territory</name>
+				<neighbours>
+					<neighbour>alaska</neighbour>
+					<neighbour>alberta</neighbour>
+					<neighbour>ontario</neighbour>
+					<neighbour>greenland</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>greenland</name>
+				<neighbours>
+					<neighbour>northwest territory</neighbour>
+					<neighbour>quebec</neighbour>
+					<neighbour>ontario</neighbour>
+					<neighbour>iceland</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>alberta</name>
+				<neighbours>
+					<neighbour>northwest territory</neighbour>
+					<neighbour>western united states</neighbour>
+					<neighbour>ontario</neighbour>
+					<neighbour>alaska</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>ontario</name>
+				<neighbours>
+					<neighbour>northwest territory</neighbour>
+					<neighbour>eastern united states</neighbour>
+					<neighbour>western united states</neighbour>
+					<neighbour>quebec</neighbour>
+					<neighbour>alberta</neighbour>
+					<neighbour>greenland</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>quebec</name>
+				<neighbours>
+					<neighbour>eastern united states</neighbour>
+					<neighbour>ontario</neighbour>
+					<neighbour>greenland</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>western united states</name>
+				<neighbours>
+					<neighbour>eastern united states</neighbour>
+					<neighbour>ontario</neighbour>
+					<neighbour>alberta</neighbour>
+					<neighbour>central america</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>eastern united states</name>
+				<neighnours>
+					<neighbour>western united states</neighbour>
+					<neighbour>ontario</neighbour>
+					<neighbour>quebec</neighbour>
+					<neighbour>central america</neighbour>
+				</neighnours>
+			</province>
+			<province>
+				<name>central america</name>
+				<neighbours>
+					<neighbour>eastern united states</neighbour>
+					<neighbour>western united states</neighbour>
+					<neighbour>venezuela</neighbour>
+				</neighbours>
+			</province>
+		</provinces>
+	</continent>
+	<continent>
+		<name>south america</name>
+		<provinces>
+			<province>
+				<name>venezuela</name>
+				<neighbours>
+					<neighbour>peru</neighbour>
+					<neighbour>brazil</neighbour>
+					<neighbour>central america</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>brazil</name>
+				<neighbours>
+					<neighbour>venezuela</neighbour>
+					<neighbour>peru</neighbour>
+					<neighbour>argentina</neighbour>
+					<neighbour>north africa</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>peru</name>
+				<neighbours>
+					<neighbour>venezuela</neighbour>
+					<neighbour>brazil</neighbour>
+					<neighbour>argentina</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>argentina</name>
+				<neighbours>
+					<neighbour>peru</neighbour>
+					<neighbour>brazil</neighbour>
+				</neighbours>
+			</province>
+		</provinces>
+	</continent>
+	<continent>
+		<name>europe</name>
+		<provinces>
+			<province>
+				<name>iceland</name>
+				<neighbours>
+					<neighbour>greenland</neighbour>
+					<neighbour>scandinavia</neighbour>
+					<neighbour>great britain</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>scandinavia</name>
+				<neighbours>
+					<neighbour>iceland</neighbour>
+					<neighbour>ukraine</neighbour>
+					<neighbour>great britain</neighbour>
+					<neighbour>northern europe</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>great britain</name>
+				<neighbours>
+					<neighbour>scandinavia</neighbour>
+					<neighbour>northern europe</neighbour>
+					<neighbour>western europe</neighbour>
+					<neighbour>iceland</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>ukraine</name>
+				<neighbours>
+					<neighbour>scandinavia</neighbour>
+					<neighbour>northern europe</neighbour>
+					<neighbour>southern europe</neighbour>
+					<neighbour>middle east</neighbour>
+					<neighbour>afghanistan</neighbour>
+					<neighbour>ural</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>northern europe</name>
+				<neighbours>
+					<neighbour>scandinavia</neighbour>
+					<neighbour>great britain</neighbour>
+					<neighbour>western europe</neighbour>
+					<neighbour>ukraine</neighbour>
+					<neighbour>southern europe</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>western europe</name>
+				<neighbours>
+					<neighbour>great britain</neighbour>
+					<neighbour>northern europe</neighbour>
+					<neighbour>southern europe</neighbour>
+					<neighbour>north africa</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>southern europe</name>
+				<neighbours>
+					<neighbour>middle east</neighbour>
+					<neighbour>northern europe</neighbour>
+					<neighbour>western europe</neighbour>
+					<neighbour>north africa</neighbour>
+				</neighbours>
+			</province>
+		</provinces>
+	</continent>
+	<continent>
+		<name>africa</name>
+		<provinces>
+			<province>
+				<name>north africa</name>
+				<neighbours>
+					<neighbour>brazil</neighbour>
+					<neighbour>western europe</neighbour>
+					<neighbour>egypt</neighbour>
+					<neighbour>congo</neighbour>
+					<neighbour>east africa</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>egypt</name>
+				<neighbours>
+					<neighbour>middle east</neighbour>
+					<neighbour>north africa</neighbour>
+					<neighbour>southern europe</neighbour>
+					<neighbour>east africa</neighbour>
+				</neighbours>
+			</province>
+			<province>
+				<name>east africa</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>congo</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>madagascar</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>south africa</name>
+				<neighbours>
+				</neighbours>
+			</province>
+		</provinces>
+	</continent>
+	<continent>
+		<name>asia</name>
+		<provinces>
+			<province>
+				<name>ural</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>siberia</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>yakutsk</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>kamchatka</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>irkutsk</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>japan</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>mongolia</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>china</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>afghanistan</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>middle east</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>india</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>siam</name>
+				<neighbours>
+				</neighbours>
+			</province>
+		</provinces>
+	</continent>
+	<continent>
+		<name>australia</name>
+		<provinces>
+			<province>
+				<name>indonesia</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>new guinea</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>western australia</name>
+				<neighbours>
+				</neighbours>
+			</province>
+			<province>
+				<name>eastern australia</name>
+				<neighbours>
+				</neighbours>
+			</province>
+		</provinces>
+	</continent>
+</continents>
