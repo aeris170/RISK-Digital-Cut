@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.SwingUtilities;
 
+import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaWindow;
@@ -21,11 +22,12 @@ public class Main {
 	public static void main(final String[] args) {
 		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.MULTI_THREAD_ENABLED = true;
+		DoaCamera.enableMouseZoom(0.1f, 10f);
 
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
 
-		DoaHandler.instantiateDoaObject(TestObject.class, 200f, 200f);
+		DoaHandler.instantiateDoaObject(TestObject.class, 910f, 490f);
 
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}

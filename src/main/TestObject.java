@@ -37,7 +37,7 @@ public class TestObject extends DoaObject {
 	@Override
 	public synchronized void render(DoaGraphicsContext g) {
 		g.setColor(Color.RED);
-		g.fillRect(position.x, position.y, 200, 200);
+		g.fillRect(position.x, position.y, 100, 100);
 	}
 
 	@Override
