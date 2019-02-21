@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xml>
+<!DOCTYPE continents [
+<!ELEMENT continents (continent*)>
+<!ELEMENT continent (name, provinces)>
+<!ELEMENT provinces (province+)>
+<!ELEMENT province (name, neighbours)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT neighbours (neighbour+)>
+<!ELEMENT neighbour (#PCDATA)>
+]>
 <continents>
 	<continent>
 		<name>north america</name>
@@ -69,12 +77,12 @@
 			</province>
 			<province>
 				<name>eastern united states</name>
-				<neighnours>
+				<neighbours>
 					<neighbour>western united states</neighbour>
 					<neighbour>ontario</neighbour>
 					<neighbour>quebec</neighbour>
 					<neighbour>central america</neighbour>
-				</neighnours>
+				</neighbours>
 			</province>
 			<province>
 				<name>central america</name>
@@ -218,21 +226,36 @@
 			<province>
 				<name>east africa</name>
 				<neighbours>
+					<neighbour>middle east</neighbour>
+					<neighbour>north africa</neighbour>
+					<neighbour>south africa</neighbour>
+					<neighbour>egypt</neighbour>
+					<neighbour>congo</neighbour>
+					<neighbour>madagascar</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>congo</name>
 				<neighbours>
+					<neighbour>north africa</neighbour>
+					<neighbour>south africa</neighbour>
+					<neighbour>east africa</neighbour>
+					<neighbour>madagascar</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>madagascar</name>
 				<neighbours>
+					<neighbour>south africa</neighbour>
+					<neighbour>east africa</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>south africa</name>
 				<neighbours>
+					<neighbour>congo</neighbour>
+					<neighbour>east africa</neighbour>
+					<neighbour>madagascar</neighbour>
 				</neighbours>
 			</province>
 		</provinces>
@@ -243,61 +266,113 @@
 			<province>
 				<name>ural</name>
 				<neighbours>
+					<neighbour>ukraine</neighbour>
+					<neighbour>siberia</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>afghanistan</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>siberia</name>
 				<neighbours>
+					<neighbour>ural</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>mongolia</neighbour>
+					<neighbour>irkutsk</neighbour>
+					<neighbour>yakutsk</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>yakutsk</name>
 				<neighbours>
+					<neighbour>siberia</neighbour>
+					<neighbour>irkutsk</neighbour>
+					<neighbour>kamchatka</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>kamchatka</name>
 				<neighbours>
+					<neighbour>yakutsk</neighbour>
+					<neighbour>irkutsk</neighbour>
+					<neighbour>mongolia</neighbour>
+					<neighbour>japan</neighbour>
+					<neighbour>alaska</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>irkutsk</name>
 				<neighbours>
+					<neighbour>yakutsk</neighbour>
+					<neighbour>kamchatka</neighbour>
+					<neighbour>mongolia</neighbour>
+					<neighbour>siberia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>japan</name>
 				<neighbours>
+					<neighbour>kamchatka</neighbour>
+					<neighbour>mongolia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>mongolia</name>
 				<neighbours>
+					<neighbour>kamchatka</neighbour>
+					<neighbour>japan</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>siberia</neighbour>
+					<neighbour>irkutsk</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>china</name>
 				<neighbours>
+					<neighbour>mongolia</neighbour>
+					<neighbour>siam</neighbour>
+					<neighbour>india</neighbour>
+					<neighbour>afghanistan</neighbour>
+					<neighbour>ural</neighbour>
+					<neighbour>siberia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>afghanistan</name>
 				<neighbours>
+					<neighbour>ural</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>india</neighbour>
+					<neighbour>middle east</neighbour>
+					<neighbour>ukraine</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>middle east</name>
 				<neighbours>
+					<neighbour>afghanistan</neighbour>
+					<neighbour>india</neighbour>
+					<neighbour>east africa</neighbour>
+					<neighbour>egypt</neighbour>
+					<neighbour>southern europe</neighbour>
+					<neighbour>ukraine</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>india</name>
 				<neighbours>
+					<neighbour>china</neighbour>
+					<neighbour>siam</neighbour>
+					<neighbour>middle east</neighbour>
+					<neighbour>afghanistan</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>siam</name>
 				<neighbours>
+					<neighbour>india</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>indonesia</neighbour>
 				</neighbours>
 			</province>
 		</provinces>
@@ -308,21 +383,31 @@
 			<province>
 				<name>indonesia</name>
 				<neighbours>
+					<neighbour>new guinea</neighbour>
+					<neighbour>western australia</neighbour>
+					<neighbour>siam</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>new guinea</name>
 				<neighbours>
+					<neighbour>indonesia</neighbour>
+					<neighbour>eastern australia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>western australia</name>
 				<neighbours>
+					<neighbour>indonesia</neighbour>
+					<neighbour>new guinea</neighbour>
+					<neighbour>eastern australia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>eastern australia</name>
 				<neighbours>
+					<neighbour>new guinea</neighbour>
+					<neighbour>western australia</neighbour>
 				</neighbours>
 			</province>
 		</provinces>
