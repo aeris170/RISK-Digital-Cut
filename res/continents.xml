@@ -138,7 +138,11 @@
 				<color>
 					<r>183</r>
 					<g>194</g>
+<<<<<<< HEAD
 					<b>0</b>
+=======
+					<b></b>
+>>>>>>> 62df7d4d176fcff97fffb97d4985f522296ccf27
 				</color>
 				<neighbours>
 					<neighbour>eastern united states</neighbour>
@@ -295,7 +299,11 @@
 				<color>
 					<r>0</r>
 					<g>128</g>
+<<<<<<< HEAD
 					<b>255</b>
+=======
+					<b>256</b>
+>>>>>>> 62df7d4d176fcff97fffb97d4985f522296ccf27
 				</color>
 				<neighbours>
 					<neighbour>great britain</neighbour>
