@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xml>
+<!DOCTYPE continents [
+<!ELEMENT continents (continent*)>
+<!ELEMENT continent (name, color, provinces)>
+<!ELEMENT provinces (province+)>
+<!ELEMENT province (name, color, neighbours)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT color (r, g, b)>
+<!ELEMENT r (#PCDATA)>
+<!ELEMENT g (#PCDATA)>
+<!ELEMENT b (#PCDATA)>
+<!ELEMENT neighbours (neighbour+)>
+<!ELEMENT neighbour (#PCDATA)>
+]>
 <continents>
 	<continent>
 		<name>north america</name>
+		<color>
+			<r>255</r>
+			<g>255</g>
+			<b>0</b>
+		</color>
 		<provinces>
 			<province>
 				<name>alaska</name>
+				<color>
+					<r>158</r>
+					<g>163</g>
+					<b>79</b>
+				</color>
 				<neighbours>
 					<neighbour>kamchatka</neighbour>
 					<neighbour>northwest territory</neighbour>
@@ -14,6 +36,11 @@
 			</province>
 			<province>
 				<name>northwest territory</name>
+				<color>
+					<r>80</r>
+					<g>80</g>
+					<b>39</b>
+				</color>
 				<neighbours>
 					<neighbour>alaska</neighbour>
 					<neighbour>alberta</neighbour>
@@ -23,6 +50,11 @@
 			</province>
 			<province>
 				<name>greenland</name>
+				<color>
+					<r>255</r>
+					<g>255</g>
+					<b>0</b>
+				</color>
 				<neighbours>
 					<neighbour>northwest territory</neighbour>
 					<neighbour>quebec</neighbour>
@@ -32,6 +64,11 @@
 			</province>
 			<province>
 				<name>alberta</name>
+				<color>
+					<r>255</r>
+					<g>255</g>
+					<b>66</b>
+				</color>
 				<neighbours>
 					<neighbour>northwest territory</neighbour>
 					<neighbour>western united states</neighbour>
@@ -41,6 +78,11 @@
 			</province>
 			<province>
 				<name>ontario</name>
+				<color>
+					<r>153</r>
+					<g>163</g>
+					<b>0</b>
+				</color>
 				<neighbours>
 					<neighbour>northwest territory</neighbour>
 					<neighbour>eastern united states</neighbour>
@@ -52,6 +94,11 @@
 			</province>
 			<province>
 				<name>quebec</name>
+				<color>
+					<r>255</r>
+					<g>255</g>
+					<b>128</b>
+				</color>
 				<neighbours>
 					<neighbour>eastern united states</neighbour>
 					<neighbour>ontario</neighbour>
@@ -60,6 +107,11 @@
 			</province>
 			<province>
 				<name>western united states</name>
+				<color>
+					<r>121</r>
+					<g>125</g>
+					<b>0</b>
+				</color>
 				<neighbours>
 					<neighbour>eastern united states</neighbour>
 					<neighbour>ontario</neighbour>
@@ -69,15 +121,25 @@
 			</province>
 			<province>
 				<name>eastern united states</name>
-				<neighnours>
+				<color>
+					<r>95</r>
+					<g>98</g>
+					<b>0</b>
+				</color>
+				<neighbours>
 					<neighbour>western united states</neighbour>
 					<neighbour>ontario</neighbour>
 					<neighbour>quebec</neighbour>
 					<neighbour>central america</neighbour>
-				</neighnours>
+				</neighbours>
 			</province>
 			<province>
 				<name>central america</name>
+				<color>
+					<r>183</r>
+					<g>194</g>
+					<b>0</b>
+				</color>
 				<neighbours>
 					<neighbour>eastern united states</neighbour>
 					<neighbour>western united states</neighbour>
@@ -88,9 +150,19 @@
 	</continent>
 	<continent>
 		<name>south america</name>
+		<color>
+			<r>255</r>
+			<g>0</g>
+			<b>0</b>
+		</color>
 		<provinces>
 			<province>
 				<name>venezuela</name>
+				<color>
+					<r>255</r>
+					<g>128</g>
+					<b>128</b>
+				</color>
 				<neighbours>
 					<neighbour>peru</neighbour>
 					<neighbour>brazil</neighbour>
@@ -99,6 +171,11 @@
 			</province>
 			<province>
 				<name>brazil</name>
+				<color>
+					<r>128</r>
+					<g>64</g>
+					<b>64</b>
+				</color>
 				<neighbours>
 					<neighbour>venezuela</neighbour>
 					<neighbour>peru</neighbour>
@@ -108,6 +185,11 @@
 			</province>
 			<province>
 				<name>peru</name>
+				<color>
+					<r>128</r>
+					<g>0</g>
+					<b>0</b>
+				</color>
 				<neighbours>
 					<neighbour>venezuela</neighbour>
 					<neighbour>brazil</neighbour>
@@ -116,6 +198,11 @@
 			</province>
 			<province>
 				<name>argentina</name>
+				<color>
+					<r>255</r>
+					<g>0</g>
+					<b>0</b>
+				</color>
 				<neighbours>
 					<neighbour>peru</neighbour>
 					<neighbour>brazil</neighbour>
@@ -125,9 +212,19 @@
 	</continent>
 	<continent>
 		<name>europe</name>
+		<color>
+			<r>0</r>
+			<g>0</g>
+			<b>255</b>
+		</color>
 		<provinces>
 			<province>
 				<name>iceland</name>
+				<color>
+					<r>60</r>
+					<g>60</g>
+					<b>255</b>
+				</color>
 				<neighbours>
 					<neighbour>greenland</neighbour>
 					<neighbour>scandinavia</neighbour>
@@ -136,6 +233,11 @@
 			</province>
 			<province>
 				<name>scandinavia</name>
+				<color>
+					<r>80</r>
+					<g>168</g>
+					<b>255</b>
+				</color>
 				<neighbours>
 					<neighbour>iceland</neighbour>
 					<neighbour>ukraine</neighbour>
@@ -145,6 +247,11 @@
 			</province>
 			<province>
 				<name>great britain</name>
+				<color>
+					<r>25</r>
+					<g>25</g>
+					<b>255</b>
+				</color>
 				<neighbours>
 					<neighbour>scandinavia</neighbour>
 					<neighbour>northern europe</neighbour>
@@ -154,6 +261,11 @@
 			</province>
 			<province>
 				<name>ukraine</name>
+				<color>
+					<r>0</r>
+					<g>0</g>
+					<b>128</b>
+				</color>
 				<neighbours>
 					<neighbour>scandinavia</neighbour>
 					<neighbour>northern europe</neighbour>
@@ -165,6 +277,11 @@
 			</province>
 			<province>
 				<name>northern europe</name>
+				<color>
+					<r>0</r>
+					<g>0</g>
+					<b>255</b>
+				</color>
 				<neighbours>
 					<neighbour>scandinavia</neighbour>
 					<neighbour>great britain</neighbour>
@@ -175,6 +292,11 @@
 			</province>
 			<province>
 				<name>western europe</name>
+				<color>
+					<r>0</r>
+					<g>128</g>
+					<b>255</b>
+				</color>
 				<neighbours>
 					<neighbour>great britain</neighbour>
 					<neighbour>northern europe</neighbour>
@@ -184,6 +306,11 @@
 			</province>
 			<province>
 				<name>southern europe</name>
+				<color>
+					<r>0</r>
+					<g>64</g>
+					<b>128</b>
+				</color>
 				<neighbours>
 					<neighbour>middle east</neighbour>
 					<neighbour>northern europe</neighbour>
@@ -195,9 +322,19 @@
 	</continent>
 	<continent>
 		<name>africa</name>
+		<color>
+			<r>255</r>
+			<g>128</g>
+			<b>0</b>
+		</color>
 		<provinces>
 			<province>
 				<name>north africa</name>
+				<color>
+					<r>255</r>
+					<g>145</g>
+					<b>91</b>
+				</color>
 				<neighbours>
 					<neighbour>brazil</neighbour>
 					<neighbour>western europe</neighbour>
@@ -208,6 +345,11 @@
 			</province>
 			<province>
 				<name>egypt</name>
+				<color>
+					<r>255</r>
+					<g>123</g>
+					<b>58</b>
+				</color>
 				<neighbours>
 					<neighbour>middle east</neighbour>
 					<neighbour>north africa</neighbour>
@@ -217,112 +359,299 @@
 			</province>
 			<province>
 				<name>east africa</name>
+				<color>
+					<r>255</r>
+					<g>104</g>
+					<b>30</b>
+				</color>
 				<neighbours>
+					<neighbour>middle east</neighbour>
+					<neighbour>north africa</neighbour>
+					<neighbour>south africa</neighbour>
+					<neighbour>egypt</neighbour>
+					<neighbour>congo</neighbour>
+					<neighbour>madagascar</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>congo</name>
+				<color>
+					<r>255</r>
+					<g>95</g>
+					<b>17</b>
+				</color>
 				<neighbours>
+					<neighbour>north africa</neighbour>
+					<neighbour>south africa</neighbour>
+					<neighbour>east africa</neighbour>
+					<neighbour>madagascar</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>madagascar</name>
+				<color>
+					<r>255</r>
+					<g>84</g>
+					<b>0</b>
+				</color>
 				<neighbours>
+					<neighbour>south africa</neighbour>
+					<neighbour>east africa</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>south africa</name>
+				<color>
+					<r>255</r>
+					<g>88</g>
+					<b>6</b>
+				</color>
 				<neighbours>
+					<neighbour>congo</neighbour>
+					<neighbour>east africa</neighbour>
+					<neighbour>madagascar</neighbour>
 				</neighbours>
 			</province>
 		</provinces>
 	</continent>
 	<continent>
 		<name>asia</name>
+		<color>
+			<r>0</r>
+			<g>255</g>
+			<b>0</b>
+		</color>
 		<provinces>
 			<province>
 				<name>ural</name>
+				<color>
+					<r>0</r>
+					<g>51</g>
+					<b>11</b>
+				</color>
 				<neighbours>
+					<neighbour>ukraine</neighbour>
+					<neighbour>siberia</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>afghanistan</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>siberia</name>
+				<color>
+					<r>42</r>
+					<g>101</g>
+					<b>64</b>
+				</color>
 				<neighbours>
+					<neighbour>ural</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>mongolia</neighbour>
+					<neighbour>irkutsk</neighbour>
+					<neighbour>yakutsk</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>yakutsk</name>
+				<color>
+					<r>39</r>
+					<g>94</g>
+					<b>66</b>
+				</color>
 				<neighbours>
+					<neighbour>siberia</neighbour>
+					<neighbour>irkutsk</neighbour>
+					<neighbour>kamchatka</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>kamchatka</name>
+				<color>
+					<r>5</r>
+					<g>110</g>
+					<b>0</b>
+				</color>
 				<neighbours>
+					<neighbour>yakutsk</neighbour>
+					<neighbour>irkutsk</neighbour>
+					<neighbour>mongolia</neighbour>
+					<neighbour>japan</neighbour>
+					<neighbour>alaska</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>irkutsk</name>
+				<color>
+					<r>91</r>
+					<g>222</g>
+					<b>153</b>
+				</color>
 				<neighbours>
+					<neighbour>yakutsk</neighbour>
+					<neighbour>kamchatka</neighbour>
+					<neighbour>mongolia</neighbour>
+					<neighbour>siberia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>japan</name>
+				<color>
+					<r>154</r>
+					<g>227</g>
+					<b>187</b>
+				</color>
 				<neighbours>
+					<neighbour>kamchatka</neighbour>
+					<neighbour>mongolia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>mongolia</name>
+				<color>
+					<r>0</r>
+					<g>64</g>
+					<b>0</b>
+				</color>
 				<neighbours>
+					<neighbour>kamchatka</neighbour>
+					<neighbour>japan</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>siberia</neighbour>
+					<neighbour>irkutsk</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>china</name>
+				<color>
+					<r>0</r>
+					<g>179</g>
+					<b>29</b>
+				</color>
 				<neighbours>
+					<neighbour>mongolia</neighbour>
+					<neighbour>siam</neighbour>
+					<neighbour>india</neighbour>
+					<neighbour>afghanistan</neighbour>
+					<neighbour>ural</neighbour>
+					<neighbour>siberia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>afghanistan</name>
+				<color>
+					<r>25</r>
+					<g>209</g>
+					<b>43</b>
+				</color>
 				<neighbours>
+					<neighbour>ural</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>india</neighbour>
+					<neighbour>middle east</neighbour>
+					<neighbour>ukraine</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>middle east</name>
+				<color>
+					<r>19</r>
+					<g>160</g>
+					<b>29</b>
+				</color>
 				<neighbours>
+					<neighbour>afghanistan</neighbour>
+					<neighbour>india</neighbour>
+					<neighbour>east africa</neighbour>
+					<neighbour>egypt</neighbour>
+					<neighbour>southern europe</neighbour>
+					<neighbour>ukraine</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>india</name>
+				<color>
+					<r>0</r>
+					<g>87</g>
+					<b>2</b>
+				</color>
 				<neighbours>
+					<neighbour>china</neighbour>
+					<neighbour>siam</neighbour>
+					<neighbour>middle east</neighbour>
+					<neighbour>afghanistan</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>siam</name>
+				<color>
+					<r>0</r>
+					<g>255</g>
+					<b>102</b>
+				</color>
 				<neighbours>
+					<neighbour>india</neighbour>
+					<neighbour>china</neighbour>
+					<neighbour>indonesia</neighbour>
 				</neighbours>
 			</province>
 		</provinces>
 	</continent>
 	<continent>
 		<name>australia</name>
+		<color>
+			<r>255</r>
+			<g>0</g>
+			<b>255</b>
+		</color>
 		<provinces>
 			<province>
 				<name>indonesia</name>
+				<color>
+					<r>128</r>
+					<g>0</g>
+					<b>255</b>
+				</color>
 				<neighbours>
+					<neighbour>new guinea</neighbour>
+					<neighbour>western australia</neighbour>
+					<neighbour>siam</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>new guinea</name>
+				<color>
+					<r>128</r>
+					<g>43</g>
+					<b>86</b>
+				</color>
 				<neighbours>
+					<neighbour>indonesia</neighbour>
+					<neighbour>eastern australia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>western australia</name>
+				<color>
+					<r>128</r>
+					<g>0</g>
+					<b>64</b>
+				</color>
 				<neighbours>
+					<neighbour>indonesia</neighbour>
+					<neighbour>new guinea</neighbour>
+					<neighbour>eastern australia</neighbour>
 				</neighbours>
 			</province>
 			<province>
 				<name>eastern australia</name>
+				<color>
+					<r>64</r>
+					<g>0</g>
+					<b>64</b>
+				</color>
 				<neighbours>
+					<neighbour>new guinea</neighbour>
+					<neighbour>western australia</neighbour>
 				</neighbours>
 			</province>
 		</provinces>

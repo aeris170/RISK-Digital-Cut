@@ -10,6 +10,8 @@ import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaWindow;
 
+import map.MapLoader;
+
 public class Main {
 
 	public static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -30,6 +32,8 @@ public class Main {
 		DoaHandler.instantiateDoaObject(TestObject.class, 910f, 490f);
 
 		SwingUtilities.invokeLater(() -> configureGUI());
+
+		MapLoader.readMapData(null);
 	}
 
 	private static void configureGUI() {

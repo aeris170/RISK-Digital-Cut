@@ -1,25 +1,36 @@
 package provinces;
 
+import java.awt.Color;
 import java.util.List;
 
 import continents.Continent;
 
 public class Province {
 
-	private String name;
 	private Continent continent;
+	private String name;
+	private Color color;
 	private List<Province> neighbours;
-
-	public String getName() {
-		return name;
-	}
 
 	public Continent getContinent() {
 		return continent;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
 	public List<Province> getNeighbours() {
 		return neighbours;
+	}
+
+	public Province setContinent(Continent continent) {
+		this.continent = continent;
+		return this;
 	}
 
 	public Province setName(String name) {
@@ -27,8 +38,8 @@ public class Province {
 		return this;
 	}
 
-	public Province setContinent(Continent continent) {
-		this.continent = continent;
+	public Province setColor(Color color) {
+		this.color = color;
 		return this;
 	}
 
@@ -37,8 +48,8 @@ public class Province {
 		return this;
 	}
 
-	public List<Province> addNeighbour(Province neighbour) {
-		neighbours.add(neighbour);
-		return neighbours;
+	@Override
+	public String toString() {
+		return "\n\t[Province] Name: " + name + "\tColor: RGB(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")";
 	}
 }
