@@ -316,6 +316,8 @@
 					<neighbour>northern europe</neighbour>
 					<neighbour>western europe</neighbour>
 					<neighbour>north africa</neighbour>
+					<neighbour>ukraine</neighbour>
+					<neighbour>egypt</neighbour>
 				</neighbours>
 			</province>
 		</provinces>
@@ -338,6 +340,7 @@
 				<neighbours>
 					<neighbour>brazil</neighbour>
 					<neighbour>western europe</neighbour>
+					<neighbour>southern europe</neighbour>
 					<neighbour>egypt</neighbour>
 					<neighbour>congo</neighbour>
 					<neighbour>east africa</neighbour>
@@ -384,7 +387,6 @@
 					<neighbour>north africa</neighbour>
 					<neighbour>south africa</neighbour>
 					<neighbour>east africa</neighbour>
-					<neighbour>madagascar</neighbour>
 				</neighbours>
 			</province>
 			<province>

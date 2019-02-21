@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +19,10 @@ import provinces.Province;
 
 public class MapLoader {
 
-	public static final Map<String, Continent> CONTINENTS = new HashMap<>();
-	public static final Map<String, Province> PROVINCES = new HashMap<>();
+	public static final Map<String, Continent> CONTINENTS = new LinkedHashMap<>();
+	public static final Map<String, Province> PROVINCES = new LinkedHashMap<>();
 
-	private static final Map<Province, List<String>> NEIGHBOURS_INTERMEDIATE_DATA = new HashMap<>();
+	private static final Map<Province, List<String>> NEIGHBOURS_INTERMEDIATE_DATA = new LinkedHashMap<>();
 
 	public static void readMapData(String continentsXMLFilePath) {
 		try {

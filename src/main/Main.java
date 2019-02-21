@@ -2,6 +2,7 @@ package main;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
@@ -34,6 +35,11 @@ public class Main {
 		SwingUtilities.invokeLater(() -> configureGUI());
 
 		MapLoader.readMapData(null);
+		//MapLoader.PROVINCES.forEach((name, province)->System.out.println(province.getName() + " " + Arrays.toString(province.getNeighbours().toArray())));
+		for(String k : MapLoader.PROVINCES.keySet()) {
+			System.out.println(MapLoader.PROVINCES.get(k).getContinent().getName() + "\t\t" + MapLoader.PROVINCES.get(k).getName());
+		}
+		System.exit(0);
 	}
 
 	private static void configureGUI() {
