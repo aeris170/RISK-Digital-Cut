@@ -5,39 +5,23 @@ import java.awt.Shape;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaKeyboard;
 
 public class TestObject extends DoaObject {
 
 	private static final long serialVersionUID = -781062122233404639L;
 
-	public TestObject(Float x, Float y) {
-		super(x, y);
+	public TestObject(Float x, Float y, Integer width, Integer height) {
+		super(x, y, width, height, DoaObject.BACK);
 	}
 
 	@Override
-	public synchronized void tick() {
-		if (DoaKeyboard.ESCAPE) {
-			System.exit(0);
-		}
-		if (DoaKeyboard.A) {
-			position.x -= 6f;
-		}
-		if (DoaKeyboard.D) {
-			position.x += 6f;
-		}
-		if (DoaKeyboard.W) {
-			position.y -= 6f;
-		}
-		if (DoaKeyboard.S) {
-			position.y += 6f;
-		}
-	}
+	public void tick() {}
 
 	@Override
-	public synchronized void render(DoaGraphicsContext g) {
-		g.setColor(Color.RED);
-		g.fillRect(position.x, position.y, 100, 100);
+	public void render(DoaGraphicsContext g) {
+		g.drawImage(DoaSprites.get("WorldMap"), position.x, position.y, width, height, null);
 	}
 
 	@Override

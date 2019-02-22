@@ -9,8 +9,10 @@ import javax.swing.SwingUtilities;
 import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaHandler;
+import com.doa.engine.DoaObject;
 import com.doa.engine.DoaWindow;
 
+import assets.AssetLoader;
 import map.MapLoader;
 
 public class Main {
@@ -25,21 +27,19 @@ public class Main {
 	public static void main(final String[] args) {
 		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.MULTI_THREAD_ENABLED = true;
-		DoaCamera.enableMouseZoom(0.1f, 10f);
+		DoaCamera.enableMouseZoom(1f, 4f);
+		
+		AssetLoader.initializeAssets();
 
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
-
-		DoaHandler.instantiateDoaObject(TestObject.class, 910f, 490f);
-
+		
+		DoaCamera.adjustCamera(DoaHandler.instantiateDoaObject(Camera.class, WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f), 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		DoaHandler.instantiateDoaObject(TestObject.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
 		SwingUtilities.invokeLater(() -> configureGUI());
 
 		MapLoader.readMapData(null);
-		//MapLoader.PROVINCES.forEach((name, province)->System.out.println(province.getName() + " " + Arrays.toString(province.getNeighbours().toArray())));
-		for(String k : MapLoader.PROVINCES.keySet()) {
-			System.out.println(MapLoader.PROVINCES.get(k).getContinent().getName() + "\t\t" + MapLoader.PROVINCES.get(k).getName());
-		}
-		System.exit(0);
 	}
 
 	private static void configureGUI() {
