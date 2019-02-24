@@ -1,16 +1,16 @@
 package main;
 
+import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaHandler;
-import com.doa.engine.DoaObject;
 import com.doa.engine.DoaWindow;
+import com.doa.engine.input.DoaMouse;
 
 import assets.AssetLoader;
 import map.MapLoader;
@@ -26,17 +26,21 @@ public class Main {
 
 	public static void main(final String[] args) {
 		DoaEngine.DEBUG_ENABLED = true;
-		DoaEngine.MULTI_THREAD_ENABLED = true;
-		DoaCamera.enableMouseZoom(1f, 4f);
-		
+		DoaEngine.CLEAR_COLOR = new Color(71, 40, 11);
+		DoaMouse.clampWheel(1d, 4d);
+
 		AssetLoader.initializeAssets();
 
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
-		
-		DoaCamera.adjustCamera(DoaHandler.instantiateDoaObject(Camera.class, WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f), 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		DoaHandler.instantiateDoaObject(TestObject.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
-		
+
+		DoaCamera.setTweenAmountX(1f);
+		DoaCamera.setTweenAmountY(1f);
+		DoaCamera.enableMouseZoom(null, 1f, 4f);
+		DoaCamera.adjustCamera(DoaHandler.instantiateDoaObject(Camera.class, WINDOW_WIDTH / 2f, WINDOW_HEIGHT / 2f), -10000, -10000, 10000, 10000);
+		DoaHandler.instantiateDoaObject(GameBoard.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
+		DoaHandler.instantiateDoaObject(DebugPanel.class);
+
 		SwingUtilities.invokeLater(() -> configureGUI());
 
 		MapLoader.readMapData(null);

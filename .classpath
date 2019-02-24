@@ -7,12 +7,12 @@
 	<classpathentry kind="src" path="doc"/>
 	<classpathentry kind="lib" path="lib/JDOM/jdom-2.0.6.jar" sourcepath="lib/JDOM/jdom-2.0.6-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/Eclipse%20Projects/CS319-MP-Risk/lib/JDOM/jdom-2.0.6-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/JDOM/jdom-2.0.6-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/DoaEngine/DoaEngine 2.1.2.jar">
+	<classpathentry kind="lib" path="lib/DoaEngine/DoaEngine 2.1.4.jar" sourcepath="lib/DoaEngine/DoaEngine 2.1.4.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/musta/Documents/GitHub/CS319-MP-Risk/lib/DoaEngine/DoaEngine%202.1.2.jar!/doc"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/DoaEngine/DoaEngine%202.1.4.jar!/doc"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
