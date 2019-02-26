@@ -43,7 +43,7 @@ public class DebugPanel extends DoaObject {
 
 	private void drawString(DoaGraphicsContext g, String s) {
 		g.setTransform(new AffineTransform());
-		g.drawString(s, 0, fontSize * (textCount + 1));
+		g.drawString(s, 0, fontSize * (textCount + 1d));
 		textCount++;
 	}
 }

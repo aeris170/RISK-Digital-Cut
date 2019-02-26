@@ -4,7 +4,13 @@ import java.io.IOException;
 
 import com.doa.engine.graphics.DoaSprites;
 
-public class AssetLoader {
+import exceptions.RiskStaticInstantiationException;
+
+public final class AssetLoader {
+
+	private AssetLoader() throws RiskStaticInstantiationException {
+		throw new RiskStaticInstantiationException(getClass());
+	}
 
 	public static void initializeAssets() {
 		try {

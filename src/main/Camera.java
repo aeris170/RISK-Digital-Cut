@@ -9,6 +9,7 @@ import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
+import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
 
 public class Camera extends DoaObject {
@@ -54,21 +55,13 @@ public class Camera extends DoaObject {
 		if (DoaMouse.X > Main.WINDOW_WIDTH * HIGH_PERCENTAGE_FOR_MOUSE_CAMERA / 100) {
 			position.x += MOUSE_LOOK_SPEED;
 		}
+
 		topLeftBound = new DoaVectorF(Main.WINDOW_WIDTH / 2f + (Main.WINDOW_WIDTH / 2f - (Main.WINDOW_WIDTH / 2f * DoaCamera.getZ())) / DoaCamera.getZ(),
 		        Main.WINDOW_HEIGHT / 2f + (Main.WINDOW_HEIGHT / 2f - (Main.WINDOW_HEIGHT / 2f * DoaCamera.getZ())) / DoaCamera.getZ());
 		bottomRightBound = new DoaVectorF(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT).sub(topLeftBound);
-		if (position.x < topLeftBound.x) {
-			position.x = topLeftBound.x;
-		}
-		if (position.y < topLeftBound.y) {
-			position.y = topLeftBound.y;
-		}
-		if (position.x > bottomRightBound.x) {
-			position.x = bottomRightBound.x;
-		}
-		if (position.y > bottomRightBound.y) {
-			position.y = bottomRightBound.y;
-		}
+
+		position.x = DoaMath.clamp(position.x, topLeftBound.x, bottomRightBound.x);
+		position.y = DoaMath.clamp(position.y, topLeftBound.y, bottomRightBound.y);
 	}
 
 	@Override

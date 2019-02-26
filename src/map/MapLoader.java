@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,14 +14,19 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import continents.Continent;
+import exceptions.RiskStaticInstantiationException;
 import provinces.Province;
 
-public class MapLoader {
+public final class MapLoader {
 
 	public static final Map<String, Continent> CONTINENTS = new LinkedHashMap<>();
 	public static final Map<String, Province> PROVINCES = new LinkedHashMap<>();
 
 	private static final Map<Province, List<String>> NEIGHBOURS_INTERMEDIATE_DATA = new LinkedHashMap<>();
+
+	private MapLoader() throws RiskStaticInstantiationException {
+		throw new RiskStaticInstantiationException(getClass());
+	}
 
 	public static void readMapData(String continentsXMLFilePath) {
 		try {
@@ -67,9 +71,7 @@ public class MapLoader {
 	private static void assignNeighboursToProvinces() {
 		PROVINCES.forEach((name, province) -> {
 			final List<Province> neighbours = new ArrayList<>();
-			NEIGHBOURS_INTERMEDIATE_DATA.get(province).forEach(neighbourName -> {
-				neighbours.add(PROVINCES.get(neighbourName));
-			});
+			NEIGHBOURS_INTERMEDIATE_DATA.get(province).forEach(neighbourName -> neighbours.add(PROVINCES.get(neighbourName)));
 			province.setNeighbours(neighbours);
 		});
 	}
