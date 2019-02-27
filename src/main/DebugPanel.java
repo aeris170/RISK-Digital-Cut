@@ -32,7 +32,7 @@ public class DebugPanel extends DoaObject {
 	public void render(DoaGraphicsContext g) {
 		g.setFont(new Font("Arial", Font.BOLD, fontSize));
 		g.setColor(Color.WHITE);
-		textCount = 4;
+		textCount = 6;
 		drawString(g, "ZOOM: " + DoaMouse.WHEEL);
 	}
 
