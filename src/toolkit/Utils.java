@@ -39,7 +39,12 @@ public final class Utils {
 	// this to his OWN ENGINE??????
 	// P.S. the author is me.
 	// TO DO: f*** myself
-	// TODO CHECK IF THIS FUNCTION WORKS FLAWLESSLY. Assignee: Fazilet Simge ER
+	// TODO CHECK IF THIS FUNCTION WORKS FLAWLESSLY. Assigned to: Fazilet Simge ER
+	// in order to do this, look at the top left of the screen. there are text that
+	// shows the mouse position.
+	// zoom in to arbitrary locations and check if the mouse coordinate is mapped
+	// correctly.
+	// <3
 	public static DoaVectorF mapMouseCoordinatesByZoom() {
 		final DoaVectorF mouseCoordinates = new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y);
 		final float cx = Main.WINDOW_WIDTH / 2f;
