@@ -1,4 +1,4 @@
-package serverConnector;
+package network;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
