@@ -45,6 +45,8 @@ public class Main {
 		SwingUtilities.invokeLater(() -> configureGUI());
 
 		MapLoader.readMapData(null);
+		MapLoader.CONTINENTS.forEach((s, c) -> System.out.println(c.toString()));
+		// System.exit(0);
 	}
 
 	private static void configureGUI() {
