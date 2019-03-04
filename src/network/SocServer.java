@@ -11,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ public class SocServer extends JFrame {
 	private static final long serialVersionUID = 5565232993673926023L;
 
 	private int capacity;
+	private AtomicInteger threadsFinished = new AtomicInteger(0);
 
 	protected JTextField userText;
 	private JTextArea chatWindow;
@@ -39,6 +41,7 @@ public class SocServer extends JFrame {
 	private List<ObjectOutputStream> outputs; // output goes away from us
 	private List<ObjectInputStream> inputs;
 	private List<Thread> streamThreads;
+	private List<Boolean> isThreadFinished;
 
 	/**
 	 * Constructor
@@ -50,6 +53,7 @@ public class SocServer extends JFrame {
 		outputs = new ArrayList<>();
 		inputs = new ArrayList<>();
 		streamThreads = new ArrayList<>();
+		isThreadFinished = new ArrayList<>();
 		userText = new JTextField();
 		userText.setEditable(false); // Without someone connect this need to be false
 
@@ -78,9 +82,7 @@ public class SocServer extends JFrame {
 
 	public static void main(String[] args) {
 		SocServer serverProtocol = new SocServer(2);
-
 		userName = "HOST";
-
 		new Thread(() -> serverProtocol.startRunning()).start();
 	}
 
@@ -89,28 +91,21 @@ public class SocServer extends JFrame {
 	public void startRunning() {
 		try {
 			UPnP.openPortTCP(27015); // open port 27015 on gateway via WaifUPnP
-			server = new ServerSocket(27015, 10); // port number is 6789
+			server = new ServerSocket(27015, capacity); // port number is 6789
 			// backlog is how many people can access
-			while (true) {
-				try {
-					waitForConnection(); // pretty much every millisecond connection will be called
-					// we need to set up output and input stream thus we can connect with each other
-					setupStreams();
-					whileChatting();
-					// connect and have conversation
-				} catch (EOFException ex) { // connection gonna end
-					showMessage("Server ended the connection!"); // when connection ends
-					ex.printStackTrace();
-				} finally {
-					closeCrap();
-				}
-				Thread.sleep(10);
+			try {
+				waitForConnection(); // pretty much every millisecond connection will be called
+				// we need to set up output and input stream thus we can connect with each other
+				whileChatting();
+				// connect and have conversation
+			} catch (EOFException ex) { // connection gonna end
+				showMessage("Server ended the connection!"); // when connection ends
+				ex.printStackTrace();
+			} finally {
+				closeCrap();
 			}
-		} catch (IOException ex1) {
-			ex1.printStackTrace();
-		} catch (InterruptedException ex2) {
-			Thread.currentThread().interrupt();
-			ex2.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -187,6 +182,7 @@ public class SocServer extends JFrame {
 		for (int i = 0; i < capacity; i++) {
 			Socket connection = server.accept();
 			connections.add(connection);
+			setupStreams(connection);
 			showMessage("Now connected to " + connection.getInetAddress().getHostName());
 		}
 	}
@@ -197,16 +193,14 @@ public class SocServer extends JFrame {
 	 * 
 	 * @throws IOException
 	 */
-	private void setupStreams() {
+	private void setupStreams(Socket socket) {
 		// create a pathway allows us to connect to another computer
-		connections.forEach(connection -> {
-			try {
-				outputs.add(new ObjectOutputStream(connection.getOutputStream()));
-				inputs.add(new ObjectInputStream(connection.getInputStream())); // receive stuff from someone
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		});
+		try {
+			outputs.add(new ObjectOutputStream(socket.getOutputStream()));
+			inputs.add(new ObjectInputStream(socket.getInputStream())); // receive stuff from someone
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		showMessage("Streams are now set up");
 	}
 
@@ -224,13 +218,17 @@ public class SocServer extends JFrame {
 			final int ii = i;
 			streamThreads.add(new Thread(() -> {
 				ObjectInputStream input = inputs.get(ii);
-				while (true) {
+				while (isThreadFinished.get(ii)) {
 					try {
 						System.out.println(Thread.currentThread().getId() + " is waiting for input");
 						// make sure it is string
 						Object message = input.readObject();
 						if (message instanceof String) {
-							showMessage((String) input.readObject());
+							if (message.equals("DISCONNECT")) {
+								isThreadFinished.set(ii, false);
+							}
+							showMessage((String) message);
+							sendMessage((String) message);
 						} else {
 							// multiplayer code
 							// send game data here
@@ -241,13 +239,23 @@ public class SocServer extends JFrame {
 						showMessage("Invalid message sent by client!");
 						ex.printStackTrace();
 					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException ex) {
+						Thread.currentThread().interrupt();
+						ex.printStackTrace();
+					}
 				}
+				threadsFinished.incrementAndGet();
 			}));
-			streamThreads.forEach(thread -> thread.start());
+			isThreadFinished.add(true);
 		}
+		streamThreads.forEach(thread -> thread.start());
 		try {
 			synchronized (this) {
-				wait();
+				while (threadsFinished.get() < capacity) {
+					wait();
+				}
 			}
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();

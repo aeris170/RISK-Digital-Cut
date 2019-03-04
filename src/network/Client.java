@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -78,6 +80,12 @@ public class Client extends JFrame {
 		// Object Declaration To run the Client
 		Client clientProtocol = new Client(IP);
 		clientProtocol.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		clientProtocol.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				clientProtocol.sendMessage("DISCONNECT");
+			}
+		});
 		clientProtocol.setBackground(Color.GREEN);
 		clientProtocol.startRunnning();
 	}
@@ -184,7 +192,6 @@ public class Client extends JFrame {
 			output.writeObject("CLIENT - " + message);
 			output.flush();
 			showMessage("\nCLIENT -" + message);
-
 		} catch (IOException ioException) {
 			chatWindows.append("\nsomething not working");
 		}
