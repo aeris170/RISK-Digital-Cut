@@ -21,6 +21,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.dosse.upnp.UPnP;
+
 /**
  * @author EgeTuran
  */
@@ -83,7 +85,8 @@ public class SocServer extends JFrame {
 	// set up and run the server
 	public void startRunning() {
 		try {
-			server = new ServerSocket(9876, 10); // port number is 6789
+			UPnP.openPortTCP(27015); // open port 27015 on gateway via WaifUPnP
+			server = new ServerSocket(27015, 10); // port number is 6789
 			// backlog is how many people can access
 			while (true) {
 				try {

@@ -157,7 +157,7 @@ public class Client extends JFrame {
 	private void connectToServer() throws UnknownHostException, IOException {
 		showMessage("Attempting connection..\n");
 		// ???????
-		connection = new Socket(InetAddress.getByName(serversIP), 9876);
+		connection = new Socket(InetAddress.getByName(serversIP), 27015);
 		showMessage("Connected to: " + connection.getInetAddress().getHostName());
 
 	}
