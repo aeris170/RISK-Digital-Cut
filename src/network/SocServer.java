@@ -1,7 +1,5 @@
 package network;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,10 +8,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import com.dosse.upnp.UPnP;
 
@@ -24,50 +18,33 @@ import network.message.MessageType;
 /**
  * @author Ege Turan, Doða Oruç
  */
-public class SocServer extends JFrame implements Runnable {
-
-	private static final long serialVersionUID = 5565232993673926023L;
+public class SocServer implements Runnable {
 
 	private int serverCapacity; // Exactly how many people will connect.
 	private AtomicInteger threadsFinished = new AtomicInteger(0); // Used for synchronisation.
 
-	private JTextArea chatWindow;
-	private transient ServerSocket server;
+	private ServerSocket server;
 
 	// To create more streams, we use lists.
 	// Transients are useless, I put them to make warnings disappear.
-	private transient List<Socket> connections; // Socket is basically connection between two computers.
-	private transient List<ObjectOutputStream> outputs;
-	private transient List<ObjectInputStream> inputs;
-	private transient List<Thread> streamThreads; // Socket listeners.
+	private List<Socket> connections; // Socket is basically connection between two computers.
+	private List<ObjectOutputStream> outputs;
+	private List<ObjectInputStream> inputs;
+	private List<Thread> streamThreads; // Socket listeners.
 	private List<Boolean> isThreadFinished; // Used to stop threads that finished listening.
 
 	public SocServer(int serverCapacity) {
-		super("SERVER");
 		this.serverCapacity = serverCapacity;
 		connections = new ArrayList<>();
 		outputs = new ArrayList<>();
 		inputs = new ArrayList<>();
 		streamThreads = new ArrayList<>();
 		isThreadFinished = new ArrayList<>();
-
-		JPanel panel = new JPanel();
-		chatWindow = new JTextArea();
-		chatWindow.setFont(new Font("default", Font.ITALIC, 15));
-		panel.add(chatWindow);
-		panel.setBackground(Color.GREEN);
-
-		add(panel);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400, 500);
-		setLocationRelativeTo(null);
-		setResizable(false);
-		setVisible(true);
 	}
 
 	public static void main(String[] args) {
 		// User will specify the server capacity.
-		SocServer serverProtocol = new SocServer(3);
+		SocServer serverProtocol = new SocServer(2);
 		new Thread(serverProtocol).start();
 	}
 
@@ -96,7 +73,7 @@ public class SocServer extends JFrame implements Runnable {
 	private void waitForConnection() throws IOException {
 		// Wait for all connections. Exactly the value of serverCapacity connections
 		// must be made.
-		for (int i = 1; i < serverCapacity; i++) {
+		for (int i = 0; i < serverCapacity; i++) {
 			Socket connection = server.accept();
 			connections.add(connection);
 			setupStreams(connection);
