@@ -15,5 +15,10 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/DoaEngine/DoaEngine%202.1.4.jar!/doc"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/WaifUPnP/WaifUPnP.jar" sourcepath="lib/WaifUPnP/WaifUPnP-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/WaifUPnP/WaifUPnP-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
