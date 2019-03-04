@@ -25,11 +25,12 @@ public class Main {
 	static DoaEngine e;
 
 	public static void main(final String[] args) {
-		DoaEngine.DEBUG_ENABLED = false;
+		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.MULTI_THREAD_ENABLED = true;
 		DoaEngine.CLEAR_COLOR = new Color(71, 40, 11);
 		DoaMouse.clampWheel(1d, 4d);
 
+		MapLoader.readMapData();
 		AssetLoader.initializeAssets();
 
 		w = DoaWindow.createWindow();
@@ -43,10 +44,6 @@ public class Main {
 		DoaHandler.instantiateDoaObject(DebugPanel.class);
 
 		SwingUtilities.invokeLater(() -> configureGUI());
-
-		MapLoader.readMapData(null);
-		MapLoader.CONTINENTS.forEach((s, c) -> System.out.println(c.toString()));
-		// System.exit(0);
 	}
 
 	private static void configureGUI() {
