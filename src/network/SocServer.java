@@ -24,7 +24,7 @@ import network.message.MessageType;
 /**
  * @author Ege Turan, Doða Oruç
  */
-public class SocServer extends JFrame {
+public class SocServer extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 5565232993673926023L;
 
@@ -68,11 +68,12 @@ public class SocServer extends JFrame {
 	public static void main(String[] args) {
 		// User will specify the server capacity.
 		SocServer serverProtocol = new SocServer(3);
-		new Thread(() -> serverProtocol.startRunning()).start();
+		new Thread(serverProtocol).start();
 	}
 
 	// *************************************************************************
-	public void startRunning() {
+	@Override
+	public void run() {
 		// Open port 27015 on gateway via WaifUPnP
 		UPnP.openPortTCP(27015);
 		try (ServerSocket sv = new ServerSocket(27015, serverCapacity)) {

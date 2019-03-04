@@ -27,7 +27,7 @@ import network.message.MessageType;
  * @author Ege Turan, Doða Oruç
  */
 
-public class Client extends JFrame {
+public class Client extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 4580330924087695464L;
 
@@ -82,7 +82,7 @@ public class Client extends JFrame {
 		add(new JScrollPane(chatWindows), BorderLayout.CENTER);
 		setSize(300, 450);
 		setVisible(true);
-		new Thread(() -> startRunnning());
+		new Thread(this).start();
 	}
 
 	// *************************************************************************
@@ -99,7 +99,8 @@ public class Client extends JFrame {
 
 	// *************************************************************************
 	// connect to server
-	public void startRunnning() {
+	@Override
+	public void run() {
 		try {
 			connectToServer();
 			setupStreams();
@@ -142,23 +143,14 @@ public class Client extends JFrame {
 	 */
 	private void whileChatting() throws IOException, ClassNotFoundException {
 		ableToType(true);
-		Message message = (Message) input.readObject();
-		if (message.getType() == MessageType.CHAT) {
-			showMessage(message.getSender() + ": " + message.getData());
-		} else if (message.getType() == MessageType.GAME_MOVE) {
-			// TODO MP
+		while (true) {
+			Message message = (Message) input.readObject();
+			if (message.getType() == MessageType.CHAT) {
+				showMessage(message.getSender() + ": " + message.getData());
+			} else if (message.getType() == MessageType.GAME_MOVE) {
+				// TODO MP
+			}
 		}
-	}
-
-	// *************************************************************************
-	/**
-	 * Let the user type stuff into their box
-	 * 
-	 * @param condition
-	 */
-	private void ableToType(boolean condition) {
-		// Update the UI asynchronously.
-		SwingUtilities.invokeLater(() -> clientText.setEditable(condition));
 	}
 
 	// *************************************************************************
@@ -194,6 +186,17 @@ public class Client extends JFrame {
 	private void showMessage(final String text) {
 		// Update the UI asynchronously.
 		SwingUtilities.invokeLater(() -> chatWindows.append(text + "\n"));
+	}
+
+	// *************************************************************************
+	/**
+	 * Let the user type stuff into their box
+	 * 
+	 * @param condition
+	 */
+	private void ableToType(boolean condition) {
+		// Update the UI asynchronously.
+		SwingUtilities.invokeLater(() -> clientText.setEditable(condition));
 	}
 
 	public Socket getSocket() {
