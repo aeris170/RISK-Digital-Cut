@@ -33,11 +33,11 @@ public final class MapLoader {
 	}
 
 	public static void readMapData() {
-		readContinentData();
+		readContinentsData();
 		readColorMapData();
 	}
 
-	private static void readContinentData() {
+	private static void readContinentsData() {
 		try {
 			readContinentData(new SAXBuilder().build(new File(CONTINENT_DATA_PATH)));
 		} catch (IOException | JDOMException ex) {
