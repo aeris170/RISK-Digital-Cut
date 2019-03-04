@@ -2,18 +2,15 @@ package network;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,27 +25,41 @@ import com.dosse.upnp.UPnP;
  */
 public class SocServer extends JFrame {
 
+	private static final long serialVersionUID = 5565232993673926023L;
+
+	private int capacity;
+
 	protected JTextField userText;
 	private JTextArea chatWindow;
-	private ObjectOutputStream output; // output goes away from us
-	private ObjectInputStream input;
 	private ServerSocket server;
-	private Socket connection; // socket is basically connection between two computers
 	private static String userName;
+
+	// to create more stream
+	private List<Socket> connections; // socket is basically connection between two computers
+	private List<ObjectOutputStream> outputs; // output goes away from us
+	private List<ObjectInputStream> inputs;
+	private List<Thread> streamThreads;
 
 	/**
 	 * Constructor
 	 */
-	public SocServer() {
+	public SocServer(int capacity) {
 		super("MESSENGER SERVER SIDE");
+		this.capacity = capacity;
+		connections = new ArrayList<>();
+		outputs = new ArrayList<>();
+		inputs = new ArrayList<>();
+		streamThreads = new ArrayList<>();
 		userText = new JTextField();
 		userText.setEditable(false); // Without someone connect this need to be false
-		// Create Listener
 
-		ActionListener listener = new ActionSendMessage();
-		userText.addActionListener(listener);
+		userText.addActionListener(e -> {
+			// whatever we type in here this action listener
+			// this will pass to send Message
+			sendMessage(e.getActionCommand()); // what we typed into this text field
+			userText.setText("");
+		});
 
-		// Panel Declaration
 		JPanel panel = new JPanel();
 
 		add(userText, BorderLayout.NORTH);
@@ -58,30 +69,22 @@ public class SocServer extends JFrame {
 		panel.setBackground(Color.GREEN);
 
 		add(panel);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400, 500);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		setVisible(true);
 	}
 
-	public static void main(String[] args) throws IOException {
-		SocServer serverProtocol = new SocServer();
+	public static void main(String[] args) {
+		SocServer serverProtocol = new SocServer(2);
 
-		Scanner input = new Scanner(System.in);
-		System.out.println("Please enter your user name");
-		userName = input.nextLine();
+		userName = "HOST";
 
-		serverProtocol.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Set Location Of the Server
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		serverProtocol.setLocation(dim.width / 2 - serverProtocol.getSize().width / 2, dim.height / 2 - serverProtocol.getSize().height / 2);
-
-		serverProtocol.setResizable(false);
-		serverProtocol.startRunning();
-
+		new Thread(() -> serverProtocol.startRunning()).start();
 	}
 
 	// *************************************************************************
-
 	// set up and run the server
 	public void startRunning() {
 		try {
@@ -95,140 +98,164 @@ public class SocServer extends JFrame {
 					setupStreams();
 					whileChatting();
 					// connect and have conversation
-				} catch (EOFException eofException) { // connection gonna end
-					showMessage("\n Server ended the connection! "); // when connection ends
+				} catch (EOFException ex) { // connection gonna end
+					showMessage("Server ended the connection!"); // when connection ends
+					ex.printStackTrace();
 				} finally {
 					closeCrap();
 				}
+				Thread.sleep(10);
 			}
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
+		} catch (IOException ex1) {
+			ex1.printStackTrace();
+		} catch (InterruptedException ex2) {
+			Thread.currentThread().interrupt();
+			ex2.printStackTrace();
 		}
 	}
 
 	// *************************************************************************
-
 	/**
 	 * Close streams and sockets after you have complete the conversation
 	 */
 	private void closeCrap() {
 		// once you done chatting, close everything
-		showMessage("\n Closing connections... \n");
+		showMessage("Closing connections...");
 		ableToType(false);
-		try {
-			output.close();
-			input.close();
-			connection.close();
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-
+		outputs.forEach(output -> {
+			try {
+				output.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		inputs.forEach(input -> {
+			try {
+				input.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		connections.forEach(connection -> {
+			try {
+				connection.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
 	}
 
 	// *************************************************************************
-
 	/**
 	 * Let the user type stuff into their box
 	 * 
 	 * @param condition
 	 */
 	private void ableToType(boolean condition) {
-		SwingUtilities.invokeLater(new Runnable() { // only will update chat window portion of gui
-			public void run() {
-				userText.setEditable(condition);// add a message to end of the document
-			}
-		});
+		// only will update chat window portion of gui
+		// add a message to end of the document
+		SwingUtilities.invokeLater(() -> userText.setEditable(condition));
 	}
 
 	// *************************************************************************
-
 	/**
 	 * Send a message to Client
 	 * 
 	 * @param message
 	 */
-
 	private void sendMessage(String message) {
-		try {
-			// one-way road from our computer to their computer
-			output.writeObject(userName + " -  " + message);
-			output.flush();
-			showMessage("\n" + userName + " -" + message); // message history
-		} catch (IOException ioException) {
-			chatWindow.append("\n ERROR: Message Is not send ");
+		// one-way road from our computer to their computer
+		outputs.forEach(output -> {
+			try {
+				output.writeObject(userName + " -  " + message);
+				output.flush();
+			} catch (IOException ex) {
+				chatWindow.append("ERROR: Message Is not send");
+				ex.printStackTrace();
+			}
+		});
+		// message history
+		showMessage("\n" + userName + " -" + message);
+	}
+
+	// *************************************************************************
+	// wait for connection, then display connection info
+	private void waitForConnection() throws IOException {
+		showMessage("Waiting for someone to connect...");
+		// do it this over and over again and someone really connected the connection is
+		// made
+		for (int i = 0; i < capacity; i++) {
+			Socket connection = server.accept();
+			connections.add(connection);
+			showMessage("Now connected to " + connection.getInetAddress().getHostName());
 		}
 	}
 
 	// *************************************************************************
-
-	// wait for connection, then display connection info
-	private void waitForConnection() throws IOException {
-		showMessage("Waiting for someone to connect...\n");
-		connection = server.accept(); // do it this over and over again and someone really connected the connection is
-		                              // made
-		// only will create socket, someone connected
-		showMessage("Now connected to " + connection.getInetAddress().getHostName());
-
-	}
-
-	// *************************************************************************
-
 	/**
 	 * //get stream to send and receive data
 	 * 
 	 * @throws IOException
 	 */
-	private void setupStreams() throws IOException {
-		output = new ObjectOutputStream(connection.getOutputStream());// create a pathway allows us to connect to another computer
-		output.flush(); // craps are stays behind(housekeeping)
-		input = new ObjectInputStream(connection.getInputStream()); // receive stuff from someone
-		showMessage("\n Streams are know set up \n");
-
+	private void setupStreams() {
+		// create a pathway allows us to connect to another computer
+		connections.forEach(connection -> {
+			try {
+				outputs.add(new ObjectOutputStream(connection.getOutputStream()));
+				inputs.add(new ObjectInputStream(connection.getInputStream())); // receive stuff from someone
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		showMessage("Streams are now set up");
 	}
 
 	// *************************************************************************
-
 	/**
 	 * This class will be working during the chat
 	 * 
 	 * @throws IOException
 	 */
 	// during the conversation
-	private void whileChatting() throws IOException {
-		String message = "You are now connected!";
-		sendMessage(message);
+	private void whileChatting() {
+		sendMessage("You are now connected!");
 		ableToType(true);
-		do {
-			try {
-				message = (String) input.readObject(); // whatever message is coming into us
-				// make sure it is string
-				showMessage("\n " + message);
-			} catch (ClassNotFoundException classNotFoundException) {
-				showMessage("\n Invalid message sent by client!");
+		for (int i = 0; i < capacity; i++) {
+			final int ii = i;
+			streamThreads.add(new Thread(() -> {
+				ObjectInputStream input = inputs.get(ii);
+				while (true) {
+					try {
+						System.out.println(Thread.currentThread().getId() + " is waiting for input");
+						// make sure it is string
+						Object message = input.readObject();
+						if (message instanceof String) {
+							showMessage((String) input.readObject());
+						} else {
+							// multiplayer code
+							// send game data here
+							showMessage("wtf this is not string");
+						}
+						System.out.println(message.toString());
+					} catch (ClassNotFoundException | IOException ex) {
+						showMessage("Invalid message sent by client!");
+						ex.printStackTrace();
+					}
+				}
+			}));
+			streamThreads.forEach(thread -> thread.start());
+		}
+		try {
+			synchronized (this) {
+				wait();
 			}
-			// have a conversation
-		} while (!message.equals("CLIENT - END"));
-	}
-
-	// *************************************************************************
-
-	/**
-	 * Description: When the user enter text into serverText this will take the text
-	 * and send it to client via sendMessage method
-	 * 
-	 * @author EgeTuran
-	 */
-	class ActionSendMessage implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			// whatever we type in here this action listener
-			// this will pass to send Message
-			sendMessage(event.getActionCommand()); // what we typed into this text field
-			userText.setText("");
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+			ex.printStackTrace();
 		}
 	}
 
 	// *************************************************************************
-
 	/**
 	 * Description: Updates chatWindow
 	 * 
@@ -236,13 +263,8 @@ public class SocServer extends JFrame {
 	 */
 	private void showMessage(final String text) {
 		// you want a change GUI this update the part or text inside the gui
-		SwingUtilities.invokeLater(new Runnable() { // only will update chat window portion of gui
-			public void run() {
-				chatWindow.append(text);// add a message to end of the document
-			}
-		});
+		// only will update chat window portion of gui
+		// add a message to end of the document
+		SwingUtilities.invokeLater(() -> chatWindow.append(text + "\n"));
 	}
-
-	// *************************************************************************
-
 }
