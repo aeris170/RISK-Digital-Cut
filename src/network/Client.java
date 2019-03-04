@@ -2,17 +2,13 @@ package network;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -21,138 +17,97 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import network.message.MessageBuilder;
+import network.message.MessageBuilder.Message;
+import network.message.MessageType;
+
 /**
  * Description:Chat Application
  * 
- * @author EgeTuran
+ * @author Ege Turan, Doða Oruç
  */
 
 public class Client extends JFrame {
+
+	private static final long serialVersionUID = 4580330924087695464L;
 
 	// Text Data Entrance Part
 	private JTextField clientText;
 	private JTextArea chatWindows;
 
 	// Data in and data out
-	private ObjectOutputStream output; // output always from this computer to other one
-	private ObjectInputStream input; // input is always taken whatever computer is it
+	// Transients are useless, I put them to make warnings disappear.
+	private transient Socket connection;
+	private transient ObjectOutputStream output;
+	private transient ObjectInputStream input;
 
 	// Message and IP
-	private String message = "";
-	private String serversIP;
+	private String clientName;
+	private String serverIP;
 
 	// Socket For Connection
-	private Socket connection;
-
 	/**
 	 * Constructor of Client class
 	 * 
-	 * @param host takes IP
+	 * @param clientName Name of the client
+	 * @param serverIP IP of the server
 	 */
-	public Client(String host) {
-
-		super("Client Message Box");
-		serversIP = host;
+	public Client(String clientName, String serverIP) {
+		super("Client");
+		this.clientName = clientName;
+		this.serverIP = serverIP;
 
 		// Arrange Client Text Field
 		clientText = new JTextField();
 		clientText.setEditable(false);
 
 		// Add ActionListener For Text Field
-		ActionListener listener = new ActionClient();
-		clientText.addActionListener(listener);
+		clientText.addActionListener(e -> {
+			sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
+			clientText.setText("");
+		});
 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				// Tell the server, you are disconnecting.
+				sendToServer(new MessageBuilder().setSender(clientName).setType(MessageType.DISCONNECT).build());
+				System.exit(0);
+			}
+		});
+
+		setBackground(Color.GREEN);
 		add(clientText, BorderLayout.NORTH);
 		chatWindows = new JTextArea();
 		add(new JScrollPane(chatWindows), BorderLayout.CENTER);
 		setSize(300, 450);
 		setVisible(true);
+		new Thread(() -> startRunnning());
 	}
 
 	// *************************************************************************
 	public static void main(String[] arg) {
-		// Scanner Declaration
-		Scanner input = new Scanner(System.in);
-		// Want the IP or press localHost
-		System.out.println("Please enter the IP of the serve or write localHost");
-		String IP = input.nextLine();
-
-		// Object Declaration To run the Client
-		Client clientProtocol = new Client(IP);
-		clientProtocol.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		clientProtocol.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				clientProtocol.sendMessage("DISCONNECT");
-			}
-		});
-		clientProtocol.setBackground(Color.GREEN);
-		clientProtocol.startRunnning();
+		// User specifies the name and IP.
+		try (Scanner input = new Scanner(System.in)) {
+			System.out.println("Enter name: \n");
+			String clientName = input.nextLine();
+			System.out.println("Enter IP: \n");
+			String serverIP = input.nextLine();
+			new Client(clientName, serverIP);
+		}
 	}
 
 	// *************************************************************************
-
 	// connect to server
 	public void startRunnning() {
 		try {
 			connectToServer();
 			setupStreams();
 			whileChatting();
-		} catch (EOFException eofExcception) {
-			showMessage("\n Client termianted the connection");
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-		} finally {
 			closeCrap();
+		} catch (IOException | ClassNotFoundException ex) {
+			ex.printStackTrace();
 		}
-	}
-
-	// *************************************************************************
-	/**
-	 * While chatting with server
-	 * 
-	 * @throws IOException
-	 */
-	private void whileChatting() throws IOException {
-		ableToType(true);
-		do {
-			try {
-				message = (String) input.readObject();
-				showMessage("\n" + message);
-			} catch (ClassNotFoundException classNotFoundException) {
-				showMessage("\n I don't know that object type");
-			}
-		} while (!message.equals("SERVER - END"));
-
-	}
-
-	// *************************************************************************
-
-	/**
-	 * Let the user type stuff into their box
-	 * 
-	 * @param condition
-	 */
-	private void ableToType(boolean condition) {
-		SwingUtilities.invokeLater(new Runnable() { // only will update chat window portion of gui
-			public void run() {
-				clientText.setEditable(condition);// add a message to end of the document
-			}
-		});
-	}
-
-	// *************************************************************************
-
-	/**
-	 * Setup streams to send and receive messages
-	 * 
-	 * @throws IOException
-	 */
-	private void setupStreams() throws IOException {
-		output = new ObjectOutputStream(connection.getOutputStream());
-		output.flush();
-		input = new ObjectInputStream(connection.getInputStream());
-		showMessage("\n streams are now good\n");
 	}
 
 	// *************************************************************************
@@ -160,64 +115,88 @@ public class Client extends JFrame {
 	 * Connect to server
 	 * 
 	 * @throws IOException
-	 * @throws UnknownHostException
 	 */
-	private void connectToServer() throws UnknownHostException, IOException {
-		showMessage("Attempting connection..\n");
-		// ???????
-		connection = new Socket(InetAddress.getByName(serversIP), 27015);
-		showMessage("Connected to: " + connection.getInetAddress().getHostName());
-
+	private void connectToServer() throws IOException {
+		showMessage("Establishing connection...");
+		connection = new Socket(InetAddress.getByName(serverIP), 27015);
 	}
-	// *************************************************************************
 
+	// *************************************************************************
+	/**
+	 * Setup streams to send and receive messages
+	 * 
+	 * @throws IOException
+	 */
+	private void setupStreams() throws IOException {
+		output = new ObjectOutputStream(connection.getOutputStream());
+		input = new ObjectInputStream(connection.getInputStream());
+		showMessage("Connected to: " + connection.getInetAddress().getHostName());
+	}
+
+	// *************************************************************************
+	/**
+	 * While chatting with server.
+	 * 
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private void whileChatting() throws IOException, ClassNotFoundException {
+		ableToType(true);
+		Message message = (Message) input.readObject();
+		if (message.getType() == MessageType.CHAT) {
+			showMessage(message.getSender() + ": " + message.getData());
+		} else if (message.getType() == MessageType.GAME_MOVE) {
+			// TODO MP
+		}
+	}
+
+	// *************************************************************************
+	/**
+	 * Let the user type stuff into their box
+	 * 
+	 * @param condition
+	 */
+	private void ableToType(boolean condition) {
+		// Update the UI asynchronously.
+		SwingUtilities.invokeLater(() -> clientText.setEditable(condition));
+	}
+
+	// *************************************************************************
 	/**
 	 * Close the streams and sockets
+	 * 
+	 * @throws IOException
 	 */
-	private void closeCrap() {
-		showMessage("\n closing crap down...");
+	private void closeCrap() throws IOException {
+		showMessage("Sýçtýk"); // XXX
 		ableToType(false);
-		try {
-			output.close();
-			input.close();
-			connection.close();
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
+		output.close();
+		input.close();
+		connection.close();
 	}
 
 	// *************************************************************************
-	private void sendMessage(String message) {
+	public void sendToServer(Message message) {
 		try {
-			output.writeObject("CLIENT - " + message);
+			output.writeObject(message);
 			output.flush();
-			showMessage("\nCLIENT -" + message);
-		} catch (IOException ioException) {
-			chatWindows.append("\nsomething not working");
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
 	// *************************************************************************
-
 	/**
 	 * Description: Updates chatWindow
 	 * 
 	 * @param text
 	 */
 	private void showMessage(final String text) {
-		// you want a change GUI this update the part or text inside the gui
-		SwingUtilities.invokeLater(new Runnable() { // only will update chat window portion of gui
-			public void run() {
-				chatWindows.append(text);// add a message to end of the document
-			}
-		});
+		// Update the UI asynchronously.
+		SwingUtilities.invokeLater(() -> chatWindows.append(text + "\n"));
 	}
-	// *************************************************************************
 
-	class ActionClient implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			sendMessage(event.getActionCommand());
-			clientText.setText("");
-		}
+	public Socket getSocket() {
+		return connection;
 	}
 }
