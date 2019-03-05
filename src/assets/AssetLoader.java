@@ -14,10 +14,9 @@ public final class AssetLoader {
 
 	public static void initializeAssets() {
 		try {
-			DoaSprites.createSprite("WorldMapOld", "/maps/legacy/ColorMapBig.png");
-			DoaSprites.createSprite("WorldMapNames", "/maps/legacy/ColorMapNamesNew.png");
-			DoaSprites.createSprite("DummyMap", "/maps/legacy/DummyMap2.png");
-			DoaSprites.createSprite("WorldMap", "/maps/WorldMapNoIslands1.png");
+			DoaSprites.createSprite("WorldMap", "/maps/ColorMapBig.png");
+			DoaSprites.createSprite("WorldMapNames", "/maps/ColorMapNamesNew.png");
+			DoaSprites.createSprite("DummyMap", "/maps/DummyMap2.png");
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
