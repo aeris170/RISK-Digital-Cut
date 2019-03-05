@@ -34,7 +34,7 @@ public final class MapLoader {
 
 	public static void readMapData() {
 		readContinentsData();
-		readColorMapData();
+		// readColorMapData();
 	}
 
 	private static void readContinentsData() {

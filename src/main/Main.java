@@ -27,7 +27,7 @@ public class Main {
 	public static void main(final String[] args) {
 		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.MULTI_THREAD_ENABLED = true;
-		DoaEngine.CLEAR_COLOR = new Color(71, 40, 11);
+		DoaEngine.CLEAR_COLOR = new Color(124, 171, 146);
 		DoaMouse.clampWheel(1d, 4d);
 
 		MapLoader.readMapData();
