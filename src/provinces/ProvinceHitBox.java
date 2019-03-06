@@ -1,6 +1,8 @@
 package provinces;
 
-import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.GeneralPath;
+import java.util.List;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
@@ -13,10 +15,19 @@ public class ProvinceHitBox extends DoaObject {
 	private static final long serialVersionUID = -6848368535793292243L;
 
 	private Province owner;
+	private GeneralPath ownerHitBoxPath;
 
 	public ProvinceHitBox(Province owner, Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
 		this.owner = owner;
+		ownerHitBoxPath = new GeneralPath();
+		List<DoaVectorF> ownerHitBoxVertices = owner.getVertices();
+		DoaVectorF startPoint = ownerHitBoxVertices.get(0);
+		ownerHitBoxPath.moveTo(startPoint.x, startPoint.y);
+		for (int i = 1; i < ownerHitBoxVertices.size(); i++) {
+			DoaVectorF nextPoint = ownerHitBoxVertices.get(i);
+			ownerHitBoxPath.lineTo(nextPoint.x, nextPoint.y);
+		}
 	}
 
 	@Override
@@ -30,12 +41,11 @@ public class ProvinceHitBox extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.setColor(owner.getColor());
-		g.fill(getBounds());
+		g.draw(ownerHitBoxPath);
 	}
 
 	@Override
-	public Rectangle getBounds() {
-		return new Rectangle((int) position.x, (int) position.y, width, height);
+	public Shape getBounds() {
+		return ownerHitBoxPath;
 	}
 }

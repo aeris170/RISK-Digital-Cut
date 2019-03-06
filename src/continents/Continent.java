@@ -1,29 +1,24 @@
 package continents;
 
-import java.awt.Color;
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import provinces.Province;
 
-public class Continent {
+public class Continent implements Serializable {
+
+	private static final long serialVersionUID = 2216078176595232966L;
 
 	public static final Map<String, Continent> NAME_CONTINENT = new LinkedHashMap<>();
-	public static final Map<Color, Continent> COLOR_CONTINENT = new HashMap<>();
 
 	private String name;
-	private Color color;
 	private List<Province> provinces;
 
 	public String getName() {
 		return name;
-	}
-
-	public Color getColor() {
-		return color;
 	}
 
 	public List<Province> getProvinces() {
@@ -31,14 +26,9 @@ public class Continent {
 	}
 
 	public Continent setName(String name) {
+		NAME_CONTINENT.remove(this.name);
 		this.name = name;
 		NAME_CONTINENT.put(name, this);
-		return this;
-	}
-
-	public Continent setColor(Color color) {
-		this.color = color;
-		COLOR_CONTINENT.put(color, this);
 		return this;
 	}
 
@@ -52,8 +42,7 @@ public class Continent {
 
 	@Override
 	public String toString() {
-		return "[Continent] Name: " + name + "\tColor: RGB(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")\n\t"
-		        + Arrays.toString(provinces.toArray(new Province[provinces.size()]));
+		return "[Continent] Name: " + name + "\n" + Arrays.toString(provinces.toArray(new Province[provinces.size()])) + "\n";
 	}
 
 	public static void printAllContinents() {

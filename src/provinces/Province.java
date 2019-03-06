@@ -1,22 +1,24 @@
 package provinces;
 
-import java.awt.Color;
-import java.util.HashMap;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.doa.maths.DoaVectorF;
+
 import continents.Continent;
 
-public class Province {
+public class Province implements Serializable {
+
+	private static final long serialVersionUID = 157817527974605181L;
 
 	public static final Map<String, Province> NAME_PROVINCE = new LinkedHashMap<>();
-	public static final Map<Color, Province> COLOR_PROVINCE = new HashMap<>();
 
 	private Continent continent;
 	private String name;
-	private Color color;
 	private List<Province> neighbours;
+	private List<DoaVectorF> vertices;
 
 	public Continent getContinent() {
 		return continent;
@@ -26,12 +28,12 @@ public class Province {
 		return name;
 	}
 
-	public Color getColor() {
-		return color;
-	}
-
 	public List<Province> getNeighbours() {
 		return neighbours;
+	}
+
+	public List<DoaVectorF> getVertices() {
+		return vertices;
 	}
 
 	public Province setContinent(Continent continent) {
@@ -40,14 +42,9 @@ public class Province {
 	}
 
 	public Province setName(String name) {
+		NAME_PROVINCE.remove(this.name);
 		this.name = name;
 		NAME_PROVINCE.put(name, this);
-		return this;
-	}
-
-	public Province setColor(Color color) {
-		this.color = color;
-		COLOR_PROVINCE.put(color, this);
 		return this;
 	}
 
@@ -56,13 +53,17 @@ public class Province {
 		return this;
 	}
 
+	public Province setVertices(List<DoaVectorF> vertices) {
+		this.vertices = vertices;
+		return this;
+	}
+
 	@Override
 	public String toString() {
-		return "[Province] Continent: " + continent.getName() + "\tName: " + name + "\tColor: RGB(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue()
-		        + ")";
+		return "[Province] Continent: " + continent.getName() + "\tName: " + name + "\n";
 	}
 
 	public static void printAllProvinces() {
-		NAME_PROVINCE.forEach((s, c) -> System.out.println(c.toString()));
+		NAME_PROVINCE.forEach((s, p) -> System.out.print(p.toString()));
 	}
 }
