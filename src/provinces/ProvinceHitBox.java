@@ -1,5 +1,7 @@
 package provinces;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.util.List;
@@ -7,7 +9,9 @@ import java.util.List;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
+import com.doa.maths.DoaVectorI;
 
+import main.DebugPanel;
 import toolkit.Utils;
 
 public class ProvinceHitBox extends DoaObject {
@@ -21,26 +25,28 @@ public class ProvinceHitBox extends DoaObject {
 		super(x, y, width, height);
 		this.owner = owner;
 		ownerHitBoxPath = new GeneralPath();
-		List<DoaVectorF> ownerHitBoxVertices = owner.getVertices();
-		DoaVectorF startPoint = ownerHitBoxVertices.get(0);
+		List<DoaVectorI> ownerHitBoxVertices = owner.getVertices();
+		DoaVectorI startPoint = ownerHitBoxVertices.get(0);
 		ownerHitBoxPath.moveTo(startPoint.x, startPoint.y);
 		for (int i = 1; i < ownerHitBoxVertices.size(); i++) {
-			DoaVectorF nextPoint = ownerHitBoxVertices.get(i);
+			DoaVectorI nextPoint = ownerHitBoxVertices.get(i);
 			ownerHitBoxPath.lineTo(nextPoint.x, nextPoint.y);
 		}
+		ownerHitBoxPath.closePath();
 	}
 
 	@Override
 	public void tick() {
 		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
 		if (getBounds().contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y)) {
-			System.out.println(owner.toString());
-			System.out.println(position);
+			DebugPanel.mouseOnProvinceName = owner.getName();
 		}
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
+		g.setColor(Color.MAGENTA);
+		g.setStroke(new BasicStroke(2));
 		g.draw(ownerHitBoxPath);
 	}
 

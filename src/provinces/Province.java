@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.doa.maths.DoaVectorF;
+import com.doa.maths.DoaVectorI;
 
 import continents.Continent;
 
@@ -18,7 +18,7 @@ public class Province implements Serializable {
 	private Continent continent;
 	private String name;
 	private List<Province> neighbours;
-	private List<DoaVectorF> vertices;
+	private List<DoaVectorI> vertices;
 
 	public Continent getContinent() {
 		return continent;
@@ -32,7 +32,7 @@ public class Province implements Serializable {
 		return neighbours;
 	}
 
-	public List<DoaVectorF> getVertices() {
+	public List<DoaVectorI> getVertices() {
 		return vertices;
 	}
 
@@ -53,7 +53,7 @@ public class Province implements Serializable {
 		return this;
 	}
 
-	public Province setVertices(List<DoaVectorF> vertices) {
+	public Province setVertices(List<DoaVectorI> vertices) {
 		this.vertices = vertices;
 		return this;
 	}

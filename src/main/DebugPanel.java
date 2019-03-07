@@ -14,8 +14,10 @@ public class DebugPanel extends DoaObject {
 
 	private static final long serialVersionUID = 6850865807972514073L;
 
+	public static String mouseOnProvinceName = "N/A";
+
 	private int fontSize = 20;
-	private int textCount = 4;
+	private int textCount;
 
 	public DebugPanel() {
 		super(0f, 0f, DoaObject.STATIC_FRONT);
@@ -34,6 +36,7 @@ public class DebugPanel extends DoaObject {
 		g.setColor(Color.WHITE);
 		textCount = 6;
 		drawString(g, "ZOOM: " + DoaMouse.WHEEL);
+		drawString(g, "Mouse was last on: " + mouseOnProvinceName.toUpperCase());
 	}
 
 	@Override

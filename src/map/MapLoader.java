@@ -11,9 +11,13 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import com.doa.engine.DoaHandler;
+import com.doa.maths.DoaVectorI;
+
 import continents.Continent;
 import exceptions.RiskStaticInstantiationException;
 import provinces.Province;
+import provinces.ProvinceHitBox;
 
 public final class MapLoader {
 
@@ -49,11 +53,7 @@ public final class MapLoader {
 		continentsElement.getChildren().forEach(continentElement -> {
 			final Continent continent = new Continent().setName(continentElement.getChildText("name"));
 			final List<Province> provincesOfContinent = new ArrayList<>();
-			continentElement.getChildren().forEach(child -> {
-				if (child.getName().equals("province")) {
-					provincesOfContinent.add(Province.NAME_PROVINCE.get(child.getText()));
-				}
-			});
+			continentElement.getChildren("province").forEach(child -> provincesOfContinent.add(Province.NAME_PROVINCE.get(child.getText())));
 			continent.setProvinces(provincesOfContinent);
 		});
 	}
@@ -64,18 +64,26 @@ public final class MapLoader {
 		neighboursElement.getChildren().forEach(provinceElement -> {
 			final Province province = Province.NAME_PROVINCE.get(provinceElement.getChildText("name"));
 			final List<Province> neighboursOfProvince = new ArrayList<>();
-			provinceElement.getChildren().forEach(child -> {
-				if (child.getName().equals("neighbour")) {
-					neighboursOfProvince.add(Province.NAME_PROVINCE.get(child.getText()));
-				}
-			});
+			provinceElement.getChildren("neighbour").forEach(child -> neighboursOfProvince.add(Province.NAME_PROVINCE.get(child.getText())));
 			province.setNeighbours(neighboursOfProvince);
 		});
 	}
 
 	private static void solidifyProvinces() throws JDOMException, IOException {
 		// TODO implement
-		Document neighboursDocument = new SAXBuilder().build(new File(VERTICES_DATA_PATH));
+		Document verticesDocument = new SAXBuilder().build(new File(VERTICES_DATA_PATH));
+		Element verticesElement = verticesDocument.getRootElement();
+		verticesElement.getChildren().forEach(provinceElement -> {
+			final Province province = Province.NAME_PROVINCE.get(provinceElement.getChildText("name"));
+			final List<DoaVectorI> verticesOfProvince = new ArrayList<>();
+			provinceElement.getChildren("vertex").forEach(vertex -> {
+				int vx = Integer.parseInt(vertex.getChildText("x"));
+				int vy = Integer.parseInt(vertex.getChildText("y"));
+				verticesOfProvince.add(new DoaVectorI(vx, vy));
+			});
+			province.setVertices(verticesOfProvince);
+			DoaHandler.instantiateDoaObject(ProvinceHitBox.class, province, 0f, 0f, 0, 0);
+		});
 	}
 
 	@Deprecated
