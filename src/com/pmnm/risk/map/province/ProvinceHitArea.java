@@ -1,4 +1,4 @@
-package provinces;
+package com.pmnm.risk.map.province;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -10,18 +10,17 @@ import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
 import com.doa.maths.DoaVectorI;
+import com.pmnm.risk.main.DebugPanel;
+import com.pmnm.risk.toolkit.Utils;
 
-import main.DebugPanel;
-import toolkit.Utils;
-
-public class ProvinceHitBox extends DoaObject {
+public class ProvinceHitArea extends DoaObject {
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
 	private Province owner;
 	private GeneralPath ownerHitBoxPath;
 
-	public ProvinceHitBox(Province owner, Float x, Float y, Integer width, Integer height) {
+	public ProvinceHitArea(Province owner, Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
 		this.owner = owner;
 		ownerHitBoxPath = new GeneralPath();

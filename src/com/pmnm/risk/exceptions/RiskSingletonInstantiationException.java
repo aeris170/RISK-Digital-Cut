@@ -1,4 +1,4 @@
-package exceptions;
+package com.pmnm.risk.exceptions;
 
 public class RiskSingletonInstantiationException extends RiskException {
 

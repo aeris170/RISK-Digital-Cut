@@ -1,4 +1,4 @@
-package network;
+package com.pmnm.risk.network;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,9 +17,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import network.message.MessageBuilder;
-import network.message.MessageBuilder.Message;
-import network.message.MessageType;
+import com.pmnm.risk.network.message.MessageBuilder;
+import com.pmnm.risk.network.message.MessageBuilder.Message;
+import com.pmnm.risk.network.message.MessageType;
 
 /**
  * Description:Chat Application
@@ -160,7 +160,6 @@ public class Client extends JFrame implements Runnable {
 	 * @throws IOException
 	 */
 	private void closeCrap() throws IOException {
-		showMessage("Sýçtýk"); // XXX
 		ableToType(false);
 		output.close();
 		input.close();

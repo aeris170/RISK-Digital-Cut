@@ -1,14 +1,13 @@
-package assets;
+package com.pmnm.risk.asset;
 
 import java.io.IOException;
 
 import com.doa.engine.graphics.DoaSprites;
-
-import exceptions.RiskStaticInstantiationException;
+import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
 
 public final class AssetLoader {
 
-	private AssetLoader() throws RiskStaticInstantiationException {
+	private AssetLoader() {
 		throw new RiskStaticInstantiationException(getClass());
 	}
 

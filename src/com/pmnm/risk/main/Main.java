@@ -1,4 +1,4 @@
-package main;
+package com.pmnm.risk.main;
 
 import java.awt.Color;
 import java.awt.GraphicsDevice;
@@ -11,9 +11,9 @@ import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaWindow;
 import com.doa.engine.input.DoaMouse;
-
-import assets.AssetLoader;
-import map.MapLoader;
+import com.pmnm.risk.asset.AssetLoader;
+import com.pmnm.risk.map.MapLoader;
+import com.pmnm.risk.map.board.GameBoard;
 
 public class Main {
 

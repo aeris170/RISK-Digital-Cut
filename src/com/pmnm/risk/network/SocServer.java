@@ -1,4 +1,4 @@
-package network;
+package com.pmnm.risk.network;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,10 +10,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.dosse.upnp.UPnP;
-
-import network.message.MessageBuilder;
-import network.message.MessageBuilder.Message;
-import network.message.MessageType;
+import com.pmnm.risk.network.message.MessageBuilder;
+import com.pmnm.risk.network.message.MessageBuilder.Message;
+import com.pmnm.risk.network.message.MessageType;
 
 /**
  * @author Ege Turan, Doða Oruç

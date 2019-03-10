@@ -1,4 +1,4 @@
-package main;
+package com.pmnm.risk.main;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -1,16 +1,15 @@
-package toolkit;
+package com.pmnm.risk.toolkit;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
-
-import exceptions.RiskStaticInstantiationException;
-import main.Camera;
-import main.Main;
+import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
+import com.pmnm.risk.main.Camera;
+import com.pmnm.risk.main.Main;
 
 public final class Utils {
 
-	private Utils() throws RiskStaticInstantiationException {
+	private Utils() {
 		throw new RiskStaticInstantiationException(getClass());
 	}
 
@@ -41,8 +40,8 @@ public final class Utils {
 	// TO DO: f*** myself
 	// TODO CHECK IF ALL Utils FUNCTIONS WORKS FLAWLESSLY.
 	// Assigned to: Fazilet Simge ER
-	// in order to do this, look at the top left of the screen. there are text that
-	// shows the mouse position.
+	// in order to do this, look at the top left of the screen. there are text
+	// showing the mouse position.
 	// zoom in to arbitrary locations and check if the mouse coordinate is mapped
 	// correctly.
 	// <3

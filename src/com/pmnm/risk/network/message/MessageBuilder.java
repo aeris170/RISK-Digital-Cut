@@ -1,4 +1,4 @@
-package network.message;
+package com.pmnm.risk.network.message;
 
 import java.io.Serializable;
 

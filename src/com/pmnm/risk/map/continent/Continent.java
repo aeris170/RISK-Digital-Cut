@@ -1,4 +1,4 @@
-package continents;
+package com.pmnm.risk.map.continent;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import provinces.Province;
+import com.pmnm.risk.map.province.Province;
 
 public class Continent implements Serializable {
 

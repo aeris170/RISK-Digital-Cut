@@ -1,19 +1,19 @@
-package main;
+package com.pmnm.risk.main;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
 
 import com.doa.engine.DoaCamera;
+import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
-
-import exceptions.RiskSingletonInstantiationException;
-import toolkit.Utils;
+import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
+import com.pmnm.risk.toolkit.Utils;
 
 public class Camera extends DoaObject {
 
@@ -29,10 +29,11 @@ public class Camera extends DoaObject {
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
 
-	public Camera(Float x, Float y) throws RiskSingletonInstantiationException {
+	public Camera(Float x, Float y) {
 		super(x, y, DoaObject.STATIC_FRONT);
 		topLeftBound = position.clone();
 		if (INSTANCE != null) {
+			DoaHandler.remove(this);
 			throw new RiskSingletonInstantiationException(getClass());
 		}
 		INSTANCE = this;

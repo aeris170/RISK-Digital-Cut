@@ -1,4 +1,4 @@
-package provinces;
+package com.pmnm.risk.map.province;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.doa.maths.DoaVectorI;
-
-import continents.Continent;
+import com.pmnm.risk.map.continent.Continent;
 
 public class Province implements Serializable {
 

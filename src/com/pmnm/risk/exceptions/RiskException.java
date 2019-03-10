@@ -1,6 +1,6 @@
-package exceptions;
+package com.pmnm.risk.exceptions;
 
-public class RiskException extends Exception {
+public class RiskException extends RuntimeException {
 
 	private static final long serialVersionUID = -1259909418166876045L;
 
