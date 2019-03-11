@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
 import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.main.DebugPanel;
@@ -19,6 +20,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	private Province owner;
 	private GeneralPath ownerHitBoxPath;
+	private boolean isVisible = false;
 
 	public ProvinceHitArea(Province owner, Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
@@ -38,15 +40,20 @@ public class ProvinceHitArea extends DoaObject {
 	public void tick() {
 		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
 		if (getBounds().contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y)) {
+			if (DoaMouse.MB1) {
+				isVisible = !isVisible;
+			}
 			DebugPanel.mouseOnProvinceName = owner.getName();
 		}
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.setColor(Color.MAGENTA);
-		g.setStroke(new BasicStroke(2));
-		g.draw(ownerHitBoxPath);
+		if (isVisible) {
+			g.setColor(Color.MAGENTA);
+			g.setStroke(new BasicStroke(2));
+			g.draw(ownerHitBoxPath);
+		}
 	}
 
 	@Override
