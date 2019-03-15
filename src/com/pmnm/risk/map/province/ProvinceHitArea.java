@@ -26,7 +26,7 @@ public class ProvinceHitArea extends DoaObject {
 	public ProvinceHitArea(Province owner, Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
 		this.owner = owner;
-		owner.getMeses().forEach(mesh -> {
+		owner.getMeshes().forEach(mesh -> {
 			GeneralPath hitArea = new GeneralPath();
 			DoaVectorI startPoint = mesh.get(0);
 			hitArea.moveTo(startPoint.x, startPoint.y);

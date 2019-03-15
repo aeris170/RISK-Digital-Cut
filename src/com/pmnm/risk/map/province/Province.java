@@ -32,7 +32,7 @@ public class Province implements Serializable {
 		return neighbours;
 	}
 
-	public List<Mesh2D> getMeses() {
+	public List<Mesh2D> getMeshes() {
 		return meshes;
 	}
 

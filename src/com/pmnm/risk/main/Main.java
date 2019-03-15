@@ -11,8 +11,7 @@ import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaWindow;
 import com.doa.engine.input.DoaMouse;
-import com.pmnm.risk.asset.AssetLoader;
-import com.pmnm.risk.map.MapLoader;
+import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.map.board.GameBoard;
 
 public class Main {
@@ -30,8 +29,7 @@ public class Main {
 		DoaEngine.CLEAR_COLOR = new Color(0, 0, 0);// 124, 171, 146
 		DoaMouse.clampWheel(1d, 4d);
 
-		MapLoader.readMapData();
-		AssetLoader.initializeAssets();
+		Globals.initilaizeGlobals();
 
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
