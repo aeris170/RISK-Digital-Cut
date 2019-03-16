@@ -11,11 +11,11 @@ import com.pmnm.risk.map.province.Province;
 
 public class Player {
 
-	public Map<String, Player> NAME_PLAYER = new HashMap<>();
+	public static final Map<String, Player> NAME_PLAYER = new HashMap<>();
 
 	private Set<Province> provinces = new HashSet<>();
 	private Set<Card> cards = new HashSet<>();
-	private Map<Province, Integer> province_troops = new HashMap<>();
+	private Map<Province, Integer> provinceTroops = new HashMap<>();
 	private Color playerColor;
 	private String playerName;
 
@@ -42,13 +42,13 @@ public class Player {
 	}
 
 	public int getTroopsIn(Province p) {
-		return province_troops.get(p);
+		return provinceTroops.get(p);
 	}
 
 	public String getName() {
 		return playerName;
 	}
-	
+
 	public Color getColor() {
 		return playerColor;
 	}
