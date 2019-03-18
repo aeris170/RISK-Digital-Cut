@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE vertices [
 <!ELEMENT vertices (province+)>
-<!ELEMENT province (name, vertex+)>
+<!ELEMENT province (name, mesh+)>
+<!ELEMENT mesh (vertex+)>
 <!ELEMENT vertex (x, y)>
 <!ELEMENT x (#PCDATA)>
 <!ELEMENT y (#PCDATA)>
@@ -9,32 +10,39 @@
 <vertices>
 	<province>
 		<name>alaska</name>
-		<vertex><x>45</x><y>200</y></vertex>
-		<vertex><x>55</x><y>200</y></vertex>
-		<vertex><x>65</x><y>190</y></vertex>
-		<vertex><x>77</x><y>188</y></vertex>
-		<vertex><x>92</x><y>182</y></vertex>
-		<vertex><x>114</x><y>186</y></vertex>
-		<vertex><x>132</x><y>188</y></vertex>
-		<vertex><x>167</x><y>192</y></vertex>
-		<vertex><x>200</x><y>200</y></vertex>
-		<vertex><x>209</x><y>193</y></vertex>
-		<vertex><x>217</x><y>200</y></vertex>
-		<vertex><x>187</x><y>250</y></vertex>
-		<vertex><x>199</x><y>250</y></vertex>
-		<vertex><x>217</x><y>274</y></vertex>
-		<vertex><x>181</x><y>256</y></vertex>
-		<vertex><x>137</x><y>248</y></vertex>
-		<vertex><x>82</x><y>280</y></vertex>
-		<vertex><x>50</x><y>289</y></vertex>
-		<vertex><x>90</x><y>260</y></vertex>
-		<vertex><x>70</x><y>260</y></vertex>
-		<vertex><x>45</x><y>245</y></vertex>
-		<vertex><x>53</x><y>233</y></vertex>
-		<vertex><x>71</x><y>232</y></vertex>
-		<vertex><x>45</x><y>226</y></vertex>
-		<vertex><x>36</x><y>218</y></vertex>
-		<vertex><x>55</x><y>213</y></vertex>
-		<vertex><x>68</x><y>214</y></vertex>
+		<mesh>
+			<vertex><x>45</x><y>200</y></vertex>
+			<vertex><x>55</x><y>200</y></vertex>
+			<vertex><x>65</x><y>190</y></vertex>
+			<vertex><x>77</x><y>188</y></vertex>
+			<vertex><x>92</x><y>182</y></vertex>
+			<vertex><x>114</x><y>186</y></vertex>
+			<vertex><x>132</x><y>188</y></vertex>
+			<vertex><x>167</x><y>192</y></vertex>
+			<vertex><x>200</x><y>200</y></vertex>
+			<vertex><x>209</x><y>193</y></vertex>
+			<vertex><x>217</x><y>200</y></vertex>
+			<vertex><x>187</x><y>250</y></vertex>
+			<vertex><x>199</x><y>250</y></vertex>
+			<vertex><x>217</x><y>274</y></vertex>
+			<vertex><x>181</x><y>256</y></vertex>
+			<vertex><x>137</x><y>248</y></vertex>
+			<vertex><x>82</x><y>280</y></vertex>
+			<vertex><x>50</x><y>289</y></vertex>
+			<vertex><x>90</x><y>260</y></vertex>
+			<vertex><x>70</x><y>260</y></vertex>
+			<vertex><x>45</x><y>245</y></vertex>
+			<vertex><x>53</x><y>233</y></vertex>
+			<vertex><x>71</x><y>232</y></vertex>
+			<vertex><x>45</x><y>226</y></vertex>
+			<vertex><x>36</x><y>218</y></vertex>
+			<vertex><x>55</x><y>213</y></vertex>
+			<vertex><x>68</x><y>214</y></vertex>
+		</mesh>
+		<mesh>
+			<vertex><x>600</x><y>400</y></vertex>
+			<vertex><x>800</x><y>500</y></vertex>
+			<vertex><x>1000</x><y>400</y></vertex>
+		</mesh>
 	</province>
 </vertices>

@@ -1,11 +1,12 @@
 package com.pmnm.risk.map.province;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.doa.maths.DoaVectorI;
+import com.pmnm.risk.map.Mesh2D;
 import com.pmnm.risk.map.continent.Continent;
 
 public class Province implements Serializable {
@@ -17,7 +18,7 @@ public class Province implements Serializable {
 	private Continent continent;
 	private String name;
 	private List<Province> neighbours;
-	private List<DoaVectorI> vertices;
+	private List<Mesh2D> meshes = new ArrayList<>();
 
 	public Continent getContinent() {
 		return continent;
@@ -31,8 +32,8 @@ public class Province implements Serializable {
 		return neighbours;
 	}
 
-	public List<DoaVectorI> getVertices() {
-		return vertices;
+	public List<Mesh2D> getMeshes() {
+		return meshes;
 	}
 
 	public Province setContinent(Continent continent) {
@@ -52,9 +53,13 @@ public class Province implements Serializable {
 		return this;
 	}
 
-	public Province setVertices(List<DoaVectorI> vertices) {
-		this.vertices = vertices;
+	public Province setMeshes(List<Mesh2D> meshes) {
+		this.meshes = meshes;
 		return this;
+	}
+
+	public void addMesh(Mesh2D mesh) {
+		meshes.add(mesh);
 	}
 
 	@Override

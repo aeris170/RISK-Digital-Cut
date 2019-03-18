@@ -11,7 +11,6 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import com.doa.engine.DoaHandler;
-import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
@@ -72,13 +71,15 @@ public final class MapLoader {
 		Element verticesElement = verticesDocument.getRootElement();
 		verticesElement.getChildren().forEach(provinceElement -> {
 			final Province province = Province.NAME_PROVINCE.get(provinceElement.getChildText("name"));
-			final List<DoaVectorI> verticesOfProvince = new ArrayList<>();
-			provinceElement.getChildren("vertex").forEach(vertex -> {
-				int vx = Integer.parseInt(vertex.getChildText("x"));
-				int vy = Integer.parseInt(vertex.getChildText("y"));
-				verticesOfProvince.add(new DoaVectorI(vx, vy));
+			provinceElement.getChildren("mesh").forEach(meshElement -> {
+				final Mesh2D mesh = new Mesh2D();
+				meshElement.getChildren("vertex").forEach(vertex -> {
+					int vx = Integer.parseInt(vertex.getChildText("x"));
+					int vy = Integer.parseInt(vertex.getChildText("y"));
+					mesh.add(new Vertex2D(vx, vy));
+				});
+				province.addMesh(mesh);
 			});
-			province.setVertices(verticesOfProvince);
 			DoaHandler.instantiateDoaObject(ProvinceHitArea.class, province, 0f, 0f, 0, 0);
 		});
 	}
