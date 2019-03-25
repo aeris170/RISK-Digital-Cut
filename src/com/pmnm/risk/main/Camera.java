@@ -32,10 +32,9 @@ public class Camera extends DoaObject {
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
 	PrintWriter writer;
-	
+	private boolean isLoggingVertices = false;
+
 	private int createCount = 1;
-	
-	
 
 	public Camera(Float x, Float y) {
 		super(x, y, DoaObject.STATIC_FRONT);
@@ -46,26 +45,21 @@ public class Camera extends DoaObject {
 		}
 		INSTANCE = this;
 	}
-	
 
 	public void creator() {
 		try {
 			writer = new PrintWriter("newHopes.txt", "UTF-8");
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (FileNotFoundException | UnsupportedEncodingException ex) {
+			ex.printStackTrace();
 		}
 	}
 
 	@Override
-	public void tick() {	
-		
-		while(createCount == 1) {
+	public void tick() {
+		if (createCount == 1) {
 			creator();
 			createCount--;
 		}
-		
-		
 		if (DoaKeyboard.W || DoaKeyboard.KEY_UP) {
 			position.y -= KEY_LOOK_SPEED;
 		}
@@ -96,40 +90,31 @@ public class Camera extends DoaObject {
 
 		position.x = DoaMath.clamp(position.x, topLeftBound.x, bottomRightBound.x);
 		position.y = DoaMath.clamp(position.y, topLeftBound.y, bottomRightBound.y);
-		
-		
-		if (DoaMouse.MB1) {
-		try {
-			String str = "ege";
-			writeVertices();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-		if (DoaMouse.MB3) {
-			try {
-				String str = "ege";
-				writeVertices();
-			} catch (FileNotFoundException | UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		if (DoaKeyboard.V) {
+			if (!isLoggingVertices) {
+				isLoggingVertices = true;
+			} else {
+				writer.println("Vertices finished");
+				writer.close();
 			}
 		}
-		
-	}
-	
-	
-	public void writeVertices() throws FileNotFoundException, UnsupportedEncodingException {
-		//<vertex><x>45</x><y>199</y></vertex>
-		writer.println("<vertex><x>" + Math.round(Utils.mapMouseCoordinatesByZoom().x) + "</x><y>" + Math.round(Utils.mapMouseCoordinatesByZoom().y) + "</y></vertex>");
-		System.out.println("<vertex><x>" + Math.round(Utils.mapMouseCoordinatesByZoom().x) + "</x><y>" + Math.round(Utils.mapMouseCoordinatesByZoom().y) + "</y></vertex>");
-		if(Utils.mapMouseCoordinatesByZoom().x < 50 && Utils.mapMouseCoordinatesByZoom().y < 50) {
-			writer.println("Vertices finished");
-			writer.close();
+		if (isLoggingVertices) {
+			if (DoaMouse.MB1) {
+				writeVertices();
+			}
+			if (DoaMouse.MB3) {
+				writeVertices();
+			}
 		}
-		
-		//writer.println(" ");
+	}
+
+	public void writeVertices() {
+		// <vertex><x>45</x><y>199</y></vertex>
+		int x = Math.round(Utils.mapMouseCoordinatesByZoom().x);
+		int y = Math.round(Utils.mapMouseCoordinatesByZoom().y);
+		writer.println("<vertex><x>" + x + "</x><y>" + y + "</y></vertex>");
+		System.out.println("<vertex><x>" + x + "</x><y>" + y + "</y></vertex>");
 	}
 
 	@Override
