@@ -13,6 +13,8 @@ import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.task.DoaTaskGuard;
+import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
 import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
@@ -33,6 +35,7 @@ public class Camera extends DoaObject {
 	private DoaVectorF bottomRightBound;
 	PrintWriter writer;
 	private boolean isLoggingVertices = false;
+	private DoaTaskGuard vertexLogKeyGuard = new DoaTaskGuard(true);
 
 	private int createCount = 1;
 
@@ -91,10 +94,13 @@ public class Camera extends DoaObject {
 		position.x = DoaMath.clamp(position.x, topLeftBound.x, bottomRightBound.x);
 		position.y = DoaMath.clamp(position.y, topLeftBound.y, bottomRightBound.y);
 
-		if (DoaKeyboard.V) {
+		if (vertexLogKeyGuard.get() && DoaKeyboard.V) {
+			vertexLogKeyGuard.set(false);
+			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
 				isLoggingVertices = true;
 			} else {
+				isLoggingVertices = false;
 				writer.println("Vertices finished");
 				writer.close();
 			}
@@ -127,6 +133,12 @@ public class Camera extends DoaObject {
 		g.drawString("Cam Bottom Right Bound: " + bottomRightBound.toString(), 0, 80);
 		g.drawString("Absolute Mouse Pos: " + new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y).toString(), 0, 100);
 		g.drawString("Mapped Mouse Pos: " + Utils.mapMouseCoordinatesByZoom().toString(), 0, 120);
+		if (isLoggingVertices) {
+			g.setColor(Color.RED);
+			g.fillRect(0, 160, 290, 23);
+			g.setColor(Color.BLACK);
+			g.drawString("VERTEX LOGGING ENABLED!", 0, 180);
+		}
 	}
 
 	@Override
