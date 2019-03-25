@@ -6,6 +6,8 @@ import java.awt.Shape;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaHandler;
@@ -33,9 +35,10 @@ public class Camera extends DoaObject {
 
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
-	PrintWriter writer;
+	private PrintWriter writer;
 	private boolean isLoggingVertices = false;
 	private DoaTaskGuard vertexLogKeyGuard = new DoaTaskGuard(true);
+	private Calendar cal = Calendar.getInstance();
 
 	private int createCount = 1;
 
@@ -99,10 +102,10 @@ public class Camera extends DoaObject {
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
 				isLoggingVertices = true;
+				writer.println("LOG::START" + new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
 			} else {
 				isLoggingVertices = false;
-				writer.println("Vertices finished");
-				writer.close();
+				writer.println("LOG::END" + new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
 			}
 		}
 		if (isLoggingVertices) {
