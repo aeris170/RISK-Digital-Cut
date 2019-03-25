@@ -6,6 +6,7 @@ import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.input.DoaKeyboard;
 import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
 
 public class GameBoard extends DoaObject {
@@ -25,7 +26,9 @@ public class GameBoard extends DoaObject {
 
 	@Override
 	public void tick() {
-		// TICKING BOARD MAKES NO SENSE! REMOVE THIS LINE BEFORE RELEASE!
+		if (DoaKeyboard.ESCAPE) {
+			System.exit(0);
+		}
 	}
 
 	@Override

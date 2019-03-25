@@ -38,7 +38,6 @@ public class Camera extends DoaObject {
 	private PrintWriter writer;
 	private boolean isLoggingVertices = false;
 	private DoaTaskGuard vertexLogKeyGuard = new DoaTaskGuard(true);
-	private Calendar cal = Calendar.getInstance();
 
 	private int createCount = 1;
 
@@ -102,10 +101,11 @@ public class Camera extends DoaObject {
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
 				isLoggingVertices = true;
-				writer.println("LOG::START" + new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
+				writer.println("LOG::START " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
 			} else {
 				isLoggingVertices = false;
-				writer.println("LOG::END" + new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
+				writer.println("LOG::END " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+				writer.flush();
 			}
 		}
 		if (isLoggingVertices) {
@@ -115,11 +115,6 @@ public class Camera extends DoaObject {
 			if (DoaMouse.MB3) {
 				writeVertices();
 			}
-		}
-
-		if (DoaKeyboard.ESCAPE) {
-			writer.close();
-			System.exit(0);
 		}
 	}
 
