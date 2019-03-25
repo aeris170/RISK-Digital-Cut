@@ -28,7 +28,7 @@ public class Main {
 		Locale.setDefault(Locale.ENGLISH);
 		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.MULTI_THREAD_ENABLED = false;
-		DoaEngine.CLEAR_COLOR = new Color(0, 0, 0);// 124, 171, 146
+		DoaEngine.CLEAR_COLOR = new Color(70, 70, 70);
 		DoaMouse.clampWheel(1d, 10d);
 
 		Globals.initilaizeGlobals();

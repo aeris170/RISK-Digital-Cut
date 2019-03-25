@@ -1,5 +1,6 @@
 package com.pmnm.risk.map;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +49,10 @@ public final class MapLoader {
 		Document continentsDocument = new SAXBuilder().build(new File(CONTINENT_DATA_PATH));
 		Element continentsElement = continentsDocument.getRootElement();
 		continentsElement.getChildren().forEach(continentElement -> {
-			final Continent continent = new Continent().setName(continentElement.getChildText("name"));
+			final Continent continent = new Continent().setName(continentElement.getChildText("name"))
+			        .setCaptureBonus(Integer.parseInt(continentElement.getChildText("capture-bonus"))).setAbbreviation(continentElement.getChildText("abbreviation"));
+			String[] parsedColor = continentElement.getChildText("color").split(",");
+			continent.setColor(new Color(Integer.parseInt(parsedColor[0].trim()), Integer.parseInt(parsedColor[1].trim()), Integer.parseInt(parsedColor[2].trim())));
 			final List<Province> provincesOfContinent = new ArrayList<>();
 			continentElement.getChildren("province").forEach(child -> provincesOfContinent.add(Province.NAME_PROVINCE.get(child.getText())));
 			continent.setProvinces(provincesOfContinent);

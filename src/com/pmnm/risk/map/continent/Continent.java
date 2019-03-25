@@ -1,5 +1,6 @@
 package com.pmnm.risk.map.continent;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -15,10 +16,25 @@ public class Continent implements Serializable {
 	public static final Map<String, Continent> NAME_CONTINENT = new LinkedHashMap<>();
 
 	private String name;
+	private Color color;
+	private int captureBonus;
+	private String abbreviation;
 	private List<Province> provinces;
 
 	public String getName() {
 		return name;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public int getCaptureBonus() {
+		return captureBonus;
+	}
+
+	public String getAbbreviation() {
+		return abbreviation;
 	}
 
 	public List<Province> getProvinces() {
@@ -29,6 +45,21 @@ public class Continent implements Serializable {
 		NAME_CONTINENT.remove(this.name);
 		this.name = name;
 		NAME_CONTINENT.put(name, this);
+		return this;
+	}
+
+	public Continent setColor(Color color) {
+		this.color = color;
+		return this;
+	}
+
+	public Continent setCaptureBonus(int captureBonus) {
+		this.captureBonus = captureBonus;
+		return this;
+	}
+
+	public Continent setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
 		return this;
 	}
 

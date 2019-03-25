@@ -385,7 +385,7 @@
 			<vertex><x>566</x><y>137</y></vertex>
 		</mesh>
 	</province>
-	////////////////////////////////////////////////////////////////////////////////////// ÇAGRI'S PART
+	<!-- CAĞRI'S PART -->
 	<province>
 		<name>scandinavia</name>
 		<mesh>
@@ -524,7 +524,6 @@
 			<vertex><x>810</x><y>217</y></vertex>
 			<vertex><x>815</x><y>212</y></vertex>
 			<vertex><x>827</x><y>215</y></vertex>
-			<vertex><x>836</x><y>220</y></vertex>
 		</mesh>
 	</province>
 	<province>
@@ -770,7 +769,6 @@
 			<vertex><x>1202</x><y>725</y></vertex>
 			<vertex><x>1203</x><y>712</y></vertex>
 			<vertex><x>1203</x><y>700</y></vertex>
-			<vertex><x>1208</x><y>706</y></vertex>
 			<vertex><x>1205</x><y>679</y></vertex>
 			<vertex><x>1201</x><y>667</y></vertex>
 
