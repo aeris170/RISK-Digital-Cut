@@ -7,7 +7,6 @@ import java.awt.geom.AffineTransform;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
 
 public class DebugPanel extends DoaObject {
@@ -24,11 +23,7 @@ public class DebugPanel extends DoaObject {
 	}
 
 	@Override
-	public void tick() {
-		if (DoaKeyboard.ESCAPE) {
-			System.exit(0);
-		}
-	}
+	public void tick() {}
 
 	@Override
 	public void render(DoaGraphicsContext g) {

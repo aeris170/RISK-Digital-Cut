@@ -116,6 +116,11 @@ public class Camera extends DoaObject {
 				writeVertices();
 			}
 		}
+
+		if (DoaKeyboard.ESCAPE) {
+			writer.close();
+			System.exit(0);
+		}
 	}
 
 	public void writeVertices() {
