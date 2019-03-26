@@ -47,13 +47,11 @@ public class ProvinceHitArea extends DoaObject {
 		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
 		ownerMeshes.forEach(mesh -> {
 			if (mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y)) {
-				if (DoaMouse.MB1) {
+				if (DoaMouse.MB2) {
 					isPathVisible = !isPathVisible;
-					isPointsVisible = false;
 				}
 				if (DoaMouse.MB3) {
 					isPointsVisible = !isPointsVisible;
-					isPathVisible = false;
 				}
 				DebugPanel.mouseOnProvinceName = owner.getName();
 			}
@@ -77,7 +75,7 @@ public class ProvinceHitArea extends DoaObject {
 			for (GeneralPath gp : ownerMeshes) {
 				double[][] points = getPoints(gp);
 				for (int i = 0; i < points.length; i++) {
-					g.fillRect(points[i][0] - 1, points[i][1] - 1, 2, 2);
+					g.fillRect(points[i][0] - 1, points[i][1] - 1, 1, 1);
 				}
 			}
 		}
