@@ -112,9 +112,6 @@ public class Camera extends DoaObject {
 			if (DoaMouse.MB1) {
 				writeVertices();
 			}
-			if (DoaMouse.MB3) {
-				writeVertices();
-			}
 		}
 	}
 
