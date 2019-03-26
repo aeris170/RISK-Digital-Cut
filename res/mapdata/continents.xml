@@ -79,7 +79,7 @@
 	</continent>
 	<continent>
 		<name>australia</name>
-		<color>0,255,255</color>
+		<color>255,0,255</color>
 		<capture-bonus>2</capture-bonus>
 		<abbreviation>AU</abbreviation>
 		<province>indonesia</province>
