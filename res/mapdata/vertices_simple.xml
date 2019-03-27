@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE vertices [
+<!ELEMENT vertices (province+)>
+<!ELEMENT province (name, mesh+)>
+<!ELEMENT mesh (vertex+)>
+<!ELEMENT vertex (x, y)>
+<!ELEMENT x (#PCDATA)>
+<!ELEMENT y (#PCDATA)>
+]>
+<vertices>
+	<province>
+		<name>alaska</name>
+		<mesh>
+			<vertex><x>45</x><y>199</y></vertex>
+		</mesh>
+	</province>
+</vertices>

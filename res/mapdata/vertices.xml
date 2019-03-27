@@ -25,7 +25,6 @@
 			<vertex><x>63</x><y>191</y></vertex>
 			<vertex><x>66</x><y>189</y></vertex>
 			<vertex><x>67</x><y>190</y></vertex>
-			<vertex><x>67</x><y>190</y></vertex>
 			<vertex><x>71</x><y>189</y></vertex>
 			<vertex><x>73</x><y>189</y></vertex>
 			<vertex><x>74</x><y>188</y></vertex>
@@ -42,9 +41,7 @@
 			<vertex><x>95</x><y>182</y></vertex>
 			<vertex><x>96</x><y>183</y></vertex>
 			<vertex><x>98</x><y>184</y></vertex>
-			<vertex><x>98</x><y>184</y></vertex>
 			<vertex><x>99</x><y>185</y></vertex>
-			<vertex><x>98</x><y>186</y></vertex>
 			<vertex><x>98</x><y>186</y></vertex>
 			<vertex><x>99</x><y>186</y></vertex>
 			<vertex><x>100</x><y>186</y></vertex>

@@ -61,12 +61,10 @@ public class ProvinceHitArea extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (isPathVisible) {
-			g.setColor(Color.WHITE);
 			for (GeneralPath gp : ownerMeshes) {
+				g.setColor(new Color(90, 90, 90));
 				g.fill(gp);
-			}
-			g.setColor(owner.getContinent().getColor());
-			for (GeneralPath gp : ownerMeshes) {
+				g.setColor(owner.getContinent().getColor());
 				g.draw(gp);
 			}
 		}
