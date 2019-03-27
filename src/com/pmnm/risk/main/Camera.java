@@ -3,6 +3,11 @@ package com.pmnm.risk.main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaHandler;
@@ -10,6 +15,8 @@ import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.task.DoaTaskGuard;
+import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
 import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
@@ -28,6 +35,11 @@ public class Camera extends DoaObject {
 
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
+	private PrintWriter writer;
+	private boolean isLoggingVertices = false;
+	private DoaTaskGuard vertexLogKeyGuard = new DoaTaskGuard(true);
+
+	private int createCount = 1;
 
 	public Camera(Float x, Float y) {
 		super(x, y, DoaObject.STATIC_FRONT);
@@ -39,8 +51,20 @@ public class Camera extends DoaObject {
 		INSTANCE = this;
 	}
 
+	public void creator() {
+		try {
+			writer = new PrintWriter("newHopes.txt", "UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	@Override
 	public void tick() {
+		if (createCount == 1) {
+			creator();
+			createCount--;
+		}
 		if (DoaKeyboard.W || DoaKeyboard.KEY_UP) {
 			position.y -= KEY_LOOK_SPEED;
 		}
@@ -71,6 +95,32 @@ public class Camera extends DoaObject {
 
 		position.x = DoaMath.clamp(position.x, topLeftBound.x, bottomRightBound.x);
 		position.y = DoaMath.clamp(position.y, topLeftBound.y, bottomRightBound.y);
+
+		if (vertexLogKeyGuard.get() && DoaKeyboard.V) {
+			vertexLogKeyGuard.set(false);
+			DoaTasker.guard(vertexLogKeyGuard, 1000);
+			if (!isLoggingVertices) {
+				isLoggingVertices = true;
+				writer.println("LOG::START " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+			} else {
+				isLoggingVertices = false;
+				writer.println("LOG::END " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+				writer.flush();
+			}
+		}
+		if (isLoggingVertices) {
+			if (DoaMouse.MB1) {
+				writeVertices();
+			}
+		}
+	}
+
+	public void writeVertices() {
+		// <vertex><x>45</x><y>199</y></vertex>
+		int x = Math.round(Utils.mapMouseCoordinatesByZoom().x);
+		int y = Math.round(Utils.mapMouseCoordinatesByZoom().y);
+		writer.println("<vertex><x>" + x + "</x><y>" + y + "</y></vertex>");
+		System.out.println("<vertex><x>" + x + "</x><y>" + y + "</y></vertex>");
 	}
 
 	@Override
@@ -83,6 +133,12 @@ public class Camera extends DoaObject {
 		g.drawString("Cam Bottom Right Bound: " + bottomRightBound.toString(), 0, 80);
 		g.drawString("Absolute Mouse Pos: " + new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y).toString(), 0, 100);
 		g.drawString("Mapped Mouse Pos: " + Utils.mapMouseCoordinatesByZoom().toString(), 0, 120);
+		if (isLoggingVertices) {
+			g.setColor(Color.RED);
+			g.fillRect(0, 160, 290, 23);
+			g.setColor(Color.BLACK);
+			g.drawString("VERTEX LOGGING ENABLED!", 0, 180);
+		}
 	}
 
 	@Override

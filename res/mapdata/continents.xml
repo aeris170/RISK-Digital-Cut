@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE continents [
 <!ELEMENT continents (continent*)>
-<!ELEMENT continent (name, province+)>
+<!ELEMENT continent (name, color, capture-bonus, abbreviation, province+)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT color (#PCDATA)>
+<!ELEMENT capture-bonus (#PCDATA)>
+<!ELEMENT abbreviation (#PCDATA)>
 <!ELEMENT province (#PCDATA)>
 ]>
 <continents>
 	<continent>
 		<name>north america</name>
+		<color>255,255,0</color>
+		<capture-bonus>5</capture-bonus>
+		<abbreviation>NA</abbreviation>
 		<province>alaska</province>
 		<province>northwest territory</province>
 		<province>greenland</province>
@@ -19,6 +26,9 @@
 	</continent>
 	<continent>
 		<name>south america</name>
+		<color>255,0,0</color>
+		<capture-bonus>2</capture-bonus>
+		<abbreviation>SA</abbreviation>
 		<province>venezuela</province>
 		<province>brazil</province>
 		<province>peru</province>
@@ -26,6 +36,9 @@
 	</continent>
 	<continent>
 		<name>europe</name>
+		<color>0,0,255</color>
+		<capture-bonus>5</capture-bonus>
+		<abbreviation>EU</abbreviation>
 		<province>iceland</province>
 		<province>scandinavia</province>
 		<province>great britain</province>
@@ -36,6 +49,9 @@
 	</continent>
 	<continent>
 		<name>africa</name>
+		<color>255,128,0</color>
+		<capture-bonus>3</capture-bonus>
+		<abbreviation>AF</abbreviation>
 		<province>north africa</province>
 		<province>egypt</province>
 		<province>east africa</province>
@@ -45,6 +61,9 @@
 	</continent>
 	<continent>
 		<name>asia</name>
+		<color>0,255,0</color>
+		<capture-bonus>7</capture-bonus>
+		<abbreviation>AS</abbreviation>
 		<province>ural</province>
 		<province>siberia</province>
 		<province>yakutsk</province>
@@ -60,6 +79,9 @@
 	</continent>
 	<continent>
 		<name>australia</name>
+		<color>255,0,255</color>
+		<capture-bonus>2</capture-bonus>
+		<abbreviation>AU</abbreviation>
 		<province>indonesia</province>
 		<province>new guinea</province>
 		<province>western australia</province>

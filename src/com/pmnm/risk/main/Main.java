@@ -3,6 +3,7 @@ package com.pmnm.risk.main;
 import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.util.Locale;
 
 import javax.swing.SwingUtilities;
 
@@ -24,10 +25,11 @@ public class Main {
 	static DoaEngine e;
 
 	public static void main(final String[] args) {
+		Locale.setDefault(Locale.ENGLISH);
 		DoaEngine.DEBUG_ENABLED = true;
-		DoaEngine.MULTI_THREAD_ENABLED = true;
-		DoaEngine.CLEAR_COLOR = new Color(0, 0, 0);// 124, 171, 146
-		DoaMouse.clampWheel(1d, 4d);
+		DoaEngine.MULTI_THREAD_ENABLED = false;
+		DoaEngine.CLEAR_COLOR = new Color(70, 70, 70);
+		DoaMouse.clampWheel(1d, 10d);
 
 		Globals.initilaizeGlobals();
 
@@ -36,7 +38,7 @@ public class Main {
 
 		DoaCamera.setTweenAmountX(1f);
 		DoaCamera.setTweenAmountY(1f);
-		DoaCamera.enableMouseZoom(null, 1f, 4f);
+		DoaCamera.enableMouseZoom(null, 1f, 10f);
 		DoaCamera.adjustCamera(DoaHandler.instantiateDoaObject(Camera.class, WINDOW_WIDTH / 2f, WINDOW_HEIGHT / 2f), -10000, -10000, 10000, 10000);
 		DoaHandler.instantiateDoaObject(GameBoard.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 		DoaHandler.instantiateDoaObject(DebugPanel.class);
