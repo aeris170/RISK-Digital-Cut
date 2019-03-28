@@ -1,7 +1,11 @@
 package com.pmnm.risk.asset;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 
+import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaSprites;
 import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
 
@@ -27,7 +31,12 @@ public final class AssetLoader {
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
 
-		} catch (IOException ex) {
+			DoaAnimations.createAnimation("RiskLogoAnim", "/ui/RiskGIF.gif", 200);
+
+			Font customFont = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf")).deriveFont(12f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(customFont);
+		} catch (IOException | FontFormatException ex) {
 			ex.printStackTrace();
 		}
 	}
