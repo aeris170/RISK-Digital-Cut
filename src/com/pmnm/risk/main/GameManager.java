@@ -1,12 +1,10 @@
 package com.pmnm.risk.main;
 
-import java.awt.Shape;
-
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 
 public class GameManager extends DoaObject {
-	
+
 	private static final long serialVersionUID = -4928417050440420799L;
 
 	public GameManager() {
@@ -23,10 +21,5 @@ public class GameManager extends DoaObject {
 	public void render(DoaGraphicsContext g) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public Shape getBounds() {
-		return null;
 	}
 }

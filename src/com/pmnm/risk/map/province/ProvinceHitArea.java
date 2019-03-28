@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
@@ -15,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
@@ -43,7 +41,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	private Province owner;
 	private List<GeneralPath> ownerMeshes = new ArrayList<>();
-	private BufferedImage cachedMesh;
+	private transient BufferedImage cachedMesh;
 	private boolean isPathVisible = true;
 	private boolean isPointsVisible = false;
 
@@ -88,16 +86,10 @@ public class ProvinceHitArea extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (isPathVisible) {
-			g.drawImage(cachedMesh, minX - 4, minY - 4);
-			/*
-			g.setStroke(new BasicStroke(2));
-			for (GeneralPath gp : ownerMeshes) {
-				g.setColor(new Color(90, 90, 90));
-				g.fill(gp);
-				g.setColor(owner.getContinent().getColor());
-				g.draw(gp);
-			}
-			*/
+			g.drawImage(cachedMesh, minX - 4d, minY - 4d);
+			/* g.setStroke(new BasicStroke(2)); for (GeneralPath gp : ownerMeshes) {
+			 * g.setColor(new Color(90, 90, 90)); g.fill(gp);
+			 * g.setColor(owner.getContinent().getColor()); g.draw(gp); } */
 		}
 		if (isPointsVisible) {
 			g.setColor(Color.MAGENTA);
@@ -108,11 +100,6 @@ public class ProvinceHitArea extends DoaObject {
 				}
 			}
 		}
-	}
-
-	@Override
-	public Shape getBounds() {
-		return null;
 	}
 
 	private void cacheMeshAsImage() {
@@ -133,7 +120,9 @@ public class ProvinceHitArea extends DoaObject {
 				}
 			}
 		}
+
 		cachedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
+		cachedMesh.setAccelerationPriority(1);
 		Graphics2D meshRenderer = cachedMesh.createGraphics();
 		meshRenderer.translate(-minX + 4, -minY + 4);
 		meshRenderer.setRenderingHints(HINTS);
@@ -155,20 +144,20 @@ public class ProvinceHitArea extends DoaObject {
 		int numSubPaths = 0;
 		for (PathIterator pi = path.getPathIterator(null); !pi.isDone(); pi.next()) {
 			switch (pi.currentSegment(coords)) {
-			case PathIterator.SEG_MOVETO:
-				pointList.add(Arrays.copyOf(coords, 2));
-				++numSubPaths;
-				break;
-			case PathIterator.SEG_LINETO:
-				pointList.add(Arrays.copyOf(coords, 2));
-				break;
-			case PathIterator.SEG_CLOSE:
-				if (numSubPaths > 1) {
-					throw new IllegalArgumentException("Path contains multiple subpaths");
-				}
-				return pointList.toArray(new double[pointList.size()][]);
-			default:
-				throw new IllegalArgumentException("Path contains curves");
+				case PathIterator.SEG_MOVETO:
+					pointList.add(Arrays.copyOf(coords, 2));
+					++numSubPaths;
+					break;
+				case PathIterator.SEG_LINETO:
+					pointList.add(Arrays.copyOf(coords, 2));
+					break;
+				case PathIterator.SEG_CLOSE:
+					if (numSubPaths > 1) {
+						throw new IllegalArgumentException("Path contains multiple subpaths");
+					}
+					return pointList.toArray(new double[pointList.size()][]);
+				default:
+					throw new IllegalArgumentException("Path contains curves");
 			}
 		}
 		throw new IllegalArgumentException("Unclosed path");

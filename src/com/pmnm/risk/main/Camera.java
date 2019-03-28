@@ -2,7 +2,6 @@ package com.pmnm.risk.main;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Shape;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -139,10 +138,5 @@ public class Camera extends DoaObject {
 			g.setColor(Color.BLACK);
 			g.drawString("VERTEX LOGGING ENABLED!", 0, 180);
 		}
-	}
-
-	@Override
-	public Shape getBounds() {
-		return null;
 	}
 }
