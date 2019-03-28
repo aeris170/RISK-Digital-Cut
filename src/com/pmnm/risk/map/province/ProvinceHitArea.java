@@ -120,7 +120,8 @@ public class ProvinceHitArea extends DoaObject {
 				}
 			}
 		}
-
+		Color borderColor = owner.getContinent().getColor();
+		Color fillColor = new Color(borderColor.getRed() / 3, borderColor.getGreen() / 3, borderColor.getBlue() / 3);
 		cachedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		cachedMesh.setAccelerationPriority(1);
 		Graphics2D meshRenderer = cachedMesh.createGraphics();
@@ -128,9 +129,9 @@ public class ProvinceHitArea extends DoaObject {
 		meshRenderer.setRenderingHints(HINTS);
 		meshRenderer.setStroke(new BasicStroke(2));
 		for (GeneralPath gp : ownerMeshes) {
-			meshRenderer.setColor(new Color(90, 90, 90));
+			meshRenderer.setColor(fillColor);
 			meshRenderer.fill(gp);
-			meshRenderer.setColor(owner.getContinent().getColor());
+			meshRenderer.setColor(borderColor);
 			meshRenderer.draw(gp);
 		}
 		meshRenderer.dispose();

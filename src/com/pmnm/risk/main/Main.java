@@ -31,7 +31,7 @@ public class Main {
 		Locale.setDefault(Locale.ENGLISH);
 		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.MULTI_THREAD_ENABLED = false;
-		DoaEngine.CLEAR_COLOR = new Color(30, 30, 30);
+		DoaEngine.CLEAR_COLOR = new Color(0, 0, 0);
 		DoaMouse.clampWheel(1d, 10d);
 
 		Globals.initilaizeGlobals();
@@ -51,7 +51,7 @@ public class Main {
 	}
 
 	private static void configureGUI() {
-		w.setTitle("DoaEngine Test Window!");
+		w.setTitle("CS319 RISK!");
 		w.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		w.setLocation(0, 0);
 		w.setUndecorated(true);
