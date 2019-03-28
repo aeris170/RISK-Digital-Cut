@@ -1,13 +1,18 @@
 package com.pmnm.risk.map.province;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Shape;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
@@ -21,10 +26,29 @@ public class ProvinceHitArea extends DoaObject {
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
+	private static final Map<RenderingHints.Key, Object> HINTS = new HashMap<>();
+	static {
+		HINTS.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		HINTS.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		HINTS.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+		HINTS.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+		HINTS.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+		HINTS.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		HINTS.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		HINTS.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
+		HINTS.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	}
+
 	private Province owner;
 	private List<GeneralPath> ownerMeshes = new ArrayList<>();
+	private transient BufferedImage cachedMesh;
 	private boolean isPathVisible = true;
 	private boolean isPointsVisible = false;
+
+	private int minX = Integer.MAX_VALUE;
+	private int minY = Integer.MAX_VALUE;
+	private int maxX = Integer.MIN_VALUE;
+	private int maxY = Integer.MIN_VALUE;
 
 	public ProvinceHitArea(Province owner, Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
@@ -40,6 +64,7 @@ public class ProvinceHitArea extends DoaObject {
 			hitArea.closePath();
 			ownerMeshes.add(hitArea);
 		});
+		cacheMeshAsImage();
 	}
 
 	@Override
@@ -47,7 +72,7 @@ public class ProvinceHitArea extends DoaObject {
 		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
 		ownerMeshes.forEach(mesh -> {
 			if (mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y)) {
-				if (DoaMouse.MB2) {
+				if (DoaMouse.MB1) {
 					isPathVisible = !isPathVisible;
 				}
 				if (DoaMouse.MB3) {
@@ -61,27 +86,54 @@ public class ProvinceHitArea extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (isPathVisible) {
-			for (GeneralPath gp : ownerMeshes) {
-				g.setColor(new Color(90, 90, 90));
-				g.fill(gp);
-				g.setColor(owner.getContinent().getColor());
-				g.draw(gp);
-			}
+			g.drawImage(cachedMesh, minX - 4d, minY - 4d);
+			/* g.setStroke(new BasicStroke(2)); for (GeneralPath gp : ownerMeshes) {
+			 * g.setColor(new Color(90, 90, 90)); g.fill(gp);
+			 * g.setColor(owner.getContinent().getColor()); g.draw(gp); } */
 		}
 		if (isPointsVisible) {
 			g.setColor(Color.MAGENTA);
 			for (GeneralPath gp : ownerMeshes) {
 				double[][] points = getPoints(gp);
 				for (int i = 0; i < points.length; i++) {
-					g.fillRect(points[i][0] - 1, points[i][1] - 1, 1, 1);
+					g.fillRect(points[i][0], points[i][1], 1, 1);
 				}
 			}
 		}
 	}
 
-	@Override
-	public Shape getBounds() {
-		return null;
+	private void cacheMeshAsImage() {
+		for (GeneralPath mesh : ownerMeshes) {
+			double[][] vertices = getPoints(mesh);
+			for (int i = 0; i < vertices.length; i++) {
+				if (vertices[i][0] < minX) {
+					minX = (int) vertices[i][0];
+				}
+				if (vertices[i][0] > maxX) {
+					maxX = (int) vertices[i][0];
+				}
+				if (vertices[i][1] < minY) {
+					minY = (int) vertices[i][1];
+				}
+				if (vertices[i][1] > maxY) {
+					maxY = (int) vertices[i][1];
+				}
+			}
+		}
+
+		cachedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
+		cachedMesh.setAccelerationPriority(1);
+		Graphics2D meshRenderer = cachedMesh.createGraphics();
+		meshRenderer.translate(-minX + 4, -minY + 4);
+		meshRenderer.setRenderingHints(HINTS);
+		meshRenderer.setStroke(new BasicStroke(2));
+		for (GeneralPath gp : ownerMeshes) {
+			meshRenderer.setColor(new Color(90, 90, 90));
+			meshRenderer.fill(gp);
+			meshRenderer.setColor(owner.getContinent().getColor());
+			meshRenderer.draw(gp);
+		}
+		meshRenderer.dispose();
 	}
 
 	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath

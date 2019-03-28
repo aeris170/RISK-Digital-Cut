@@ -2,7 +2,6 @@ package com.pmnm.risk.main;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 
 import com.doa.engine.DoaObject;
@@ -32,11 +31,6 @@ public class DebugPanel extends DoaObject {
 		textCount = 6;
 		drawString(g, "ZOOM: " + DoaMouse.WHEEL);
 		drawString(g, "Mouse was last on: " + mouseOnProvinceName.toUpperCase());
-	}
-
-	@Override
-	public Shape getBounds() {
-		return null;
 	}
 
 	private void drawString(DoaGraphicsContext g, String s) {

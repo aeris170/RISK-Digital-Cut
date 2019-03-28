@@ -1,7 +1,5 @@
 package com.pmnm.risk.map.board;
 
-import java.awt.Shape;
-
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
@@ -34,10 +32,5 @@ public class GameBoard extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		g.drawImage(DoaSprites.get("WorldMap"), position.x, position.y, width, height, null);
-	}
-
-	@Override
-	public Shape getBounds() {
-		return null;
 	}
 }
