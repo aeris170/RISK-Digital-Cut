@@ -1,7 +1,9 @@
 package com.pmnm.risk.map.province;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
@@ -85,6 +87,8 @@ public class ProvinceHitArea extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
+		Composite oldComposite = g.getComposite();
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
 		if (isPathVisible) {
 			g.drawImage(cachedMesh, minX - 4d, minY - 4d);
 		}
@@ -97,6 +101,7 @@ public class ProvinceHitArea extends DoaObject {
 				}
 			}
 		}
+		g.setComposite(oldComposite);
 	}
 
 	private void cacheMeshAsImage() {
@@ -118,7 +123,7 @@ public class ProvinceHitArea extends DoaObject {
 			}
 		}
 		Color borderColor = owner.getContinent().getColor();
-		Color fillColor = new Color(borderColor.getRed() / 3, borderColor.getGreen() / 3, borderColor.getBlue() / 3, 100);
+		Color fillColor = new Color(borderColor.getRed() / 3, borderColor.getGreen() / 3, borderColor.getBlue() / 3);
 		cachedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		cachedMesh.setAccelerationPriority(1);
 		Graphics2D meshRenderer = cachedMesh.createGraphics();

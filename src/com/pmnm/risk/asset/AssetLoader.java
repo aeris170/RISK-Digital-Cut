@@ -31,6 +31,10 @@ public final class AssetLoader {
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
 
+			DoaSprites.createSprite("pieceGauge", "/ui/gameScreenElements/pieceGauge.png");
+			DoaSprites.createSprite("gaugeNeedle", "/ui/gameScreenElements/needle.png");
+			DoaSprites.createSprite("infoPanel", "/ui/gameScreenElements/infoPanel.png");
+
 			DoaAnimations.createAnimation("RiskLogoAnim", "/ui/RiskGIF.gif", 200);
 
 			Font customFont = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf")).deriveFont(12f);

@@ -3,6 +3,8 @@ package com.pmnm.risk.ui.actions;
 import com.doa.ui.action.DoaUIAction;
 import com.pmnm.risk.ui.MainMenu;
 
+import gameui.RiskUI;
+
 public class PlayOfflineButtonAction implements DoaUIAction {
 
 	MainMenu mm;
@@ -14,6 +16,7 @@ public class PlayOfflineButtonAction implements DoaUIAction {
 	@Override
 	public void execute() {
 		mm.setActive(false);
+		RiskUI.initUI();
 	}
 
 }

@@ -36,7 +36,7 @@
 	</continent>
 	<continent>
 		<name>europe</name>
-		<color>0,0,255</color>
+		<color>100,200,255</color>
 		<capture-bonus>5</capture-bonus>
 		<abbreviation>EU</abbreviation>
 		<province>iceland</province>
