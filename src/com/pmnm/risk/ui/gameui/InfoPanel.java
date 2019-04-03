@@ -12,16 +12,16 @@ public class InfoPanel extends DoaObject {
 
 	private static final long serialVersionUID = -59674351675589726L;
 
-	private static final DoaVectorF GARRISON_HOLDER = new DoaVectorF(16f, 746f);
-	private static final DoaVectorF GARRISON_HOLDER_ICON = new DoaVectorF(181f, 754f);
+	private static final DoaVectorF GARRISON_HOLDER = new DoaVectorF(23f, 786f);
+	private static final DoaVectorF GARRISON_HOLDER_ICON = new DoaVectorF(164f, 794f);
 
-	private static final DoaVectorF OWNER_HOLDER = new DoaVectorF(16f, 795f);
-	private static final DoaVectorF OWNER_HOLDER_ICON = new DoaVectorF(223f, 803f);
+	private static final DoaVectorF OWNER_HOLDER = new DoaVectorF(23f, 828f);
+	private static final DoaVectorF OWNER_HOLDER_ICON = new DoaVectorF(200f, 835f);
 
-	private static final DoaVectorF PROVINCE_NAME_HOLDER = new DoaVectorF(16f, 844f);
-	private static final DoaVectorF PROVINCE_NAME_HOLDER_ICON = new DoaVectorF(276f, 851f);
+	private static final DoaVectorF PROVINCE_NAME_HOLDER = new DoaVectorF(23f, 870f);
+	private static final DoaVectorF PROVINCE_NAME_HOLDER_ICON = new DoaVectorF(245f, 876f);
 
-	private static final DoaVectorF MINIMAP_HOLDER = new DoaVectorF(16f, 896f);
+	private static final DoaVectorF MINIMAP_HOLDER = new DoaVectorF(23f, 914f);
 
 	private static final DoaSprite TEXTURE = DoaSprites.get("infoPanel");
 	private static final DoaSprite GARRISON_HOLDER_TEXTURE = DoaSprites.get("garrisonHolder");

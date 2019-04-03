@@ -38,13 +38,21 @@ public final class AssetLoader {
 			DoaSprites.createSprite("gaugeNeedle", "/ui/gameScreenElements/needle.png");
 
 			DoaSprites.createSprite("infoPanel", "/ui/gameScreenElements/infoPanel.png");
-			DoaSprites.createSprite("garrisonHolder", "/ui/gameScreenElements/garrisonHolder.png");
-			DoaSprites.createSprite("garrisonHolderIcon", "/ui/gameScreenElements/garrisonHolderIcon.png");
-			DoaSprites.createSprite("ownerHolder", "/ui/gameScreenElements/ownerHolder.png");
-			DoaSprites.createSprite("ownerHolderIcon", "/ui/gameScreenElements/ownerHolderIcon.png");
-			DoaSprites.createSprite("provinceNameHolder", "/ui/gameScreenElements/provinceNameHolder.png");
-			DoaSprites.createSprite("provinceNameHolderIcon", "/ui/gameScreenElements/provinceNameHolderIcon.png");
-			DoaSprites.createSprite("mini", "/ui/gameScreenElements/mini.png");
+			DoaSprites.createSprite("garrisonHolder", "/ui/gameScreenElements/smallGarrisonHolder.png");
+			DoaSprites.createSprite("garrisonHolderIcon", "/ui/gameScreenElements/smallGarrisonHolderIcon.png");
+			DoaSprites.createSprite("ownerHolder", "/ui/gameScreenElements/smallOwnerHolder.png");
+			DoaSprites.createSprite("ownerHolderIcon", "/ui/gameScreenElements/smallOwnerHolderIcon.png");
+			DoaSprites.createSprite("provinceNameHolder", "/ui/gameScreenElements/smallProvinceNameHolder.png");
+			DoaSprites.createSprite("provinceNameHolderIcon", "/ui/gameScreenElements/smallProvinceNameHolderIcon.png");
+			DoaSprites.createSprite("mini", "/ui/gameScreenElements/smallMiniBG.png");
+
+			DoaSprites.createSprite("scroll", "/ui/gameScreenElements/smallGameScreenScroll.png");
+			DoaSprites.createSprite("nextPhaseButtonIdle", "/ui/gameScreenElements/smallNextPhaseButton.png");
+			DoaSprites.createSprite("nextPhaseButtonHover", "/ui/gameScreenElements/smallPressedNextPhaseButton.png");
+			DoaSprites.createSprite("cardsButtonIdle", "/ui/gameScreenElements/smallProvinceCardsButton.png");
+			DoaSprites.createSprite("cardsButtonHover", "/ui/gameScreenElements/smallPressedProvinceCardsButton.png");
+			DoaSprites.createSprite("winConditionButtonIdle", "/ui/gameScreenElements/smallWinningConditionsButton.png");
+			DoaSprites.createSprite("winConditionButtonHover", "/ui/gameScreenElements/smallPressedWinningConditionsButton.png");
 
 			List<DoaSprite> riskLogoKeyFrames = new ArrayList<>();
 			for (int i = 1; i <= 11; i++) {

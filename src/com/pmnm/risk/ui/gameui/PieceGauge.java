@@ -14,8 +14,11 @@ public class PieceGauge extends DoaObject {
 
 	private static final long serialVersionUID = -59674351675589726L;
 
+	private static final float ACCELERATION = 0.032f;
+
 	private static final DoaVectorF MIN = new DoaVectorF(1591f, 732f);
 	private static final DoaVectorF MAX = new DoaVectorF(1801f, 732f);
+
 	private static final DoaSprite TEXTURE = DoaSprites.get("pieceGauge");
 	private static final DoaSprite NEEDLE = DoaSprites.get("gaugeNeedle");
 
@@ -33,14 +36,14 @@ public class PieceGauge extends DoaObject {
 				movementLock = !movementLock;
 			}
 			if (position.x > MIN.x && !movementLock) {
-				velocity.x -= 0.032f;
+				velocity.x -= ACCELERATION;
 
 			} else {
 				angle -= 0.0005f;
 			}
 		} else {
 			if (position.x < MAX.x && !movementLock) {
-				velocity.x += 0.032f;
+				velocity.x += ACCELERATION;
 			}
 		}
 		position.x += velocity.x;
