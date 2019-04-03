@@ -1,5 +1,6 @@
 package com.pmnm.risk.ui;
 
+import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.ui.panel.DoaPanel;
@@ -32,6 +33,6 @@ public class MainMenu extends DoaPanel {
 		}
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, FLEUR_HEIGHT * 1.5d);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - FLEUR_HEIGHT * 1.5d - DoaSprites.get("MainMenuTopRing").getHeight());
-		g.drawImage(DoaSprites.get("RiskLogo"), 1286, 279);
+		g.drawAnimation(DoaAnimations.get("RiskLogoAnim"), 1286, 220);
 	}
 }

@@ -2,8 +2,7 @@ package com.pmnm.risk.ui.actions;
 
 import com.doa.ui.action.DoaUIAction;
 import com.pmnm.risk.ui.MainMenu;
-
-import gameui.RiskUI;
+import com.pmnm.risk.ui.gameui.RiskUI;
 
 public class PlayOfflineButtonAction implements DoaUIAction {
 

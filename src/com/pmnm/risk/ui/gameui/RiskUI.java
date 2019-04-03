@@ -1,4 +1,4 @@
-package gameui;
+package com.pmnm.risk.ui.gameui;
 
 import com.doa.engine.DoaHandler;
 

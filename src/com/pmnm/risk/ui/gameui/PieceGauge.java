@@ -1,4 +1,4 @@
-package gameui;
+package com.pmnm.risk.ui.gameui;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
