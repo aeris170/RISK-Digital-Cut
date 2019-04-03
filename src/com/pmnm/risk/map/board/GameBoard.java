@@ -3,6 +3,7 @@ package com.pmnm.risk.map.board;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaKeyboard;
 import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
 
@@ -30,7 +31,7 @@ public class GameBoard extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		// g.drawImage(DoaSprites.get("WorldMap"), position.x, position.y, width,
-		// height, null);
+		 g.drawImage(DoaSprites.get("WorldMap"), position.x, position.y, width,
+		 height, null);
 	}
 }

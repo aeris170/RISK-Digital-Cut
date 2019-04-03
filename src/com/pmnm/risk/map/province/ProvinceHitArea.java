@@ -118,7 +118,7 @@ public class ProvinceHitArea extends DoaObject {
 			}
 		}
 		Color borderColor = owner.getContinent().getColor();
-		Color fillColor = new Color(borderColor.getRed() / 3, borderColor.getGreen() / 3, borderColor.getBlue() / 3);
+		Color fillColor = new Color(borderColor.getRed() / 3, borderColor.getGreen() / 3, borderColor.getBlue() / 3, 100);
 		cachedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		cachedMesh.setAccelerationPriority(1);
 		Graphics2D meshRenderer = cachedMesh.createGraphics();
