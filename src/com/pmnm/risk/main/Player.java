@@ -14,6 +14,7 @@ public class Player {
 	public static final Map<String, Player> NAME_PLAYER = new HashMap<>();
 
 	private Set<Province> provinces = new HashSet<>();
+	@SuppressWarnings("unused")
 	private Set<Card> cards = new HashSet<>();
 	private Map<Province, Integer> provinceTroops = new HashMap<>();
 	private Color playerColor;

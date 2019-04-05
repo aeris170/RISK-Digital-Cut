@@ -42,6 +42,7 @@ public class Client extends JFrame implements Runnable {
 	private transient ObjectInputStream input;
 
 	// Message and IP
+	@SuppressWarnings("unused")
 	private String clientName;
 	private String serverIP;
 

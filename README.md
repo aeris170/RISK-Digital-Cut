@@ -35,7 +35,7 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 * [Analysis Report]	[link][3]
 * [Design Report]	[link][4]
-* [Final Report]	TBA
+* [Final Report]	[link][5]
 
 ### Iteration 2
 
@@ -50,5 +50,6 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 [1]: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
 [2]: https://www.hasbro.com/common/instruct/Risk1963.PDF
-[3]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Iteration_1_-_Project_Analysis_Report_.docx?raw=true
-[4]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Project_Design_Report-Iteration_1.docx?raw=true
+[3]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Analysis_Report_Iteration_1.docx?raw=true
+[4]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_1.docx?raw=true
+[5]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Implementation_Report_Iteration_1.docx?raw=true
