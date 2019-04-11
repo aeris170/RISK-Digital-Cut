@@ -1,4 +1,4 @@
-# Project: Risk Tabletop Game Implementation for Desktop Machines
+﻿# Project: Risk Tabletop Game Implementation for Desktop Machines
 
 ## Description
 
@@ -22,12 +22,27 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 ## Group 1.I Members
 
-### PrivateMoon Nobleman
-* Doğa Oruç -	21602022
-* Fazilet Simge Er - 21602358
-* Kaan Ünlü - 21602622
-* Ege Turan - 21502441
-* Çağrı Orhan - 21503102
+### Private Moon Inc.
+
+<p>
+    <ul>
+        <li>
+            <a href="https://github.com/aeris170" title="aeris170">Doğa Oruç - 21602022</a>
+        </li>
+        <li>
+            <a href="https://github.com/simge98" title="simge98">Fazilet Simge Er - 21602358</a>
+        </li>
+        <li>
+            <a href="https://github.com/Paledomain" title="Paledomain">Kaan Ünlü - 21602622</a>
+        </li>
+        <li>
+            <a href="https://github.com/egeturan" title= "egeturan">Ege Turan - 21502441</a>
+        </li>
+        <li>
+            <a href="https://github.com/cagriorhan" title= "cagriorhan">Çağrı Orhan - 21503102</a>
+        </li>
+    </ul>
+  </p>
 
 ## Links to Project Reports
 
