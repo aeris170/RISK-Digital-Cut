@@ -1,12 +1,16 @@
 package com.pmnm.risk.main;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.pmnm.risk.exceptions.RiskException;
+import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 
 public class Player {
@@ -30,20 +34,43 @@ public class Player {
 		}
 	}
 
+	public static int findStartingTroopCount(int numberOfPlayers) {
+		return 50 - 5 * numberOfPlayers;
+	}
+
+	public static int calculateReinforcementsForThisTurn(Player player) {
+		int reinforcementsForThisTurn = player.provinces.size() / 3;
+		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
+			Continent currentContinent = entry.getValue();
+			if (player.provinces.containsAll(currentContinent.getProvinces())) {
+				reinforcementsForThisTurn += currentContinent.getCaptureBonus();
+			}
+		}
+		return reinforcementsForThisTurn;
+	}
+
 	public Set<Province> getProvinces() {
 		return provinces;
 	}
 
 	public boolean addProvince(Province p) {
-		return provinces.add(p);
+		boolean rv = provinces.add(p);
+		provinceTroops.put(p, 1);
+		return rv;
 	}
 
 	public boolean removeProvince(Province p) {
-		return provinces.remove(p);
+		boolean rv = provinces.remove(p);
+		provinceTroops.remove(p);
+		return rv;
 	}
 
 	public int getTroopsIn(Province p) {
 		return provinceTroops.get(p);
+	}
+	
+	public void modifyProvinceTroopsBy(Province p, int amount) {
+		provinceTroops.put(p, provinceTroops.get(p) + amount);
 	}
 
 	public String getName() {

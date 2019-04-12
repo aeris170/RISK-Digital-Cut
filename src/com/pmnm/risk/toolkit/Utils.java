@@ -1,5 +1,7 @@
 package com.pmnm.risk.toolkit;
 
+import java.awt.geom.Rectangle2D;
+
 import com.doa.engine.DoaCamera;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
@@ -56,5 +58,9 @@ public final class Utils {
 		final float my = mouseCoordinates.y - camy;
 		final DoaVectorF distance = new DoaVectorF(mx * z + cx, my * z + cy);
 		return mouseCoordinates.add(distance.sub(mouseCoordinates).mul(-1f / DoaCamera.getZ()));
+	}
+	
+	public static double computeRectangleArea(Rectangle2D rect) {
+		return rect.getWidth() * rect.getHeight(); 
 	}
 }

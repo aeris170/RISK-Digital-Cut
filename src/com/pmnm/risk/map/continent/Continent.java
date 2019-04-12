@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.pmnm.risk.map.province.Province;
 
@@ -19,7 +20,7 @@ public class Continent implements Serializable {
 	private Color color;
 	private int captureBonus;
 	private String abbreviation;
-	private List<Province> provinces;
+	private Set<Province> provinces;
 
 	public String getName() {
 		return name;
@@ -37,7 +38,7 @@ public class Continent implements Serializable {
 		return abbreviation;
 	}
 
-	public List<Province> getProvinces() {
+	public Set<Province> getProvinces() {
 		return provinces;
 	}
 
@@ -63,7 +64,7 @@ public class Continent implements Serializable {
 		return this;
 	}
 
-	public Continent setProvinces(List<Province> provinces) {
+	public Continent setProvinces(Set<Province> provinces) {
 		this.provinces = provinces;
 		for (Province p : provinces) {
 			p.setContinent(this);

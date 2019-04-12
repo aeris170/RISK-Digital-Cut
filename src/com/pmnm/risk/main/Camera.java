@@ -138,5 +138,11 @@ public class Camera extends DoaObject {
 			g.setColor(Color.BLACK);
 			g.drawString("VERTEX LOGGING ENABLED!", 0, 180);
 		}
+		g.setColor(Color.WHITE);
+		g.drawString("Phase: " + GameManager.currentPhase, 0, 200);
+		g.setColor(GameManager.currentPlayer.getColor());
+		g.fillRect(0, 200, 290, 23);
+		g.setColor(Color.WHITE);
+		g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
 	}
 }
