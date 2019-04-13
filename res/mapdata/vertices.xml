@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE vertices [
 <!ELEMENT vertices (province+)>
-<!ELEMENT province (name, mesh+)>
+<!ELEMENT province (name, center, mesh+)>
+<!ELEMENT center (vertex)>
 <!ELEMENT mesh (vertex+)>
 <!ELEMENT vertex (x, y)>
 <!ELEMENT x (#PCDATA)>
@@ -11,6 +12,9 @@
 	<!-- NORTH AMERICA -->
 	<province>
 		<name>alaska</name>
+		<center>
+			<vertex><x>130</x><y>220</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>45</x><y>199</y></vertex>
 			<vertex><x>47</x><y>199</y></vertex>
@@ -521,6 +525,9 @@
 	</province>
 	<province>
 		<name>northwest territory</name>
+		<center>
+			<vertex><x>329</x><y>227</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>216</x><y>200</y></vertex>
 			<vertex><x>214</x><y>202</y></vertex>
@@ -966,6 +973,9 @@
 	</province>
 	<province>
 		<name>greenland</name>
+		<center>
+			<vertex><x>681</x><y>157</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>553</x><y>130</y></vertex>
 			<vertex><x>556</x><y>129</y></vertex>
@@ -1311,6 +1321,9 @@
 	</province>
 	<province>
 		<name>alberta</name>
+		<center>
+			<vertex><x>309</x><y>290</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>203</x><y>251</y></vertex>
 			<vertex><x>209</x><y>251</y></vertex>
@@ -1519,6 +1532,9 @@
 	</province>
 	<province>
 		<name>ontario</name>
+		<center>
+			<vertex><x>429</x><y>302</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>398</x><y>253</y></vertex>
 			<vertex><x>398</x><y>255</y></vertex>
@@ -1807,6 +1823,9 @@
 	</province>
 	<province>
 		<name>quebec</name>
+		<center>
+			<vertex><x>538</x><y>299</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>511</x><y>352</y></vertex>
 			<vertex><x>512</x><y>352</y></vertex>
@@ -2438,6 +2457,9 @@
 	</province>
 	<province>
 		<name>western united states</name>
+		<center>
+			<vertex><x>329</x><y>375</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>389</x><y>335</y></vertex>
 			<vertex><x>387</x><y>334</y></vertex>
@@ -2661,6 +2683,9 @@
 	</province>
 	<province>
 		<name>eastern united states</name>
+		<center>
+			<vertex><x>442</x><y>400</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>391</x><y>335</y></vertex>
 			<vertex><x>394</x><y>335</y></vertex>
@@ -3266,6 +3291,9 @@
 	</province>
 	<province>
 		<name>central america</name>
+		<center>
+			<vertex><x>372</x><y>472</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>399</x><y>462</y></vertex>
 			<vertex><x>398</x><y>461</y></vertex>
@@ -3866,6 +3894,9 @@
 	<!-- SOUTH AMERICA -->
 	<province>
 		<name>venezuela</name>
+		<center>
+			<vertex><x>549</x><y>585</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>499</x><y>569</y></vertex>
 			<vertex><x>501</x><y>570</y></vertex>
@@ -4196,6 +4227,9 @@
 	</province>
 		<province>
 		<name>brazil</name>
+		<center>
+			<vertex><x>630</x><y>690</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>640</x><y>605</y></vertex>
 			<vertex><x>638</x><y>611</y></vertex>
@@ -4636,6 +4670,9 @@
 	</province>
 	<province>
 		<name>peru</name>
+		<center>
+			<vertex><x>534</x><y>708</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>491</x><y>622</y></vertex>
 			<vertex><x>493</x><y>622</y></vertex>
@@ -4880,6 +4917,9 @@
 	</province>
 	<province>
 		<name>argentina</name>
+		<center>
+			<vertex><x>569</x><y>825</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>641</x><y>821</y></vertex>
 			<vertex><x>638</x><y>818</y></vertex>
@@ -5278,6 +5318,9 @@
 	<!-- EUROPE -->
 	<province>
 		<name>iceland</name>
+		<center>
+			<vertex><x>799</x><y>226</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>751</x><y>221</y></vertex>
 			<vertex><x>752</x><y>220</y></vertex>
@@ -5555,6 +5598,9 @@
 	</province>
 	<province>
 		<name>scandinavia</name>
+		<center>
+			<vertex><x>995</x><y>219</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1059</x><y>193</y></vertex>
 			<vertex><x>1057</x><y>195</y></vertex>
@@ -5878,6 +5924,9 @@
 	</province>
 	<province>
 		<name>great britain</name>
+		<center>
+			<vertex><x>891</x><y>285</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>815</x><y>267</y></vertex>
 			<vertex><x>815</x><y>267</y></vertex>
@@ -6649,6 +6698,9 @@
 	</province>
 	<province>
 		<name>ukraine</name>
+		<center>
+			<vertex><x>1090</x><y>289</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1059</x><y>193</y></vertex>
 			<vertex><x>1057</x><y>195</y></vertex>
@@ -7178,6 +7230,9 @@
 	</province>
 	<province>
 		<name>northern europe</name>
+		<center>
+			<vertex><x>973</x><y>310</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>940</x><y>334</y></vertex>
 			<vertex><x>940</x><y>332</y></vertex>
@@ -7532,6 +7587,9 @@
 	</province>
 	<province>
 		<name>western europe</name>
+		<center>
+			<vertex><x>915</x><y>343</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>916</x><y>310</y></vertex>
 			<vertex><x>915</x><y>310</y></vertex>
@@ -7794,6 +7852,9 @@
 	</province>
 	<province>
 		<name>southern europe</name>
+		<center>
+			<vertex><x>1019</x><y>352</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1054</x><y>348</y></vertex>
 			<vertex><x>1053</x><y>347</y></vertex>
@@ -8220,6 +8281,9 @@
 	<!-- AFRICA -->
 	<province>
 		<name>north africa</name>
+		<center>
+			<vertex><x>915</x><y>515</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>874</x><y>405</y></vertex>
 			<vertex><x>877</x><y>405</y></vertex>
@@ -8654,6 +8718,9 @@
 	</province>	
 	<province>
 		<name>egypt</name>
+		<center>
+			<vertex><x>1024</x><y>458</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>956</x><y>416</y></vertex>
 			<vertex><x>956</x><y>417</y></vertex>
@@ -8919,6 +8986,9 @@
 	</province>	
 	<province>
 		<name>east africa</name>
+		<center>
+			<vertex><x>1089</x><y>579</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1089</x><y>478</y></vertex>
 			<vertex><x>1087</x><y>478</y></vertex>
@@ -9271,6 +9341,9 @@
 	</province>	
 	<province>
 		<name>congo</name>
+		<center>
+			<vertex><x>1009</x><y>638</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>956</x><y>612</y></vertex>
 			<vertex><x>959</x><y>612</y></vertex>
@@ -9507,6 +9580,9 @@
 	</province>	
 	<province>
 		<name>madagascar</name>
+		<center>
+			<vertex><x>1172</x><y>740</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1196</x><y>663</y></vertex>
 			<vertex><x>1196</x><y>664</y></vertex>
@@ -9657,6 +9733,9 @@
 	</province>	
 	<province>
 		<name>south africa</name>
+		<center>
+			<vertex><x>1030</x><y>761</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1114</x><y>707</y></vertex>
 			<vertex><x>1112</x><y>707</y></vertex>
@@ -9987,6 +10066,9 @@
 	<!-- ASIA -->
 	<province>
 		<name>ural</name>
+		<center>
+			<vertex><x>1250</x><y>234</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1145</x><y>212</y></vertex>
 			<vertex><x>1145</x><y>214</y></vertex>
@@ -10324,6 +10406,9 @@
 	</province>
 	<province>
 		<name>siberia</name>
+		<center>
+			<vertex><x>1373</x><y>201</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1346</x><y>303</y></vertex>
 			<vertex><x>1344</x><y>301</y></vertex>
@@ -10538,6 +10623,9 @@
 	</province>
 	<province>
 		<name>yakutsk</name>
+		<center>
+			<vertex><x>1529</x><y>203</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1451</x><y>172</y></vertex>
 			<vertex><x>1448</x><y>174</y></vertex>
@@ -10743,6 +10831,9 @@
 	</province>
 	<province>
 		<name>kamchatka</name>
+		<center>
+			<vertex><x>1688</x><y>221</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1587</x><y>359</y></vertex>
 			<vertex><x>1589</x><y>356</y></vertex>
@@ -11175,6 +11266,9 @@
 	</province>
 	<province>
 		<name>irkutsk</name>
+		<center>
+			<vertex><x>1446</x><y>251</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1575</x><y>308</y></vertex>
 			<vertex><x>1573</x><y>309</y></vertex>
@@ -11368,6 +11462,9 @@
 	</province>
 	<province>
 		<name>japan</name>
+		<center>
+			<vertex><x>1660</x><y>408</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1690</x><y>306</y></vertex>
 			<vertex><x>1694</x><y>308</y></vertex>
@@ -11757,6 +11854,9 @@
 	</province>
 	<province>
 		<name>mongolia</name>
+		<center>
+			<vertex><x>1484</x><y>317</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1362</x><y>305</y></vertex>
 			<vertex><x>1364</x><y>308</y></vertex>
@@ -12008,6 +12108,9 @@
 	</province>
 	<province>
 		<name>china</name>
+		<center>
+			<vertex><x>1428</x><y>405</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1407</x><y>446</y></vertex>
 			<vertex><x>1407</x><y>443</y></vertex>
@@ -12316,6 +12419,9 @@
 	</province>
 	<province>
 		<name>afghanistan</name>
+		<center>
+			<vertex><x>1237</x><y>330</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1148</x><y>348</y></vertex>
 			<vertex><x>1147</x><y>346</y></vertex>
@@ -12590,6 +12696,9 @@
 	</province>
 	<province>
 		<name>middle east</name>
+		<center>
+			<vertex><x>1126</x><y>424</y></vertex>
+		</center>
 		<mesh>			
 			<vertex><x>1039</x><y>373</y></vertex>
 			<vertex><x>1040</x><y>371</y></vertex>
@@ -12998,6 +13107,9 @@
 	</province>
 	<province>
 		<name>india</name>
+		<center>
+			<vertex><x>1313</x><y>464</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1311</x><y>393</y></vertex>
 			<vertex><x>1306</x><y>395</y></vertex>
@@ -13210,6 +13322,9 @@
 	</province>
 	<province>
 		<name>siam</name>
+		<center>
+			<vertex><x>1428</x><y>519</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1460</x><y>495</y></vertex>
 			<vertex><x>1460</x><y>492</y></vertex>
@@ -13372,6 +13487,9 @@
 	<!-- AUSTRALIA -->
 	<province>
 		<name>indonesia</name>
+		<center>
+			<vertex><x>1470</x><y>707</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1315</x><y>651</y></vertex>
 			<vertex><x>1317</x><y>650</y></vertex>
@@ -13946,6 +14064,9 @@
 	</province>
 	<province>
 		<name>new guinea</name>
+		<center>
+			<vertex><x>1624</x><y>672</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1526</x><y>618</y></vertex>
 			<vertex><x>1527</x><y>616</y></vertex>
@@ -14276,6 +14397,9 @@
 	</province>
 	<province>
 		<name>western australia</name>
+		<center>
+			<vertex><x>1601</x><y>878</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1626</x><y>786</y></vertex>
 			<vertex><x>1618</x><y>807</y></vertex>
@@ -14446,6 +14570,9 @@
 	</province>
 	<province>
 		<name>eastern australia</name>
+		<center>
+			<vertex><x>1727</x><y>884</y></vertex>
+		</center>
 		<mesh>
 			<vertex><x>1626</x><y>786</y></vertex>
 			<vertex><x>1626</x><y>783</y></vertex>

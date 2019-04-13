@@ -27,7 +27,7 @@ public class Main {
 
 	public static void main(final String[] args) {
 		Locale.setDefault(Locale.ENGLISH);
-		DoaEngine.DEBUG_ENABLED = true;
+		DoaEngine.DEBUG_ENABLED = false;
 		DoaEngine.MULTI_THREAD_ENABLED = false;
 		DoaEngine.CLEAR_COLOR = new Color(3, 0, 47);
 		DoaEngine.RENDERING_MODE = DoaRenderingMode.SPEED;
@@ -45,7 +45,8 @@ public class Main {
 		DoaCamera.adjustCamera(DoaHandler.instantiateDoaObject(Camera.class, WINDOW_WIDTH / 2f, WINDOW_HEIGHT / 2f), -10000, -10000, 10000, 10000);
 		DoaHandler.instantiateDoaObject(GameBoard.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 		DoaHandler.instantiateDoaObject(DebugPanel.class);
-
+		DoaHandler.instantiateDoaObject(GameManager.class);
+		
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}
 

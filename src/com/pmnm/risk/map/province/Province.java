@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.map.Mesh2D;
 import com.pmnm.risk.map.continent.Continent;
 
@@ -19,6 +20,7 @@ public class Province implements Serializable {
 	private String name;
 	private List<Province> neighbours;
 	private List<Mesh2D> meshes = new ArrayList<>();
+	private DoaVectorI center;
 
 	public Continent getContinent() {
 		return continent;
@@ -34,6 +36,14 @@ public class Province implements Serializable {
 
 	public List<Mesh2D> getMeshes() {
 		return meshes;
+	}
+	
+	public DoaVectorI getCenter() {
+		return center;
+	}
+	
+	public void setCenter(DoaVectorI centerVertex) {
+		center = centerVertex;
 	}
 
 	public Province setContinent(Continent continent) {
