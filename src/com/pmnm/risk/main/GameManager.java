@@ -16,7 +16,7 @@ public class GameManager extends DoaObject {
 	private static final long serialVersionUID = -4928417050440420799L;
 
 	public static Player[] players;
-	public static int numberOfPlayers = 4;
+	public static int numberOfPlayers = 2;
 	
 	public static boolean isBeginning = true;
 	public static Player[] turns;
@@ -87,21 +87,20 @@ public class GameManager extends DoaObject {
 			System.out.println();
 			*/
 			players = new Player[numberOfPlayers];
-			players[0] = new Player("Player1", Color.RED);
-			players[1] = new Player("Player2", Color.YELLOW);
-			players[2] = new Player("Player3", Color.BLUE);
-			players[3] = new Player("Player4", Color.GREEN);
+			players[0] = new Player("Player1", Color.BLUE);
+			players[1] = new Player("Player2", Color.GREEN);
+			//players[2] = new Player("Player3", Color.RED);
+			//players[3] = new Player("Player4", Color.YELLOW);
 			currentPhase = TurnPhase.DRAFT;
 			isBeginning = false;
 		}
-		currentPlayer = players[turnCount % numberOfPlayers];
-		if(currentPhase == TurnPhase.DRAFT) {
-			
-		} else if(currentPhase == TurnPhase.ATTACK) {
-			
-		} else if(currentPhase == TurnPhase.REINFORCE) {
-			
+		if(currentPhase == TurnPhase.REINFORCE) {
+
+			ProvinceHitArea.isReinforcementsForThisTurnCalculated = false;
 		}
+		
+		currentPlayer = players[turnCount % numberOfPlayers];
+		
 	}
 
 	@Override

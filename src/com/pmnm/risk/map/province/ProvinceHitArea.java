@@ -26,6 +26,7 @@ import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.main.DebugPanel;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Player;
+import com.pmnm.risk.main.TurnPhase;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.risk.ui.UIInit;
 
@@ -54,7 +55,9 @@ public class ProvinceHitArea extends DoaObject {
 	public boolean isOccupied = false;
 	public static int numberOfUnoccupiedProvinces = Province.NAME_PROVINCE.entrySet().size();
 	public static int numberOfRemainingBeginningTroops = Player.findStartingTroopCount(GameManager.numberOfPlayers)
-			* GameManager.numberOfPlayers - Province.NAME_PROVINCE.entrySet().size();
+			* GameManager.numberOfPlayers;
+	public static int remainingTroopsToPut;
+	public static boolean isReinforcementsForThisTurnCalculated = false;
 
 	private int minX = Integer.MAX_VALUE;
 	private int minY = Integer.MAX_VALUE;
@@ -99,6 +102,7 @@ public class ProvinceHitArea extends DoaObject {
 						GameManager.currentPlayer.addProvince(owner);
 						cacheMeshAsImage(GameManager.currentPlayer.getColor());
 						numberOfUnoccupiedProvinces--;
+						numberOfRemainingBeginningTroops--;
 						GameManager.turnCount++;
 						isOccupied = true;
 					} else if (numberOfRemainingBeginningTroops > 0 && numberOfUnoccupiedProvinces <= 0
@@ -106,7 +110,26 @@ public class ProvinceHitArea extends DoaObject {
 						GameManager.currentPlayer.modifyProvinceTroopsBy(owner, 1);
 						GameManager.turnCount++;
 						numberOfRemainingBeginningTroops--;
-						System.out.println(numberOfRemainingBeginningTroops);
+						if (numberOfRemainingBeginningTroops <= 0) {
+							GameManager.turnCount = 0;
+						}
+					} else if (numberOfRemainingBeginningTroops <= 0 && numberOfUnoccupiedProvinces <= 0) {
+						if (GameManager.currentPhase == TurnPhase.DRAFT) {
+							if(!isReinforcementsForThisTurnCalculated) {
+								remainingTroopsToPut = Player.calculateReinforcementsForThisTurn(GameManager.currentPlayer);
+								isReinforcementsForThisTurnCalculated = true;
+							}
+							if (GameManager.currentPlayer.getProvinces().contains(owner)) {
+								if(remainingTroopsToPut > 0) {
+									GameManager.currentPlayer.modifyProvinceTroopsBy(owner, 1);
+									remainingTroopsToPut--;
+								}
+							}
+						} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
+
+						} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
+
+						}
 					}
 				}
 				if (DoaMouse.MB2) {

@@ -13,12 +13,17 @@ public class NextPhaseButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		if(ProvinceHitArea.numberOfRemainingBeginningTroops <= 0) {
-			GameManager.nextPhase();
-			if(GameManager.currentPhase == TurnPhase.DRAFT) {
+		if (ProvinceHitArea.numberOfRemainingBeginningTroops <= 0) {
+			if (GameManager.currentPhase == TurnPhase.DRAFT) {
+				if (ProvinceHitArea.remainingTroopsToPut <= 0) {
+					GameManager.nextPhase();
+				}
+			} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
+				GameManager.nextPhase();
+			} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
+				GameManager.nextPhase();
 				GameManager.turnCount++;
 			}
 		}
 	}
-
 }
