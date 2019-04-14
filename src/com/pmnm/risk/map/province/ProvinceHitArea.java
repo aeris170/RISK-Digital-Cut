@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
@@ -49,15 +50,25 @@ public class ProvinceHitArea extends DoaObject {
 
 	private Province owner;
 	private List<GeneralPath> ownerMeshes = new ArrayList<>();
-	private transient BufferedImage cachedMesh;
+	private transient BufferedImage unoccupiedMesh;
+	private Map<Color, BufferedImage> playerOwnedMeshes;
+	private transient BufferedImage selectedBorder;
+	private transient BufferedImage unselectedBorder;
+	private transient BufferedImage redGlowingMesh;
 	private boolean isPathVisible = true;
 	private boolean isPointsVisible = false;
 	public boolean isOccupied = false;
+	// beginning
 	public static int numberOfUnoccupiedProvinces = Province.NAME_PROVINCE.entrySet().size();
 	public static int numberOfRemainingBeginningTroops = Player.findStartingTroopCount(GameManager.numberOfPlayers)
 			* GameManager.numberOfPlayers;
 	public static int remainingTroopsToPut;
 	public static boolean isReinforcementsForThisTurnCalculated = false;
+	// attack
+	public static boolean attackerProvinceSelected = false;
+	public static boolean defenderProvinceSelected = false;
+	public static ProvinceHitArea attackerProvince = null;
+	public static ProvinceHitArea defenderProvince = null;
 
 	private int minX = Integer.MAX_VALUE;
 	private int minY = Integer.MAX_VALUE;
@@ -100,7 +111,8 @@ public class ProvinceHitArea extends DoaObject {
 				if (DoaMouse.MB1) {
 					if (!isOccupied && numberOfUnoccupiedProvinces > 0) {
 						GameManager.currentPlayer.addProvince(owner);
-						cacheMeshAsImage(GameManager.currentPlayer.getColor());
+						cacheMeshAsImage(GameManager.currentPlayer.getColor(), GameManager.currentPlayer.getColor(),
+								new BasicStroke(2));
 						numberOfUnoccupiedProvinces--;
 						numberOfRemainingBeginningTroops--;
 						GameManager.turnCount++;
@@ -115,17 +127,28 @@ public class ProvinceHitArea extends DoaObject {
 						}
 					} else if (numberOfRemainingBeginningTroops <= 0 && numberOfUnoccupiedProvinces <= 0) {
 						if (GameManager.currentPhase == TurnPhase.DRAFT) {
-							if(!isReinforcementsForThisTurnCalculated) {
-								remainingTroopsToPut = Player.calculateReinforcementsForThisTurn(GameManager.currentPlayer);
+							if (!isReinforcementsForThisTurnCalculated) {
+								remainingTroopsToPut = Player
+										.calculateReinforcementsForThisTurn(GameManager.currentPlayer);
 								isReinforcementsForThisTurnCalculated = true;
 							}
 							if (GameManager.currentPlayer.getProvinces().contains(owner)) {
-								if(remainingTroopsToPut > 0) {
+								if (remainingTroopsToPut > 0) {
 									GameManager.currentPlayer.modifyProvinceTroopsBy(owner, 1);
 									remainingTroopsToPut--;
 								}
 							}
 						} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
+							if (GameManager.currentPlayer.getProvinces().contains(owner)) {
+								attackerProvince = this;
+								if (!attackerProvinceSelected) {
+									cacheMeshAsImage(GameManager.currentPlayer.getColor(), Color.PINK,
+											new BasicStroke(5));
+									attackerProvinceSelected = true;
+								}
+							} else if (attackerProvince != null) {
+								defenderProvince = this;
+							}
 
 						} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
 
@@ -143,7 +166,7 @@ public class ProvinceHitArea extends DoaObject {
 		});
 	}
 
-	private void cacheMeshAsImage(Color color) {
+	private void cacheMeshAsImage(Color interiorColor, Color borderColor, Stroke stroke) {
 		for (GeneralPath mesh : ownerMeshes) {
 			double[][] vertices = getPoints(mesh);
 			for (int i = 0; i < vertices.length; i++) {
@@ -161,18 +184,16 @@ public class ProvinceHitArea extends DoaObject {
 				}
 			}
 		}
-		Color borderColor = owner.getContinent().getColor();
-		Color fillColor = new Color(borderColor.getRed() / 3, borderColor.getGreen() / 3, borderColor.getBlue() / 3);
 		cachedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		cachedMesh.setAccelerationPriority(1);
 		Graphics2D meshRenderer = cachedMesh.createGraphics();
 		meshRenderer.translate(-minX + 4, -minY + 4);
 		meshRenderer.setRenderingHints(HINTS);
-		meshRenderer.setStroke(new BasicStroke(2));
+		meshRenderer.setStroke(stroke);
 		for (GeneralPath gp : ownerMeshes) {
-			meshRenderer.setColor(color);
+			meshRenderer.setColor(interiorColor);
 			meshRenderer.fill(gp);
-			meshRenderer.setColor(color);
+			meshRenderer.setColor(borderColor);
 			meshRenderer.draw(gp);
 		}
 		meshRenderer.dispose();
@@ -183,7 +204,11 @@ public class ProvinceHitArea extends DoaObject {
 		Composite oldComposite = g.getComposite();
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
 		if (isPathVisible) {
-			g.drawImage(cachedMesh, minX - 4d, minY - 4d);
+			if (isOccupied) {
+				g.drawImage(playerOwnedMesh, minX - 4d, minY - 4d);
+			} else {
+				g.drawImage(unoccupiedMesh, minX - 4d, minY - 4d);
+			}
 		}
 		if (isPointsVisible) {
 			g.setColor(Color.MAGENTA);
@@ -195,6 +220,11 @@ public class ProvinceHitArea extends DoaObject {
 			}
 		}
 		g.setComposite(oldComposite);
+		if (attackerProvince == this || defenderProvince == this) {
+			g.drawImage(selectedBorder, minX - 4d, minY - 4d);
+		} else {
+			g.drawImage(unselectedBorder, minX - 4d, minY - 4d);
+		}
 		if (isOccupied) {
 			Player playerOwningThisProvince = null;
 			for (Entry<String, Player> player : Player.NAME_PLAYER.entrySet()) {
