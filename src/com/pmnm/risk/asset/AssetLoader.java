@@ -54,6 +54,13 @@ public final class AssetLoader {
 			DoaSprites.createSprite("winConditionButtonIdle", "/ui/gameScreenElements/smallWinningConditionsButton.png");
 			DoaSprites.createSprite("winConditionButtonHover", "/ui/gameScreenElements/smallPressedWinningConditionsButton.png");
 
+			DoaSprites.createSprite("p1Pawn", "/ui/gameScreenElements/pawns/p1.png");
+			DoaSprites.createSprite("p2Pawn", "/ui/gameScreenElements/pawns/p2.png");
+			DoaSprites.createSprite("p3Pawn", "/ui/gameScreenElements/pawns/p3.png");
+			DoaSprites.createSprite("p4Pawn", "/ui/gameScreenElements/pawns/p4.png");
+			DoaSprites.createSprite("p5Pawn", "/ui/gameScreenElements/pawns/p5.png");
+			DoaSprites.createSprite("p6Pawn", "/ui/gameScreenElements/pawns/p6.png");
+
 			List<DoaSprite> riskLogoKeyFrames = new ArrayList<>();
 			for (int i = 1; i <= 11; i++) {
 				riskLogoKeyFrames.add(DoaSprites.createSprite("KEYFRAME" + i, "/ui/logoKeyframes/" + i + ".png"));

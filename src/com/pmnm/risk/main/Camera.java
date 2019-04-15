@@ -19,7 +19,6 @@ import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
 import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
-import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
 
 public class Camera extends DoaObject {
@@ -89,11 +88,8 @@ public class Camera extends DoaObject {
 		if (DoaMouse.X > Main.WINDOW_WIDTH * HIGH_PERCENTAGE_FOR_MOUSE_CAMERA / 100) {
 			position.x += MOUSE_LOOK_SPEED;
 		}
-		topLeftBound = new DoaVectorF(
-				Main.WINDOW_WIDTH / 2f
-						+ (Main.WINDOW_WIDTH / 2f - (Main.WINDOW_WIDTH / 2f * DoaCamera.getZ())) / DoaCamera.getZ(),
-				Main.WINDOW_HEIGHT / 2f
-						+ (Main.WINDOW_HEIGHT / 2f - (Main.WINDOW_HEIGHT / 2f * DoaCamera.getZ())) / DoaCamera.getZ());
+		topLeftBound = new DoaVectorF(Main.WINDOW_WIDTH / 2f + (Main.WINDOW_WIDTH / 2f - (Main.WINDOW_WIDTH / 2f * DoaCamera.getZ())) / DoaCamera.getZ(),
+		        Main.WINDOW_HEIGHT / 2f + (Main.WINDOW_HEIGHT / 2f - (Main.WINDOW_HEIGHT / 2f * DoaCamera.getZ())) / DoaCamera.getZ());
 		bottomRightBound = new DoaVectorF(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT).sub(topLeftBound);
 
 		position.x = DoaMath.clamp(position.x, topLeftBound.x, bottomRightBound.x);
@@ -104,8 +100,7 @@ public class Camera extends DoaObject {
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
 				isLoggingVertices = true;
-				writer.println(
-						"LOG::START " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+				writer.println("LOG::START " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
 			} else {
 				isLoggingVertices = false;
 				writer.println("LOG::END " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
@@ -135,8 +130,7 @@ public class Camera extends DoaObject {
 		g.drawString("Cam Pos: " + position.toString(), 0, 40);
 		g.drawString("Cam Top Left Bound: " + topLeftBound.toString(), 0, 60);
 		g.drawString("Cam Bottom Right Bound: " + bottomRightBound.toString(), 0, 80);
-		g.drawString("Absolute Mouse Pos: " + new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y).toString(), 0,
-				100);
+		g.drawString("Absolute Mouse Pos: " + new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y).toString(), 0, 100);
 		g.drawString("Mapped Mouse Pos: " + Utils.mapMouseCoordinatesByZoom().toString(), 0, 120);
 		if (isLoggingVertices) {
 			g.setColor(Color.RED);
@@ -152,14 +146,11 @@ public class Camera extends DoaObject {
 		g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
 		g.setColor(GameManager.currentPlayer.getColor());
 		g.fillRect(0, 220, 290, 23);
-		g.setColor(Color.WHITE);
-		if (ProvinceHitArea.numberOfRemainingBeginningTroops > 0) {
-			g.drawString("Remaining troops to put: "
-					+ ((50 - 5 * GameManager.numberOfPlayers) - GameManager.turnCount / GameManager.numberOfPlayers), 0,
-					240);
-		} else {
-			g.drawString("Remaining troops to put: "
-					+ (ProvinceHitArea.remainingTroopsToPut), 0, 240);
-		}
+		g.setColor(Color.WHITE);/* if (ProvinceHitArea.numberOfRemainingBeginningTroops > 0) {
+		                         * g.drawString("Remaining troops to put: " + ((50 - 5 *
+		                         * GameManager.numberOfPlayers) - GameManager.turnCount /
+		                         * GameManager.numberOfPlayers), 0, 240); } else {
+		                         * g.drawString("Remaining troops to put: " +
+		                         * (ProvinceHitArea.remainingTroopsToPut), 0, 240); } */
 	}
 }
