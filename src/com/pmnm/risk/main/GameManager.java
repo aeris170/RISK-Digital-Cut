@@ -12,6 +12,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.ui.gameui.DicePanel;
 
 public class GameManager extends DoaObject {
 
@@ -30,6 +31,7 @@ public class GameManager extends DoaObject {
 
 	public static ProvinceHitArea attackerProvinceHitArea = null;
 	public static ProvinceHitArea defenderProvinceHitArea = null;
+	public static DicePanel dicePanel = DoaHandler.instantiateDoaObject(DicePanel.class);
 
 	public GameManager() {
 		super(0f, 0f);
@@ -149,6 +151,9 @@ public class GameManager extends DoaObject {
 		if (defenderProvinceHitArea != null) {
 			defenderProvinceHitArea.selectAsDefender();
 			defenderProvinceHitArea.setzOrder(DoaObject.FRONT);
+			dicePanel.show();
+		} else {
+			dicePanel.hide();
 		}
 	}
 

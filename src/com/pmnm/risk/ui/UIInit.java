@@ -42,6 +42,6 @@ public final class UIInit {
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", new Color(189, 164, 79), new Color(94, 82, 42)));
 		mm.add(DoaHandler.instantiateDoaObject(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y, new ExitButtonAction(),
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", new Color(189, 164, 79), new Color(94, 82, 42)));
-		mm.setActive(true);
+		mm.show();
 	}
 }

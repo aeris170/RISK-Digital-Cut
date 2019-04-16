@@ -14,7 +14,7 @@ public class PlayOfflineButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		mm.setActive(false);
+		mm.hide();
 		RiskGameScreenUI.initUI();
 	}
 
