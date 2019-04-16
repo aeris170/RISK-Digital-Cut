@@ -19,7 +19,7 @@ public class GameManager extends DoaObject {
 	private static final long serialVersionUID = -4928417050440420799L;
 
 	public static final List<Player> players = new ArrayList<>();
-	public static int numberOfPlayers = 6;
+	public static int numberOfPlayers = 2;
 
 	public static boolean isManualPlacementDone = false;
 	public static final Map<Player, Integer> startingTroops = new HashMap<>();
