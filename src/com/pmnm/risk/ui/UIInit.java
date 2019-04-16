@@ -32,16 +32,26 @@ public final class UIInit {
 
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiateDoaObject(MainMenu.class);
-		mm.add(DoaHandler.instantiateDoaObject(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y, new PlayOfflineButtonAction(mm),
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY OFFLINE", new Color(189, 164, 79), new Color(94, 82, 42)));
-		mm.add(DoaHandler.instantiateDoaObject(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y, new PlayOnlineButtonAction(),
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY ONLINE", new Color(189, 164, 79), new Color(94, 82, 42)));
-		mm.add(DoaHandler.instantiateDoaObject(TextImageButton.class, MM_SETTING_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y, new SettingsButtonAction(),
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "SETTINGS", new Color(189, 164, 79), new Color(94, 82, 42)));
-		mm.add(DoaHandler.instantiateDoaObject(TextImageButton.class, MM_RULES_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y, new RulesButtonAction(),
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", new Color(189, 164, 79), new Color(94, 82, 42)));
-		mm.add(DoaHandler.instantiateDoaObject(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y, new ExitButtonAction(),
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", new Color(189, 164, 79), new Color(94, 82, 42)));
+		TextImageButton playOfflineButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY OFFLINE", new Color(189, 164, 79), new Color(94, 82, 42));
+		TextImageButton playOnlineButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY ONLINE", new Color(189, 164, 79), new Color(94, 82, 42));
+		TextImageButton settingsButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_SETTING_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "SETTINGS", new Color(189, 164, 79), new Color(94, 82, 42));
+		TextImageButton rulesButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_RULES_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", new Color(189, 164, 79), new Color(94, 82, 42));
+		TextImageButton exitButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", new Color(189, 164, 79), new Color(94, 82, 42));
+		playOfflineButton.addAction(new PlayOfflineButtonAction(mm));
+		playOnlineButton.addAction(new PlayOnlineButtonAction());
+		settingsButton.addAction(new SettingsButtonAction());
+		rulesButton.addAction(new RulesButtonAction());
+		exitButton.addAction(new ExitButtonAction());
+		mm.add(playOfflineButton);
+		mm.add(playOnlineButton);
+		mm.add(settingsButton);
+		mm.add(rulesButton);
+		mm.add(exitButton);
 		mm.show();
 	}
 }
