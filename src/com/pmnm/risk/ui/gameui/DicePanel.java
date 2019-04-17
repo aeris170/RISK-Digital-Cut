@@ -13,18 +13,18 @@ public class DicePanel extends DoaUIContainer {
 
 	private static final float ACCELERATION = 0.064f;
 
-	private static final DoaVectorF MIN = new DoaVectorF(1820f, 400f);
-	private static final DoaVectorF MAX = new DoaVectorF(1920f, 600f);
+	private static final DoaVectorF MIN = new DoaVectorF(-100f, 400f);
+	private static final DoaVectorF MAX = new DoaVectorF(0f, 600f);
 
-	private DoaImageButton one = DoaHandler.instantiateDoaObject(DoaImageButton.class, 1920f, 400f, 100, 70, DoaSprites.get("dice1"));
-	private DoaImageButton two = DoaHandler.instantiateDoaObject(DoaImageButton.class, 1920f, 470f, 100, 70, DoaSprites.get("dice2"));
-	private DoaImageButton three = DoaHandler.instantiateDoaObject(DoaImageButton.class, 1920f, 540f, 100, 70, DoaSprites.get("dice3"));
-	private DoaImageButton blitz = DoaHandler.instantiateDoaObject(DoaImageButton.class, 1920f, 610f, 100, 70, DoaSprites.get("diceBlitz"));
+	private DoaImageButton one = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 400f, 100, 70, DoaSprites.get("dice1"));
+	private DoaImageButton two = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 470f, 100, 70, DoaSprites.get("dice2"));
+	private DoaImageButton three = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 540f, 100, 70, DoaSprites.get("dice3"));
+	private DoaImageButton blitz = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 610f, 100, 70, DoaSprites.get("diceBlitz"));
 
 	private boolean moving = false;
 
 	public DicePanel() {
-		super(MAX.clone(), (int) (MAX.x - MIN.x), (int) (MAX.y - MIN.y));
+		super(MIN.clone(), (int) (MAX.x - MIN.x), (int) (MAX.y - MIN.y));
 		add(one);
 		add(two);
 		add(three);
@@ -62,13 +62,13 @@ public class DicePanel extends DoaUIContainer {
 	@Override
 	public void show() {
 		moving = true;
-		velocity.x = -1;
+		velocity.x = 1;
 	}
 
 	@Override
 	public void hide() {
 		moving = true;
-		velocity.x = 1;
+		velocity.x = -1;
 	}
 
 	@Override
