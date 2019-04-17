@@ -61,6 +61,11 @@ public final class AssetLoader {
 			DoaSprites.createSprite("p5Pawn", "/ui/gameScreenElements/pawns/p5.png");
 			DoaSprites.createSprite("p6Pawn", "/ui/gameScreenElements/pawns/p6.png");
 
+			DoaSprites.createSprite("dice1", "/ui/dice1.png");
+			DoaSprites.createSprite("dice2", "/ui/dice2.png");
+			DoaSprites.createSprite("dice3", "/ui/dice3.png");
+			DoaSprites.createSprite("diceBlitz", "/ui/diceBlitz.png");
+
 			List<DoaSprite> riskLogoKeyFrames = new ArrayList<>();
 			for (int i = 1; i <= 11; i++) {
 				riskLogoKeyFrames.add(DoaSprites.createSprite("KEYFRAME" + i, "/ui/logoKeyframes/" + i + ".png"));

@@ -65,7 +65,8 @@ public class Player extends DoaObject {
 					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1) {
 						GameManager.markAttackerProvince(clickedHitArea);
 						GameManager.markDefenderProvince(null);
-					} else if (GameManager.getAttackerProvince() != null && GameManager.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
+					} else if (GameManager.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
+					        && GameManager.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
 						GameManager.markDefenderProvince(clickedHitArea);
 					}
 				} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {

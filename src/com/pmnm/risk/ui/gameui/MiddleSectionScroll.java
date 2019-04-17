@@ -1,13 +1,16 @@
 package com.pmnm.risk.ui.gameui;
 
-import com.doa.engine.DoaObject;
+import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
+import com.doa.ui.panel.DoaPanel;
+import com.pmnm.risk.ui.gameui.actions.CardsButtonAction;
+import com.pmnm.risk.ui.gameui.actions.NextPhaseButtonAction;
 
-public class MiddleSectionScroll extends DoaObject {
+public class MiddleSectionScroll extends DoaPanel {
 
 	private static final long serialVersionUID = -3397313460439190782L;
 
@@ -21,20 +24,23 @@ public class MiddleSectionScroll extends DoaObject {
 	private static final DoaSprite CARDS_BUTTON_TEXTURE = DoaSprites.get("cardsButtonIdle");
 	private static final DoaSprite WIN_CONDITION_BUTTON_TEXTURE = DoaSprites.get("winConditionButtonIdle");
 
-	private DoaImageButton nextPhaseButton;
-	private DoaImageButton cardsButton;
-	private DoaImageButton winConditionButton;
+	private DoaImageButton nextPhaseButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, 833f, 991f, NEXT_PHASE_BUTTON_TEXTURE.getWidth(),
+	        NEXT_PHASE_BUTTON_TEXTURE.getHeight(), NEXT_PHASE_BUTTON_TEXTURE, DoaSprites.get("nextPhaseButtonHover"));
+	private DoaImageButton cardsButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, 935f, 991f, CARDS_BUTTON_TEXTURE.getWidth(),
+	        CARDS_BUTTON_TEXTURE.getHeight(), CARDS_BUTTON_TEXTURE, DoaSprites.get("cardsButtonHover"));
+	private DoaImageButton winConditionButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, 1037f, 991f, WIN_CONDITION_BUTTON_TEXTURE.getWidth(),
+	        WIN_CONDITION_BUTTON_TEXTURE.getHeight(), WIN_CONDITION_BUTTON_TEXTURE, DoaSprites.get("winConditionButtonHover"));
 
 	boolean moving = false;
 
 	public MiddleSectionScroll() {
-		super(MAX.clone(), TEXTURE.getWidth(), TEXTURE.getHeight(), DoaObject.STATIC_FRONT);
-		nextPhaseButton = new DoaImageButton(833f, 991f, NEXT_PHASE_BUTTON_TEXTURE.getWidth(), NEXT_PHASE_BUTTON_TEXTURE.getHeight(), NEXT_PHASE_BUTTON_TEXTURE,
-		        DoaSprites.get("nextPhaseButtonHover"));
-		cardsButton = new DoaImageButton(935f, 991f, CARDS_BUTTON_TEXTURE.getWidth(), CARDS_BUTTON_TEXTURE.getHeight(), CARDS_BUTTON_TEXTURE,
-		        DoaSprites.get("cardsButtonHover"));
-		winConditionButton = new DoaImageButton(1037f, 991f, WIN_CONDITION_BUTTON_TEXTURE.getWidth(), WIN_CONDITION_BUTTON_TEXTURE.getHeight(),
-		        WIN_CONDITION_BUTTON_TEXTURE, DoaSprites.get("winConditionButtonHover"));
+		super(MAX.clone(), TEXTURE.getWidth(), TEXTURE.getHeight());
+		add(nextPhaseButton);
+		add(cardsButton);
+		add(winConditionButton);
+		nextPhaseButton.addAction(new NextPhaseButtonAction());
+		cardsButton.addAction(new CardsButtonAction(this));
+		show();
 	}
 
 	public void move() {
@@ -56,9 +62,9 @@ public class MiddleSectionScroll extends DoaObject {
 				velocity.y -= ACCELERATION;
 			}
 			position.add(velocity);
-			nextPhaseButton.setPosition(nextPhaseButton.getPosition().add(velocity));
-			cardsButton.setPosition(cardsButton.getPosition().add(velocity));
-			winConditionButton.setPosition(winConditionButton.getPosition().add(velocity));
+			nextPhaseButton.getPosition().add(velocity);
+			cardsButton.getPosition().add(velocity);
+			winConditionButton.getPosition().add(velocity);
 			if (position.y > MAX.y) {
 				position.y = MAX.y;
 				velocity.y = 0;
@@ -70,16 +76,10 @@ public class MiddleSectionScroll extends DoaObject {
 				moving = false;
 			}
 		}
-		nextPhaseButton.tick();
-		cardsButton.tick();
-		winConditionButton.tick();
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
 		g.drawImage(TEXTURE, position.x, position.y);
-		nextPhaseButton.render(g);
-		cardsButton.render(g);
-		winConditionButton.render(g);
 	}
 }

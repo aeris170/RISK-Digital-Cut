@@ -31,7 +31,7 @@ public class GameManager extends DoaObject {
 
 	public static ProvinceHitArea attackerProvinceHitArea = null;
 	public static ProvinceHitArea defenderProvinceHitArea = null;
-	public static DicePanel dicePanel = DoaHandler.instantiateDoaObject(DicePanel.class, 0f, 0f, 0, 0);
+	public static DicePanel dicePanel = DoaHandler.instantiateDoaObject(DicePanel.class);
 
 	public GameManager() {
 		super(0f, 0f);
