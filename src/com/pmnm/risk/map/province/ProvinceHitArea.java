@@ -142,7 +142,7 @@ public class ProvinceHitArea extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (isPathVisible) {
-			if (province.isOccupied()) {
+			if (province.isClaimed()) {
 				g.drawImage(playerOwnedMeshes.get(province.getOwner().getColor()), minX - 4d, minY - 4d);
 				if (isEmphasized) {
 					g.drawImage(emphasizedBorder, minX - 4d, minY - 4d);
@@ -166,7 +166,7 @@ public class ProvinceHitArea extends DoaObject {
 				}
 			}
 		}
-		if (province.isOccupied()) {
+		if (province.isClaimed()) {
 			g.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
 			FontMetrics fm = g.getFontMetrics();
 			g.setColor(Color.BLACK);

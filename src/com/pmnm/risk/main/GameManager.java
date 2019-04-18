@@ -6,12 +6,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.pmnm.risk.dice.Dice;
+import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
@@ -23,6 +25,7 @@ public class GameManager extends DoaObject {
 
 	public static final List<Player> players = new ArrayList<>();
 	public static int numberOfPlayers = 2;
+	public static boolean manualPlacement = false;
 
 	public static boolean isManualPlacementDone = false;
 	public static final Map<Player, Integer> startingTroops = new HashMap<>();
@@ -46,6 +49,9 @@ public class GameManager extends DoaObject {
 		}
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
+		if (!manualPlacement) {
+			randomPlacement();
+		}
 	}
 
 	public static void nextPhase() {
@@ -91,8 +97,8 @@ public class GameManager extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {}
 
-	public static void occupyProvince(Province occupied) {
-		occupied.getOccupiedBy(currentPlayer);
+	public static void claimProvince(Province claimed) {
+		claimed.getClaimedBy(currentPlayer);
 		startingTroops.put(currentPlayer, startingTroops.get(currentPlayer) - 1);
 		currentPlayer = players.get(++turnCount % players.size());
 		currentPlayer.turn();
@@ -116,8 +122,8 @@ public class GameManager extends DoaObject {
 		return reinforcementForThisTurn;
 	}
 
-	public static boolean areAllProvincesCaptured() {
-		return Province.NAME_PROVINCE.values().stream().filter(province -> province.isOccupied()).count() == Province.NAME_PROVINCE.size();
+	public static boolean areAllProvincesClaimed() {
+		return Province.ALL_PROVINCES.stream().filter(province -> province.isClaimed()).count() == Province.ALL_PROVINCES.size();
 	}
 
 	public static void markAttackerProvince(ProvinceHitArea province) {
@@ -188,6 +194,8 @@ public class GameManager extends DoaObject {
 					attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_3.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
 				}
 				break;
+			default:
+				throw new DiceException("diceAmount not in the set (1, 2, 3)");
 		}
 		if (attackerDiceValues != null) {
 			Arrays.sort(attackerDiceValues, Collections.reverseOrder());
@@ -202,10 +210,9 @@ public class GameManager extends DoaObject {
 				}
 			}
 			int defenderTroopCount = defenderProvinceHitArea.getProvince().getTroops();
-			if(defenderTroopCount > defenderCasualties){
+			if (defenderTroopCount > defenderCasualties) {
 				defenderProvinceHitArea.getProvince().removeTroops(defenderCasualties);
-			}
-			else{
+			} else {
 				defenderProvinceHitArea.getProvince().removeTroops(defenderTroopCount);
 			}
 			attackerProvinceHitArea.getProvince().removeTroops(attackerCasualties);
@@ -216,19 +223,36 @@ public class GameManager extends DoaObject {
 			if (defenderProvinceHitArea.getProvince().getTroops() <= 0) {
 				// capture
 				int remainingTroops = attackerProvinceHitArea.getProvince().getTroops();
-				if(remainingTroops - diceAmount > 1) {
+				if (remainingTroops - diceAmount > 1) {
 					defenderProvinceHitArea.getProvince().addTroops(diceAmount);
 					attackerProvinceHitArea.getProvince().removeTroops(diceAmount);
-				}
-				else if (remainingTroops - diceAmount <= 1 && remainingTroops > 1) {
+				} else if (remainingTroops - diceAmount <= 1 && remainingTroops > 1) {
 					defenderProvinceHitArea.getProvince().addTroops(remainingTroops - 1);
 					attackerProvinceHitArea.getProvince().removeTroops(remainingTroops - 1);
 				}
-				//the attacking province cannot both win and have only 1 troop left... right?
-				occupyProvince(defenderProvinceHitArea.getProvince());
+				// the attacking province cannot both win and have only 1 troop left... right?
+				occupyProvince(defenderProvinceHitArea.getProvince(), diceAmount);
+				defenderProvinceHitArea.deemphasizeForAttack();
 			}
 		} else {
 			// dice cannot be thrown because province didn't have enough troop
+		}
+	}
+
+	private static void occupyProvince(Province occupied, int invadingTroopCount) {
+		occupied.getOccupiedBy(currentPlayer, invadingTroopCount);
+		markDefenderProvince(null);
+	}
+
+	private static void randomPlacement() {
+		while (!Province.UNCLAIMED_PROVINCES.isEmpty()) {
+			currentPlayer.endTurn();
+			claimProvince(Province.getRandomUnclaimedProvince());
+		}
+		while (!startingTroops.values().stream().allMatch(v -> v == 0)) {
+			List<Province> playerProvinces = Player.getPlayerProvinces(currentPlayer);
+			currentPlayer.endTurn();
+			reinforce(playerProvinces.get(ThreadLocalRandom.current().nextInt(playerProvinces.size())), 1);
 		}
 	}
 }

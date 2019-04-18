@@ -50,10 +50,10 @@ public class Player extends DoaObject {
 			if (clickedHitArea != null) {
 				Province clickedProvince = clickedHitArea.getProvince();
 				if (!GameManager.isManualPlacementDone) {
-					if (!clickedProvince.isOccupied()) {
-						GameManager.occupyProvince(clickedProvince);
+					if (!clickedProvince.isClaimed()) {
+						GameManager.claimProvince(clickedProvince);
 						isInTurn = false;
-					} else if (clickedProvince.isOwnedBy(this) && GameManager.areAllProvincesCaptured()) {
+					} else if (clickedProvince.isOwnedBy(this) && GameManager.areAllProvincesClaimed()) {
 						GameManager.reinforce(clickedProvince, 1);
 						isInTurn = false;
 					}
@@ -103,7 +103,7 @@ public class Player extends DoaObject {
 	}
 
 	public static int calculateReinforcementsForThisTurn(Player player) {
-		List<Province> playerProvinces = Province.NAME_PROVINCE.values().stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
+		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
 		int reinforcementsForThisTurn = playerProvinces.size() / 3;
 		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
 			Continent currentContinent = entry.getValue();
@@ -112,5 +112,13 @@ public class Player extends DoaObject {
 			}
 		}
 		return reinforcementsForThisTurn;
+	}
+
+	public static List<Province> getPlayerProvinces(Player player) {
+		return Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == player).collect(Collectors.toList());
+	}
+
+	public void endTurn() {
+		isInTurn = false;
 	}
 }

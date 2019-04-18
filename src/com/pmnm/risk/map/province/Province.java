@@ -2,9 +2,8 @@ package com.pmnm.risk.map.province;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.main.Player;
@@ -15,16 +14,22 @@ public class Province implements Serializable {
 
 	private static final long serialVersionUID = 157817527974605181L;
 
-	public static final Map<String, Province> NAME_PROVINCE = new LinkedHashMap<>();
+	public static final List<Province> ALL_PROVINCES = new ArrayList<>();
+	public static final List<Province> UNCLAIMED_PROVINCES = new ArrayList<>();
 
 	private Continent continent;
 	private String name;
 	private List<Province> neighbours;
 	private List<Mesh2D> meshes = new ArrayList<>();
 	private DoaVectorI center;
-	private boolean isOccupied;
+	private boolean isClaimed;
 	private Player owner;
 	private int troops;
+
+	public Province() {
+		ALL_PROVINCES.add(this);
+		UNCLAIMED_PROVINCES.add(this);
+	}
 
 	public Continent getContinent() {
 		return continent;
@@ -56,9 +61,7 @@ public class Province implements Serializable {
 	}
 
 	public Province setName(String name) {
-		NAME_PROVINCE.remove(this.name);
 		this.name = name;
-		NAME_PROVINCE.put(name, this);
 		return this;
 	}
 
@@ -82,16 +85,17 @@ public class Province implements Serializable {
 	}
 
 	public static void printAllProvinces() {
-		NAME_PROVINCE.forEach((s, p) -> System.out.print(p.toString()));
+		ALL_PROVINCES.forEach(p -> System.out.print(p.toString()));
 	}
 
-	public boolean isOccupied() {
-		return isOccupied;
+	public boolean isClaimed() {
+		return isClaimed;
 	}
 
-	public void getOccupiedBy(Player player) {
+	public void getClaimedBy(Player player) {
+		UNCLAIMED_PROVINCES.remove(this);
 		owner = player;
-		isOccupied = true;
+		isClaimed = true;
 		troops = 1;
 	}
 
@@ -113,5 +117,14 @@ public class Province implements Serializable {
 
 	public Player getOwner() {
 		return owner;
+	}
+
+	public static Province getRandomUnclaimedProvince() {
+		return UNCLAIMED_PROVINCES.get(ThreadLocalRandom.current().nextInt(UNCLAIMED_PROVINCES.size()));
+	}
+
+	public void getOccupiedBy(Player player, int invadingTroopCount) {
+		owner = player;
+		troops = invadingTroopCount;
 	}
 }

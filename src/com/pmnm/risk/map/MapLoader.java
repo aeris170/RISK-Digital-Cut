@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jdom2.Document;
@@ -26,6 +28,8 @@ public final class MapLoader {
 	private static final String NEIGHBOURS_DATA_PATH = "res/mapdata/neighbours.xml";
 	private static final String VERTICES_DATA_PATH = "res/mapdata/vertices.xml";
 
+	private static final Map<String, Province> NAME_PROVINCE = new HashMap<>();
+
 	private MapLoader() {
 		throw new RiskStaticInstantiationException(getClass());
 	}
@@ -44,7 +48,7 @@ public final class MapLoader {
 	private static void createProvinces() throws JDOMException, IOException {
 		Document provincesDocument = new SAXBuilder().build(new File(PROVINCE_DATA_PATH));
 		Element provincesElement = provincesDocument.getRootElement();
-		provincesElement.getChildren().forEach(province -> new Province().setName(province.getText()));
+		provincesElement.getChildren().forEach(province -> NAME_PROVINCE.put(province.getText(), new Province().setName(province.getText())));
 	}
 
 	private static void groupProvinces() throws JDOMException, IOException {
@@ -52,14 +56,11 @@ public final class MapLoader {
 		Element continentsElement = continentsDocument.getRootElement();
 		continentsElement.getChildren().forEach(continentElement -> {
 			final Continent continent = new Continent().setName(continentElement.getChildText("name"))
-					.setCaptureBonus(Integer.parseInt(continentElement.getChildText("capture-bonus")))
-					.setAbbreviation(continentElement.getChildText("abbreviation"));
+			        .setCaptureBonus(Integer.parseInt(continentElement.getChildText("capture-bonus"))).setAbbreviation(continentElement.getChildText("abbreviation"));
 			String[] parsedColor = continentElement.getChildText("color").split(",");
-			continent.setColor(new Color(Integer.parseInt(parsedColor[0].trim()),
-					Integer.parseInt(parsedColor[1].trim()), Integer.parseInt(parsedColor[2].trim())));
+			continent.setColor(new Color(Integer.parseInt(parsedColor[0].trim()), Integer.parseInt(parsedColor[1].trim()), Integer.parseInt(parsedColor[2].trim())));
 			final Set<Province> provincesOfContinent = new HashSet<>();
-			continentElement.getChildren("province")
-					.forEach(child -> provincesOfContinent.add(Province.NAME_PROVINCE.get(child.getText())));
+			continentElement.getChildren("province").forEach(child -> provincesOfContinent.add(NAME_PROVINCE.get(child.getText())));
 			continent.setProvinces(provincesOfContinent);
 		});
 	}
@@ -68,10 +69,9 @@ public final class MapLoader {
 		Document neighboursDocument = new SAXBuilder().build(new File(NEIGHBOURS_DATA_PATH));
 		Element neighboursElement = neighboursDocument.getRootElement();
 		neighboursElement.getChildren().forEach(provinceElement -> {
-			final Province province = Province.NAME_PROVINCE.get(provinceElement.getChildText("name"));
+			final Province province = NAME_PROVINCE.get(provinceElement.getChildText("name"));
 			final List<Province> neighboursOfProvince = new ArrayList<>();
-			provinceElement.getChildren("neighbour")
-					.forEach(child -> neighboursOfProvince.add(Province.NAME_PROVINCE.get(child.getText())));
+			provinceElement.getChildren("neighbour").forEach(child -> neighboursOfProvince.add(NAME_PROVINCE.get(child.getText())));
 			province.setNeighbours(neighboursOfProvince);
 		});
 	}
@@ -80,7 +80,7 @@ public final class MapLoader {
 		Document verticesDocument = new SAXBuilder().build(new File(VERTICES_DATA_PATH));
 		Element verticesElement = verticesDocument.getRootElement();
 		verticesElement.getChildren().forEach(provinceElement -> {
-			final Province province = Province.NAME_PROVINCE.get(provinceElement.getChildText("name"));
+			final Province province = NAME_PROVINCE.get(provinceElement.getChildText("name"));
 			Element centerVertex = provinceElement.getChild("center").getChild("vertex");
 			province.setCenter(new Vertex2D(Integer.parseInt(centerVertex.getChildText("x")), Integer.parseInt(centerVertex.getChildText("y"))));
 			provinceElement.getChildren("mesh").forEach(meshElement -> {
