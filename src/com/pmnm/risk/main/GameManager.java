@@ -201,14 +201,31 @@ public class GameManager extends DoaObject {
 					attackerCasualties++;
 				}
 			}
+			int defenderTroopCount = defenderProvinceHitArea.getProvince().getTroops();
+			if(defenderTroopCount > defenderCasualties){
+				defenderProvinceHitArea.getProvince().removeTroops(defenderCasualties);
+			}
+			else{
+				defenderProvinceHitArea.getProvince().removeTroops(defenderTroopCount);
+			}
 			attackerProvinceHitArea.getProvince().removeTroops(attackerCasualties);
-			defenderProvinceHitArea.getProvince().removeTroops(defenderCasualties);
 			if (attackerProvinceHitArea.getProvince().getTroops() == 1) {
 				markAttackerProvince(null);
 				markDefenderProvince(null);
 			}
-			if (defenderProvinceHitArea.getProvince().getTroops() == 0) {
+			if (defenderProvinceHitArea.getProvince().getTroops() <= 0) {
 				// capture
+				int remainingTroops = attackerProvinceHitArea.getProvince().getTroops();
+				if(remainingTroops - diceAmount > 1) {
+					defenderProvinceHitArea.getProvince().addTroops(diceAmount);
+					attackerProvinceHitArea.getProvince().removeTroops(diceAmount);
+				}
+				else if (remainingTroops - diceAmount <= 1 && remainingTroops > 1) {
+					defenderProvinceHitArea.getProvince().addTroops(remainingTroops - 1);
+					attackerProvinceHitArea.getProvince().removeTroops(remainingTroops - 1);
+				}
+				//the attacking province cannot both win and have only 1 troop left... right?
+				occupyProvince(defenderProvinceHitArea.getProvince());
 			}
 		} else {
 			// dice cannot be thrown because province didn't have enough troop
