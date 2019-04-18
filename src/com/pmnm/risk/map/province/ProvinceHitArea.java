@@ -4,6 +4,8 @@ import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
@@ -18,6 +20,7 @@ import java.util.Map;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
@@ -164,12 +167,17 @@ public class ProvinceHitArea extends DoaObject {
 			}
 		}
 		if (province.isOccupied()) {
-			g.setFont(UIInit.UI_FONT.deriveFont(18f));
-			g.setColor(new Color(255 - province.getOwner().getColor().getRed(), 255 - province.getOwner().getColor().getGreen(),
-			        255 - province.getOwner().getColor().getBlue()));
-			g.drawImage(DoaSprites.get("p" + province.getOwner().getID() + "Pawn"), centerX - 20, centerY - 26, 46, 46);
-			// g.drawOval(centerX - 7, centerY - 13, 20, 20);
-			g.drawString("" + province.getTroops(), centerX, centerY);
+			g.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
+			FontMetrics fm = g.getFontMetrics();
+			g.setColor(Color.BLACK);
+			DoaSprite ownerLogo = DoaSprites.get("p" + province.getOwner().getID() + "Pawn");
+			DoaSprite continentLogo = DoaSprites.get(province.getContinent().getAbbreviation());
+			g.drawImage(continentLogo, centerX - continentLogo.getWidth() * 0.33f, centerY - continentLogo.getHeight() * 0.33f, continentLogo.getWidth() * 0.66f,
+			        continentLogo.getHeight() * 0.66f);
+			g.drawImage(ownerLogo, centerX - ownerLogo.getWidth() * 0.33f, centerY - ownerLogo.getHeight() * 0.33f, ownerLogo.getWidth() * 0.66f,
+			        ownerLogo.getHeight() * 0.66f);
+			String troopCount = "" + province.getTroops();
+			g.drawString(troopCount, centerX - fm.stringWidth(troopCount) / 2f, centerY + (fm.getHeight() - fm.getAscent()) / 2f);
 		}
 	}
 
@@ -240,7 +248,7 @@ public class ProvinceHitArea extends DoaObject {
 				renderer.setColor(PlayerColorBank.get(i));
 				renderer.fill(gp);
 				renderer.setComposite(oldComposite);
-				renderer.setColor(PlayerColorBank.get(i));
+				renderer.setColor(Globals.PROVINCE_UNOCCUPIED_BORDER);
 				renderer.draw(gp);
 			}
 		}

@@ -6,7 +6,7 @@ import com.pmnm.risk.dice.exceptions.DiceAccessException;
 import com.pmnm.risk.dice.exceptions.DiceInstantiationException;
 
 public class Dice {
-	
+
 	public static final Dice ATTACK_DICE_3 = new Dice(3);
 	public static final Dice ATTACK_DICE_2 = new Dice(2);
 	public static final Dice ATTACK_DICE_1 = new Dice(1);
@@ -20,6 +20,11 @@ public class Dice {
 			throw new DiceInstantiationException();
 		}
 		values = new int[numberOfDice];
+	}
+
+	public int[] rollAllAndGetAll() {
+		rollAll();
+		return values;
 	}
 
 	public int[] getAllValues() {

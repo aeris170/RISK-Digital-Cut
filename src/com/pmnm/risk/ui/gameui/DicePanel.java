@@ -6,6 +6,7 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.DoaUIContainer;
 import com.doa.ui.button.DoaImageButton;
+import com.pmnm.risk.ui.gameui.actions.DiceButtonAction;
 
 public class DicePanel extends DoaUIContainer {
 
@@ -13,23 +14,28 @@ public class DicePanel extends DoaUIContainer {
 
 	private static final float ACCELERATION = 0.064f;
 
-	private static final DoaVectorF MIN = new DoaVectorF(-100f, 400f);
-	private static final DoaVectorF MAX = new DoaVectorF(0f, 600f);
+	private static final DoaVectorF MIN = new DoaVectorF(-160f, 258f);
+	private static final DoaVectorF MAX = new DoaVectorF(0f, 823f);
 
-	private DoaImageButton one = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 400f, 100, 70, DoaSprites.get("dice1"));
-	private DoaImageButton two = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 470f, 100, 70, DoaSprites.get("dice2"));
-	private DoaImageButton three = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 540f, 100, 70, DoaSprites.get("dice3"));
-	private DoaImageButton blitz = DoaHandler.instantiateDoaObject(DoaImageButton.class, -100f, 610f, 100, 70, DoaSprites.get("diceBlitz"));
+	private DoaImageButton one = DoaHandler.instantiateDoaObject(DoaImageButton.class, -111f, 367f, 54, 60, DoaSprites.get("dice1Idle"), DoaSprites.get("dice1Hover"));
+	private DoaImageButton two = DoaHandler.instantiateDoaObject(DoaImageButton.class, -138f, 441f, 109, 62, DoaSprites.get("dice2Idle"), DoaSprites.get("dice2Hover"));
+	private DoaImageButton three = DoaHandler.instantiateDoaObject(DoaImageButton.class, -139f, 524f, 109, 86, DoaSprites.get("dice3Idle"), DoaSprites.get("dice3Hover"));
+	private DoaImageButton blitz;
 
 	private boolean moving = false;
 
 	public DicePanel() {
 		super(MIN.clone(), (int) (MAX.x - MIN.x), (int) (MAX.y - MIN.y));
+		one.addAction(new DiceButtonAction(1));
+		two.addAction(new DiceButtonAction(2));
+		three.addAction(new DiceButtonAction(3));
 		add(one);
 		add(two);
 		add(three);
+		blitz = DoaHandler.instantiateDoaObject(BlitzButton.class, -130f, 643f, 85, 60, DoaSprites.get("blitzIdle"), DoaSprites.get("blitzHover"));
 		add(blitz);
 		super.show();
+		// show();
 	}
 
 	@Override
@@ -41,11 +47,6 @@ public class DicePanel extends DoaUIContainer {
 			} else if (velocity.x < 0) {
 				velocity.x -= ACCELERATION;
 			}
-			position.add(velocity);
-			one.getPosition().add(velocity);
-			two.getPosition().add(velocity);
-			three.getPosition().add(velocity);
-			blitz.getPosition().add(velocity);
 			if (position.x > MAX.x) {
 				position.x = MAX.x;
 				velocity.x = 0;
@@ -56,21 +57,32 @@ public class DicePanel extends DoaUIContainer {
 				velocity.x = 0;
 				moving = false;
 			}
+			position.add(velocity);
+			one.getPosition().add(velocity);
+			two.getPosition().add(velocity);
+			three.getPosition().add(velocity);
+			blitz.getPosition().add(velocity);
 		}
 	}
 
 	@Override
 	public void show() {
-		moving = true;
-		velocity.x = 1;
+		if (position.x != MAX.x) {
+			moving = true;
+			velocity.x = 1;
+		}
 	}
 
 	@Override
 	public void hide() {
-		moving = true;
-		velocity.x = -1;
+		if (position.x != MIN.x) {
+			moving = true;
+			velocity.x = -1;
+		}
 	}
 
 	@Override
-	public void render(DoaGraphicsContext g) {}
+	public void render(DoaGraphicsContext g) {
+		g.drawImage(DoaSprites.get("diceScroll"), position.x, position.y);
+	}
 }

@@ -1,6 +1,8 @@
 package com.pmnm.risk.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,7 @@ import java.util.stream.Collectors;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
@@ -159,5 +162,56 @@ public class GameManager extends DoaObject {
 
 	public static ProvinceHitArea getAttackerProvince() {
 		return attackerProvinceHitArea;
+	}
+
+	public static void toss(int diceAmount) {
+		Integer[] attackerDiceValues = null;
+		Integer[] defenderDiceValues = null;
+		if (defenderProvinceHitArea.getProvince().getTroops() == 1 || diceAmount == 1) {
+			defenderDiceValues = Arrays.stream(Dice.DEFENCE_DICE_1.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+		} else {
+			defenderDiceValues = Arrays.stream(Dice.DEFENCE_DICE_2.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+		}
+		switch (diceAmount) {
+			case 1:
+				if (attackerProvinceHitArea.getProvince().getTroops() > 1) {
+					attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_1.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+				}
+				break;
+			case 2:
+				if (attackerProvinceHitArea.getProvince().getTroops() > 2) {
+					attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_2.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+				}
+				break;
+			case 3:
+				if (attackerProvinceHitArea.getProvince().getTroops() > 3) {
+					attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_3.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+				}
+				break;
+		}
+		if (attackerDiceValues != null) {
+			Arrays.sort(attackerDiceValues, Collections.reverseOrder());
+			Arrays.sort(defenderDiceValues, Collections.reverseOrder());
+			int attackerCasualties = 0;
+			int defenderCasualties = 0;
+			for (int i = 0; i < Math.min(attackerDiceValues.length, defenderDiceValues.length); i++) {
+				if (attackerDiceValues[i] > defenderDiceValues[i]) {
+					defenderCasualties++;
+				} else {
+					attackerCasualties++;
+				}
+			}
+			attackerProvinceHitArea.getProvince().removeTroops(attackerCasualties);
+			defenderProvinceHitArea.getProvince().removeTroops(defenderCasualties);
+			if (attackerProvinceHitArea.getProvince().getTroops() == 1) {
+				markAttackerProvince(null);
+				markDefenderProvince(null);
+			}
+			if (defenderProvinceHitArea.getProvince().getTroops() == 0) {
+				// capture
+			}
+		} else {
+			// dice cannot be thrown because province didn't have enough troop
+		}
 	}
 }

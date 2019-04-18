@@ -30,7 +30,7 @@ public class Main {
 		DoaEngine.DEBUG_ENABLED = false;
 		DoaEngine.MULTI_THREAD_ENABLED = false;
 		DoaEngine.CLEAR_COLOR = new Color(3, 0, 47);
-		DoaEngine.RENDERING_MODE = DoaRenderingMode.SPEED;
+		DoaEngine.RENDERING_MODE = DoaRenderingMode.BALANCED;
 		DoaMouse.clampWheel(0.8d, 10d);
 
 		Globals.initilaizeGlobals();
@@ -46,7 +46,7 @@ public class Main {
 		DoaHandler.instantiateDoaObject(GameBoard.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 		DoaHandler.instantiateDoaObject(DebugPanel.class);
 		DoaHandler.instantiateDoaObject(GameManager.class);
-		
+
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}
 

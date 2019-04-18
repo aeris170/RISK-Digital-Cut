@@ -1,8 +1,10 @@
 package com.pmnm.risk.toolkit;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import com.doa.engine.DoaCamera;
+import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
 import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
@@ -59,8 +61,23 @@ public final class Utils {
 		final DoaVectorF distance = new DoaVectorF(mx * z + cx, my * z + cy);
 		return mouseCoordinates.add(distance.sub(mouseCoordinates).mul(-1f / DoaCamera.getZ()));
 	}
-	
+
 	public static double computeRectangleArea(Rectangle2D rect) {
-		return rect.getWidth() * rect.getHeight(); 
+		return rect.getWidth() * rect.getHeight();
+	}
+
+	public static void paintImage(DoaSprite sp, Color c) {
+		float cRed = c.getRed() / 255f;
+		float cBlue = c.getBlue() / 255f;
+		float cGreen = c.getGreen() / 255f;
+		float cAlpha = c.getAlpha() / 255f;
+		for (int xx = 0; xx < sp.getWidth(); xx++) {
+			for (int yy = 0; yy < sp.getHeight(); yy++) {
+				Color oldColor = new Color(sp.getRGB(xx, yy), true);
+				Color newColor = new Color((int) ((cRed * oldColor.getRed() / 255f) * 255), (int) ((cGreen * oldColor.getGreen() / 255f) * 255),
+				        (int) ((cBlue * oldColor.getBlue() / 255f) * 255), (int) ((cAlpha * oldColor.getAlpha() / 255f) * 255));
+				sp.setRGB(xx, yy, newColor.getRGB());
+			}
+		}
 	}
 }
