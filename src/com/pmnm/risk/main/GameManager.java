@@ -41,6 +41,8 @@ public class GameManager extends DoaObject {
 	public static ProvinceHitArea defenderProvinceHitArea = null;
 	public static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
 
+	public static ProvinceHitArea clickedHitArea;
+
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
