@@ -8,9 +8,9 @@ public class BlitzButton extends DoaImageButton {
 
 	private static final long serialVersionUID = -4633067220666124307L;
 
-	private DoaSprite idleImage;
-	private DoaSprite hoverImage;
-	private DoaSprite clickImage;
+	private transient DoaSprite idleImage;
+	private transient DoaSprite hoverImage;
+	private transient DoaSprite clickImage;
 
 	public BlitzButton(Float x, Float y, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage) {
 		super(x, y, width, height, idleImage, hoverImage);

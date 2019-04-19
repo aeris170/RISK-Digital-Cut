@@ -45,7 +45,6 @@ public class Main {
 		DoaCamera.adjustCamera(DoaHandler.instantiateDoaObject(Camera.class, WINDOW_WIDTH / 2f, WINDOW_HEIGHT / 2f), -10000, -10000, 10000, 10000);
 		DoaHandler.instantiateDoaObject(GameBoard.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 		DoaHandler.instantiateDoaObject(DebugPanel.class);
-		DoaHandler.instantiateDoaObject(GameManager.class);
 
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}

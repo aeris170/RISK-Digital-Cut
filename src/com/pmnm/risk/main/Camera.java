@@ -141,16 +141,8 @@ public class Camera extends DoaObject {
 		g.setColor(Color.WHITE);
 		g.drawString("Phase: " + GameManager.currentPhase, 0, 200);
 		g.setColor(GameManager.currentPlayer.getColor());
-		g.fillRect(0, 200, 290, 23);
+		g.fillRect(0, 200, 130, 23);
 		g.setColor(Color.WHITE);
 		g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
-		g.setColor(GameManager.currentPlayer.getColor());
-		g.fillRect(0, 220, 290, 23);
-		g.setColor(Color.WHITE);/* if (ProvinceHitArea.numberOfRemainingBeginningTroops > 0) {
-		                         * g.drawString("Remaining troops to put: " + ((50 - 5 *
-		                         * GameManager.numberOfPlayers) - GameManager.turnCount /
-		                         * GameManager.numberOfPlayers), 0, 240); } else {
-		                         * g.drawString("Remaining troops to put: " +
-		                         * (ProvinceHitArea.remainingTroopsToPut), 0, 240); } */
 	}
 }
