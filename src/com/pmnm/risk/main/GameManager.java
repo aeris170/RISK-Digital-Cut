@@ -18,6 +18,7 @@ import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.ui.gameui.DicePanel;
+import com.pmnm.risk.ui.gameui.RiskGameScreenUI;
 
 public class GameManager extends DoaObject {
 
@@ -29,15 +30,18 @@ public class GameManager extends DoaObject {
 
 	public static boolean isManualPlacementDone = false;
 	public static final Map<Player, Integer> startingTroops = new HashMap<>();
+	public static int placementCounter = 0;
 
 	public static TurnPhase currentPhase = TurnPhase.DRAFT;
 	public static int reinforcementForThisTurn = 0;
 	public static Player currentPlayer;
-	public static int turnCount = 0;
+	public static int turnCount = 1;
 
 	public static ProvinceHitArea attackerProvinceHitArea = null;
 	public static ProvinceHitArea defenderProvinceHitArea = null;
-	public static DicePanel dicePanel = DoaHandler.instantiateDoaObject(DicePanel.class);
+	public static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
+
+	public static ProvinceHitArea clickedHitArea;
 
 	public GameManager() {
 		super(0f, 0f);
@@ -100,7 +104,7 @@ public class GameManager extends DoaObject {
 	public static void claimProvince(Province claimed) {
 		claimed.getClaimedBy(currentPlayer);
 		startingTroops.put(currentPlayer, startingTroops.get(currentPlayer) - 1);
-		currentPlayer = players.get(++turnCount % players.size());
+		currentPlayer = players.get(++placementCounter % players.size());
 		currentPlayer.turn();
 	}
 
@@ -108,7 +112,7 @@ public class GameManager extends DoaObject {
 		reinforced.addTroops(reinforcementCount);
 		if (!isManualPlacementDone) {
 			startingTroops.put(currentPlayer, startingTroops.get(currentPlayer) - reinforcementCount);
-			currentPlayer = players.get(++turnCount % players.size());
+			currentPlayer = players.get(++placementCounter % players.size());
 			currentPlayer.turn();
 		} else {
 			reinforcementForThisTurn -= reinforcementCount;
@@ -232,7 +236,6 @@ public class GameManager extends DoaObject {
 				}
 				// the attacking province cannot both win and have only 1 troop left... right?
 				occupyProvince(defenderProvinceHitArea.getProvince(), diceAmount);
-				defenderProvinceHitArea.deemphasizeForAttack();
 			}
 		} else {
 			// dice cannot be thrown because province didn't have enough troop
@@ -241,6 +244,8 @@ public class GameManager extends DoaObject {
 
 	private static void occupyProvince(Province occupied, int invadingTroopCount) {
 		occupied.getOccupiedBy(currentPlayer, invadingTroopCount);
+		defenderProvinceHitArea.deemphasizeForAttack();
+		markAttackerProvince(null);
 		markDefenderProvince(null);
 	}
 
