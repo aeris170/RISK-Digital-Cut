@@ -13,6 +13,7 @@ public final class Globals {
 	public static final Color PROVINCE_UNOCCUPIED_BORDER = Color.BLACK;
 	public static final Color PROVINCE_SELECTED_BORDER = Color.CYAN;
 	public static final Color PROVINCE_EMPHASIZE = Color.GREEN;
+	public static final Color PROVINCE_HIGHLIGHT = Color.GRAY.darker().darker().darker().darker();
 
 	private Globals() {
 		throw new RiskStaticInstantiationException(getClass());

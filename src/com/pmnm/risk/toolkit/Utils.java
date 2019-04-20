@@ -1,9 +1,12 @@
 package com.pmnm.risk.toolkit;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
 
 import com.doa.engine.DoaCamera;
+import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
@@ -79,5 +82,16 @@ public final class Utils {
 				sp.setRGB(xx, yy, newColor.getRGB());
 			}
 		}
+	}
+
+	public static float findMaxFontSizeToFitInArea(DoaGraphicsContext g, Font f, DoaVectorF r, String s) {
+		float fontSize = 0;
+		FontMetrics fm = g.getFontMetrics(f);
+		do {
+			f = new Font(f.getFontName(), Font.PLAIN, f.getSize() + 1);
+			fontSize++;
+			fm = g.getFontMetrics(f);
+		} while (fm.stringWidth(s) < r.x && fm.getHeight() < r.y);
+		return fontSize;
 	}
 }

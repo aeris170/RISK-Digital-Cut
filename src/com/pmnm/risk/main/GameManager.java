@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.input.DoaMouse;
 import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.PlayerColorBank;
@@ -35,7 +36,7 @@ public class GameManager extends DoaObject {
 	public static TurnPhase currentPhase = TurnPhase.DRAFT;
 	public static int reinforcementForThisTurn = 0;
 	public static Player currentPlayer;
-	public static int turnCount = 1;
+	public static int turnCount = 0;
 
 	public static ProvinceHitArea attackerProvinceHitArea = null;
 	public static ProvinceHitArea defenderProvinceHitArea = null;
@@ -63,13 +64,23 @@ public class GameManager extends DoaObject {
 			currentPhase = TurnPhase.ATTACK;
 		} else if (currentPhase == TurnPhase.ATTACK) {
 			currentPhase = TurnPhase.REINFORCE;
+			markAttackerProvince(null);
+			markDefenderProvince(null);
 		} else if (currentPhase == TurnPhase.REINFORCE) {
 			currentPhase = TurnPhase.DRAFT;
+			currentPlayer.endTurn();
+			GameManager.turnCount++;
+			currentPlayer = players.get(turnCount % players.size());
+			currentPlayer.turn();
+			reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
 		}
 	}
 
 	@Override
 	public void tick() {
+		if (DoaMouse.MB1) {
+			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
+		}
 		if (!isManualPlacementDone) {
 			/* System.out.println("Game started!"); players = new Player[numberOfPlayers];
 			 * for(int i = 0; i < numberOfPlayers; i++) { players[i] = new Player("Player" +

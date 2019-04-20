@@ -49,7 +49,6 @@ public class Player extends DoaObject {
 			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 			if (clickedHitArea != null) {
 				Province clickedProvince = clickedHitArea.getProvince();
-				GameManager.clickedHitArea = clickedHitArea;
 				if (!GameManager.isManualPlacementDone) {
 					if (!clickedProvince.isClaimed()) {
 						GameManager.claimProvince(clickedProvince);
@@ -122,5 +121,9 @@ public class Player extends DoaObject {
 
 	public void endTurn() {
 		isInTurn = false;
+	}
+
+	public boolean isLocalPlayer() {
+		return true;
 	}
 }
