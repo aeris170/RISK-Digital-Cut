@@ -25,13 +25,14 @@ public class BottomPanel extends DoaPanel {
 	private static final DoaSprite LEFT = DoaSprites.get("gaugeLeft");
 	private static final DoaSprite RIGHT = DoaSprites.get("gaugeRight");
 
-	private DoaImageButton nextPhaseButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, 0f, 0f, 300, 300, DoaSprites.get("nextPhaseButtonIdle"),
+	public static DoaImageButton nextPhaseButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, 0f, 0f, 300, 300, DoaSprites.get("nextPhaseButtonIdle"),
 	        DoaSprites.get("nextPhaseButtonHover"), DoaSprites.get("nextPhaseButtonPressed"), DoaSprites.get("nextPhaseButtonDisabled"));
 
 	public BottomPanel() {
 		super(0f, 0f, 0, 0);
 		nextPhaseButton.addAction(new NextPhaseButtonAction(nextPhaseButton));
 		add(nextPhaseButton);
+		nextPhaseButton.disable();
 
 		show();
 	}

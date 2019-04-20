@@ -4,73 +4,66 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
+import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.task.DoaTasker;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 
 public class AIPlayer extends Player {
 
 	public static final Map<String, Player> NAME_AI = new HashMap<>();
-	private static int number = 1;
-	
-	public static int difficulty;
-	private boolean isInTurn;
-	private int id;
-	private Robot robot;
 
-	private Province source = null;
-	private Province destination = null;
-	
+	public int difficulty;
+
+	Province provinceToClaim;
+	ProvinceHitArea areaToClick;
+
 	public AIPlayer(String playerName, Color playerColor, int difficulty) {
-		super(playerName, playerColor);
+		super(playerName, playerColor, false);
 		this.difficulty = difficulty;
-		id = number;
-		try {
-			robot = new Robot();
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
 	}
-	
+
 	@Override
 	public void tick() {
 		if (isInTurn) {
-			Province p = Province.getRandomUnclaimedProvince();
-			
-			/*
-			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
-			if (clickedHitArea != null) {
-				Province clickedProvince = clickedHitArea.getProvince();
-				if (!GameManager.isManualPlacementDone) {
-					if (!clickedProvince.isOccupied()) {
-						GameManager.occupyProvince(clickedProvince);
-						isInTurn = false;
-					} else if (clickedProvince.isOwnedBy(this) && GameManager.areAllProvincesCaptured()) {
-						GameManager.reinforce(clickedProvince, 1);
-						isInTurn = false;
-					}
-				} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
-					if (GameManager.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
-						GameManager.reinforce(clickedProvince, 1);
-					}
-				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
-					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1) {
-						GameManager.markAttackerProvince(clickedHitArea);
-						GameManager.markDefenderProvince(null);
-					} else if (GameManager.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
-					        && GameManager.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
-						GameManager.markDefenderProvince(clickedHitArea);
-					}
-				} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
-					if (source == null) {} else if (destination == null) {}
+			if (!GameManager.isManualPlacementDone) {
+				if (!GameManager.areAllProvincesClaimed()) {
+					Province provinceToClaim = Province.getRandomUnclaimedProvince();
+					ProvinceHitArea areaToClick = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream()
+							.filter(hitArea -> hitArea.getProvince().equals(provinceToClaim)).findFirst().orElse(null);
+					GameManager.claimProvince(provinceToClaim);
+					isInTurn = false;
+				} else {
+					List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
+							.collect(Collectors.toList());
+					Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
+					GameManager.reinforce(p, 1);
+					isInTurn = false;
 				}
-			} else if (DoaMouse.MB1 && GameManager.currentPhase == TurnPhase.ATTACK) {
-				GameManager.markAttackerProvince(null);
-				GameManager.markDefenderProvince(null);
-			}*/
+			} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
+				List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
+						.collect(Collectors.toList());
+				Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
+				GameManager.reinforce(p, 1);
+			} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
+				GameManager.nextPhase();
+			} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
+				GameManager.nextPhase();
+			}
 		}
+	}
+
+	@Override
+	public void render(DoaGraphicsContext g) {
+		g.setColor(Color.YELLOW);
+		g.fillRect(areaToClick.centerX() - 5, areaToClick.centerY() - 5, 10, 10);
 	}
 }

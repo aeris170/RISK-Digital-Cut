@@ -18,6 +18,7 @@ import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.ui.gameui.BottomPanel;
 import com.pmnm.risk.ui.gameui.DicePanel;
 import com.pmnm.risk.ui.gameui.RiskGameScreenUI;
 
@@ -27,7 +28,7 @@ public class GameManager extends DoaObject {
 
 	public static final List<Player> players = new ArrayList<>();
 	public static int numberOfPlayers = 2;
-	public static boolean manualPlacement = false;
+	public static boolean manualPlacement = true;
 
 	public static boolean isManualPlacementDone = false;
 	public static final Map<Player, Integer> startingTroops = new HashMap<>();
@@ -47,11 +48,21 @@ public class GameManager extends DoaObject {
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		for (int i = 0; i < numberOfPlayers; i++) {
-			Player p = DoaHandler.instantiateDoaObject(Player.class, "Player" + i, PlayerColorBank.get(i));
+		/*for (int i = 0; i < numberOfPlayers; i++) {
+			Player p = new Player("Player" + i, PlayerColorBank.get(i), i == 0);
+			DoaHandler.add(p);
 			players.add(p);
 			startingTroops.put(p, startingTroopCount);
-		}
+		}*/
+		AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 0);
+		DoaHandler.add(aIP1);
+		players.add(aIP1);
+		startingTroops.put(aIP1, startingTroopCount);
+		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 0);
+		DoaHandler.add(aIP2);
+		players.add(aIP2);
+		startingTroops.put(aIP2, startingTroopCount);
+		
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
 		if (!manualPlacement) {
@@ -62,6 +73,9 @@ public class GameManager extends DoaObject {
 	public static void nextPhase() {
 		if (currentPhase == TurnPhase.DRAFT) {
 			currentPhase = TurnPhase.ATTACK;
+			if(currentPlayer.isLocalPlayer()) {
+				BottomPanel.nextPhaseButton.enable();
+			}
 		} else if (currentPhase == TurnPhase.ATTACK) {
 			currentPhase = TurnPhase.REINFORCE;
 			markAttackerProvince(null);
@@ -73,6 +87,7 @@ public class GameManager extends DoaObject {
 			currentPlayer = players.get(turnCount % players.size());
 			currentPlayer.turn();
 			reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
+			
 		}
 	}
 
@@ -82,26 +97,6 @@ public class GameManager extends DoaObject {
 			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 		}
 		if (!isManualPlacementDone) {
-			/* System.out.println("Game started!"); players = new Player[numberOfPlayers];
-			 * for(int i = 0; i < numberOfPlayers; i++) { players[i] = new Player("Player" +
-			 * (i + 1), Color.BLACK); } turns = new Player[numberOfPlayers]; Dice
-			 * beginningDice = Dice.randomlyGenerate(numberOfPlayers); int[]
-			 * beginninggDiceValues = beginningDice.getAllValues(); boolean[]
-			 * valuesFinalized = new boolean[numberOfPlayers];
-			 * System.out.println(Arrays.toString(beginninggDiceValues));
-			 * System.out.println(Arrays.toString(valuesFinalized)); int turnsDetermined =
-			 * 0; int max = 0; int numberOfMax = 0; ArrayList<Integer> indicesOfMax = new
-			 * ArrayList<>(); while(turnsDetermined < numberOfPlayers) { for(int i = 0; i <
-			 * numberOfPlayers; i++) { if(beginninggDiceValues[i] > max &&
-			 * valuesFinalized[i] == false) { max = beginninggDiceValues[i]; } } for(int i =
-			 * 0; i < numberOfPlayers; i++) { if(beginninggDiceValues[i] == max) {
-			 * indicesOfMax.add(i); numberOfMax++; } } if(numberOfMax == 1) {
-			 * turns[turnsDetermined] = players[indicesOfMax.get(0)];
-			 * valuesFinalized[indicesOfMax.get(0)] = true; turnsDetermined++; } else
-			 * if(numberOfMax > 1) { } max = 0; numberOfMax = 0; indicesOfMax.clear(); }
-			 * for(int i = 0; i < numberOfPlayers; i++) {
-			 * System.out.print(turns[i].getName() + ", "); } System.out.println(); */
-			// numberOfOccupiedProvinces = 0;
 			if (startingTroops.values().stream().allMatch(v -> v == 0)) {
 				isManualPlacementDone = true;
 				reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);

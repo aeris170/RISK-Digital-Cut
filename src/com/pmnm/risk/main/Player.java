@@ -24,13 +24,14 @@ public class Player extends DoaObject {
 
 	private Color playerColor;
 	private String playerName;
-	private boolean isInTurn;
+	protected boolean isInTurn;
 	private int id;
+	private boolean isLocalPlayer;
 
 	private Province source = null;
 	private Province destination = null;
 
-	public Player(String playerName, Color playerColor) {
+	public Player(String playerName, Color playerColor, boolean isLocalPlayer) {
 		super(0f, 0f);
 		this.playerName = playerName;
 		this.playerColor = playerColor;
@@ -41,11 +42,12 @@ public class Player extends DoaObject {
 			throw new RiskException("Player names must be unique!");
 		}
 		number++;
+		this.isLocalPlayer = isLocalPlayer;
 	}
 
 	@Override
 	public void tick() {
-		if (isInTurn) {
+		if (isInTurn && isLocalPlayer) {
 			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 			if (clickedHitArea != null) {
 				Province clickedProvince = clickedHitArea.getProvince();
@@ -124,6 +126,6 @@ public class Player extends DoaObject {
 	}
 
 	public boolean isLocalPlayer() {
-		return true;
+		return isLocalPlayer;
 	}
 }

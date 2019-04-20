@@ -57,7 +57,7 @@ public class TopPanel extends DoaPanel {
 
 		Composite oldComposite = g.getComposite();
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
-		String turn = "TURN: " + GameManager.turnCount + 1;
+		String turn = "TURN: " + (GameManager.turnCount + 1);
 		g.drawString(turn, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(turn)) / 2f, 110);
 
 		g.setColor(GameManager.currentPlayer.getColor());

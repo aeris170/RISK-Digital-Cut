@@ -58,17 +58,6 @@ public class ProvinceHitArea extends DoaObject {
 	private transient BufferedImage emphasizedBorder;
 	private transient BufferedImage highlightBorder;
 
-	/* public boolean isOccupied = false; // beginning public static int
-	 * numberOfUnoccupiedProvinces = Province.NAME_PROVINCE.entrySet().size();
-	 * public static int numberOfRemainingBeginningTroops =
-	 * Player.findStartingTroopCount(GameManager.numberOfPlayers)
-	 * GameManager.numberOfPlayers; public static int remainingTroopsToPut; public
-	 * static boolean isReinforcementsForThisTurnCalculated = false; // attack
-	 * public static boolean attackerProvinceSelected = false; public static boolean
-	 * defenderProvinceSelected = false; public static ProvinceHitArea
-	 * attackerProvince = null; public static ProvinceHitArea defenderProvince =
-	 * null; */
-
 	private boolean isPathVisible = true;
 	private boolean isPointsVisible = false;
 
@@ -115,40 +104,6 @@ public class ProvinceHitArea extends DoaObject {
 			isHighlighted = false;
 			setzOrder(DoaObject.GAME_OBJECTS);
 		}
-
-		/* DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
-		 * meshes.forEach(mesh -> { if (mesh.contains((int) mappedMouseCoords.x, (int)
-		 * mappedMouseCoords.y)) { if (DoaMouse.MB1) { if (!province.isOccupied() &&
-		 * numberOfUnoccupiedProvinces > 0) {
-		 * GameManager.currentPlayer.addProvince(owner);
-		 * cacheMeshAsImage(GameManager.currentPlayer.getColor(),
-		 * GameManager.currentPlayer.getColor(), new BasicStroke(2));
-		 * numberOfUnoccupiedProvinces--; numberOfRemainingBeginningTroops--;
-		 * GameManager.turnCount++; isOccupied = true; } else if
-		 * (numberOfRemainingBeginningTroops > 0 && numberOfUnoccupiedProvinces <= 0 &&
-		 * GameManager.currentPlayer.getProvinces().contains(owner)) {
-		 * GameManager.currentPlayer.modifyProvinceTroopsBy(owner, 1);
-		 * GameManager.turnCount++; numberOfRemainingBeginningTroops--; if
-		 * (numberOfRemainingBeginningTroops <= 0) { GameManager.turnCount = 0; } } else
-		 * if (numberOfRemainingBeginningTroops <= 0 && numberOfUnoccupiedProvinces <=
-		 * 0) { if (GameManager.currentPhase == TurnPhase.DRAFT) { if
-		 * (!isReinforcementsForThisTurnCalculated) { remainingTroopsToPut =
-		 * Player.calculateReinforcementsForThisTurn(GameManager.currentPlayer);
-		 * isReinforcementsForThisTurnCalculated = true; } if
-		 * (GameManager.currentPlayer.getProvinces().contains(owner)) { if
-		 * (remainingTroopsToPut > 0) {
-		 * GameManager.currentPlayer.modifyProvinceTroopsBy(owner, 1);
-		 * remainingTroopsToPut--; } } } else if (GameManager.currentPhase ==
-		 * TurnPhase.ATTACK) { if
-		 * (GameManager.currentPlayer.getProvinces().contains(owner)) { attackerProvince
-		 * = this; if (!attackerProvinceSelected) {
-		 * cacheMeshAsImage(GameManager.currentPlayer.getColor(), Color.PINK, new
-		 * BasicStroke(5)); attackerProvinceSelected = true; } } else if
-		 * (attackerProvince != null) { defenderProvince = this; } } else if
-		 * (GameManager.currentPhase == TurnPhase.REINFORCE) {} } } if (DoaMouse.MB2) {
-		 * isPathVisible = !isPathVisible; } if (DoaMouse.MB3) { isPointsVisible =
-		 * !isPointsVisible; } DebugPanel.mouseOnProvinceName = owner.getName(); }
-		 * }); */
 	}
 
 	@Override
