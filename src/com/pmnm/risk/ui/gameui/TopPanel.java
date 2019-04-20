@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Font;
 
+import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
@@ -17,14 +18,13 @@ public class TopPanel extends DoaPanel {
 
 	private static final long serialVersionUID = -1014037154232695775L;
 
-	private Season season = Season.getSeason();
-
 	private DoaTaskGuard threeSecondGuard = new DoaTaskGuard();
 	private float alpha;
 	private float delta = 0.1f;
 
 	public TopPanel() {
 		super(0f, 0f, 0, 0);
+		DoaHandler.instantiateDoaObject(SeasonEffect.class);
 		show();
 	}
 
@@ -44,6 +44,7 @@ public class TopPanel extends DoaPanel {
 				DoaTasker.executeLater(() -> alpha += delta, 100 * i);
 			}
 		}
+		Season.updateSeason();
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class TopPanel extends DoaPanel {
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, -6);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
 		g.drawImage(DoaSprites.get("seasonCircle"), (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
-		g.drawImage(DoaSprites.get(season.toString()), (Main.WINDOW_WIDTH - DoaSprites.get(season.toString()).getWidth()) / 2f, 0);
+		g.drawImage(DoaSprites.get(Season.getCurrentSeason().toString()), (Main.WINDOW_WIDTH - DoaSprites.get(Season.getCurrentSeason().toString()).getWidth()) / 2f, 0);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 26f));
 		g.setColor(UIInit.FONT_COLOR);
 
@@ -65,6 +66,5 @@ public class TopPanel extends DoaPanel {
 		String player = GameManager.currentPlayer.getName();
 		g.drawString(player, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(player)) / 2f, 110);
 		g.setComposite(oldComposite);
-
 	}
 }

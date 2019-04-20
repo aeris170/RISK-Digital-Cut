@@ -1,6 +1,5 @@
 package com.pmnm.risk.main;
 
-import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.Locale;
@@ -29,7 +28,7 @@ public class Main {
 		Locale.setDefault(Locale.ENGLISH);
 		DoaEngine.DEBUG_ENABLED = false;
 		DoaEngine.MULTI_THREAD_ENABLED = false;
-		DoaEngine.CLEAR_COLOR = new Color(3, 0, 47);
+		// DoaEngine.CLEAR_COLOR = new Color(3, 0, 47);
 		DoaEngine.RENDERING_MODE = DoaRenderingMode.BALANCED;
 		DoaMouse.clampWheel(0.8d, 10d);
 
