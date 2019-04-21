@@ -11,6 +11,7 @@ import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
+import com.doa.maths.DoaMath;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
@@ -25,7 +26,7 @@ public class TopPanel extends DoaPanel {
 	private float delta = 0.1f;
 
 	private float godrayAlpha = 0.7f;
-	private float godrayAlphaDelta = 0.005f;
+	private float godrayAlphaDelta = 0.001f;
 	private double godrayAngle = 0;
 
 	public TopPanel() {
@@ -50,13 +51,13 @@ public class TopPanel extends DoaPanel {
 				DoaTasker.executeLater(() -> alpha += delta, 100 * i);
 			}
 		}
-		// Season.updateSeason();
 		godrayAngle += 0.05f;
+		godrayAlpha += godrayAlphaDelta;
 		if (godrayAlpha >= 1f || godrayAlpha <= 0.5f) {
 			godrayAlphaDelta *= -1;
+			godrayAlpha = DoaMath.clamp(godrayAlpha, 0.5f, 1f);
 		}
-		godrayAlpha += godrayAlphaDelta;
-
+		Season.updateSeason();
 	}
 
 	@Override
@@ -65,15 +66,14 @@ public class TopPanel extends DoaPanel {
 		Composite oldComposite = g.getComposite();
 		if (Season.getCurrentSeason() == Season.SUMMER) {
 			DoaSprite godray = DoaSprites.get("godray");
-			g.translate((Main.WINDOW_WIDTH - godray.getWidth()) / 2f, -godray.getHeight() / 2f);
-			g.rotate(Math.toRadians(godrayAngle), godray.getWidth() / 2f, godray.getHeight() / 2f);
-			// g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OVER,
-			// godrayAlpha));
-			g.drawImage(DoaSprites.get("godray"), 0, 0);
+			g.translate(Main.WINDOW_WIDTH / 2f, 0);
+			g.rotate(Math.toRadians(godrayAngle));
+			g.scale(1.2f, 1.2f);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, godrayAlpha));
+			g.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
 		}
 		g.setComposite(oldComposite);
 		g.setTransform(oldTransform);
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, -6);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
 		g.drawImage(DoaSprites.get("seasonCircle"), (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
