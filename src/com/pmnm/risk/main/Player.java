@@ -107,12 +107,15 @@ public class Player extends DoaObject {
 
 	public static int calculateReinforcementsForThisTurn(Player player) {
 		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
-		int reinforcementsForThisTurn = playerProvinces.size() / 3;
+		int reinforcementsForThisTurn = Math.min(playerProvinces.size() / 3, 3);
 		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
 			Continent currentContinent = entry.getValue();
 			if (playerProvinces.containsAll(currentContinent.getProvinces())) {
 				reinforcementsForThisTurn += currentContinent.getCaptureBonus();
 			}
+		}
+		if(player.getName().equals("AIPlayer2")) {
+			return reinforcementsForThisTurn + 20;
 		}
 		return reinforcementsForThisTurn;
 	}
