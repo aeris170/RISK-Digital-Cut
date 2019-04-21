@@ -77,8 +77,6 @@ public class BottomPanel extends DoaPanel {
 		DoaVectorF phaseArea = new DoaVectorF(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, phaseArea, phaseText)));
 		g.drawString(GameManager.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
-		// g.drawRect(Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.953f,
-		// phaseArea.x, phaseArea.y);
 
 		g.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, Main.WINDOW_HEIGHT - MIDDLE.getHeight());
 
@@ -94,7 +92,7 @@ public class BottomPanel extends DoaPanel {
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 25f));
 		FontMetrics fm = g.getFontMetrics();
 
-		g.drawString(garrisonText, garrisonTopLeft.x + (garrisonSprite.getWidth() - fm.stringWidth(garrisonText)) / 2f, garrisonTopLeft.y * 1.025f);
+		g.drawString(garrisonText, garrisonTopLeft.x + (garrisonSprite.getWidth() - fm.stringWidth(garrisonText)) / 2f, garrisonTopLeft.y * 1.031f);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 30f));
 		fm = g.getFontMetrics();
 		if (clickedProvince != null) {

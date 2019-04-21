@@ -26,7 +26,8 @@ public final class UIInit {
 	private static final DoaVectorF MM_RULES_LOCATION = new DoaVectorF(1377f, 730f);
 	private static final DoaVectorF MM_EXIT_LOCATION = new DoaVectorF(1377f, 803f);
 
-	public static final Font UI_FONT = new Font("Constantia", Font.PLAIN, 1);
+	// public static final Font UI_FONT_ALT = new Font("Constantia", Font.PLAIN, 1);
+	public static final Font UI_FONT = new Font("Book Antiqua", Font.PLAIN, 1);
 	public static final Color FONT_COLOR = new Color(189, 164, 79);
 	public static final Color HOVER_FONT_COLOR = new Color(94, 82, 42);
 
