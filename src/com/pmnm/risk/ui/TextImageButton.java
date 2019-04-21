@@ -1,6 +1,7 @@
 package com.pmnm.risk.ui;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
@@ -26,7 +27,7 @@ public class TextImageButton extends DoaImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		super.render(g);
-		g.setFont(UIInit.UI_FONT);
+		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 36f));
 		g.setColor(textColor);
 		if (hover) {
 			g.setColor(hoverTextColor);

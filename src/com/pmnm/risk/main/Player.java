@@ -24,13 +24,14 @@ public class Player extends DoaObject {
 
 	private Color playerColor;
 	private String playerName;
-	private boolean isInTurn;
+	protected boolean isInTurn;
 	private int id;
+	private boolean isLocalPlayer;
 
 	private Province source = null;
 	private Province destination = null;
 
-	public Player(String playerName, Color playerColor) {
+	public Player(String playerName, Color playerColor, boolean isLocalPlayer) {
 		super(0f, 0f);
 		this.playerName = playerName;
 		this.playerColor = playerColor;
@@ -41,15 +42,15 @@ public class Player extends DoaObject {
 			throw new RiskException("Player names must be unique!");
 		}
 		number++;
+		this.isLocalPlayer = isLocalPlayer;
 	}
 
 	@Override
 	public void tick() {
-		if (isInTurn) {
+		if (isInTurn && isLocalPlayer) {
 			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 			if (clickedHitArea != null) {
 				Province clickedProvince = clickedHitArea.getProvince();
-				GameManager.clickedHitArea = clickedHitArea;
 				if (!GameManager.isManualPlacementDone) {
 					if (!clickedProvince.isClaimed()) {
 						GameManager.claimProvince(clickedProvince);
@@ -106,7 +107,7 @@ public class Player extends DoaObject {
 
 	public static int calculateReinforcementsForThisTurn(Player player) {
 		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
-		int reinforcementsForThisTurn = playerProvinces.size() / 3;
+		int reinforcementsForThisTurn = Math.min(playerProvinces.size() / 3, 3);
 		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
 			Continent currentContinent = entry.getValue();
 			if (playerProvinces.containsAll(currentContinent.getProvinces())) {
@@ -122,5 +123,9 @@ public class Player extends DoaObject {
 
 	public void endTurn() {
 		isInTurn = false;
+	}
+
+	public boolean isLocalPlayer() {
+		return isLocalPlayer;
 	}
 }

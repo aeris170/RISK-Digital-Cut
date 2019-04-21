@@ -127,4 +127,12 @@ public class Province implements Serializable {
 		owner = player;
 		troops = invadingTroopCount;
 	}
+	
+	public int troopCount() {
+		return troops;
+	}
+	
+	public ProvinceHitArea getProvinceHitArea() {
+		return ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.getProvince().equals(this)).findFirst().orElse(null);
+	}
 }

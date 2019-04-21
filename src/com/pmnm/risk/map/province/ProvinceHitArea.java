@@ -56,17 +56,7 @@ public class ProvinceHitArea extends DoaObject {
 	private Map<Color, BufferedImage> playerOwnedMeshes = new HashMap<>();
 	private transient BufferedImage selectedBorder;
 	private transient BufferedImage emphasizedBorder;
-
-	/* public boolean isOccupied = false; // beginning public static int
-	 * numberOfUnoccupiedProvinces = Province.NAME_PROVINCE.entrySet().size();
-	 * public static int numberOfRemainingBeginningTroops =
-	 * Player.findStartingTroopCount(GameManager.numberOfPlayers)
-	 * GameManager.numberOfPlayers; public static int remainingTroopsToPut; public
-	 * static boolean isReinforcementsForThisTurnCalculated = false; // attack
-	 * public static boolean attackerProvinceSelected = false; public static boolean
-	 * defenderProvinceSelected = false; public static ProvinceHitArea
-	 * attackerProvince = null; public static ProvinceHitArea defenderProvince =
-	 * null; */
+	private transient BufferedImage highlightBorder;
 
 	private boolean isPathVisible = true;
 	private boolean isPointsVisible = false;
@@ -82,6 +72,7 @@ public class ProvinceHitArea extends DoaObject {
 	private boolean isAttacker = false;
 	private boolean isDefender = false;
 	private boolean isEmphasized = false;
+	private boolean isHighlighted = false;
 
 	public ProvinceHitArea(Province province, Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
@@ -104,39 +95,15 @@ public class ProvinceHitArea extends DoaObject {
 	}
 
 	@Override
-	public void tick() {/* DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
-	                     * meshes.forEach(mesh -> { if (mesh.contains((int) mappedMouseCoords.x, (int)
-	                     * mappedMouseCoords.y)) { if (DoaMouse.MB1) { if (!province.isOccupied() &&
-	                     * numberOfUnoccupiedProvinces > 0) {
-	                     * GameManager.currentPlayer.addProvince(owner);
-	                     * cacheMeshAsImage(GameManager.currentPlayer.getColor(),
-	                     * GameManager.currentPlayer.getColor(), new BasicStroke(2));
-	                     * numberOfUnoccupiedProvinces--; numberOfRemainingBeginningTroops--;
-	                     * GameManager.turnCount++; isOccupied = true; } else if
-	                     * (numberOfRemainingBeginningTroops > 0 && numberOfUnoccupiedProvinces <= 0 &&
-	                     * GameManager.currentPlayer.getProvinces().contains(owner)) {
-	                     * GameManager.currentPlayer.modifyProvinceTroopsBy(owner, 1);
-	                     * GameManager.turnCount++; numberOfRemainingBeginningTroops--; if
-	                     * (numberOfRemainingBeginningTroops <= 0) { GameManager.turnCount = 0; } } else
-	                     * if (numberOfRemainingBeginningTroops <= 0 && numberOfUnoccupiedProvinces <=
-	                     * 0) { if (GameManager.currentPhase == TurnPhase.DRAFT) { if
-	                     * (!isReinforcementsForThisTurnCalculated) { remainingTroopsToPut =
-	                     * Player.calculateReinforcementsForThisTurn(GameManager.currentPlayer);
-	                     * isReinforcementsForThisTurnCalculated = true; } if
-	                     * (GameManager.currentPlayer.getProvinces().contains(owner)) { if
-	                     * (remainingTroopsToPut > 0) {
-	                     * GameManager.currentPlayer.modifyProvinceTroopsBy(owner, 1);
-	                     * remainingTroopsToPut--; } } } else if (GameManager.currentPhase ==
-	                     * TurnPhase.ATTACK) { if
-	                     * (GameManager.currentPlayer.getProvinces().contains(owner)) { attackerProvince
-	                     * = this; if (!attackerProvinceSelected) {
-	                     * cacheMeshAsImage(GameManager.currentPlayer.getColor(), Color.PINK, new
-	                     * BasicStroke(5)); attackerProvinceSelected = true; } } else if
-	                     * (attackerProvince != null) { defenderProvince = this; } } else if
-	                     * (GameManager.currentPhase == TurnPhase.REINFORCE) {} } } if (DoaMouse.MB2) {
-	                     * isPathVisible = !isPathVisible; } if (DoaMouse.MB3) { isPointsVisible =
-	                     * !isPointsVisible; } DebugPanel.mouseOnProvinceName = owner.getName(); }
-	                     * }); */
+	public void tick() {
+		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
+		if (meshes.stream().anyMatch(mesh -> mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y))) {
+			isHighlighted = true;
+			setzOrder(DoaObject.FRONT);
+		} else {
+			isHighlighted = false;
+			setzOrder(DoaObject.GAME_OBJECTS);
+		}
 	}
 
 	@Override
@@ -146,6 +113,9 @@ public class ProvinceHitArea extends DoaObject {
 				g.drawImage(playerOwnedMeshes.get(province.getOwner().getColor()), minX - 4d, minY - 4d);
 				if (isEmphasized) {
 					g.drawImage(emphasizedBorder, minX - 4d, minY - 4d);
+				}
+				if (isHighlighted) {
+					g.drawImage(highlightBorder, minX - 4d, minY - 4d);
 				}
 				if (isAttacker) {
 					g.drawImage(selectedBorder, minX - 4d, minY - 4d);
@@ -203,6 +173,7 @@ public class ProvinceHitArea extends DoaObject {
 		unoccupiedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		selectedBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		emphasizedBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
+		highlightBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		for (int i = 0; i < PlayerColorBank.size(); i++) {
 			BufferedImage meshTexture = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 			meshTexture.setAccelerationPriority(1);
@@ -218,6 +189,7 @@ public class ProvinceHitArea extends DoaObject {
 		Graphics2D umr = unoccupiedMesh.createGraphics();
 		Graphics2D sbr = selectedBorder.createGraphics();
 		Graphics2D ebr = emphasizedBorder.createGraphics();
+		Graphics2D hbr = highlightBorder.createGraphics();
 		umr.translate(-minX + 4, -minY + 4);
 		umr.setRenderingHints(HINTS);
 		umr.setStroke(new BasicStroke(2));
@@ -227,6 +199,9 @@ public class ProvinceHitArea extends DoaObject {
 		ebr.translate(-minX + 4, -minY + 4);
 		ebr.setRenderingHints(HINTS);
 		ebr.setStroke(new BasicStroke(2));
+		hbr.translate(-minX + 4, -minY + 4);
+		hbr.setRenderingHints(HINTS);
+		hbr.setStroke(new BasicStroke(2));
 		for (GeneralPath gp : meshes) {
 			Composite umrOldComposite = umr.getComposite();
 			umr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
@@ -241,6 +216,9 @@ public class ProvinceHitArea extends DoaObject {
 
 			ebr.setColor(Globals.PROVINCE_EMPHASIZE);
 			ebr.draw(gp);
+
+			ebr.setColor(Globals.PROVINCE_HIGHLIGHT);
+			hbr.draw(gp);
 			for (int i = 0; i < playerMeshRenderers.size(); i++) {
 				Graphics2D renderer = playerMeshRenderers.get(i);
 				Composite oldComposite = renderer.getComposite();
@@ -296,6 +274,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	public void selectAsAttacker() {
 		isAttacker = true;
+		setzOrder(DoaObject.FRONT);
 	}
 
 	public void selectAsDefender() {
@@ -304,6 +283,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	public void deselectAsAttacker() {
 		isAttacker = false;
+		setzOrder(DoaObject.GAME_OBJECTS);
 	}
 
 	public void deselectAsDefender() {
