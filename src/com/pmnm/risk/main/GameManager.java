@@ -58,7 +58,7 @@ public class GameManager extends DoaObject {
 		DoaHandler.add(aIP1);
 		players.add(aIP1);
 		startingTroops.put(aIP1, startingTroopCount);
-		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 0);
+		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 1);
 		DoaHandler.add(aIP2);
 		players.add(aIP2);
 		startingTroops.put(aIP2, startingTroopCount);
