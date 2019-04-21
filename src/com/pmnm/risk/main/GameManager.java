@@ -51,11 +51,11 @@ public class GameManager extends DoaObject {
 		/* for (int i = 0; i < numberOfPlayers; i++) { Player p = new Player("Player" +
 		 * i, PlayerColorBank.get(i), i == 0); DoaHandler.add(p); players.add(p);
 		 * startingTroops.put(p, startingTroopCount); } */
-		AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 0);
+		AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 1);
 		DoaHandler.add(aIP1);
 		players.add(aIP1);
 		startingTroops.put(aIP1, startingTroopCount);
-		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 0);
+		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 1);
 		DoaHandler.add(aIP2);
 		players.add(aIP2);
 		startingTroops.put(aIP2, startingTroopCount);
