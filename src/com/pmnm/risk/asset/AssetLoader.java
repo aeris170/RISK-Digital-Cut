@@ -41,6 +41,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("spring", "/ui/gameScreenElements/topInfo/spring.png");
 				DoaSprites.createSprite("fall", "/ui/gameScreenElements/topInfo/fall.png");
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
+				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
 			}
 
 			{// BOTTOM INFO

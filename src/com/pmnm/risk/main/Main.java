@@ -25,6 +25,7 @@ public class Main {
 	static DoaEngine e;
 
 	public static void main(final String[] args) {
+		DoaEngine.TICK_RATE = 240;
 		Locale.setDefault(Locale.ENGLISH);
 		DoaEngine.DEBUG_ENABLED = false;
 		DoaEngine.MULTI_THREAD_ENABLED = false;

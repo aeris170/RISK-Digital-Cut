@@ -3,9 +3,11 @@ package com.pmnm.risk.ui.gameui;
 import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Font;
+import java.awt.geom.AffineTransform;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
@@ -21,6 +23,10 @@ public class TopPanel extends DoaPanel {
 	private DoaTaskGuard threeSecondGuard = new DoaTaskGuard();
 	private float alpha;
 	private float delta = 0.1f;
+
+	private float godrayAlpha = 0.7f;
+	private float godrayAlphaDelta = 0.005f;
+	private double godrayAngle = 0;
 
 	public TopPanel() {
 		super(0f, 0f, 0, 0);
@@ -44,11 +50,28 @@ public class TopPanel extends DoaPanel {
 				DoaTasker.executeLater(() -> alpha += delta, 100 * i);
 			}
 		}
-		Season.updateSeason();
+		// Season.updateSeason();
+		godrayAngle += 0.05f;
+		if (godrayAlpha >= 1f || godrayAlpha <= 0.5f) {
+			godrayAlphaDelta *= -1;
+		}
+		godrayAlpha += godrayAlphaDelta;
+
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
+		AffineTransform oldTransform = g.getTransform();
+		Composite oldComposite = g.getComposite();
+		if (Season.getCurrentSeason() == Season.SUMMER) {
+			DoaSprite godray = DoaSprites.get("godray");
+			g.translate((Main.WINDOW_WIDTH - godray.getWidth()) / 2f, -godray.getHeight() / 2f);
+			g.rotate(Math.toRadians(godrayAngle), godray.getWidth() / 2f, godray.getHeight() / 2f);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, godrayAlpha));
+			g.drawImage(DoaSprites.get("godray"), 0, 0);
+		}
+		g.setComposite(oldComposite);
+		g.setTransform(new AffineTransform());
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, -6);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
 		g.drawImage(DoaSprites.get("seasonCircle"), (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
@@ -56,7 +79,7 @@ public class TopPanel extends DoaPanel {
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 26f));
 		g.setColor(UIInit.FONT_COLOR);
 
-		Composite oldComposite = g.getComposite();
+		oldComposite = g.getComposite();
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
 		String turn = "TURN: " + (GameManager.turnCount + 1);
 		g.drawString(turn, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(turn)) / 2f, 110);
