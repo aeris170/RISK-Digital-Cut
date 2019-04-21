@@ -114,9 +114,6 @@ public class Player extends DoaObject {
 				reinforcementsForThisTurn += currentContinent.getCaptureBonus();
 			}
 		}
-		if(player.getName().equals("AIPlayer2")) {
-			return reinforcementsForThisTurn + 20;
-		}
 		return reinforcementsForThisTurn;
 	}
 

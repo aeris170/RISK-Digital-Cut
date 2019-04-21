@@ -48,13 +48,10 @@ public class GameManager extends DoaObject {
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		/*for (int i = 0; i < numberOfPlayers; i++) {
-			Player p = new Player("Player" + i, PlayerColorBank.get(i), i == 0);
-			DoaHandler.add(p);
-			players.add(p);
-			startingTroops.put(p, startingTroopCount);
-		}*/
-		AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 0);
+		/* for (int i = 0; i < numberOfPlayers; i++) { Player p = new Player("Player" +
+		 * i, PlayerColorBank.get(i), i == 0); DoaHandler.add(p); players.add(p);
+		 * startingTroops.put(p, startingTroopCount); } */
+		AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 1);
 		DoaHandler.add(aIP1);
 		players.add(aIP1);
 		startingTroops.put(aIP1, startingTroopCount);
@@ -62,7 +59,7 @@ public class GameManager extends DoaObject {
 		DoaHandler.add(aIP2);
 		players.add(aIP2);
 		startingTroops.put(aIP2, startingTroopCount);
-		
+
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
 		if (!manualPlacement) {
@@ -73,7 +70,7 @@ public class GameManager extends DoaObject {
 	public static void nextPhase() {
 		if (currentPhase == TurnPhase.DRAFT) {
 			currentPhase = TurnPhase.ATTACK;
-			if(currentPlayer.isLocalPlayer()) {
+			if (currentPlayer.isLocalPlayer()) {
 				BottomPanel.nextPhaseButton.enable();
 			}
 		} else if (currentPhase == TurnPhase.ATTACK) {
@@ -87,7 +84,7 @@ public class GameManager extends DoaObject {
 			currentPlayer = players.get(turnCount % players.size());
 			currentPlayer.turn();
 			reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
-			
+
 		}
 	}
 
@@ -122,7 +119,7 @@ public class GameManager extends DoaObject {
 			currentPlayer.turn();
 		} else {
 			reinforcementForThisTurn -= reinforcementCount;
-			if (reinforcementForThisTurn == 0) {
+			if (reinforcementForThisTurn <= 0) {
 				nextPhase();
 			}
 		}
@@ -170,9 +167,13 @@ public class GameManager extends DoaObject {
 		if (defenderProvinceHitArea != null) {
 			defenderProvinceHitArea.selectAsDefender();
 			defenderProvinceHitArea.setzOrder(DoaObject.FRONT);
-			dicePanel.show();
+			if (currentPlayer.isLocalPlayer()) {
+				dicePanel.show();
+			}
 		} else {
-			dicePanel.hide();
+			if (currentPlayer.isLocalPlayer()) {
+				dicePanel.hide();
+			}
 		}
 	}
 
