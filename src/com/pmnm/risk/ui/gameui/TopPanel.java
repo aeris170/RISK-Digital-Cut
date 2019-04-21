@@ -67,11 +67,13 @@ public class TopPanel extends DoaPanel {
 			DoaSprite godray = DoaSprites.get("godray");
 			g.translate((Main.WINDOW_WIDTH - godray.getWidth()) / 2f, -godray.getHeight() / 2f);
 			g.rotate(Math.toRadians(godrayAngle), godray.getWidth() / 2f, godray.getHeight() / 2f);
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, godrayAlpha));
+			// g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OVER,
+			// godrayAlpha));
 			g.drawImage(DoaSprites.get("godray"), 0, 0);
 		}
 		g.setComposite(oldComposite);
-		g.setTransform(new AffineTransform());
+		g.setTransform(oldTransform);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, -6);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
 		g.drawImage(DoaSprites.get("seasonCircle"), (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
