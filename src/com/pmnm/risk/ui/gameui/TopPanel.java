@@ -3,15 +3,12 @@ package com.pmnm.risk.ui.gameui;
 import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Font;
-import java.awt.geom.AffineTransform;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
-import com.doa.maths.DoaMath;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
@@ -24,10 +21,6 @@ public class TopPanel extends DoaPanel {
 	private DoaTaskGuard threeSecondGuard = new DoaTaskGuard();
 	private float alpha;
 	private float delta = 0.1f;
-
-	private float godrayAlpha = 0.7f;
-	private float godrayAlphaDelta = 0.001f;
-	private double godrayAngle = 0;
 
 	public TopPanel() {
 		super(0f, 0f, 0, 0);
@@ -51,29 +44,12 @@ public class TopPanel extends DoaPanel {
 				DoaTasker.executeLater(() -> alpha += delta, 100 * i);
 			}
 		}
-		godrayAngle += 0.05f;
-		godrayAlpha += godrayAlphaDelta;
-		if (godrayAlpha >= 1f || godrayAlpha <= 0.5f) {
-			godrayAlphaDelta *= -1;
-			godrayAlpha = DoaMath.clamp(godrayAlpha, 0.5f, 1f);
-		}
 		Season.updateSeason();
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		AffineTransform oldTransform = g.getTransform();
 		Composite oldComposite = g.getComposite();
-		if (Season.getCurrentSeason() == Season.SUMMER) {
-			DoaSprite godray = DoaSprites.get("godray");
-			g.translate(Main.WINDOW_WIDTH / 2f, 0);
-			g.rotate(Math.toRadians(godrayAngle));
-			g.scale(1.2f, 1.2f);
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, godrayAlpha));
-			g.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
-		}
-		g.setComposite(oldComposite);
-		g.setTransform(oldTransform);
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, -6);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
 		g.drawImage(DoaSprites.get("seasonCircle"), (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
