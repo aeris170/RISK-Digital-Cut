@@ -37,7 +37,6 @@ public class DicePanel extends DoaUIContainer {
 		blitz.addAction(new BlitzButtonAction());
 		add(blitz);
 		super.show();
-		// show();
 	}
 
 	@Override

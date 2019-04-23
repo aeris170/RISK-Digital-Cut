@@ -68,17 +68,17 @@ public class BottomPanel extends DoaPanel {
 		nextPhaseButton.setHeight(70);
 
 		g.setColor(UIInit.FONT_COLOR);
-		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - DoaSprites.get("MainMenuBottomRing").getHeight() + 6);
+		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - DoaSprites.get("MainMenuBottomRing").getHeight() + 6d);
 
-		g.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, Main.WINDOW_HEIGHT - LEFT.getHeight());
-		g.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, Main.WINDOW_HEIGHT - RIGHT.getHeight());
+		g.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (double) Main.WINDOW_HEIGHT - LEFT.getHeight());
+		g.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (double) Main.WINDOW_HEIGHT - RIGHT.getHeight());
 
 		String phaseText = GameManager.currentPhase.name();
 		DoaVectorF phaseArea = new DoaVectorF(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, phaseArea, phaseText)));
 		g.drawString(GameManager.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
 
-		g.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, Main.WINDOW_HEIGHT - MIDDLE.getHeight());
+		g.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (double) Main.WINDOW_HEIGHT - MIDDLE.getHeight());
 
 		g.drawImage(garrisonSprite, garrisonTopLeft.x, garrisonTopLeft.y);
 		g.drawImage(DoaSprites.get("garrisonHolderIcon"), Main.WINDOW_WIDTH * 0.527f, Main.WINDOW_HEIGHT * 0.842f);

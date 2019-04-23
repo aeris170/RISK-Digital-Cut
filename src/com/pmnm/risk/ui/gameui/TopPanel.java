@@ -41,7 +41,7 @@ public class TopPanel extends DoaPanel {
 				}
 			}, 4000);
 			for (int i = 0; i < 10; i++) {
-				DoaTasker.executeLater(() -> alpha += delta, 100 * i);
+				DoaTasker.executeLater(() -> alpha += delta, 100L * i);
 			}
 		}
 		Season.updateSeason();
@@ -57,7 +57,6 @@ public class TopPanel extends DoaPanel {
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 26f));
 		g.setColor(UIInit.FONT_COLOR);
 
-		oldComposite = g.getComposite();
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
 		String turn = "TURN: " + (GameManager.turnCount + 1);
 		g.drawString(turn, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(turn)) / 2f, 110);

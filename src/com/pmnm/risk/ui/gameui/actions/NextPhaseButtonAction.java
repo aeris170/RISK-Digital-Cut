@@ -21,9 +21,7 @@ public class NextPhaseButtonAction implements DoaUIAction {
 			GameManager.nextPhase();
 		} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
 			GameManager.nextPhase();
-			// if (!GameManager.currentPlayer.isLocalPlayer()) {
 			button.disable();
-			// }
 		}
 	}
 }
