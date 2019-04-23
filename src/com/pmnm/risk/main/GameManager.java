@@ -28,7 +28,7 @@ public class GameManager extends DoaObject {
 
 	public static final List<Player> players = new ArrayList<>();
 	public static int numberOfPlayers = 2;
-	public static boolean manualPlacement = true;
+	public static boolean manualPlacement = false;
 
 	public static boolean isManualPlacementDone = false;
 	public static final Map<Player, Integer> startingTroops = new HashMap<>();
@@ -48,17 +48,16 @@ public class GameManager extends DoaObject {
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		/* for (int i = 0; i < numberOfPlayers; i++) { Player p = new Player("Player" +
-		 * i, PlayerColorBank.get(i), i == 0); DoaHandler.add(p); players.add(p);
-		 * startingTroops.put(p, startingTroopCount); } */
-		AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 1);
-		DoaHandler.add(aIP1);
-		players.add(aIP1);
-		startingTroops.put(aIP1, startingTroopCount);
-		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 1);
-		DoaHandler.add(aIP2);
-		players.add(aIP2);
-		startingTroops.put(aIP2, startingTroopCount);
+		for (int i = 0; i < numberOfPlayers; i++) {
+			Player p = new Player("Player" + i, PlayerColorBank.get(i), true);
+			DoaHandler.add(p);
+			players.add(p);
+			startingTroops.put(p, startingTroopCount);
+		} /* AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 1);
+		   * DoaHandler.add(aIP1); players.add(aIP1); startingTroops.put(aIP1,
+		   * startingTroopCount); AIPlayer aIP2 = new AIPlayer("AIPlayer2",
+		   * PlayerColorBank.get(1), 1); DoaHandler.add(aIP2); players.add(aIP2);
+		   * startingTroops.put(aIP2, startingTroopCount); */
 
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
@@ -84,7 +83,6 @@ public class GameManager extends DoaObject {
 			currentPlayer = players.get(turnCount % players.size());
 			currentPlayer.turn();
 			reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
-
 		}
 	}
 
@@ -247,6 +245,25 @@ public class GameManager extends DoaObject {
 		} else {
 			// dice cannot be thrown because province didn't have enough troop
 		}
+	}
+
+	public static void blitz() {
+		int attackerTroops = attackerProvinceHitArea.getProvince().getTroops();
+		if (attackerTroops <= 1 || defenderProvinceHitArea.getProvince().getTroops() <= 0) {
+			return;
+		}
+		switch (attackerTroops) {
+			default:
+				toss(3);
+				break;
+			case 3:
+				toss(2);
+				break;
+			case 2:
+				toss(1);
+				break;
+		}
+		blitz();
 	}
 
 	private static void occupyProvince(Province occupied, int invadingTroopCount) {

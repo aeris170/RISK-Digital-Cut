@@ -6,6 +6,7 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.DoaUIContainer;
 import com.doa.ui.button.DoaImageButton;
+import com.pmnm.risk.ui.gameui.actions.BlitzButtonAction;
 import com.pmnm.risk.ui.gameui.actions.DiceButtonAction;
 
 public class DicePanel extends DoaUIContainer {
@@ -33,6 +34,7 @@ public class DicePanel extends DoaUIContainer {
 		add(two);
 		add(three);
 		blitz = DoaHandler.instantiateDoaObject(BlitzButton.class, -130f, 643f, 85, 60, DoaSprites.get("blitzIdle"), DoaSprites.get("blitzHover"));
+		blitz.addAction(new BlitzButtonAction());
 		add(blitz);
 		super.show();
 		// show();
