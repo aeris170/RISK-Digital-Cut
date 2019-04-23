@@ -64,7 +64,7 @@ public class AIPlayer extends Player {
 					if (ownedProvinces.get(i).troopCount() - ownedProvinceNeighbours.get(j).troopCount() > 5) {
 						GameManager.markAttackerProvince(ownedProvinces.get(i).getProvinceHitArea());
 						GameManager.markDefenderProvince(ownedProvinceNeighbours.get(j).getProvinceHitArea());
-						GameManager.toss(3);
+						GameManager.blitz();
 					}
 				}
 			}

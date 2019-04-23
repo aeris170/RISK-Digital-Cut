@@ -56,8 +56,8 @@ public class GameManager extends DoaObject {
 		players.add(aIP1);
 		startingTroops.put(aIP1, startingTroopCount);
 		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 1);
-		DoaHandler.add(aIP2);
 		players.add(aIP2);
+		DoaHandler.add(aIP2);
 		startingTroops.put(aIP2, startingTroopCount);
 
 		currentPlayer = players.get(0);
@@ -93,7 +93,7 @@ public class GameManager extends DoaObject {
 			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 		}
 		if (!isManualPlacementDone) {
-			if (startingTroops.values().stream().allMatch(v -> v == 0)) {
+			if (startingTroops.values().stream().allMatch(v -> v <= 0)) {
 				isManualPlacementDone = true;
 				reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
 			}
