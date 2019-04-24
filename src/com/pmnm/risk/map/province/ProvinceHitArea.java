@@ -73,6 +73,8 @@ public class ProvinceHitArea extends DoaObject {
 	private boolean isDefender = false;
 	private boolean isEmphasized = false;
 	private boolean isHighlighted = false;
+	private boolean isReinforcing = false;
+	private boolean isReinforced = false;
 
 	public ProvinceHitArea(Province province, Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
@@ -99,10 +101,10 @@ public class ProvinceHitArea extends DoaObject {
 		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
 		if (meshes.stream().anyMatch(mesh -> mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y))) {
 			isHighlighted = true;
-			setzOrder(DoaObject.FRONT);
+			// setzOrder(DoaObject.FRONT);
 		} else {
 			isHighlighted = false;
-			setzOrder(DoaObject.GAME_OBJECTS);
+			// setzOrder(DoaObject.GAME_OBJECTS);
 		}
 	}
 
@@ -279,6 +281,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	public void selectAsDefender() {
 		isDefender = true;
+		setzOrder(DoaObject.FRONT);
 	}
 
 	public void deselectAsAttacker() {
@@ -288,13 +291,44 @@ public class ProvinceHitArea extends DoaObject {
 
 	public void deselectAsDefender() {
 		isDefender = false;
+		setzOrder(DoaObject.GAME_OBJECTS);
 	}
 
 	public void emphasizeForAttack() {
 		isEmphasized = true;
+		setzOrder(DoaObject.FRONT);
 	}
 
 	public void deemphasizeForAttack() {
+		isEmphasized = false;
+		setzOrder(DoaObject.GAME_OBJECTS);
+	}
+
+	public void selectAsReinforcing() {
+		isReinforcing = true;
+		setzOrder(DoaObject.FRONT);
+	}
+
+	public void selectAsReinforced() {
+		isReinforcing = true;
+		setzOrder(DoaObject.FRONT);
+	}
+
+	public void deselectAsReinforcing() {
+		isReinforced = false;
+		setzOrder(DoaObject.GAME_OBJECTS);
+	}
+
+	public void deselectAsReinforced() {
+		isReinforced = false;
+		setzOrder(DoaObject.GAME_OBJECTS);
+	}
+
+	public void emphasizeForReinforcement() {
+		isEmphasized = true;
+	}
+
+	public void deemphasizeForReinforcement() {
 		isEmphasized = false;
 	}
 }

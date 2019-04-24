@@ -72,12 +72,26 @@ public class Player extends DoaObject {
 						GameManager.markDefenderProvince(clickedHitArea);
 					}
 				} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
-					if (source == null) {} else if (destination == null) {}
+					if (clickedProvince.isOwnedBy(this)) {
+						if (clickedProvince.getTroops() > 1 && GameManager.getReinforcingProvince() == null) {
+							GameManager.markReinforcingProvince(clickedHitArea);
+						} else if (destination == null) {
+							GameManager.markReinforcedProvince(clickedHitArea);
+							GameManager.reinforce(3);
+						}
+					}
 				}
-			} else if (DoaMouse.MB1 && GameManager.currentPhase == TurnPhase.ATTACK) {
-				GameManager.markAttackerProvince(null);
-				GameManager.markDefenderProvince(null);
+			} else if (DoaMouse.MB1) {
 				GameManager.clickedHitArea = null;
+				if (GameManager.currentPhase == TurnPhase.DRAFT) {
+
+				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
+					GameManager.markAttackerProvince(null);
+					GameManager.markDefenderProvince(null);
+				} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
+					GameManager.markReinforcingProvince(null);
+					GameManager.markReinforcedProvince(null);
+				}
 			}
 		}
 	}

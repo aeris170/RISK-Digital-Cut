@@ -18,6 +18,7 @@ import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.risk.ui.gameui.BottomPanel;
 import com.pmnm.risk.ui.gameui.DicePanel;
 import com.pmnm.risk.ui.gameui.RiskGameScreenUI;
@@ -43,23 +44,25 @@ public class GameManager extends DoaObject {
 	public static ProvinceHitArea defenderProvinceHitArea = null;
 	public static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
 
+	public static ProvinceHitArea reinforcingProvince = null;
+	public static ProvinceHitArea reinforcedProvince = null;
+
 	public static ProvinceHitArea clickedHitArea;
 
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		/* for (int i = 0; i < numberOfPlayers; i++) { Player p = new Player("Player" +
-		 * i, PlayerColorBank.get(i), true); DoaHandler.add(p); players.add(p);
-		 * startingTroops.put(p, startingTroopCount); } */
-		AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 1);
-		DoaHandler.add(aIP1);
-		players.add(aIP1);
-		startingTroops.put(aIP1, startingTroopCount);
-		AIPlayer aIP2 = new AIPlayer("AIPlayer2", PlayerColorBank.get(1), 1);
-		players.add(aIP2);
-		DoaHandler.add(aIP2);
-		startingTroops.put(aIP2, startingTroopCount);
-
+		for (int i = 0; i < numberOfPlayers; i++) {
+			Player p = new Player("Player" + i, PlayerColorBank.get(i), true);
+			DoaHandler.add(p);
+			players.add(p);
+			startingTroops.put(p, startingTroopCount);
+		}
+		/* AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 1);
+		 * DoaHandler.add(aIP1); players.add(aIP1); startingTroops.put(aIP1,
+		 * startingTroopCount); AIPlayer aIP2 = new AIPlayer("AIPlayer2",
+		 * PlayerColorBank.get(1), 1); players.add(aIP2); DoaHandler.add(aIP2);
+		 * startingTroops.put(aIP2, startingTroopCount); */
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
 		if (!manualPlacement) {
@@ -134,25 +137,17 @@ public class GameManager extends DoaObject {
 
 	public static void markAttackerProvince(ProvinceHitArea province) {
 		if (attackerProvinceHitArea != null) {
-			attackerProvinceHitArea.deselectAsAttacker();
-			attackerProvinceHitArea.setzOrder(DoaObject.GAME_OBJECTS);
 			ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(
 			        hitArea -> attackerProvinceHitArea.getProvince().getNeighbours().contains(hitArea.getProvince()) && !hitArea.getProvince().isOwnedBy(currentPlayer))
-			        .collect(Collectors.toList()).forEach(hitArea -> {
-				        hitArea.deemphasizeForAttack();
-				        hitArea.setzOrder(DoaObject.GAME_OBJECTS);
-			        });
+			        .collect(Collectors.toList()).forEach(hitArea -> hitArea.deemphasizeForAttack());
+			attackerProvinceHitArea.deselectAsAttacker();
 		}
 		attackerProvinceHitArea = province;
 		if (attackerProvinceHitArea != null) {
-			attackerProvinceHitArea.selectAsAttacker();
-			attackerProvinceHitArea.setzOrder(DoaObject.FRONT);
 			ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(
 			        hitArea -> attackerProvinceHitArea.getProvince().getNeighbours().contains(hitArea.getProvince()) && !hitArea.getProvince().isOwnedBy(currentPlayer))
-			        .collect(Collectors.toList()).forEach(hitArea -> {
-				        hitArea.emphasizeForAttack();
-				        hitArea.setzOrder(DoaObject.FRONT);
-			        });
+			        .collect(Collectors.toList()).forEach(hitArea -> hitArea.emphasizeForAttack());
+			attackerProvinceHitArea.selectAsAttacker();
 		}
 
 	}
@@ -160,12 +155,10 @@ public class GameManager extends DoaObject {
 	public static void markDefenderProvince(ProvinceHitArea province) {
 		if (defenderProvinceHitArea != null) {
 			defenderProvinceHitArea.deselectAsDefender();
-			defenderProvinceHitArea.setzOrder(DoaObject.GAME_OBJECTS);
 		}
 		defenderProvinceHitArea = province;
 		if (defenderProvinceHitArea != null) {
 			defenderProvinceHitArea.selectAsDefender();
-			defenderProvinceHitArea.setzOrder(DoaObject.FRONT);
 			if (currentPlayer.isLocalPlayer()) {
 				dicePanel.show();
 			}
@@ -272,6 +265,60 @@ public class GameManager extends DoaObject {
 		defenderProvinceHitArea.deemphasizeForAttack();
 		markAttackerProvince(null);
 		markDefenderProvince(null);
+	}
+
+	public static ProvinceHitArea getReinforcingProvince() {
+		return reinforcingProvince;
+	}
+
+	public static void markReinforcingProvince(ProvinceHitArea province) {
+		if (reinforcingProvince != null) {
+			reinforcingProvince.deselectAsReinforcing();
+			Utils.connectedComponents(reinforcingProvince).forEach(hitArea -> {
+				hitArea.deemphasizeForReinforcement();
+				hitArea.setzOrder(DoaObject.GAME_OBJECTS);
+			});
+		}
+		reinforcingProvince = province;
+		if (reinforcingProvince != null) {
+			reinforcingProvince.selectAsReinforcing();
+			Utils.connectedComponents(reinforcingProvince).forEach(hitArea -> {
+				hitArea.emphasizeForReinforcement();
+				hitArea.setzOrder(DoaObject.FRONT);
+			});
+		}
+	}
+
+	public static ProvinceHitArea getReinforcedProvince() {
+		return reinforcedProvince;
+	}
+
+	public static void markReinforcedProvince(ProvinceHitArea province) {
+		if (reinforcedProvince != null) {
+			reinforcedProvince.deselectAsReinforced();
+			reinforcedProvince.setzOrder(DoaObject.GAME_OBJECTS);
+		}
+		reinforcedProvince = province;
+		if (reinforcedProvince != null) {
+			reinforcedProvince.selectAsReinforced();
+			reinforcedProvince.setzOrder(DoaObject.FRONT);
+			if (currentPlayer.isLocalPlayer()) {
+				// show spinner
+			}
+		} else {
+			if (currentPlayer.isLocalPlayer()) {
+				// hide spinner
+			}
+		}
+	}
+
+	public static void reinforce(int reinforcementCount) {
+		if (reinforcingProvince != null && reinforcedProvince != null) {
+			reinforcingProvince.getProvince().removeTroops(reinforcementCount);
+			reinforcedProvince.getProvince().addTroops(reinforcementCount);
+			Utils.connectedComponents(reinforcingProvince).forEach(p -> p.deemphasizeForReinforcement());
+			nextPhase();
+		}
 	}
 
 	private static void randomPlacement() {

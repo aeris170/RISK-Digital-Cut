@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.graphics.DoaGraphicsContext;
@@ -13,6 +15,8 @@ import com.doa.maths.DoaVectorF;
 import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
 import com.pmnm.risk.main.Camera;
 import com.pmnm.risk.main.Main;
+import com.pmnm.risk.map.province.Province;
+import com.pmnm.risk.map.province.ProvinceHitArea;
 
 public final class Utils {
 
@@ -93,5 +97,25 @@ public final class Utils {
 			fm = g.getFontMetrics(f);
 		} while (fm.stringWidth(s) < r.x && fm.getHeight() < r.y);
 		return fontSize;
+	}
+
+	public static List<ProvinceHitArea> connectedComponents(ProvinceHitArea province) {
+		List<ProvinceHitArea> connectedComponents = new ArrayList<>();
+		connectedComponents.add(province);
+		explodeFrom(province, connectedComponents);
+		return connectedComponents;
+	}
+
+	private static void explodeFrom(ProvinceHitArea provinceHitArea, List<ProvinceHitArea> connectedComponents) {
+		Province province = provinceHitArea.getProvince();
+		for (Province p : provinceHitArea.getProvince().getNeighbours()) {
+			if (p.getOwner() == province.getOwner()) {
+				ProvinceHitArea pHitArea = p.getProvinceHitArea();
+				if (!connectedComponents.contains(pHitArea)) {
+					connectedComponents.add(pHitArea);
+					explodeFrom(pHitArea, connectedComponents);
+				}
+			}
+		}
 	}
 }
