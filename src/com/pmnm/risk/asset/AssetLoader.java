@@ -60,6 +60,13 @@ public final class AssetLoader {
 				DoaSprites.createSprite("nextPhaseButtonHover", "/ui/gameScreenElements/bottomInfo/nextPhaseHovered.png");
 				DoaSprites.createSprite("nextPhaseButtonPressed", "/ui/gameScreenElements/bottomInfo/nextPhasePressed.png");
 				DoaSprites.createSprite("nextPhaseButtonDisabled", "/ui/gameScreenElements/bottomInfo/nextPhaseDisabled.png");
+				DoaSprites.createSprite("arrowUp", "/ui/gameScreenElements/bottomInfo/arrowUp.png");
+				DoaSprites.createSprite("arrowUpHover", "/ui/gameScreenElements/bottomInfo/arrowUpHovered.png");
+				DoaSprites.createSprite("arrowUpPress", "/ui/gameScreenElements/bottomInfo/arrowUpPressed.png");
+				DoaSprites.createSprite("arrowDown", "/ui/gameScreenElements/bottomInfo/arrowDown.png");
+				DoaSprites.createSprite("arrowDownHover", "/ui/gameScreenElements/bottomInfo/arrowDownHovered.png");
+				DoaSprites.createSprite("arrowDownPress", "/ui/gameScreenElements/bottomInfo/arrowDownPressed.png");
+				DoaSprites.createSprite("centerPiece", "/ui/gameScreenElements/bottomInfo/ArmySelector.png");
 			}
 
 			{// CONTINENT SYMBOLS

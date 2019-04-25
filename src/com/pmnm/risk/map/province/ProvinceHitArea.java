@@ -149,6 +149,9 @@ public class ProvinceHitArea extends DoaObject {
 			g.drawImage(ownerLogo, centerX - ownerLogo.getWidth() * 0.33f, centerY - ownerLogo.getHeight() * 0.33f, ownerLogo.getWidth() * 0.66f,
 			        ownerLogo.getHeight() * 0.66f);
 			String troopCount = "" + province.getTroops();
+			if (province.getTroops() == -1) {
+				troopCount = "???";
+			}
 			g.drawString(troopCount, centerX - fm.stringWidth(troopCount) / 2f, centerY + (fm.getHeight() - fm.getAscent()) / 2f);
 		}
 	}
@@ -330,5 +333,13 @@ public class ProvinceHitArea extends DoaObject {
 
 	public void deemphasizeForReinforcement() {
 		isEmphasized = false;
+	}
+
+	public double centerX() {
+		return centerX;
+	}
+
+	public double centerY() {
+		return centerY;
 	}
 }

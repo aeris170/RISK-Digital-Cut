@@ -123,15 +123,14 @@ public class Province implements Serializable {
 		return UNCLAIMED_PROVINCES.get(ThreadLocalRandom.current().nextInt(UNCLAIMED_PROVINCES.size()));
 	}
 
-	public void getOccupiedBy(Player player, int invadingTroopCount) {
+	public void getOccupiedBy(Player player) {
 		owner = player;
-		troops = invadingTroopCount;
 	}
-	
+
 	public int troopCount() {
 		return troops;
 	}
-	
+
 	public ProvinceHitArea getProvinceHitArea() {
 		return ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.getProvince().equals(this)).findFirst().orElse(null);
 	}

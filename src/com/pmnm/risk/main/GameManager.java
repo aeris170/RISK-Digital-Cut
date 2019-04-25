@@ -16,6 +16,7 @@ import com.doa.engine.input.DoaMouse;
 import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.PlayerColorBank;
+import com.pmnm.risk.map.board.ProvinceConnector;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
@@ -49,6 +50,8 @@ public class GameManager extends DoaObject {
 
 	public static ProvinceHitArea clickedHitArea;
 
+	public static ProvinceConnector pc = DoaHandler.instantiateDoaObject(ProvinceConnector.class);
+
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
@@ -76,6 +79,7 @@ public class GameManager extends DoaObject {
 			if (currentPlayer.isLocalPlayer()) {
 				BottomPanel.nextPhaseButton.enable();
 			}
+			BottomPanel.nullSpinner();
 		} else if (currentPhase == TurnPhase.ATTACK) {
 			currentPhase = TurnPhase.REINFORCE;
 			markAttackerProvince(null);
@@ -87,6 +91,7 @@ public class GameManager extends DoaObject {
 			currentPlayer = players.get(turnCount % players.size());
 			currentPlayer.turn();
 			reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
+			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 		}
 	}
 
@@ -99,6 +104,7 @@ public class GameManager extends DoaObject {
 			if (startingTroops.values().stream().allMatch(v -> v <= 0)) {
 				isManualPlacementDone = true;
 				reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
+				BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			}
 		}
 	}
@@ -123,6 +129,8 @@ public class GameManager extends DoaObject {
 			reinforcementForThisTurn -= reinforcementCount;
 			if (reinforcementForThisTurn <= 0) {
 				nextPhase();
+			} else {
+				BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			}
 		}
 	}
@@ -212,12 +220,7 @@ public class GameManager extends DoaObject {
 					attackerCasualties++;
 				}
 			}
-			int defenderTroopCount = defenderProvinceHitArea.getProvince().getTroops();
-			if (defenderTroopCount > defenderCasualties) {
-				defenderProvinceHitArea.getProvince().removeTroops(defenderCasualties);
-			} else {
-				defenderProvinceHitArea.getProvince().removeTroops(defenderTroopCount);
-			}
+			defenderProvinceHitArea.getProvince().removeTroops(defenderCasualties);
 			attackerProvinceHitArea.getProvince().removeTroops(attackerCasualties);
 			if (attackerProvinceHitArea.getProvince().getTroops() == 1) {
 				markAttackerProvince(null);
@@ -225,19 +228,11 @@ public class GameManager extends DoaObject {
 			}
 			if (defenderProvinceHitArea.getProvince().getTroops() <= 0) {
 				// capture
-				int remainingTroops = attackerProvinceHitArea.getProvince().getTroops();
-				if (remainingTroops - diceAmount > 1) {
-					defenderProvinceHitArea.getProvince().addTroops(diceAmount);
-					attackerProvinceHitArea.getProvince().removeTroops(diceAmount);
-				} else if (remainingTroops - diceAmount <= 1 && remainingTroops > 1) {
-					defenderProvinceHitArea.getProvince().addTroops(remainingTroops - 1);
-					attackerProvinceHitArea.getProvince().removeTroops(remainingTroops - 1);
-				}
-				// the attacking province cannot both win and have only 1 troop left... right?
-				occupyProvince(defenderProvinceHitArea.getProvince(), diceAmount);
+				defenderProvinceHitArea.getProvince().removeTroops(defenderProvinceHitArea.getProvince().getTroops() + 1);
+				BottomPanel.updateSpinnerValues(diceAmount, attackerProvinceHitArea.getProvince().getTroops() - 1);
+				pc.setPath(attackerProvinceHitArea, defenderProvinceHitArea);
+				occupyProvince(defenderProvinceHitArea.getProvince());
 			}
-		} else {
-			// dice cannot be thrown because province didn't have enough troop
 		}
 	}
 
@@ -260,8 +255,8 @@ public class GameManager extends DoaObject {
 		blitz();
 	}
 
-	private static void occupyProvince(Province occupied, int invadingTroopCount) {
-		occupied.getOccupiedBy(currentPlayer, invadingTroopCount);
+	private static void occupyProvince(Province occupied) {
+		occupied.getOccupiedBy(currentPlayer);
 		defenderProvinceHitArea.deemphasizeForAttack();
 		markAttackerProvince(null);
 		markDefenderProvince(null);

@@ -14,6 +14,7 @@ import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.ui.gameui.BottomPanel;
 
 public class Player extends DoaObject {
 
@@ -61,7 +62,7 @@ public class Player extends DoaObject {
 					}
 				} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
 					if (GameManager.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
-						GameManager.reinforce(clickedProvince, 1);
+						GameManager.reinforce(clickedProvince, BottomPanel.spinnerValues.get(BottomPanel.index));
 					}
 				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
 					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1) {
@@ -121,7 +122,7 @@ public class Player extends DoaObject {
 
 	public static int calculateReinforcementsForThisTurn(Player player) {
 		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
-		int reinforcementsForThisTurn = Math.min(playerProvinces.size() / 3, 3);
+		int reinforcementsForThisTurn = Math.max(playerProvinces.size() / 3, 3);
 		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
 			Continent currentContinent = entry.getValue();
 			if (playerProvinces.containsAll(currentContinent.getProvinces())) {
