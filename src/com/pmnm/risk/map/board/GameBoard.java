@@ -31,7 +31,6 @@ public class GameBoard extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		 g.drawImage(DoaSprites.get("WorldMap"), position.x, position.y, width,
-		 height, null);
+		g.drawImage(DoaSprites.get("WorldMap"), position.x, position.y, width, height, null);
 	}
 }
