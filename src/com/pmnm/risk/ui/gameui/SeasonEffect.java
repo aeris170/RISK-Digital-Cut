@@ -5,6 +5,8 @@ import java.awt.Composite;
 import java.awt.geom.AffineTransform;
 
 import com.doa.engine.DoaObject;
+import com.doa.engine.graphics.DoaAnimation;
+import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
@@ -20,7 +22,7 @@ public class SeasonEffect extends DoaObject {
 	private double godrayAngle = 0;
 
 	public SeasonEffect() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, DoaObject.BACK);
+		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, DoaObject.STATIC_FRONT);
 	}
 
 	@Override
@@ -43,6 +45,13 @@ public class SeasonEffect extends DoaObject {
 		AffineTransform oldTransform = g.getTransform();
 		switch (Season.getCurrentSeason()) {
 			case WINTER:
+				DoaAnimation anim = DoaAnimations.get("Snowfall");
+				g.translate(Main.WINDOW_WIDTH / 2f, 0);
+				g.drawAnimation(anim, -anim.getFrames().get(0).getWidth() / 2f, -anim.getFrames().get(0).getHeight() / 3f);
+				g.rotate(Math.toRadians(45));
+				g.drawAnimation(anim, -anim.getFrames().get(0).getWidth() / 2f, -anim.getFrames().get(0).getHeight() / 2f);
+				g.rotate(Math.toRadians(-90));
+				g.drawAnimation(anim, -anim.getFrames().get(0).getWidth() / 2f, -anim.getFrames().get(0).getHeight() / 2f);
 				break;
 			case SPRING:
 				break;
