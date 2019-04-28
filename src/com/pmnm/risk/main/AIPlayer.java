@@ -35,13 +35,15 @@ public class AIPlayer extends Player {
 				} else {
 					List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this).collect(Collectors.toList());
 					Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
-					GameManager.reinforce(p, 1);
+					GameManager.setDraftReinforceProvince(p);
+					GameManager.draftReinforce(1);
 					isInTurn = false;
 				}
 			} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
 				List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this).collect(Collectors.toList());
 				Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
-				GameManager.reinforce(p, 1);
+				GameManager.setDraftReinforceProvince(p);
+				GameManager.draftReinforce(1);
 			} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
 				if (difficulty == 0) {
 					GameManager.nextPhase();

@@ -12,7 +12,7 @@ public class BlitzButton extends DoaImageButton {
 	private transient DoaSprite hoverImage;
 	private transient DoaSprite clickImage;
 
-	public BlitzButton(Float x, Float y, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage) {
+	public BlitzButton(float x, float y, int width, int height, DoaSprite idleImage, DoaSprite hoverImage) {
 		super(x, y, width, height, idleImage, hoverImage);
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;

@@ -16,8 +16,7 @@ public class TextImageButton extends DoaImageButton {
 	protected Color textColor;
 	protected Color hoverTextColor;
 
-	public TextImageButton(DoaVectorF position, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor,
-	        Color hoverTextColor) {
+	public TextImageButton(DoaVectorF position, int width, int height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor, Color hoverTextColor) {
 		super(position, width, height, idleImage, hoverImage);
 		this.text = text;
 		this.textColor = textColor;

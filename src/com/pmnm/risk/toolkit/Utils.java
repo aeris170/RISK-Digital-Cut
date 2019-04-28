@@ -60,8 +60,8 @@ public final class Utils {
 		final DoaVectorF mouseCoordinates = new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y);
 		final float cx = Main.WINDOW_WIDTH / 2f;
 		final float cy = Main.WINDOW_HEIGHT / 2f;
-		final float camx = Camera.INSTANCE.getPosition().x;
-		final float camy = Camera.INSTANCE.getPosition().y;
+		final float camx = Camera.getInstance().getPosition().x;
+		final float camy = Camera.getInstance().getPosition().y;
 		final float z = DoaCamera.getZ();
 		final float mx = mouseCoordinates.x - camx;
 		final float my = mouseCoordinates.y - camy;

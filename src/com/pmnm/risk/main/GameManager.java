@@ -50,14 +50,13 @@ public class GameManager extends DoaObject {
 
 	public static ProvinceHitArea clickedHitArea;
 
-	public static ProvinceConnector pc = DoaHandler.instantiateDoaObject(ProvinceConnector.class);
+	private static Province draftReinforceProvince = null;
 
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
 		for (int i = 0; i < numberOfPlayers; i++) {
-			Player p = new Player("Player" + i, PlayerColorBank.get(i), true);
-			DoaHandler.add(p);
+			Player p = DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i), true);
 			players.add(p);
 			startingTroops.put(p, startingTroopCount);
 		}
@@ -119,8 +118,8 @@ public class GameManager extends DoaObject {
 		currentPlayer.turn();
 	}
 
-	public static void reinforce(Province reinforced, int reinforcementCount) {
-		reinforced.addTroops(reinforcementCount);
+	public static void draftReinforce(int reinforcementCount) {
+		draftReinforceProvince.addTroops(reinforcementCount);
 		if (!isManualPlacementDone) {
 			startingTroops.put(currentPlayer, startingTroops.get(currentPlayer) - reinforcementCount);
 			currentPlayer = players.get(++placementCounter % players.size());
@@ -230,7 +229,7 @@ public class GameManager extends DoaObject {
 				// capture
 				defenderProvinceHitArea.getProvince().removeTroops(defenderProvinceHitArea.getProvince().getTroops() + 1);
 				BottomPanel.updateSpinnerValues(diceAmount, attackerProvinceHitArea.getProvince().getTroops() - 1);
-				pc.setPath(attackerProvinceHitArea, defenderProvinceHitArea);
+				ProvinceConnector.getInstance().setPath(attackerProvinceHitArea, defenderProvinceHitArea);
 				occupyProvince(defenderProvinceHitArea.getProvince());
 			}
 		}
@@ -271,7 +270,7 @@ public class GameManager extends DoaObject {
 			reinforcingProvince.deselectAsReinforcing();
 			Utils.connectedComponents(reinforcingProvince).forEach(hitArea -> {
 				hitArea.deemphasizeForReinforcement();
-				hitArea.setzOrder(DoaObject.GAME_OBJECTS);
+				hitArea.setzOrder(0);
 			});
 		}
 		reinforcingProvince = province;
@@ -279,7 +278,6 @@ public class GameManager extends DoaObject {
 			reinforcingProvince.selectAsReinforcing();
 			Utils.connectedComponents(reinforcingProvince).forEach(hitArea -> {
 				hitArea.emphasizeForReinforcement();
-				hitArea.setzOrder(DoaObject.FRONT);
 			});
 		}
 	}
@@ -291,12 +289,11 @@ public class GameManager extends DoaObject {
 	public static void markReinforcedProvince(ProvinceHitArea province) {
 		if (reinforcedProvince != null) {
 			reinforcedProvince.deselectAsReinforced();
-			reinforcedProvince.setzOrder(DoaObject.GAME_OBJECTS);
+			reinforcedProvince.setzOrder(0);
 		}
 		reinforcedProvince = province;
 		if (reinforcedProvince != null) {
 			reinforcedProvince.selectAsReinforced();
-			reinforcedProvince.setzOrder(DoaObject.FRONT);
 			if (currentPlayer.isLocalPlayer()) {
 				// show spinner
 			}
@@ -324,7 +321,12 @@ public class GameManager extends DoaObject {
 		while (!startingTroops.values().stream().allMatch(v -> v == 0)) {
 			List<Province> playerProvinces = Player.getPlayerProvinces(currentPlayer);
 			currentPlayer.endTurn();
-			reinforce(playerProvinces.get(ThreadLocalRandom.current().nextInt(playerProvinces.size())), 1);
+			draftReinforceProvince = playerProvinces.get(ThreadLocalRandom.current().nextInt(playerProvinces.size()));
+			draftReinforce(1);
 		}
+	}
+
+	public static void setDraftReinforceProvince(Province clickedProvince) {
+		draftReinforceProvince = clickedProvince;
 	}
 }

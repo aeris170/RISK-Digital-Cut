@@ -14,7 +14,6 @@ import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
-import com.pmnm.risk.ui.gameui.BottomPanel;
 
 public class Player extends DoaObject {
 
@@ -57,12 +56,13 @@ public class Player extends DoaObject {
 						GameManager.claimProvince(clickedProvince);
 						isInTurn = false;
 					} else if (clickedProvince.isOwnedBy(this) && GameManager.areAllProvincesClaimed()) {
-						GameManager.reinforce(clickedProvince, 1);
+						GameManager.setDraftReinforceProvince(clickedProvince);
+						GameManager.draftReinforce(1);
 						isInTurn = false;
 					}
 				} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
 					if (GameManager.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
-						GameManager.reinforce(clickedProvince, BottomPanel.spinnerValues.get(BottomPanel.index));
+						GameManager.setDraftReinforceProvince(clickedProvince);
 					}
 				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
 					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1) {
@@ -93,6 +93,8 @@ public class Player extends DoaObject {
 					GameManager.markReinforcingProvince(null);
 					GameManager.markReinforcedProvince(null);
 				}
+				ProvinceHitArea.selectedProvinceByMouse.isSelected = false;
+				ProvinceHitArea.selectedProvinceByMouse = null;
 			}
 		}
 	}
