@@ -78,14 +78,13 @@ public class Player extends DoaObject {
 							GameManager.markReinforcingProvince(clickedHitArea);
 						} else if (destination == null) {
 							GameManager.markReinforcedProvince(clickedHitArea);
-							GameManager.reinforce(3);
 						}
 					}
 				}
 			} else if (DoaMouse.MB1) {
 				GameManager.clickedHitArea = null;
 				if (GameManager.currentPhase == TurnPhase.DRAFT) {
-
+					GameManager.setDraftReinforceProvince(null);
 				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
 					GameManager.markAttackerProvince(null);
 					GameManager.markDefenderProvince(null);

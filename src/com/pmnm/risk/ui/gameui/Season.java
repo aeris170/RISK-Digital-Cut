@@ -3,6 +3,8 @@ package com.pmnm.risk.ui.gameui;
 import java.awt.Color;
 import java.util.Calendar;
 
+import com.pmnm.risk.main.GameManager;
+
 public enum Season {
 
 	WINTER("winter", Color.CYAN), SPRING("spring", Color.GREEN), SUMMER("summer", Color.YELLOW), FALL("fall", new Color(205, 133, 63));
@@ -28,7 +30,7 @@ public enum Season {
 	private static Season currentSeason = seasons[Calendar.getInstance().get(Calendar.MONTH)];
 
 	public static void updateSeason() {
-		currentSeason = SUMMER;// seasons[(Calendar.MONTH + GameManager.turnCount / 4) % 12];
+		currentSeason = seasons[(Calendar.MONTH + GameManager.turnCount / 4) % 12];
 	}
 
 	public static Season getCurrentSeason() {

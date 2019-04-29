@@ -118,4 +118,11 @@ public final class Utils {
 			}
 		}
 	}
+
+	public static ProvinceHitArea[] shortestPath(ProvinceHitArea reinforcingProvince, ProvinceHitArea reinforcedProvince) {
+		List<ProvinceHitArea> shortestPath = new ArrayList<>();
+		shortestPath.add(reinforcingProvince);
+		shortestPath.add(reinforcedProvince);
+		return shortestPath.toArray(new ProvinceHitArea[shortestPath.size()]);
+	}
 }
