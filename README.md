@@ -42,7 +42,7 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 ### Iteration 2
 
 * [Analysis Report]	[link][6]
-* [Design Report]	[link][7]
+* [Design Report]	TBA
 * [Final Report]	TBA
 
 ## Meeting Hours
@@ -56,4 +56,3 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 [4]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_1.docx?raw=true
 [5]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Implementation_Report_Iteration_1.docx?raw=true
 [6]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Analysis_Report_Iteration_2.docx?raw=true
-[6]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_2.docx?raw=true
