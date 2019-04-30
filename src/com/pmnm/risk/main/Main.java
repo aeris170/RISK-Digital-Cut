@@ -27,9 +27,7 @@ public class Main {
 	public static void main(final String[] args) {
 		DoaEngine.TICK_RATE = 240;
 		Locale.setDefault(Locale.ENGLISH);
-		DoaEngine.DEBUG_ENABLED = false;
-		DoaEngine.MULTI_THREAD_ENABLED = false;
-		// DoaEngine.CLEAR_COLOR = new Color(3, 0, 47);
+		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.RENDERING_MODE = DoaRenderingMode.BALANCED;
 		DoaMouse.clampWheel(0.8d, 10d);
 
@@ -42,9 +40,9 @@ public class Main {
 		DoaCamera.setTweenAmountY(1f);
 		DoaCamera.enableMouseZoom(null, 0.8f, 10f);
 
-		DoaCamera.adjustCamera(DoaHandler.instantiateDoaObject(Camera.class, WINDOW_WIDTH / 2f, WINDOW_HEIGHT / 2f), -10000, -10000, 10000, 10000);
-		DoaHandler.instantiateDoaObject(GameBoard.class, 0f, 0f, WINDOW_WIDTH, WINDOW_HEIGHT);
-		DoaHandler.instantiateDoaObject(DebugPanel.class);
+		DoaCamera.adjustCamera(Camera.getInstance(), -10000, -10000, 10000, 10000);
+		GameBoard.getInstance();
+		DoaHandler.instantiate(DebugPanel.class);
 
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}

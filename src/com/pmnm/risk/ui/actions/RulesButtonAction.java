@@ -6,5 +6,4 @@ public class RulesButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {}
-
 }

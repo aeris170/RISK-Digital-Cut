@@ -16,7 +16,6 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import com.doa.engine.DoaHandler;
-import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
@@ -30,9 +29,7 @@ public final class MapLoader {
 
 	private static final Map<String, Province> NAME_PROVINCE = new HashMap<>();
 
-	private MapLoader() {
-		throw new RiskStaticInstantiationException(getClass());
-	}
+	private MapLoader() {}
 
 	public static void readMapData() {
 		try {
@@ -92,7 +89,7 @@ public final class MapLoader {
 				});
 				province.addMesh(mesh);
 			});
-			DoaHandler.instantiateDoaObject(ProvinceHitArea.class, province, 0f, 0f, 0, 0);
+			DoaHandler.instantiate(ProvinceHitArea.class, province, 0f, 0f, 0, 0);
 		});
 	}
 }

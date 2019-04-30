@@ -18,8 +18,7 @@ public class SpinnerCenterPiece extends DoaImageButton {
 	protected Color textColor;
 	protected Color hoverTextColor;
 
-	public SpinnerCenterPiece(DoaVectorF position, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor,
-	        Color hoverTextColor) {
+	public SpinnerCenterPiece(DoaVectorF position, int width, int height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor, Color hoverTextColor) {
 		super(position, width, height, idleImage, hoverImage);
 		this.text = text;
 		this.textColor = textColor;

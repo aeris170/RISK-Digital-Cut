@@ -18,7 +18,6 @@ import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
-import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
 import com.pmnm.risk.toolkit.Utils;
 
 public class Camera extends DoaObject {
@@ -30,7 +29,7 @@ public class Camera extends DoaObject {
 	private static final float LOW_PERCENTAGE_FOR_MOUSE_CAMERA = 5;
 	private static final float HIGH_PERCENTAGE_FOR_MOUSE_CAMERA = 95;
 
-	public static Camera INSTANCE;
+	private static Camera _this = null;
 
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
@@ -40,14 +39,11 @@ public class Camera extends DoaObject {
 
 	private int createCount = 1;
 
-	public Camera(Float x, Float y) {
-		super(x, y, DoaObject.STATIC_FRONT);
+	private Camera(float x, float y) {
+		super(x, y, 1000);
 		topLeftBound = position.clone();
-		if (INSTANCE != null) {
-			DoaHandler.remove(this);
-			throw new RiskSingletonInstantiationException(getClass());
-		}
-		INSTANCE = this;
+		bottomRightBound = position.clone().add(new DoaVectorF(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT));
+		setFixed(true);
 	}
 
 	public void creator() {
@@ -56,6 +52,10 @@ public class Camera extends DoaObject {
 		} catch (FileNotFoundException | UnsupportedEncodingException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public static Camera getInstance() {
+		return _this == null ? _this = DoaHandler.instantiate(Camera.class, Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT / 2f) : _this;
 	}
 
 	@Override
@@ -140,9 +140,11 @@ public class Camera extends DoaObject {
 		}
 		g.setColor(Color.WHITE);
 		g.drawString("Phase: " + GameManager.currentPhase, 0, 200);
-		g.setColor(GameManager.currentPlayer.getColor());
-		g.fillRect(0, 200, 130, 23);
-		g.setColor(Color.WHITE);
-		g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
+		if (GameManager.currentPlayer != null) {
+			g.setColor(GameManager.currentPlayer.getColor());
+			g.fillRect(0, 200, 130, 23);
+			g.setColor(Color.WHITE);
+			g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
+		}
 	}
 }

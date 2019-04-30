@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.AffineTransform;
 
+import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.input.DoaMouse;
 
 public class DebugPanel extends DoaObject {
 
@@ -18,7 +18,8 @@ public class DebugPanel extends DoaObject {
 	private int textCount;
 
 	public DebugPanel() {
-		super(0f, 0f, DoaObject.STATIC_FRONT);
+		super(0f, 0f, 1000);
+		// setFixed(true);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class DebugPanel extends DoaObject {
 		g.setFont(new Font("Arial", Font.BOLD, fontSize));
 		g.setColor(Color.WHITE);
 		textCount = 6;
-		drawString(g, "ZOOM: " + DoaMouse.WHEEL);
+		drawString(g, "ZOOM: " + DoaCamera.getZ());
 		drawString(g, "Mouse was last on: " + mouseOnProvinceName.toUpperCase());
 	}
 

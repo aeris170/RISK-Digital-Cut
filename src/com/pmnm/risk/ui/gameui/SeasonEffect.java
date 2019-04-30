@@ -22,7 +22,7 @@ public class SeasonEffect extends DoaObject {
 	private double godrayAngle = 0;
 
 	public SeasonEffect() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, DoaObject.STATIC_FRONT);
+		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, 100);
 	}
 
 	@Override

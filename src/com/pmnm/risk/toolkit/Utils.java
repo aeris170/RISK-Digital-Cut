@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.doa.engine.DoaCamera;
@@ -45,23 +46,12 @@ public final class Utils {
 		return new DoaVectorF(mx * z + cx, my * z + cy);
 	}
 
-	// XXX why the flying f****** f*** the author of DoaEngine did not implement
-	// this to his OWN ENGINE??????
-	// P.S. the author is me.
-	// TO DO: f*** myself
-	// TODO CHECK IF ALL Utils FUNCTIONS WORKS FLAWLESSLY.
-	// Assigned to: Fazilet Simge ER
-	// in order to do this, look at the top left of the screen. there are text
-	// showing the mouse position.
-	// zoom in to arbitrary locations and check if the mouse coordinate is mapped
-	// correctly.
-	// <3
 	public static DoaVectorF mapMouseCoordinatesByZoom() {
 		final DoaVectorF mouseCoordinates = new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y);
 		final float cx = Main.WINDOW_WIDTH / 2f;
 		final float cy = Main.WINDOW_HEIGHT / 2f;
-		final float camx = Camera.INSTANCE.getPosition().x;
-		final float camy = Camera.INSTANCE.getPosition().y;
+		final float camx = Camera.getInstance().getPosition().x;
+		final float camy = Camera.getInstance().getPosition().y;
 		final float z = DoaCamera.getZ();
 		final float mx = mouseCoordinates.x - camx;
 		final float my = mouseCoordinates.y - camy;
@@ -88,9 +78,17 @@ public final class Utils {
 		}
 	}
 
+	public static Color complementaryColor(Color c) {
+		return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
+	}
+
+	public static float euclideanDistance(DoaVectorF first, DoaVectorF second) {
+		return (float) Math.sqrt(Math.pow((second.x - first.x), 2) + Math.pow((second.y - first.y), 2));
+	}
+
 	public static float findMaxFontSizeToFitInArea(DoaGraphicsContext g, Font f, DoaVectorF r, String s) {
 		float fontSize = 0;
-		FontMetrics fm = g.getFontMetrics(f);
+		FontMetrics fm;
 		do {
 			f = new Font(f.getFontName(), Font.PLAIN, f.getSize() + 1);
 			fontSize++;
@@ -115,6 +113,27 @@ public final class Utils {
 					connectedComponents.add(pHitArea);
 					explodeFrom(pHitArea, connectedComponents);
 				}
+			}
+		}
+	}
+
+	public static ProvinceHitArea[] shortestPath(ProvinceHitArea reinforcingProvince, ProvinceHitArea reinforcedProvince) {
+		List<List<ProvinceHitArea>> paths = new ArrayList<>();
+		doStuff(reinforcingProvince, new ArrayList<>(), paths, reinforcedProvince);
+		List<ProvinceHitArea> shortestPath = paths.stream().min(Comparator.comparingInt(List::size)).orElse(new ArrayList<>());
+		return shortestPath.toArray(new ProvinceHitArea[shortestPath.size()]);
+	}
+
+	private static void doStuff(ProvinceHitArea previous, List<ProvinceHitArea> path, List<List<ProvinceHitArea>> paths, ProvinceHitArea destination) {
+		path.add(previous);
+		if (previous == destination) {
+			paths.add(path);
+			return; // XXX if this function ever behaves buggy, comment the return and test again!
+		}
+		Province province = previous.getProvince();
+		for (Province p : province.getNeighbours()) {
+			if (p.getOwner() == province.getOwner() && !path.contains(p.getProvinceHitArea())) {
+				doStuff(p.getProvinceHitArea(), new ArrayList<>(path), paths, destination);
 			}
 		}
 	}
