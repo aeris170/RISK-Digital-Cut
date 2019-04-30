@@ -6,5 +6,4 @@ public class PlayOnlineButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {}
-
 }

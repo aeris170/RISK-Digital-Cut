@@ -381,6 +381,11 @@ public class ProvinceHitArea extends DoaObject {
 		return centerY;
 	}
 
+	@Override
+	public String toString() {
+		return "PHA:" + province.toString();
+	}
+
 	public class ProvinceSymbol extends DoaObject {
 
 		private static final long serialVersionUID = -5094307362006544586L;

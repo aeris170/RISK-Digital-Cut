@@ -45,7 +45,8 @@ public class Camera extends DoaObject {
 	private Camera(float x, float y) {
 		super(x, y, 1000);
 		topLeftBound = position.clone();
-		// setFixed(true);
+		bottomRightBound = position.clone().add(new DoaVectorF(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT));
+		setFixed(true);
 	}
 
 	public void creator() {
@@ -155,10 +156,12 @@ public class Camera extends DoaObject {
 		}
 		g.setColor(Color.WHITE);
 		g.drawString("Phase: " + GameManager.currentPhase, 0, 200);
-		g.setColor(GameManager.currentPlayer.getColor());
-		g.fillRect(0, 200, 130, 23);
-		g.setColor(Color.WHITE);
-		g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
+		if (GameManager.currentPlayer != null) {
+			g.setColor(GameManager.currentPlayer.getColor());
+			g.fillRect(0, 200, 130, 23);
+			g.setColor(Color.WHITE);
+			g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
+		}
 	}
 	
 	

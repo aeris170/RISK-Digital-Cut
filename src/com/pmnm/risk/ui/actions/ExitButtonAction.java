@@ -8,5 +8,4 @@ public class ExitButtonAction implements DoaUIAction {
 	public void execute() {
 		System.exit(0);
 	}
-
 }

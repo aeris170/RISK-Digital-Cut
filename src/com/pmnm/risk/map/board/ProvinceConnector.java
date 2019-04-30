@@ -28,7 +28,7 @@ public final class ProvinceConnector extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		if (provinceHitAreas != null) {
+		if (provinceHitAreas != null && provinceHitAreas.length > 0) {
 			g.setStroke(new BasicStroke(4, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9, 5 }, dashArray));
 			Color ownerColor = provinceHitAreas[0].getProvince().getOwner().getColor();
 			ownerColor = new Color(255 - ownerColor.getRed(), 255 - ownerColor.getGreen(), 255 - ownerColor.getBlue());

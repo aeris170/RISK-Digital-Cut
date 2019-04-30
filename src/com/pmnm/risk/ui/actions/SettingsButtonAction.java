@@ -6,5 +6,4 @@ public class SettingsButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {}
-
 }

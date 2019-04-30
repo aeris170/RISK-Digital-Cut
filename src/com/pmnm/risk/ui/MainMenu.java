@@ -20,9 +20,6 @@ public class MainMenu extends DoaPanel {
 	}
 
 	@Override
-	public void tick() {}
-
-	@Override
 	public void render(DoaGraphicsContext g) {
 		g.drawImage(DoaSprites.get("MainMenuBackground"), position.x, position.y, width, height);
 		for (int i = 0; i < Main.WINDOW_WIDTH; i += FLEUR_WIDTH) {
