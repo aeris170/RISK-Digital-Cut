@@ -28,9 +28,6 @@ public class Player extends DoaObject {
 	private int id;
 	private boolean isLocalPlayer;
 
-	private Province source = null;
-	private Province destination = null;
-
 	public Player(String playerName, Color playerColor, boolean isLocalPlayer) {
 		super(0f, 0f);
 		this.playerName = playerName;
@@ -76,7 +73,7 @@ public class Player extends DoaObject {
 					if (clickedProvince.isOwnedBy(this)) {
 						if (clickedProvince.getTroops() > 1 && GameManager.getReinforcingProvince() == null) {
 							GameManager.markReinforcingProvince(clickedHitArea);
-						} else if (GameManager.getReinforcingProvince() != null && destination == null) {
+						} else if (GameManager.getReinforcingProvince() != null) {
 							GameManager.markReinforcedProvince(clickedHitArea);
 						}
 					}
