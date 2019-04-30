@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.doa.engine.DoaCamera;
@@ -45,17 +46,6 @@ public final class Utils {
 		return new DoaVectorF(mx * z + cx, my * z + cy);
 	}
 
-	// XXX why the flying f****** f*** the author of DoaEngine did not implement
-	// this to his OWN ENGINE??????
-	// P.S. the author is me.
-	// TO DO: f*** myself
-	// TODO CHECK IF ALL Utils FUNCTIONS WORKS FLAWLESSLY.
-	// Assigned to: Fazilet Simge ER
-	// in order to do this, look at the top left of the screen. there are text
-	// showing the mouse position.
-	// zoom in to arbitrary locations and check if the mouse coordinate is mapped
-	// correctly.
-	// <3
 	public static DoaVectorF mapMouseCoordinatesByZoom() {
 		final DoaVectorF mouseCoordinates = new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y);
 		final float cx = Main.WINDOW_WIDTH / 2f;
@@ -120,9 +110,23 @@ public final class Utils {
 	}
 
 	public static ProvinceHitArea[] shortestPath(ProvinceHitArea reinforcingProvince, ProvinceHitArea reinforcedProvince) {
-		List<ProvinceHitArea> shortestPath = new ArrayList<>();
-		shortestPath.add(reinforcingProvince);
-		shortestPath.add(reinforcedProvince);
+		List<List<ProvinceHitArea>> paths = new ArrayList<>();
+		doStuff(reinforcingProvince, new ArrayList<>(), paths, reinforcedProvince);
+		List<ProvinceHitArea> shortestPath = paths.stream().min(Comparator.comparingInt(List::size)).orElse(new ArrayList<>());
 		return shortestPath.toArray(new ProvinceHitArea[shortestPath.size()]);
+	}
+
+	private static void doStuff(ProvinceHitArea previous, List<ProvinceHitArea> path, List<List<ProvinceHitArea>> paths, ProvinceHitArea destination) {
+		path.add(previous);
+		if (previous == destination) {
+			paths.add(path);
+			return; // XXX if this function ever behaves buggy, comment the return and test again!
+		}
+		Province province = previous.getProvince();
+		for (Province p : province.getNeighbours()) {
+			if (p.getOwner() == province.getOwner() && !path.contains(p.getProvinceHitArea())) {
+				doStuff(p.getProvinceHitArea(), new ArrayList<>(path), paths, destination);
+			}
+		}
 	}
 }

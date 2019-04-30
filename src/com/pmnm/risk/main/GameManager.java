@@ -310,9 +310,8 @@ public class GameManager extends DoaObject {
 				BottomPanel.updateSpinnerValues(1, reinforcingProvince.getProvince().getTroops() - 1);
 			}
 		} else {
-			if (currentPlayer.isLocalPlayer()) {
-				// hide spinner
-			}
+			BottomPanel.nullSpinner();
+			ProvinceConnector.getInstance().setPath();
 		}
 	}
 

@@ -76,7 +76,7 @@ public class Player extends DoaObject {
 					if (clickedProvince.isOwnedBy(this)) {
 						if (clickedProvince.getTroops() > 1 && GameManager.getReinforcingProvince() == null) {
 							GameManager.markReinforcingProvince(clickedHitArea);
-						} else if (destination == null) {
+						} else if (GameManager.getReinforcingProvince() != null && destination == null) {
 							GameManager.markReinforcedProvince(clickedHitArea);
 						}
 					}
@@ -92,8 +92,10 @@ public class Player extends DoaObject {
 					GameManager.markReinforcingProvince(null);
 					GameManager.markReinforcedProvince(null);
 				}
-				ProvinceHitArea.selectedProvinceByMouse.isSelected = false;
-				ProvinceHitArea.selectedProvinceByMouse = null;
+				if (ProvinceHitArea.selectedProvinceByMouse != null) {
+					ProvinceHitArea.selectedProvinceByMouse.isSelected = false;
+					ProvinceHitArea.selectedProvinceByMouse = null;
+				}
 			}
 		}
 	}
