@@ -78,9 +78,17 @@ public final class Utils {
 		}
 	}
 
+	public static Color complementaryColor(Color c) {
+		return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
+	}
+
+	public static float euclideanDistance(DoaVectorF first, DoaVectorF second) {
+		return (float) Math.sqrt(Math.pow((second.x - first.x), 2) + Math.pow((second.y - first.y), 2));
+	}
+
 	public static float findMaxFontSizeToFitInArea(DoaGraphicsContext g, Font f, DoaVectorF r, String s) {
 		float fontSize = 0;
-		FontMetrics fm = g.getFontMetrics(f);
+		FontMetrics fm;
 		do {
 			f = new Font(f.getFontName(), Font.PLAIN, f.getSize() + 1);
 			fontSize++;

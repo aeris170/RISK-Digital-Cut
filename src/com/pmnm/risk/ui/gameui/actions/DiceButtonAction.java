@@ -15,5 +15,4 @@ public class DiceButtonAction implements DoaUIAction {
 	public void execute() {
 		GameManager.toss(diceAmount);
 	}
-
 }
