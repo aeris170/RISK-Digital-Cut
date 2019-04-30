@@ -172,7 +172,7 @@ public class Camera extends DoaObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GameManager.tester();
+		
 		
 	}
 	

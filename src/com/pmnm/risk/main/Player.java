@@ -27,7 +27,7 @@ public class Player extends DoaObject {
 	protected boolean isInTurn;
 	private int id;
 	private boolean isLocalPlayer;
-
+	
 	private Province source = null;
 	private Province destination = null;
 
