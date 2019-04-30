@@ -1,8 +1,13 @@
 package com.pmnm.risk.main;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +22,7 @@ import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.board.ProvinceConnector;
+import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
@@ -29,9 +35,12 @@ public class GameManager extends DoaObject {
 	private static final long serialVersionUID = -4928417050440420799L;
 
 	public static final List<Player> players = new ArrayList<>();
+	
 	public static int numberOfPlayers = 2;
 	public static boolean manualPlacement = false;
 
+	static GameInstance gameLoader = new GameInstance("ege", "ege");
+	
 	public static boolean isManualPlacementDone = false;
 	public static final Map<Player, Integer> startingTroops = new HashMap<>();
 	public static int placementCounter = 0;
@@ -329,4 +338,144 @@ public class GameManager extends DoaObject {
 	public static void setDraftReinforceProvince(Province clickedProvince) {
 		draftReinforceProvince = clickedProvince;
 	}
+
+	
+	public static boolean saveGame(String saveGameName) throws IOException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		String currentDate = dateFormat.format(date); //2016/11/16 12:08:43
+		String saveName = "firstSave";
+		
+		//This is new saveGame in our system
+		GameInstance newGameInstance = new GameInstance(currentDate, saveName);
+		
+		saveGameVariables(newGameInstance);
+		
+		if(newGameInstance.saveNow(newGameInstance)) {
+			System.out.println("Save is successfull");
+			return true;
+		}
+		else {
+			System.out.println("Save is not successful");
+			return false;
+		}
+		
+	}
+	
+	public static void tester() {
+		for(int i = 0; i < 20; i++) {
+			//System.out.println(Province.ALL_PROVINCES.get(i).getOwner());
+		}
+		
+	}
+	
+
+	@SuppressWarnings("null")
+	public static boolean loadGame(String loadName) {
+		
+		 String filename = loadName + ".ser"; 
+		 
+		 GameInstance loadedGame = null;
+		 
+		 	//look is file exist
+
+		 File tempFile = new File(filename);
+		 boolean fileExist = tempFile.exists();
+		 
+		 if(fileExist) {
+				loadedGame = gameLoader.loadNow(loadName);
+				updateGameManager(loadedGame);
+				System.out.println("Load is successful");
+				return true;
+		 }
+			 
+		 else {
+			 System.out.println("Save file is not found");
+			 return false;
+		 }
+		
+	}
+	
+	
+	private static void updateGameManager(GameInstance loadedGame) {
+		System.out.println(loadedGame.getCurrentPhase());
+		System.out.println(loadedGame.getCurrentPhase());
+		GameManager.currentPhase = loadedGame.getCurrentPhase();
+		GameManager.currentPlayer = loadedGame.getCurrentPlayer();
+		GameManager.draftReinforceProvince = loadedGame.getDraftReinforceProvince();
+		GameManager.numberOfPlayers = loadedGame.getNumberOfPlayers();
+		GameManager.placementCounter = loadedGame.getPlacementCounter();
+		GameManager.reinforcementForThisTurn = loadedGame.getReinforcementForThisTurn();
+		GameManager.turnCount = loadedGame.getTurnCount();
+		
+		System.out.println("Players are: ");
+		for (int i = 0; i < GameManager.players.size(); i++) {
+			System.out.println(GameManager.players.get(i).toString());
+		}
+		
+		System.out.println("ALL_PROVINCES ARE old owners ");
+		for (int i = 0; i < Province.ALL_PROVINCES.size(); i++) {
+			System.out.println(Province.ALL_PROVINCES.get(i).getName() + "   " + Province.ALL_PROVINCES.get(i).getTroops());
+		}
+		
+		//Lists
+		List<Player> newPlayers = loadedGame.getPlayers();
+		List<Province> newAllProvinces = loadedGame.getALL_PROVINCES();
+		
+		
+		System.out.println("*****************");
+	
+		
+		System.out.println("saved all provinces");
+		for (int i = 0; i < newAllProvinces.size(); i++) {
+			System.out.println(newAllProvinces.get(i).getName() + "    " + newAllProvinces.get(i).getTroops());
+		}
+		
+		System.out.println(" ALL Provinces list now ");
+		
+		for (int i = 0; i < Province.ALL_PROVINCES.size(); i++) {
+			Province.ALL_PROVINCES.set(i,newAllProvinces.get(i));
+			System.out.println(Province.ALL_PROVINCES.get(i).getName() + "   " +  Province.ALL_PROVINCES.get(i).getTroops());
+		}
+		
+		
+		
+		
+		for(ProvinceHitArea p: ProvinceHitArea.ALL_PROVINCE_HIT_AREAS) {
+			DoaHandler.remove(p);
+		}
+		
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
+		
+		//DoaHandler.remove(o);
+		
+		for (int i = 0; i < newAllProvinces.size(); i++) {
+			//DoaHandler.remove(o);
+			DoaHandler.instantiate(ProvinceHitArea.class, newAllProvinces.get(i), 0f, 0f, 0, 0);
+		}
+		
+		
+		System.out.println("Game is updated");
+	}
+
+	//save save game variables
+	private static void saveGameVariables(GameInstance newGameInstance) {
+		newGameInstance.setCurrentPhase(currentPhase);
+		newGameInstance.setCurrentPlayer(currentPlayer);
+		newGameInstance.setDraftReinforceProvince(draftReinforceProvince);
+		newGameInstance.setManualPlacement(isManualPlacementDone);
+		newGameInstance.setManualPlacementDone(isManualPlacementDone);
+		newGameInstance.setNumberOfPlayers(numberOfPlayers);
+		newGameInstance.setPlacementCounter(placementCounter);
+		newGameInstance.setReinforcementForThisTurn(reinforcementForThisTurn);
+		newGameInstance.setTurnCount(turnCount);
+		newGameInstance.setPlayers(players);
+		newGameInstance.setNAME_CONTINENT(Continent.NAME_CONTINENT);
+		newGameInstance.setALL_PROVINCES(Province.ALL_PROVINCES);
+		newGameInstance.setUNCLAIMED_PROVINCES(Province.UNCLAIMED_PROVINCES);
+		
+	}
+	
+	
+	
 }

@@ -145,4 +145,10 @@ public class Player extends DoaObject {
 	public boolean isLocalPlayer() {
 		return isLocalPlayer;
 	}
+
+	@Override
+	public String toString() {
+		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id="
+				+ id + ", isLocalPlayer=" + isLocalPlayer + ", source=" + source + ", destination=" + destination + "]";
+	}
 }
