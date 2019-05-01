@@ -421,4 +421,10 @@ public class ProvinceHitArea extends DoaObject {
 			}
 		}
 	}
+
+	public void setProvince(Province province) {
+		this.province = province;
+	}
+	
+	
 }

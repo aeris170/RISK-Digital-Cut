@@ -81,7 +81,9 @@ public class Province implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Province] Continent: " + continent.getName() + "\tName: " + name + "\n";
+		return "Province [continent=" + continent + ", name=" + name + ", neighbours=" + neighbours + ", meshes="
+				+ meshes + ", center=" + center + ", isClaimed=" + isClaimed + ", owner=" + owner + ", troops=" + troops
+				+ "]";
 	}
 
 	public static void printAllProvinces() {
