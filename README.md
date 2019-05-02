@@ -15,8 +15,8 @@
 * "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24: [link][2]
 
 ## Features to be Implemented (Rough)
-The entirety of the board game will be implemented. Beyond that, the primary objectives of this project is adding **_multiplayer_**, 
-AI(?) opponents and new maps to the game. Depending on time left after these. More content *will* be added. 
+The entirety of the board game will be implemented. Beyond that, the primary objectives of this project is adding **_multiplayer_**,
+AI(?) opponents and new maps to the game. Depending on time left after these. More content *will* be added.
 
 Shortly said, this will be an extended version of the traditional Risk game, designed so that it can be played alone or with people from far away locations (unlike the original version, which requires a certain number of people to be strictly around the game board), and will have more gameplay content than the original Risk, such as new maps, and depending on time left after the key features are implemented, even more.
 
@@ -42,7 +42,7 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 ### Iteration 2
 
 * [Analysis Report]	[link][6]
-* [Design Report]	TBA
+* [Design Report]	[link][7]
 * [Final Report]	TBA
 
 ## Meeting Hours
@@ -56,3 +56,4 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 [4]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_1.docx?raw=true
 [5]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Implementation_Report_Iteration_1.docx?raw=true
 [6]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Analysis_Report_Iteration_2.docx?raw=true
+[7]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_2.docx?raw=true

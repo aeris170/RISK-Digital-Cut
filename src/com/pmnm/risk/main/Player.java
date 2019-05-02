@@ -14,7 +14,6 @@ import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
-import com.pmnm.risk.ui.gameui.BottomPanel;
 
 public class Player extends DoaObject {
 
@@ -57,12 +56,13 @@ public class Player extends DoaObject {
 						GameManager.claimProvince(clickedProvince);
 						isInTurn = false;
 					} else if (clickedProvince.isOwnedBy(this) && GameManager.areAllProvincesClaimed()) {
-						GameManager.reinforce(clickedProvince, 1);
+						GameManager.setDraftReinforceProvince(clickedProvince);
+						GameManager.draftReinforce(1);
 						isInTurn = false;
 					}
 				} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
 					if (GameManager.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
-						GameManager.reinforce(clickedProvince, BottomPanel.spinnerValues.get(BottomPanel.index));
+						GameManager.setDraftReinforceProvince(clickedProvince);
 					}
 				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
 					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1) {
@@ -76,22 +76,25 @@ public class Player extends DoaObject {
 					if (clickedProvince.isOwnedBy(this)) {
 						if (clickedProvince.getTroops() > 1 && GameManager.getReinforcingProvince() == null) {
 							GameManager.markReinforcingProvince(clickedHitArea);
-						} else if (destination == null) {
+						} else if (GameManager.getReinforcingProvince() != null && destination == null) {
 							GameManager.markReinforcedProvince(clickedHitArea);
-							GameManager.reinforce(3);
 						}
 					}
 				}
 			} else if (DoaMouse.MB1) {
 				GameManager.clickedHitArea = null;
 				if (GameManager.currentPhase == TurnPhase.DRAFT) {
-
+					GameManager.setDraftReinforceProvince(null);
 				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
 					GameManager.markAttackerProvince(null);
 					GameManager.markDefenderProvince(null);
 				} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
 					GameManager.markReinforcingProvince(null);
 					GameManager.markReinforcedProvince(null);
+				}
+				if (ProvinceHitArea.selectedProvinceByMouse != null) {
+					ProvinceHitArea.selectedProvinceByMouse.isSelected = false;
+					ProvinceHitArea.selectedProvinceByMouse = null;
 				}
 			}
 		}
@@ -142,5 +145,11 @@ public class Player extends DoaObject {
 
 	public boolean isLocalPlayer() {
 		return isLocalPlayer;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id="
+				+ id + ", isLocalPlayer=" + isLocalPlayer + ", source=" + source + ", destination=" + destination + "]";
 	}
 }

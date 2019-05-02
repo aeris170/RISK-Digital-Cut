@@ -5,21 +5,16 @@ import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaKeyboard;
-import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
+import com.pmnm.risk.main.Main;
 
-public class GameBoard extends DoaObject {
+public final class GameBoard extends DoaObject {
 
 	private static final long serialVersionUID = -781062122233404639L;
 
-	public static GameBoard INSTANCE;
+	private static GameBoard _this = null;
 
-	public GameBoard(Float x, Float y, Integer width, Integer height) {
-		super(x, y, width, height, DoaObject.BACK);
-		if (INSTANCE != null) {
-			DoaHandler.remove(this);
-			throw new RiskSingletonInstantiationException(getClass());
-		}
-		INSTANCE = this;
+	private GameBoard() {
+		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, -1);
 	}
 
 	@Override
@@ -32,5 +27,9 @@ public class GameBoard extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		g.drawImage(DoaSprites.get("WorldMap"), position.x, position.y, width, height, null);
+	}
+
+	public static GameBoard getInstance() {
+		return _this == null ? _this = DoaHandler.instantiate(GameBoard.class) : _this;
 	}
 }

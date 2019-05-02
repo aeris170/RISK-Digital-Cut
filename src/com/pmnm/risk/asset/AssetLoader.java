@@ -10,21 +10,14 @@ import java.util.List;
 import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
-import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
 
 public final class AssetLoader {
 
-	private AssetLoader() {
-		throw new RiskStaticInstantiationException(getClass());
-	}
+	private AssetLoader() {}
 
 	public static void initializeAssets() {
 		try {
-			DoaSprites.createSprite("WorldMapOld", "/maps/legacy/ColorMapBig.png");
-			DoaSprites.createSprite("WorldMapNames", "/maps/legacy/ColorMapNamesNew.png");
-			DoaSprites.createSprite("DummyMap", "/maps/legacy/DummyMap2.png");
 			DoaSprites.createSprite("WorldMap", "/maps/GeographicMap.png");
-
 			DoaSprites.createSprite("MainMenuBackground", "/ui/MainMenuBackground.png");
 			DoaSprites.createSprite("MainMenuTopRing", "/ui/TopRing.png");
 			DoaSprites.createSprite("MainMenuBottomRing", "/ui/BottomRing.png");
@@ -42,6 +35,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("fall", "/ui/gameScreenElements/topInfo/fall.png");
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
+				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
 			}
 
 			{// BOTTOM INFO
@@ -78,7 +72,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("SA", "/ui/gameScreenElements/continents/southAmerica.png");
 			}
 
-			{// PAWNS
+			{// PLAYER SYMBOLS
 				DoaSprites.createSprite("p1Pawn", "/ui/gameScreenElements/pawns/p1.png");
 				DoaSprites.createSprite("p2Pawn", "/ui/gameScreenElements/pawns/p2.png");
 				DoaSprites.createSprite("p3Pawn", "/ui/gameScreenElements/pawns/p3.png");
@@ -87,7 +81,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("p6Pawn", "/ui/gameScreenElements/pawns/p6.png");
 			}
 
-			{// DICE
+			{// DICE PANEL
 				DoaSprites.createSprite("diceScroll", "/ui/gameScreenElements/diceScroll/diceScroll.png");
 				DoaSprites.createSprite("dice1Idle", "/ui/gameScreenElements/diceScroll/oneDieNormal.png");
 				DoaSprites.createSprite("dice1Hover", "/ui/gameScreenElements/diceScroll/oneDieHover.png");
@@ -104,7 +98,6 @@ public final class AssetLoader {
 				riskLogoKeyFrames.add(DoaSprites.createSprite("KEYFRAME" + i, "/ui/logoKeyframes/" + i + ".png"));
 			}
 			DoaAnimations.createAnimation("RiskLogoAnim", riskLogoKeyFrames, 100);
-			DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
 
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			Font customFont = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf")).deriveFont(12f);

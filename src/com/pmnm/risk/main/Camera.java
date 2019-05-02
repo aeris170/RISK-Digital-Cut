@@ -3,6 +3,7 @@ package com.pmnm.risk.main;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,6 @@ import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
-import com.pmnm.risk.exceptions.RiskSingletonInstantiationException;
 import com.pmnm.risk.toolkit.Utils;
 
 public class Camera extends DoaObject {
@@ -30,8 +30,10 @@ public class Camera extends DoaObject {
 	private static final float LOW_PERCENTAGE_FOR_MOUSE_CAMERA = 5;
 	private static final float HIGH_PERCENTAGE_FOR_MOUSE_CAMERA = 95;
 
-	public static Camera INSTANCE;
-
+	private static Camera _this = null;
+	static int value = 0;
+	
+	
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
 	private PrintWriter writer;
@@ -40,14 +42,11 @@ public class Camera extends DoaObject {
 
 	private int createCount = 1;
 
-	public Camera(Float x, Float y) {
-		super(x, y, DoaObject.STATIC_FRONT);
+	private Camera(float x, float y) {
+		super(x, y, 1000);
 		topLeftBound = position.clone();
-		if (INSTANCE != null) {
-			DoaHandler.remove(this);
-			throw new RiskSingletonInstantiationException(getClass());
-		}
-		INSTANCE = this;
+		bottomRightBound = position.clone().add(new DoaVectorF(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT));
+		setFixed(true);
 	}
 
 	public void creator() {
@@ -56,6 +55,10 @@ public class Camera extends DoaObject {
 		} catch (FileNotFoundException | UnsupportedEncodingException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public static Camera getInstance() {
+		return _this == null ? _this = DoaHandler.instantiate(Camera.class, Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT / 2f) : _this;
 	}
 
 	@Override
@@ -107,6 +110,15 @@ public class Camera extends DoaObject {
 				writer.flush();
 			}
 		}
+		
+		if (vertexLogKeyGuard.get() && DoaKeyboard.L) {
+			vertexLogKeyGuard.set(false);
+			DoaTasker.guard(vertexLogKeyGuard, 1000);
+			System.out.println("L is pressed");
+			GameManager.loadGame("firstSave");
+		}
+		
+		
 		if (isLoggingVertices) {
 			if (DoaMouse.MB1) {
 				writeVertices();
@@ -133,6 +145,10 @@ public class Camera extends DoaObject {
 		g.drawString("Absolute Mouse Pos: " + new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y).toString(), 0, 100);
 		g.drawString("Mapped Mouse Pos: " + Utils.mapMouseCoordinatesByZoom().toString(), 0, 120);
 		if (isLoggingVertices) {
+			if(value == 0) { 
+		     	saveGameFromCamera();
+		     	value++;
+				}
 			g.setColor(Color.RED);
 			g.fillRect(0, 160, 290, 23);
 			g.setColor(Color.BLACK);
@@ -140,9 +156,24 @@ public class Camera extends DoaObject {
 		}
 		g.setColor(Color.WHITE);
 		g.drawString("Phase: " + GameManager.currentPhase, 0, 200);
-		g.setColor(GameManager.currentPlayer.getColor());
-		g.fillRect(0, 200, 130, 23);
-		g.setColor(Color.WHITE);
-		g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
+		if (GameManager.currentPlayer != null) {
+			g.setColor(GameManager.currentPlayer.getColor());
+			g.fillRect(0, 200, 130, 23);
+			g.setColor(Color.WHITE);
+			g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
+		}
 	}
+	
+	
+	public void  saveGameFromCamera() {
+		try {
+			GameManager.saveGame("Ege");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 }

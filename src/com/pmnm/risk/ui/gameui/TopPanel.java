@@ -24,7 +24,7 @@ public class TopPanel extends DoaPanel {
 
 	public TopPanel() {
 		super(0f, 0f, 0, 0);
-		DoaHandler.instantiateDoaObject(SeasonEffect.class);
+		DoaHandler.instantiate(SeasonEffect.class);
 		show();
 	}
 

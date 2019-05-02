@@ -31,14 +31,14 @@ public class BottomPanel extends DoaPanel {
 	private static final DoaSprite LEFT = DoaSprites.get("gaugeLeft");
 	private static final DoaSprite RIGHT = DoaSprites.get("gaugeRight");
 
-	public static DoaImageButton nextPhaseButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, Main.WINDOW_WIDTH * 0.622f, Main.WINDOW_HEIGHT * 0.898f, 70, 70,
+	public static DoaImageButton nextPhaseButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.622f, Main.WINDOW_HEIGHT * 0.898f, 70, 70,
 	        DoaSprites.get("nextPhaseButtonIdle"), DoaSprites.get("nextPhaseButtonHover"), DoaSprites.get("nextPhaseButtonPressed"),
 	        DoaSprites.get("nextPhaseButtonDisabled"));
-	public static DoaImageButton decrementButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.958f, 41, 36,
+	public static DoaImageButton decrementButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.958f, 41, 36,
 	        DoaSprites.get("arrowDown"), DoaSprites.get("arrowDownHover"), DoaSprites.get("arrowDownPress"));
-	public static DoaImageButton incrementButton = DoaHandler.instantiateDoaObject(DoaImageButton.class, Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.912f, 41, 36,
+	public static DoaImageButton incrementButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.912f, 41, 36,
 	        DoaSprites.get("arrowUp"), DoaSprites.get("arrowUpHover"), DoaSprites.get("arrowUpPress"));
-	public static SpinnerCenterPiece centerPiece = DoaHandler.instantiateDoaObject(SpinnerCenterPiece.class,
+	public static SpinnerCenterPiece centerPiece = DoaHandler.instantiate(SpinnerCenterPiece.class,
 	        new DoaVectorF(Main.WINDOW_WIDTH * 0.320f, Main.WINDOW_HEIGHT * 0.925f), DoaSprites.get("centerPiece").getWidth(), DoaSprites.get("centerPiece").getHeight(),
 	        DoaSprites.get("centerPiece"), DoaSprites.get("centerPiece"), "", Color.BLACK, Color.RED);
 

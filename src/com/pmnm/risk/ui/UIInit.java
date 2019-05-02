@@ -26,7 +26,6 @@ public final class UIInit {
 	private static final DoaVectorF MM_RULES_LOCATION = new DoaVectorF(1377f, 730f);
 	private static final DoaVectorF MM_EXIT_LOCATION = new DoaVectorF(1377f, 803f);
 
-	// public static final Font UI_FONT_ALT = new Font("Constantia", Font.PLAIN, 1);
 	public static final Font UI_FONT = new Font("Book Antiqua", Font.PLAIN, 1);
 	public static final Color FONT_COLOR = new Color(189, 164, 79);
 	public static final Color HOVER_FONT_COLOR = new Color(94, 82, 42);
@@ -34,16 +33,16 @@ public final class UIInit {
 	private UIInit() {}
 
 	public static void initUI() {
-		MainMenu mm = DoaHandler.instantiateDoaObject(MainMenu.class);
-		TextImageButton playOfflineButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
+		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY OFFLINE", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton playOnlineButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		TextImageButton playOnlineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY ONLINE", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton settingsButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_SETTING_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		TextImageButton settingsButton = DoaHandler.instantiate(TextImageButton.class, MM_SETTING_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "SETTINGS", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton rulesButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_RULES_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		TextImageButton rulesButton = DoaHandler.instantiate(TextImageButton.class, MM_RULES_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton exitButton = DoaHandler.instantiateDoaObject(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
 		playOfflineButton.addAction(new PlayOfflineButtonAction(mm));
 		playOnlineButton.addAction(new PlayOnlineButtonAction());

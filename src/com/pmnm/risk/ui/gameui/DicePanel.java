@@ -18,9 +18,9 @@ public class DicePanel extends DoaUIContainer {
 	private static final DoaVectorF MIN = new DoaVectorF(-160f, 258f);
 	private static final DoaVectorF MAX = new DoaVectorF(0f, 823f);
 
-	private DoaImageButton one = DoaHandler.instantiateDoaObject(DoaImageButton.class, -111f, 367f, 54, 60, DoaSprites.get("dice1Idle"), DoaSprites.get("dice1Hover"));
-	private DoaImageButton two = DoaHandler.instantiateDoaObject(DoaImageButton.class, -138f, 441f, 109, 62, DoaSprites.get("dice2Idle"), DoaSprites.get("dice2Hover"));
-	private DoaImageButton three = DoaHandler.instantiateDoaObject(DoaImageButton.class, -139f, 524f, 109, 86, DoaSprites.get("dice3Idle"), DoaSprites.get("dice3Hover"));
+	private DoaImageButton one = DoaHandler.instantiate(DoaImageButton.class, -111f, 367f, 54, 60, DoaSprites.get("dice1Idle"), DoaSprites.get("dice1Hover"));
+	private DoaImageButton two = DoaHandler.instantiate(DoaImageButton.class, -138f, 441f, 109, 62, DoaSprites.get("dice2Idle"), DoaSprites.get("dice2Hover"));
+	private DoaImageButton three = DoaHandler.instantiate(DoaImageButton.class, -139f, 524f, 109, 86, DoaSprites.get("dice3Idle"), DoaSprites.get("dice3Hover"));
 	private DoaImageButton blitz;
 
 	private boolean moving = false;
@@ -33,7 +33,7 @@ public class DicePanel extends DoaUIContainer {
 		add(one);
 		add(two);
 		add(three);
-		blitz = DoaHandler.instantiateDoaObject(BlitzButton.class, -130f, 643f, 85, 60, DoaSprites.get("blitzIdle"), DoaSprites.get("blitzHover"));
+		blitz = DoaHandler.instantiate(BlitzButton.class, -130f, 643f, 85, 60, DoaSprites.get("blitzIdle"), DoaSprites.get("blitzHover"));
 		blitz.addAction(new BlitzButtonAction());
 		add(blitz);
 		super.show();
