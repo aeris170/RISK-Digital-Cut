@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ger [
+<!ELEMENT ger (pair+)>
+<!ELEMENT pair (key, value)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+]>
+<ger>
+	<pair>
+		<key>PLAY_OFFLINE</key>
+		<value>Offline Spielen</value>
+	</pair>
+	<pair>
+		<key>PLAY_ONLINE</key>
+		<value>Online Spielen</value>
+	</pair>
+	<pair>
+		<key>SETTINGS</key>
+		<value>die Einstellungen</value>
+	</pair>
+	<pair>
+		<key>RULES</key>
+		<value>Regeln</value>
+	</pair>
+	<pair>
+		<key>EXIT</key>
+		<value>Ausgang</value>
+	</pair>
+</ger>
