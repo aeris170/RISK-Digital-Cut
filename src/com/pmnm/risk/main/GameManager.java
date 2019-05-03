@@ -67,18 +67,18 @@ public class GameManager extends DoaObject {
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
+		/*
+		 * for (int i = 0; i < numberOfPlayers; i++) { Player p =
+		 * DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i),
+		 * true); players.add(p); startingTroops.put(p, startingTroopCount); }
+		 */
+
 		for (int i = 0; i < numberOfPlayers; i++) {
-			Player p = DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i), true);
+			Player p = DoaHandler.instantiate(AIPlayer.class, "AIPlayer" + i, PlayerColorBank.get(i), i);
 			players.add(p);
 			startingTroops.put(p, startingTroopCount);
 		}
-		/*
-		 * AIPlayer aIP1 = new AIPlayer("AIPlayer1", PlayerColorBank.get(0), 1);
-		 * DoaHandler.add(aIP1); players.add(aIP1); startingTroops.put(aIP1,
-		 * startingTroopCount); AIPlayer aIP2 = new AIPlayer("AIPlayer2",
-		 * PlayerColorBank.get(1), 1); players.add(aIP2); DoaHandler.add(aIP2);
-		 * startingTroops.put(aIP2, startingTroopCount);
-		 */
+
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
 		if (!manualPlacement) {
@@ -180,7 +180,6 @@ public class GameManager extends DoaObject {
 					.collect(Collectors.toList()).forEach(hitArea -> hitArea.emphasizeForAttack());
 			attackerProvinceHitArea.selectAsAttacker();
 		}
-
 	}
 
 	public static void markDefenderProvince(ProvinceHitArea province) {
@@ -252,7 +251,7 @@ public class GameManager extends DoaObject {
 				markAttackerProvince(null);
 				markDefenderProvince(null);
 			}
-			if (defenderProvinceHitArea.getProvince().getTroops() <= 0) {
+			if (defenderProvinceHitArea != null && defenderProvinceHitArea.getProvince().getTroops() <= 0) {
 				// capture
 				defenderProvinceHitArea.getProvince()
 						.removeTroops(defenderProvinceHitArea.getProvince().getTroops() + 1);
@@ -263,22 +262,24 @@ public class GameManager extends DoaObject {
 	}
 
 	public static void blitz() {
-		int attackerTroops = attackerProvinceHitArea.getProvince().getTroops();
-		if (attackerTroops <= 1 || defenderProvinceHitArea.getProvince().getTroops() <= 0) {
-			return;
+		if (attackerProvinceHitArea != null && defenderProvinceHitArea != null) {
+			int attackerTroops = attackerProvinceHitArea.getProvince().getTroops();
+			if (attackerTroops <= 1 || defenderProvinceHitArea.getProvince().getTroops() <= 0) {
+				return;
+			}
+			switch (attackerTroops) {
+			default:
+				toss(3);
+				break;
+			case 3:
+				toss(2);
+				break;
+			case 2:
+				toss(1);
+				break;
+			}
+			blitz();
 		}
-		switch (attackerTroops) {
-		default:
-			toss(3);
-			break;
-		case 3:
-			toss(2);
-			break;
-		case 2:
-			toss(1);
-			break;
-		}
-		blitz();
 	}
 
 	private static void occupyProvince(Province occupied) {
