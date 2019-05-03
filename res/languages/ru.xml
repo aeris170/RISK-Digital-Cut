@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE de [
-<!ELEMENT de (pair+)>
+<!DOCTYPE ru [
+<!ELEMENT ru (pair+)>
 <!ELEMENT pair (key, value)>
 <!ELEMENT key (#PCDATA)>
 <!ELEMENT value (#PCDATA)>
 ]>
-<de>
+<ru>
 	<pair>
 		<key>PLAY_OFFLINE</key>
-		<value>offline spielen</value>
+		<value>одиночная игра</value>
 	</pair>
 	<pair>
 		<key>PLAY_ONLINE</key>
-		<value>online spielen</value>
+		<value>играть с друзьями</value>
 	</pair>
 	<pair>
 		<key>SETTINGS</key>
-		<value>einstellungen</value>
+		<value>опции</value>
 	</pair>
 	<pair>
 		<key>RULES</key>
-		<value>regeln</value>
+		<value>правилы</value>
 	</pair>
-	
-	
-	
 	<pair>
 		<key>EXIT</key>
-		<value>beenden</value>
+		<value>выйти</value>
 	</pair>
-	
-	
-	
-	
-	
 	<pair>
 		<key>MASTER</key>
-		<value>master</value>
+		<value>мастер</value>
 	</pair>
 	<pair>
 		<key>MUSIC</key>
-		<value>music</value>
+		<value>Музыка</value>
 	</pair>
 	<pair>
 		<key>SFX</key>
@@ -48,26 +40,26 @@
 	</pair>
 	<pair>
 		<key>OK</key>
-		<value>apply</value>
+		<value>OК</value>
 	</pair>
 	<pair>
 		<key>BACK</key>
-		<value>back</value>
+		<value>назад</value>
 	</pair>
 	<pair>
 		<key>NEXT</key>
-		<value>next</value>
+		<value>следующий</value>
 	</pair>
 	<pair>
 		<key>PLAYER</key>
-		<value>player</value>
+		<value>игрок</value>
 	</pair>
 	<pair>
 		<key>READY</key>
-		<value>ready</value>
+		<value>готов</value>
 	</pair>
 	<pair>
 		<key>PLAY</key>
-		<value>play</value>
+		<value>играть</value>
 	</pair>
-</de>
+</ru>

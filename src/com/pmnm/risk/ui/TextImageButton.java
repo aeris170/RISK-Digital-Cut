@@ -2,6 +2,7 @@ package com.pmnm.risk.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Locale;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
