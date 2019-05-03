@@ -7,6 +7,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
+import com.pmnm.risk.globals.localization.Translator;
 
 public class TextImageButton extends DoaImageButton {
 
@@ -35,6 +36,7 @@ public class TextImageButton extends DoaImageButton {
 		if (hover) {
 			g.setColor(hoverTextColor);
 		}
-		g.drawString(text, position.x + 20, position.y + height - 17);
+		g.drawString(Translator.getInstance().getTranslatedString(text).toUpperCase(), position.x + 20, position.y + height - 17);
+		// Translator.getInstance().setCurrentLanguage(Language.DE);
 	}
 }

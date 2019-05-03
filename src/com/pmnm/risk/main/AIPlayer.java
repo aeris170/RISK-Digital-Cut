@@ -8,7 +8,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import com.pmnm.risk.map.province.Province;
-import com.pmnm.risk.map.province.ProvinceHitArea;
 
 public class AIPlayer extends Player {
 
@@ -28,21 +27,20 @@ public class AIPlayer extends Player {
 		if (isInTurn) {
 			if (!GameManager.isManualPlacementDone) {
 				if (!GameManager.areAllProvincesClaimed()) {
-					if(difficulty <= 0 || difficulty == 1) {
+					if (difficulty <= 0 || difficulty == 1) {
 						Province provinceToClaim = Province.getRandomUnclaimedProvince();
 						GameManager.claimProvince(provinceToClaim);
 						isInTurn = false;
-					}else if(difficulty == 2) {
-						if(claimedProvince == null) {
+					} else if (difficulty == 2) {
+						if (claimedProvince == null) {
 							Province provinceToClaim = Province.getRandomUnclaimedProvince();
 							GameManager.claimProvince(provinceToClaim);
 							claimedProvince = provinceToClaim;
 							isInTurn = false;
-						}else {
-						}
+						} else {}
 					}
 				} else {
-					if(difficulty <= 0 || difficulty == 1) {
+					if (difficulty <= 0 || difficulty == 1) {
 						List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this).collect(Collectors.toList());
 						Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
 						GameManager.setDraftReinforceProvince(p);
@@ -51,7 +49,7 @@ public class AIPlayer extends Player {
 					}
 				}
 			} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
-				if(difficulty <= 0 || difficulty == 1) {
+				if (difficulty <= 0 || difficulty == 1) {
 					List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this).collect(Collectors.toList());
 					Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
 					GameManager.setDraftReinforceProvince(p);
@@ -67,10 +65,11 @@ public class AIPlayer extends Player {
 
 	public void attack() {
 		List<Province> ownedProvinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this).collect(Collectors.toList());
-		if(difficulty == 1) {
+		if (difficulty == 1) {
 			for (int i = 0; i < ownedProvinces.size(); i++) {
 				if (ownedProvinces.get(i).troopCount() > 10) {
-					List<Province> ownedProvinceNeighbours = ownedProvinces.get(i).getNeighbours().stream().filter(p -> p.getOwner() != this).collect(Collectors.toList());
+					List<Province> ownedProvinceNeighbours = ownedProvinces.get(i).getNeighbours().stream().filter(p -> p.getOwner() != this)
+					        .collect(Collectors.toList());
 					for (int j = 0; j < ownedProvinceNeighbours.size(); j++) {
 						if (ownedProvinces.get(i).troopCount() - ownedProvinceNeighbours.get(j).troopCount() > 5) {
 							GameManager.markAttackerProvince(ownedProvinces.get(i).getProvinceHitArea());

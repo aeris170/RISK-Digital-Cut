@@ -7,7 +7,6 @@ import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.maths.DoaVectorI;
-import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.ui.actions.ExitButtonAction;
 import com.pmnm.risk.ui.actions.PlayOfflineButtonAction;
 import com.pmnm.risk.ui.actions.PlayOnlineButtonAction;
@@ -36,20 +35,15 @@ public final class UIInit {
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
 		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), Translator.getInstance().getTranslatedString("PLAY_OFFLINE").toUpperCase(),
-		        FONT_COLOR, HOVER_FONT_COLOR);
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY_OFFLINE", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton playOnlineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), Translator.getInstance().getTranslatedString("PLAY_ONLINE").toUpperCase(),
-		        FONT_COLOR, HOVER_FONT_COLOR);
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY_ONLINE", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton settingsButton = DoaHandler.instantiate(TextImageButton.class, MM_SETTING_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), Translator.getInstance().getTranslatedString("SETTINGS").toUpperCase(),
-		        FONT_COLOR, HOVER_FONT_COLOR);
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "SETTINGS", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton rulesButton = DoaHandler.instantiate(TextImageButton.class, MM_RULES_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), Translator.getInstance().getTranslatedString("RULES").toUpperCase(), FONT_COLOR,
-		        HOVER_FONT_COLOR);
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), Translator.getInstance().getTranslatedString("EXIT").toUpperCase(), FONT_COLOR,
-		        HOVER_FONT_COLOR);
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
 		playOfflineButton.addAction(new PlayOfflineButtonAction(mm));
 		playOnlineButton.addAction(new PlayOnlineButtonAction());
 		settingsButton.addAction(new SettingsButtonAction());
