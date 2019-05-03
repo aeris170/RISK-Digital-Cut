@@ -3,7 +3,8 @@ package com.pmnm.risk.globals;
 import java.awt.Color;
 
 import com.pmnm.risk.asset.AssetLoader;
-import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
+import com.pmnm.risk.globals.localization.Language;
+import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.map.MapLoader;
 import com.pmnm.risk.ui.UIInit;
 
@@ -15,13 +16,13 @@ public final class Globals {
 	public static final Color PROVINCE_EMPHASIZE = Color.GREEN;
 	public static final Color PROVINCE_HIGHLIGHT = Color.GRAY.darker().darker().darker().darker();
 
-	private Globals() {
-		throw new RiskStaticInstantiationException(getClass());
-	}
+	private Globals() {}
 
 	public static void initilaizeGlobals() {
 		MapLoader.readMapData();
 		AssetLoader.initializeAssets();
+		Translator.getInstance();
+		Translator.getInstance().setCurrentLanguage(Language.DE);
 		UIInit.initUI();
 	}
 }
