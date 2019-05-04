@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tr [
+<!ELEMENT tr (pair+)>
+<!ELEMENT pair (key, value)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+]>
+<tr>
+	<pair>
+		<key>PLAY_OFFLINE</key>
+		<value>çevrimdışı oyun</value>
+	</pair>
+	<pair>
+		<key>PLAY_ONLINE</key>
+		<value>çevrimiçi oyun</value>
+	</pair>
+	<pair>
+		<key>SETTINGS</key>
+		<value>ayarlar</value>
+	</pair>
+	<pair>
+		<key>RULES</key>
+		<value>kurallar</value>
+	</pair>
+	<pair>
+		<key>EXIT</key>
+		<value>çıkış</value>
+	</pair>
+	<pair>
+		<key>MASTER</key>
+		<value>ana ses</value>
+	</pair>
+	<pair>
+		<key>MUSIC</key>
+		<value>müzikler</value>
+	</pair>
+	<pair>
+		<key>SFX</key>
+		<value>efekler</value>
+	</pair>
+	<pair>
+		<key>OK</key>
+		<value>tamam</value>
+	</pair>
+	<pair>
+		<key>BACK</key>
+		<value>geri</value>
+	</pair>
+	<pair>
+		<key>NEXT</key>
+		<value>ileri</value>
+	</pair>
+	<pair>
+		<key>PLAYER</key>
+		<value>oyuncu</value>
+	</pair>
+	<pair>
+		<key>READY</key>
+		<value>hazır</value>
+	</pair>
+	<pair>
+		<key>PLAY</key>
+		<value>oyna</value>
+	</pair>
+	<pair>
+		<key>YES</key>
+		<value>evet</value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value>hayır</value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value>çıkmak istediğinize emin misiniz?</value>
+	</pair>
+</tr>
