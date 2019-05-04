@@ -27,6 +27,20 @@ public final class AssetLoader {
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
 
+			{// SETTINGS MENU
+				DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
+				DoaSprites.createSprite("Lens", "/ui/settings/lensEffect.png");
+				DoaSprites.createSprite("LensHover", "/ui/settings/lensEffectHover.png");
+				DoaSprites.createSprite("LensSelect", "/ui/settings/lensEffectSelected.png");
+				DoaSprites.createSprite("English", "/ui/settings/englis.png");
+				DoaSprites.createSprite("Deutch", "/ui/settings/deutsc.png");
+				DoaSprites.createSprite("Espanol", "/ui/settings/espano.png");
+				DoaSprites.createSprite("France", "/ui/settings/franc.png");
+				DoaSprites.createSprite("Italian", "/ui/settings/itali.png");
+				DoaSprites.createSprite("Russian", "/ui/settings/rusk.png");
+				DoaSprites.createSprite("Turkish", "/ui/settings/turkis.png");
+			}
+
 			{// EXIT POPUP
 				DoaSprites.createSprite("ExitPopupBackground", "/ui/popupBox.png");
 				DoaSprites.createSprite("MiniButtonIdle", "/ui/MiniButtonIdle.png");
