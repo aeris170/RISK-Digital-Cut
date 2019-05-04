@@ -27,6 +27,13 @@ public final class AssetLoader {
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
 
+			{// EXIT POPUP
+				DoaSprites.createSprite("ExitPopupBackground", "/ui/popupBox.png");
+				DoaSprites.createSprite("MiniButtonIdle", "/ui/MiniButtonIdle.png");
+				DoaSprites.createSprite("MiniButtonHover", "/ui/MiniButtonHover.png");
+				DoaSprites.createSprite("MiniButtonClick", "/ui/MiniButtonPressed.png");
+			}
+
 			{// TOP INFO
 				DoaSprites.createSprite("timerBottomRing", "/ui/gameScreenElements/topInfo/timerBottomRing.png");
 				DoaSprites.createSprite("seasonCircle", "/ui/gameScreenElements/topInfo/turnCirc.png");

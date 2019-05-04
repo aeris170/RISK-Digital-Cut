@@ -70,4 +70,16 @@
 		<key>PLAY</key>
 		<value>play</value>
 	</pair>
+	<pair>
+		<key>YES</key>
+		<value>ja</value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value>nein</value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value>sind sie sicher, dass sie beenden wollen?</value>
+	</pair>
 </de>

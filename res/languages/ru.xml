@@ -62,4 +62,16 @@
 		<key>PLAY</key>
 		<value>играть</value>
 	</pair>
+		<pair>
+		<key>YES</key>
+		<value>да</value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value>нет</value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value>Ты уверен, что хочешь выйти?</value>
+	</pair>
 </ru>

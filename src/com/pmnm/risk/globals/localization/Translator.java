@@ -2,6 +2,7 @@ package com.pmnm.risk.globals.localization;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class Translator {
 
 	private static final String LANGUAGE_DATA_PATH = "res/languages/";
 
-	private Map<Language, Map<String, String>> languages = new HashMap<>();
+	private Map<Language, Map<String, String>> languages = new EnumMap<>(Language.class);
 
 	private static Translator _this;
 
@@ -26,10 +27,10 @@ public class Translator {
 				Map<String, String> languageData = new HashMap<>();
 				Document languageDocument = new SAXBuilder().build(new File(LANGUAGE_DATA_PATH + l.name() + ".xml"));
 				Element root = languageDocument.getRootElement();
-				root.getChildren().forEach(pair -> languageData.put(pair.getChildText("key"), pair.getChildText("value")));
+				root.getChildren().forEach(pair -> languageData.put(pair.getChildText("key").trim(), pair.getChildText("value").trim()));
 				languages.put(l, languageData);
 			} catch (JDOMException | IOException ex) {
-				System.err.println("Exception while reading language data for Language: " + l.name());
+				System.err.println("Exception while reading language data for Language: " + l.name() + " " + ex.getMessage());
 			}
 		}
 	}

@@ -8,6 +8,7 @@ import com.doa.engine.graphics.DoaSprite;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.localization.Translator;
+import com.pmnm.risk.toolkit.Utils;
 
 public class TextImageButton extends DoaImageButton {
 
@@ -16,12 +17,21 @@ public class TextImageButton extends DoaImageButton {
 	protected String text;
 	protected Color textColor;
 	protected Color hoverTextColor;
+	private DoaVectorF textRect;
+	private boolean isCentered;
 
 	public TextImageButton(DoaVectorF position, int width, int height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor, Color hoverTextColor) {
+		this(position, width, height, idleImage, hoverImage, text, textColor, hoverTextColor, false);
+	}
+
+	public TextImageButton(DoaVectorF position, int width, int height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor, Color hoverTextColor,
+	        boolean isCentered) {
 		super(position, width, height, idleImage, hoverImage);
 		this.text = text;
 		this.textColor = textColor;
 		this.hoverTextColor = hoverTextColor;
+		textRect = new DoaVectorF(width - 20, height - 20);
+		this.isCentered = isCentered;
 	}
 
 	public void setText(String s) {
@@ -31,11 +41,16 @@ public class TextImageButton extends DoaImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		super.render(g);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 36f));
+		String s = Translator.getInstance().getTranslatedString(text).toUpperCase();
+		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, s)));
 		g.setColor(textColor);
 		if (hover) {
 			g.setColor(hoverTextColor);
 		}
-		g.drawString(Translator.getInstance().getTranslatedString(text).toUpperCase(), position.x + 20, position.y + height - 17);
+		if (isCentered) {
+			g.drawString(s, position.x + (width - g.getFontMetrics().stringWidth(s)) / 2d, (position.y + height) * 0.971f);
+		} else {
+			g.drawString(s, position.x + 20, position.y + height - 17);
+		}
 	}
 }

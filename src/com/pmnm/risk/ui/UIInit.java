@@ -49,10 +49,10 @@ public final class UIInit {
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
-		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, spm));
-		playOnlineButton.addAction(new PlayOnlineButtonAction(mm, mpm));
-		settingsButton.addAction(new SettingsButtonAction(mm, sm));
-		rulesButton.addAction(new RulesButtonAction(mm, rm));
+		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, spm, ep));
+		playOnlineButton.addAction(new PlayOnlineButtonAction(mm, mpm, ep));
+		settingsButton.addAction(new SettingsButtonAction(mm, sm, ep));
+		rulesButton.addAction(new RulesButtonAction(mm, rm, ep));
 		exitButton.addAction(new ExitButtonAction(ep));
 		mm.add(playOfflineButton);
 		mm.add(playOnlineButton);

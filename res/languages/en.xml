@@ -62,4 +62,16 @@
 		<key>PLAY</key>
 		<value>play</value>
 	</pair>
+	<pair>
+		<key>YES</key>
+		<value>yes</value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value>no</value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value>are you sure you want to exit?</value>
+	</pair>
 </en>
