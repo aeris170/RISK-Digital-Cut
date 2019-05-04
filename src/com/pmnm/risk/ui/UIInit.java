@@ -34,6 +34,11 @@ public final class UIInit {
 
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
+		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class);
+		MultiPlayerMenu mpm = DoaHandler.instantiate(MultiPlayerMenu.class);
+		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class);
+		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class);
+		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
 		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY_OFFLINE", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton playOnlineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
@@ -44,11 +49,11 @@ public final class UIInit {
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
-		playOfflineButton.addAction(new PlayOfflineButtonAction(mm));
-		playOnlineButton.addAction(new PlayOnlineButtonAction());
-		settingsButton.addAction(new SettingsButtonAction());
-		rulesButton.addAction(new RulesButtonAction());
-		exitButton.addAction(new ExitButtonAction());
+		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, spm));
+		playOnlineButton.addAction(new PlayOnlineButtonAction(mm, mpm));
+		settingsButton.addAction(new SettingsButtonAction(mm, sm));
+		rulesButton.addAction(new RulesButtonAction(mm, rm));
+		exitButton.addAction(new ExitButtonAction(ep));
 		mm.add(playOfflineButton);
 		mm.add(playOnlineButton);
 		mm.add(settingsButton);

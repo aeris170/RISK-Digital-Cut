@@ -2,6 +2,8 @@ package com.pmnm.risk.ui.gameui;
 
 import com.doa.engine.DoaHandler;
 import com.pmnm.risk.main.GameManager;
+import com.pmnm.risk.map.MapLoader;
+import com.pmnm.risk.map.board.GameBoard;
 
 public final class RiskGameScreenUI {
 
@@ -10,10 +12,12 @@ public final class RiskGameScreenUI {
 	private RiskGameScreenUI() {}
 
 	public static void initUI() {
+		MapLoader.readMapData();
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);
 		DoaHandler.instantiate(GameManager.class);
+		DoaHandler.instantiate(GameBoard.class);
 		GameManager.dicePanel = DicePanel;
 	}
 }

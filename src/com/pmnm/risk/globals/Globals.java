@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import com.pmnm.risk.asset.AssetLoader;
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.map.MapLoader;
 import com.pmnm.risk.ui.UIInit;
 
 public final class Globals {
@@ -18,7 +17,6 @@ public final class Globals {
 	private Globals() {}
 
 	public static void initilaizeGlobals() {
-		MapLoader.readMapData();
 		AssetLoader.initializeAssets();
 		Translator.getInstance();
 		UIInit.initUI();
