@@ -2,8 +2,11 @@ package com.pmnm.risk.main;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.Locale;
 
+import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
 import com.doa.engine.DoaCamera;
@@ -41,7 +44,6 @@ public class Main {
 
 		DoaCamera.adjustCamera(Camera.getInstance(), -10000, -10000, 10000, 10000);
 		DoaHandler.instantiate(DebugPanel.class);
-		// Translator.getInstance().setCurrentLanguage(Language.RU);
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}
 
@@ -51,6 +53,8 @@ public class Main {
 		w.setLocation(0, 0);
 		w.setUndecorated(true);
 		w.setResizable(false);
+		w.setCursor(
+		        Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(), new Point(0, 0), "Kaan's Cursor"));
 		w.setVisible(true);
 		w.add(e);
 	}
