@@ -13,8 +13,6 @@ import com.doa.engine.DoaRenderingMode;
 import com.doa.engine.DoaWindow;
 import com.doa.engine.input.DoaMouse;
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.globals.localization.Language;
-import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.map.board.GameBoard;
 
 public class Main {
@@ -45,7 +43,7 @@ public class Main {
 		DoaCamera.adjustCamera(Camera.getInstance(), -10000, -10000, 10000, 10000);
 		GameBoard.getInstance();
 		DoaHandler.instantiate(DebugPanel.class);
-		Translator.getInstance().setCurrentLanguage(Language.RU);
+		// Translator.getInstance().setCurrentLanguage(Language.RU);
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}
 

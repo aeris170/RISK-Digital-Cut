@@ -65,7 +65,7 @@ public class Player extends DoaObject {
 						GameManager.setDraftReinforceProvince(clickedProvince);
 					}
 				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
-					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1) {
+					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && GameManager.moveAfterOccupySource == null) {
 						GameManager.markAttackerProvince(clickedHitArea);
 						GameManager.markDefenderProvince(null);
 					} else if (GameManager.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
@@ -149,7 +149,7 @@ public class Player extends DoaObject {
 
 	@Override
 	public String toString() {
-		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id="
-				+ id + ", isLocalPlayer=" + isLocalPlayer + ", source=" + source + ", destination=" + destination + "]";
+		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id=" + id + ", isLocalPlayer=" + isLocalPlayer
+		        + ", source=" + source + ", destination=" + destination + "]";
 	}
 }

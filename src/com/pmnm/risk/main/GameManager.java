@@ -67,18 +67,15 @@ public class GameManager extends DoaObject {
 	public GameManager() {
 		super(0f, 0f);
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		/*
-		 * for (int i = 0; i < numberOfPlayers; i++) { Player p =
-		 * DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i),
-		 * true); players.add(p); startingTroops.put(p, startingTroopCount); }
-		 */
-
 		for (int i = 0; i < numberOfPlayers; i++) {
-			Player p = DoaHandler.instantiate(AIPlayer.class, "AIPlayer" + i, PlayerColorBank.get(i), i);
+			Player p = DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i), true);
 			players.add(p);
 			startingTroops.put(p, startingTroopCount);
 		}
-
+		/* for (int i = 0; i < numberOfPlayers; i++) { Player p =
+		 * DoaHandler.instantiate(AIPlayer.class, "AIPlayer" + i,
+		 * PlayerColorBank.get(i), i); players.add(p); startingTroops.put(p,
+		 * startingTroopCount); } */
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
 		if (!manualPlacement) {
@@ -104,6 +101,8 @@ public class GameManager extends DoaObject {
 			currentPlayer = players.get(turnCount % players.size());
 			currentPlayer.turn();
 			reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
+			markReinforcingProvince(null);
+			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
 		}
@@ -112,8 +111,7 @@ public class GameManager extends DoaObject {
 	@Override
 	public void tick() {
 		if (DoaMouse.MB1) {
-			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked())
-					.findFirst().orElse(null);
+			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 		}
 		if (!isManualPlacementDone) {
 			if (startingTroops.values().stream().allMatch(v -> v <= 0)) {
@@ -125,8 +123,7 @@ public class GameManager extends DoaObject {
 	}
 
 	@Override
-	public void render(DoaGraphicsContext g) {
-	}
+	public void render(DoaGraphicsContext g) {}
 
 	public static void claimProvince(Province claimed) {
 		claimed.getClaimedBy(currentPlayer);
@@ -160,24 +157,21 @@ public class GameManager extends DoaObject {
 	}
 
 	public static boolean areAllProvincesClaimed() {
-		return Province.ALL_PROVINCES.stream().filter(province -> province.isClaimed())
-				.count() == Province.ALL_PROVINCES.size();
+		return Province.ALL_PROVINCES.stream().filter(province -> province.isClaimed()).count() == Province.ALL_PROVINCES.size();
 	}
 
 	public static void markAttackerProvince(ProvinceHitArea province) {
 		if (attackerProvinceHitArea != null) {
-			ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream()
-					.filter(hitArea -> attackerProvinceHitArea.getProvince().getNeighbours()
-							.contains(hitArea.getProvince()) && !hitArea.getProvince().isOwnedBy(currentPlayer))
-					.collect(Collectors.toList()).forEach(hitArea -> hitArea.deemphasizeForAttack());
+			ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(
+			        hitArea -> attackerProvinceHitArea.getProvince().getNeighbours().contains(hitArea.getProvince()) && !hitArea.getProvince().isOwnedBy(currentPlayer))
+			        .collect(Collectors.toList()).forEach(hitArea -> hitArea.deemphasizeForAttack());
 			attackerProvinceHitArea.deselectAsAttacker();
 		}
 		attackerProvinceHitArea = province;
 		if (attackerProvinceHitArea != null) {
-			ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream()
-					.filter(hitArea -> attackerProvinceHitArea.getProvince().getNeighbours()
-							.contains(hitArea.getProvince()) && !hitArea.getProvince().isOwnedBy(currentPlayer))
-					.collect(Collectors.toList()).forEach(hitArea -> hitArea.emphasizeForAttack());
+			ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(
+			        hitArea -> attackerProvinceHitArea.getProvince().getNeighbours().contains(hitArea.getProvince()) && !hitArea.getProvince().isOwnedBy(currentPlayer))
+			        .collect(Collectors.toList()).forEach(hitArea -> hitArea.emphasizeForAttack());
 			attackerProvinceHitArea.selectAsAttacker();
 		}
 	}
@@ -212,26 +206,23 @@ public class GameManager extends DoaObject {
 			defenderDiceValues = Arrays.stream(Dice.DEFENCE_DICE_2.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
 		}
 		switch (diceAmount) {
-		case 1:
-			if (attackerProvinceHitArea.getProvince().getTroops() > 1) {
-				attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_1.rollAllAndGetAll()).boxed()
-						.toArray(Integer[]::new);
-			}
-			break;
-		case 2:
-			if (attackerProvinceHitArea.getProvince().getTroops() > 2) {
-				attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_2.rollAllAndGetAll()).boxed()
-						.toArray(Integer[]::new);
-			}
-			break;
-		case 3:
-			if (attackerProvinceHitArea.getProvince().getTroops() > 3) {
-				attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_3.rollAllAndGetAll()).boxed()
-						.toArray(Integer[]::new);
-			}
-			break;
-		default:
-			throw new DiceException("diceAmount not in the set (1, 2, 3)");
+			case 1:
+				if (attackerProvinceHitArea.getProvince().getTroops() > 1) {
+					attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_1.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+				}
+				break;
+			case 2:
+				if (attackerProvinceHitArea.getProvince().getTroops() > 2) {
+					attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_2.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+				}
+				break;
+			case 3:
+				if (attackerProvinceHitArea.getProvince().getTroops() > 3) {
+					attackerDiceValues = Arrays.stream(Dice.ATTACK_DICE_3.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+				}
+				break;
+			default:
+				throw new DiceException("diceAmount not in the set (1, 2, 3)");
 		}
 		if (attackerDiceValues != null) {
 			Arrays.sort(attackerDiceValues, Collections.reverseOrder());
@@ -253,8 +244,7 @@ public class GameManager extends DoaObject {
 			}
 			if (defenderProvinceHitArea != null && defenderProvinceHitArea.getProvince().getTroops() <= 0) {
 				// capture
-				defenderProvinceHitArea.getProvince()
-						.removeTroops(defenderProvinceHitArea.getProvince().getTroops() + 1);
+				defenderProvinceHitArea.getProvince().removeTroops(defenderProvinceHitArea.getProvince().getTroops() + 1);
 				BottomPanel.updateSpinnerValues(diceAmount, attackerProvinceHitArea.getProvince().getTroops() - 1);
 				occupyProvince(defenderProvinceHitArea.getProvince());
 			}
@@ -268,15 +258,15 @@ public class GameManager extends DoaObject {
 				return;
 			}
 			switch (attackerTroops) {
-			default:
-				toss(3);
-				break;
-			case 3:
-				toss(2);
-				break;
-			case 2:
-				toss(1);
-				break;
+				default:
+					toss(3);
+					break;
+				case 3:
+					toss(2);
+					break;
+				case 2:
+					toss(1);
+					break;
 			}
 			blitz();
 		}
@@ -369,6 +359,8 @@ public class GameManager extends DoaObject {
 		// 1 is there because it was -1 before
 		moveAfterOccupyDestination.getProvince().addTroops(1 + count);
 		moveAfterOccupySource.getProvince().removeTroops(count);
+		moveAfterOccupyDestination = null;
+		moveAfterOccupySource = null;
 		ProvinceConnector.getInstance().setPath();
 	}
 
@@ -437,8 +429,7 @@ public class GameManager extends DoaObject {
 
 		System.out.println("ALL_PROVINCES ARE old owners ");
 		for (int i = 0; i < Province.ALL_PROVINCES.size(); i++) {
-			System.out.println(
-					Province.ALL_PROVINCES.get(i).getName() + "   " + Province.ALL_PROVINCES.get(i).getTroops());
+			System.out.println(Province.ALL_PROVINCES.get(i).getName() + "   " + Province.ALL_PROVINCES.get(i).getTroops());
 		}
 
 		// Lists
@@ -456,8 +447,7 @@ public class GameManager extends DoaObject {
 
 		for (int i = 0; i < Province.ALL_PROVINCES.size(); i++) {
 			Province.ALL_PROVINCES.set(i, newAllProvinces.get(i));
-			System.out.println(
-					Province.ALL_PROVINCES.get(i).getName() + "   " + Province.ALL_PROVINCES.get(i).getTroops());
+			System.out.println(Province.ALL_PROVINCES.get(i).getName() + "   " + Province.ALL_PROVINCES.get(i).getTroops());
 		}
 
 		for (ProvinceHitArea p : ProvinceHitArea.ALL_PROVINCE_HIT_AREAS) {

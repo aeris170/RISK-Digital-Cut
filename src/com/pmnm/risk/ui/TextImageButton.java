@@ -2,7 +2,6 @@ package com.pmnm.risk.ui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Locale;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
@@ -38,6 +37,5 @@ public class TextImageButton extends DoaImageButton {
 			g.setColor(hoverTextColor);
 		}
 		g.drawString(Translator.getInstance().getTranslatedString(text).toUpperCase(), position.x + 20, position.y + height - 17);
-		// Translator.getInstance().setCurrentLanguage(Language.DE);
 	}
 }
