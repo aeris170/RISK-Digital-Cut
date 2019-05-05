@@ -29,12 +29,12 @@ public final class AssetLoader {
 			DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
 
 			{// SINGLEPLAYER MENU
-				DoaSprites.createSprite("arrowLeftIdle", "/ui/playOffline/arrowUnpressedLeft.png");
-				DoaSprites.createSprite("arrowRightIdle", "/ui/playOffline/arrowUnpressedRight.png");
-				DoaSprites.createSprite("arrowDownIdle", "/ui/playOffline/arrowUnpressedDown.png");
-				DoaSprites.createSprite("arrowLeftClick", "/ui/playOffline/arrowPressedLeft.png");
-				DoaSprites.createSprite("arrowRightClick", "/ui/playOffline/arrowPressedRight.png");
-				DoaSprites.createSprite("arrowDownClick", "/ui/playOffline/arrowPressedDown.png");
+				DoaSprites.createSprite("ArrowLeftIdle", "/ui/playOffline/arrowUnpressedLeft.png");
+				DoaSprites.createSprite("ArrowRightIdle", "/ui/playOffline/arrowUnpressedRight.png");
+				DoaSprites.createSprite("ArrowDownIdle", "/ui/playOffline/arrowUnpressedDown.png");
+				DoaSprites.createSprite("ArrowLeftClick", "/ui/playOffline/arrowPressedLeft.png");
+				DoaSprites.createSprite("ArrowRightClick", "/ui/playOffline/arrowPressedRight.png");
+				DoaSprites.createSprite("ArrowDownClick", "/ui/playOffline/arrowPressedDown.png");
 				DoaSprites.createSprite("White", "/ui/playOffline/colour.png");
 				DoaSprites.createSprite("ColorRect", "/ui/playOffline/colourRect.png");
 				DoaSprites.createSprite("MapChooserBackground", "/ui/playOffline/mapChooserContainer.png");

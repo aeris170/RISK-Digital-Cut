@@ -63,10 +63,7 @@ public class BottomPanel extends DoaPanel {
 	public void tick() {
 		try {
 			centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
-		} catch (Exception e3) {}
-		if (spinnerValues != null) {
-			spinnerValues.forEach(System.out::print);
-			System.out.println(" " + index);
+		} catch (Exception e3) {// TODO wtf
 		}
 	}
 

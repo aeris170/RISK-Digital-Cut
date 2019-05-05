@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE es [
+<!ELEMENT fr (pair+)>
+<!ELEMENT pair (key, value)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+]>
+<fr>
+	<pair>
+		<key>PLAY_OFFLINE</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>PLAY_ONLINE</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>SETTINGS</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>RULES</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>EXIT</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>MASTER</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>MUSIC</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>SFX</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>OK</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>BACK</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>NEXT</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>PLAYER</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>READY</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>PLAY</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>YES</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value></value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value></value>
+	</pair>
+</fr>

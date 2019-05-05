@@ -45,7 +45,7 @@ public class Translator {
 
 	public String getTranslatedString(String key) {
 		String rv = languages.get(currentLanguage).get(key);
-		return rv != null ? rv : "RISKUI::UNMAPPED_STRING";
+		return (rv != null && rv.length() != 0) ? rv : "RISKUI::UNMAPPED_STRING";
 	}
 
 	public static Translator getInstance() {
