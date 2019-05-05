@@ -31,24 +31,31 @@ public final class MapLoader {
 
 	private MapLoader() {}
 
-	public static void readMapData() {
+	public static void readMapData(File mapFolder) {
 		try {
-			createProvinces();
-			groupProvinces();
-			connectProvinces();
-			solidifyProvinces();
+			clearExistingMapData();
+			createProvinces(new File(mapFolder.getAbsolutePath() + "/provinces.xml"));
+			groupProvinces(new File(mapFolder.getAbsolutePath() + "/continents.xml"));
+			connectProvinces(new File(mapFolder.getAbsolutePath() + "/neighbours.xml"));
+			solidifyProvinces(new File(mapFolder.getAbsolutePath() + "/vertices.xml"));
 		} catch (JDOMException | IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	private static void createProvinces() throws JDOMException, IOException {
+	private static void clearExistingMapData() {
+		Province.ALL_PROVINCES.clear();
+		Continent.NAME_CONTINENT.clear();
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> DoaHandler.remove(pha));
+	}
+
+	private static void createProvinces(File provincesFile) throws JDOMException, IOException {
 		Document provincesDocument = new SAXBuilder().build(new File(PROVINCE_DATA_PATH));
 		Element provincesElement = provincesDocument.getRootElement();
 		provincesElement.getChildren().forEach(province -> NAME_PROVINCE.put(province.getText(), new Province().setName(province.getText())));
 	}
 
-	private static void groupProvinces() throws JDOMException, IOException {
+	private static void groupProvinces(File continentsFile) throws JDOMException, IOException {
 		Document continentsDocument = new SAXBuilder().build(new File(CONTINENT_DATA_PATH));
 		Element continentsElement = continentsDocument.getRootElement();
 		continentsElement.getChildren().forEach(continentElement -> {
@@ -62,7 +69,7 @@ public final class MapLoader {
 		});
 	}
 
-	private static void connectProvinces() throws JDOMException, IOException {
+	private static void connectProvinces(File neighboursFile) throws JDOMException, IOException {
 		Document neighboursDocument = new SAXBuilder().build(new File(NEIGHBOURS_DATA_PATH));
 		Element neighboursElement = neighboursDocument.getRootElement();
 		neighboursElement.getChildren().forEach(provinceElement -> {
@@ -73,7 +80,7 @@ public final class MapLoader {
 		});
 	}
 
-	private static void solidifyProvinces() throws JDOMException, IOException {
+	private static void solidifyProvinces(File verticesFile) throws JDOMException, IOException {
 		Document verticesDocument = new SAXBuilder().build(new File(VERTICES_DATA_PATH));
 		Element verticesElement = verticesDocument.getRootElement();
 		verticesElement.getChildren().forEach(provinceElement -> {

@@ -26,9 +26,29 @@ public final class AssetLoader {
 			DoaSprites.createSprite("FleurDeLisGold", "/ui/FleurDeLisGold.png");
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
+			DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
+
+			{// SINGLEPLAYER MENU
+				DoaSprites.createSprite("arrowLeftIdle", "/ui/playOffline/arrowUnpressedLeft.png");
+				DoaSprites.createSprite("arrowRightIdle", "/ui/playOffline/arrowUnpressedRight.png");
+				DoaSprites.createSprite("arrowDownIdle", "/ui/playOffline/arrowUnpressedDown.png");
+				DoaSprites.createSprite("arrowLeftClick", "/ui/playOffline/arrowPressedLeft.png");
+				DoaSprites.createSprite("arrowRightClick", "/ui/playOffline/arrowPressedRight.png");
+				DoaSprites.createSprite("arrowDownClick", "/ui/playOffline/arrowPressedDown.png");
+				DoaSprites.createSprite("White", "/ui/playOffline/colour.png");
+				DoaSprites.createSprite("ColorRect", "/ui/playOffline/colourRect.png");
+				DoaSprites.createSprite("MapChooserBackground", "/ui/playOffline/mapChooserContainer.png");
+				DoaSprites.createSprite("MapBorder", "/ui/playOffline/mapContainer.png");
+				DoaSprites.createSprite("PlayerNumberBorder", "/ui/playOffline/playerNoRect.png");
+				DoaSprites.createSprite("MainScroll", "/ui/playOffline/playersScroll.png");
+				DoaSprites.createSprite("PlayerTypeBorder", "/ui/playOffline/playerTypeRect.png");
+				{// MULTIPLAYER MENU
+					DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
+					DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");
+				}
+			}
 
 			{// SETTINGS MENU
-				DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
 				DoaSprites.createSprite("Lens", "/ui/settings/lensEffect.png");
 				DoaSprites.createSprite("LensHover", "/ui/settings/lensEffectHover.png");
 				DoaSprites.createSprite("LensSelect", "/ui/settings/lensEffectSelected.png");

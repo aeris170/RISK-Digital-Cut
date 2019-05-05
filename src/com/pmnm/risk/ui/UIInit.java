@@ -39,8 +39,8 @@ public final class UIInit {
 
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
-		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class);
-		MultiPlayerMenu mpm = DoaHandler.instantiate(MultiPlayerMenu.class);
+		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, mm);
+		MultiPlayerMenu mpm = DoaHandler.instantiate(MultiPlayerMenu.class, mm);
 		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
 		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class);
 		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
