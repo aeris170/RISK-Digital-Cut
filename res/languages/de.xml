@@ -36,11 +36,11 @@
 	
 	<pair>
 		<key>MASTER</key>
-		<value>master</value>
+		<value>gesamt</value>
 	</pair>
 	<pair>
 		<key>MUSIC</key>
-		<value>music</value>
+		<value>musik</value>
 	</pair>
 	<pair>
 		<key>SFX</key>
@@ -48,27 +48,27 @@
 	</pair>
 	<pair>
 		<key>OK</key>
-		<value>apply</value>
+		<value>fertig</value>
 	</pair>
 	<pair>
 		<key>BACK</key>
-		<value>back</value>
+		<value>zurück</value>
 	</pair>
 	<pair>
 		<key>NEXT</key>
-		<value>next</value>
+		<value>neben</value>
 	</pair>
 	<pair>
 		<key>PLAYER</key>
-		<value>player</value>
+		<value>spieler</value>
 	</pair>
 	<pair>
 		<key>READY</key>
-		<value>ready</value>
+		<value>bereit</value>
 	</pair>
 	<pair>
 		<key>PLAY</key>
-		<value>play</value>
+		<value>spiel</value>
 	</pair>
 	<pair>
 		<key>YES</key>

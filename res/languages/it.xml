@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE it [
+<!ELEMENT it (pair+)>
+<!ELEMENT pair (key, value)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+]>
+<it>
+	<pair>
+		<key>PLAY_OFFLINE</key>
+		<value>giocare offline</value>
+	</pair>
+	<pair>
+		<key>PLAY_ONLINE</key>
+		<value>giocare online</value>
+	</pair>
+	<pair>
+		<key>SETTINGS</key>
+		<value>installazione</value>
+	</pair>
+	<pair>
+		<key>RULES</key>
+		<value>regole</value>
+	</pair>
+	
+	
+	
+	<pair>
+		<key>EXIT</key>
+		<value>esci</value>
+	</pair>
+	
+	
+	
+	
+	
+	<pair>
+		<key>MASTER</key>
+		<value>generale</value>
+	</pair>
+	<pair>
+		<key>MUSIC</key>
+		<value>musica</value>
+	</pair>
+	<pair>
+		<key>SFX</key>
+		<value>SFX</value>
+	</pair>
+	<pair>
+		<key>OK</key>
+		<value>fatto</value>
+	</pair>
+	<pair>
+		<key>BACK</key>
+		<value>ritorno</value>
+	</pair>
+	<pair>
+		<key>NEXT</key>
+		<value>accanto</value>
+	</pair>
+	<pair>
+		<key>PLAYER</key>
+		<value>giocatore</value>
+	</pair>
+	<pair>
+		<key>READY</key>
+		<value>pronto</value>
+	</pair>
+	<pair>
+		<key>PLAY</key>
+		<value>giocare</value>
+	</pair>
+	<pair>
+		<key>YES</key>
+		<value>si</value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value>no</value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value>sei sicuro di voler uscire?</value>
+	</pair>
+</it>
