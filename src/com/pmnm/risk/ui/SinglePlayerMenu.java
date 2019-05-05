@@ -20,7 +20,7 @@ public class SinglePlayerMenu extends DoaPanel {
 	        UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR,
 	        UIInit.HOVER_FONT_COLOR);
 
-	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.098f, Main.WINDOW_HEIGHT * 0.040f);
+	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
 	public SinglePlayerMenu(MainMenu mm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
