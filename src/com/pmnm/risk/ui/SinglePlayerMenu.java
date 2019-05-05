@@ -8,6 +8,7 @@ import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.risk.ui.gameui.RiskGameScreenUI;
 
 public class SinglePlayerMenu extends DoaPanel {
 
@@ -25,7 +26,9 @@ public class SinglePlayerMenu extends DoaPanel {
 	public SinglePlayerMenu(MainMenu mm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		playButton.addAction(() -> {
-			;
+			hide();
+			// TODO find a better way
+			RiskGameScreenUI.initUI();
 		});
 		backButton.addAction(() -> {
 			hide();
@@ -33,6 +36,7 @@ public class SinglePlayerMenu extends DoaPanel {
 		});
 		add(playButton);
 		add(backButton);
+		add(DoaHandler.instantiate(ComboBox.class, new DoaVectorF(300f, 300f), 500, 500));
 	}
 
 	@Override

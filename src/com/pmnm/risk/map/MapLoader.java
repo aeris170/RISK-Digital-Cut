@@ -33,7 +33,7 @@ public final class MapLoader {
 
 	public static void readMapData(File mapFolder) {
 		try {
-			clearExistingMapData();
+			// clearExistingMapData();
 			createProvinces(new File(mapFolder.getAbsolutePath() + "/provinces.xml"));
 			groupProvinces(new File(mapFolder.getAbsolutePath() + "/continents.xml"));
 			connectProvinces(new File(mapFolder.getAbsolutePath() + "/neighbours.xml"));
