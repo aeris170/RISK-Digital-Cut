@@ -14,7 +14,7 @@ public final class RiskGameScreenUI {
 	private RiskGameScreenUI() {}
 
 	public static void initUI() {
-		MapLoader.readMapData(new File(""));
+		MapLoader.readMapData(new File("classic"));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);

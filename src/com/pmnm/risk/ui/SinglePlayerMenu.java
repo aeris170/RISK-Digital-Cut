@@ -2,13 +2,11 @@ package com.pmnm.risk.ui;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
-import com.pmnm.risk.globals.PlayerColorBank;
+import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Main;
-import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.risk.ui.gameui.RiskGameScreenUI;
 
 public class SinglePlayerMenu extends DoaPanel {
@@ -24,6 +22,8 @@ public class SinglePlayerMenu extends DoaPanel {
 
 	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
+	TypeComboButton[] tbca = new TypeComboButton[Globals.MAX_NUM_PLAYERS];
+
 	public SinglePlayerMenu(MainMenu mm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		playButton.addAction(() -> {
@@ -37,14 +37,13 @@ public class SinglePlayerMenu extends DoaPanel {
 		});
 		add(playButton);
 		add(backButton);
-		DoaSprite[] colors = new DoaSprite[PlayerColorBank.size()];
-		for (int i = 0; i < PlayerColorBank.size(); i++) {
-			DoaSprite w = DoaSprites.deepCopyDoaSprite(DoaSprites.get("White"));
-			Utils.paintImage(w, PlayerColorBank.get(i));
-			colors[i] = w;
+		for (int i = Globals.MAX_NUM_PLAYERS - 1; i >= 0; i--) {
+			TypeComboButton tbc = DoaHandler.instantiate(TypeComboButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.079f + Main.WINDOW_WIDTH * 0.103f,
+			        Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i) + Main.WINDOW_HEIGHT * 0.003f));
+			add(tbc);
+			tbca[i] = tbc;
 		}
-		String[] types = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
-		String[] difficulties = new String[] { "PASSIVE", "EASY", "MEDIUM", "HARD", "INSANE", "CHEATER" };
+		tbca[0].index = 1;
 	}
 
 	@Override
@@ -58,18 +57,6 @@ public class SinglePlayerMenu extends DoaPanel {
 		}
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, UIInit.FLEUR_HEIGHT * 1.5d);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - UIInit.FLEUR_HEIGHT * 1.5d - DoaSprites.get("MainMenuTopRing").getHeight());
-		g.drawImage(DoaSprites.get("MainScroll"), Main.WINDOW_WIDTH * 0.0125f,
-		        Main.WINDOW_HEIGHT * 0.163f);/* g.setColor(UIInit.FONT_COLOR); for (int i = 0; i < Globals.MAX_NUM_PLAYERS;
-		                                      * i++) { g.drawImage(DoaSprites.get("PlayerNumberBorder"), Main.WINDOW_WIDTH *
-		                                      * 0.079f, Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i));
-		                                      * String s = (Translator.getInstance().getTranslatedString("PLAYER") + " " + (i
-		                                      * + 1) + ":").toUpperCase();
-		                                      * g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g,
-		                                      * UIInit.UI_FONT, textRect, s))); g.drawString(s, Main.WINDOW_WIDTH * 0.082f,
-		                                      * Main.WINDOW_HEIGHT * 0.305f + (Main.WINDOW_HEIGHT * 0.048f * i));
-		                                      * g.drawImage(DoaSprites.get("PlayerTypeBorder"), Main.WINDOW_WIDTH * 0.178f,
-		                                      * Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i));
-		                                      * g.drawImage(DoaSprites.get("ColorBorder"), Main.WINDOW_WIDTH * 0.251f,
-		                                      * Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i)); } */
+		g.drawImage(DoaSprites.get("MainScroll"), Main.WINDOW_WIDTH * 0.0125f, Main.WINDOW_HEIGHT * 0.163f);
 	}
 }

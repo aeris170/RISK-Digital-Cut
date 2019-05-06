@@ -16,16 +16,12 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import com.doa.engine.DoaHandler;
+import com.doa.engine.graphics.DoaSprites;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 
 public final class MapLoader {
-
-	private static final String PROVINCE_DATA_PATH = "res/mapdata/provinces.xml";
-	private static final String CONTINENT_DATA_PATH = "res/mapdata/continents.xml";
-	private static final String NEIGHBOURS_DATA_PATH = "res/mapdata/neighbours.xml";
-	private static final String VERTICES_DATA_PATH = "res/mapdata/vertices.xml";
 
 	private static final Map<String, Province> NAME_PROVINCE = new HashMap<>();
 
@@ -33,11 +29,13 @@ public final class MapLoader {
 
 	public static void readMapData(File mapFolder) {
 		try {
-			// clearExistingMapData();
-			createProvinces(new File(mapFolder.getAbsolutePath() + "/provinces.xml"));
-			groupProvinces(new File(mapFolder.getAbsolutePath() + "/continents.xml"));
-			connectProvinces(new File(mapFolder.getAbsolutePath() + "/neighbours.xml"));
-			solidifyProvinces(new File(mapFolder.getAbsolutePath() + "/vertices.xml"));
+			String path = "res/maps/" + mapFolder.getPath().replaceAll("\\\\", "/");
+			clearExistingMapData();
+			createProvinces(new File(path + "/provinces.xml"));
+			groupProvinces(new File(path + "/continents.xml"));
+			connectProvinces(new File(path + "/neighbours.xml"));
+			solidifyProvinces(new File(path + "/vertices.xml"));
+			DoaSprites.createSprite("MapBackground", path.substring(path.indexOf("/"), path.length()) + "/map.png");
 		} catch (JDOMException | IOException ex) {
 			ex.printStackTrace();
 		}
@@ -50,13 +48,13 @@ public final class MapLoader {
 	}
 
 	private static void createProvinces(File provincesFile) throws JDOMException, IOException {
-		Document provincesDocument = new SAXBuilder().build(new File(PROVINCE_DATA_PATH));
+		Document provincesDocument = new SAXBuilder().build(provincesFile);
 		Element provincesElement = provincesDocument.getRootElement();
 		provincesElement.getChildren().forEach(province -> NAME_PROVINCE.put(province.getText(), new Province().setName(province.getText())));
 	}
 
 	private static void groupProvinces(File continentsFile) throws JDOMException, IOException {
-		Document continentsDocument = new SAXBuilder().build(new File(CONTINENT_DATA_PATH));
+		Document continentsDocument = new SAXBuilder().build(continentsFile);
 		Element continentsElement = continentsDocument.getRootElement();
 		continentsElement.getChildren().forEach(continentElement -> {
 			final Continent continent = new Continent().setName(continentElement.getChildText("name"))
@@ -70,7 +68,7 @@ public final class MapLoader {
 	}
 
 	private static void connectProvinces(File neighboursFile) throws JDOMException, IOException {
-		Document neighboursDocument = new SAXBuilder().build(new File(NEIGHBOURS_DATA_PATH));
+		Document neighboursDocument = new SAXBuilder().build(neighboursFile);
 		Element neighboursElement = neighboursDocument.getRootElement();
 		neighboursElement.getChildren().forEach(provinceElement -> {
 			final Province province = NAME_PROVINCE.get(provinceElement.getChildText("name"));
@@ -81,7 +79,7 @@ public final class MapLoader {
 	}
 
 	private static void solidifyProvinces(File verticesFile) throws JDOMException, IOException {
-		Document verticesDocument = new SAXBuilder().build(new File(VERTICES_DATA_PATH));
+		Document verticesDocument = new SAXBuilder().build(verticesFile);
 		Element verticesElement = verticesDocument.getRootElement();
 		verticesElement.getChildren().forEach(provinceElement -> {
 			final Province province = NAME_PROVINCE.get(provinceElement.getChildText("name"));

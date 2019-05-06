@@ -17,7 +17,6 @@ public final class AssetLoader {
 
 	public static void initializeAssets() {
 		try {
-			DoaSprites.createSprite("WorldMap", "/maps/classic/map.png");
 			DoaSprites.createSprite("MainMenuBackground", "/ui/MainMenuBackground.png");
 			DoaSprites.createSprite("MainMenuTopRing", "/ui/TopRing.png");
 			DoaSprites.createSprite("MainMenuBottomRing", "/ui/BottomRing.png");
@@ -39,9 +38,13 @@ public final class AssetLoader {
 				DoaSprites.createSprite("ColorBorder", "/ui/playOffline/colourRect.png");
 				DoaSprites.createSprite("MapChooserBackground", "/ui/playOffline/mapChooserContainer.png");
 				DoaSprites.createSprite("MapBorder", "/ui/playOffline/mapContainer.png");
-				DoaSprites.createSprite("PlayerNumberBorder", "/ui/playOffline/playerNoRect.png");
+				DoaSprites.createSprite("PlayerTypeBorder", "/ui/playOffline/playerType.png");
 				DoaSprites.createSprite("MainScroll", "/ui/playOffline/playersScroll.png");
-				DoaSprites.createSprite("PlayerTypeBorder", "/ui/playOffline/playerTypeRect.png");
+				DoaSprites.createSprite("DifficutyBorder", "/ui/playOffline/difficuty.png");
+				DoaSprites.createSprite("DropDown", "/ui/playOffline/droppedComboBoxPlain.png");
+				DoaSprites.createSprite("DropDownTex", "/ui/playOffline/droppedComboBox.png");
+				DoaSprites.createSprite("DropDownType", "/ui/playOffline/droppedComboBoxPlainType.png");
+				DoaSprites.createSprite("DropDownTexType", "/ui/playOffline/droppedComboBoxType.png");
 				{// MULTIPLAYER MENU
 					DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
 					DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");

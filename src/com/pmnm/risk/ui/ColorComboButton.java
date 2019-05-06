@@ -1,11 +1,15 @@
 package com.pmnm.risk.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.toolkit.Utils;
 
-public class ColorComboBox {
+public class ColorComboButton extends DoaImageButton {
 
 	private static final DoaSprite[] OPTIONS = new DoaSprite[PlayerColorBank.size()];
 
@@ -17,6 +21,12 @@ public class ColorComboBox {
 		}
 	}
 
-	public ColorComboBox() {}
+	private static final List<TypeComboButton> COMBO_BUTTONS = new ArrayList<>();
+
+	int index = 0;
+
+	public ColorComboButton() {
+		super();
+	}
 
 }
