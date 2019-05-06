@@ -80,15 +80,15 @@
 	</pair>
 	<pair>
 		<key>CLOSED</key>
-		<value>closed</value>
+		<value>geschlossen</value>
 	</pair>
 	<pair>
 		<key>HUMAN</key>
-		<value>human</value>
+		<value>mensch</value>
 	</pair>
 	<pair>
 		<key>COMPUTER</key>
-		<value>bilgisayar</value>
+		<value>computer</value>
 	</pair>
 	<pair>
 		<key>PASSIVE</key>
@@ -108,7 +108,7 @@
 	</pair>
 	<pair>
 		<key>INSANE</key>
-		<value>wahnsinnig</value>
+		<value>verrückt</value>
 	</pair>
 	<pair>
 		<key>CHEATER</key>

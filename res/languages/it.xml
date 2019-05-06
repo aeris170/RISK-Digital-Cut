@@ -76,42 +76,42 @@
 	</pair>
 	<pair>
 		<key>OPEN</key>
-		<value>open</value>
+		<value>libero</value>
 	</pair>
 	<pair>
 		<key>CLOSED</key>
-		<value>closed</value>
+		<value>chiuso</value>
 	</pair>
 	<pair>
 		<key>HUMAN</key>
-		<value>human</value>
+		<value>persona</value>
 	</pair>
 	<pair>
 		<key>COMPUTER</key>
-		<value>bilgisayar</value>
+		<value>computer</value>
 	</pair>
 	<pair>
 		<key>PASSIVE</key>
-		<value>Passive</value>
+		<value>passivo</value>
 	</pair>
 	<pair>
 		<key>EASY</key>
-		<value>Easy</value>
+		<value>facile</value>
 	</pair>
 	<pair>
 		<key>MEDIUM</key>
-		<value>Medium</value>
+		<value>medio</value>
 	</pair>
 	<pair>
 		<key>HARD</key>
-		<value>Hard</value>
+		<value>difficile</value>
 	</pair>
 	<pair>
 		<key>INSANE</key>
-		<value>Insane</value>
+		<value>folle</value>
 	</pair>
 	<pair>
 		<key>CHEATER</key>
-		<value>Cheater</value>
+		<value>imbroglione</value>
 	</pair>
 </it>
