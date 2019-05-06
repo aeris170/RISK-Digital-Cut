@@ -13,6 +13,7 @@ public final class Globals {
 	public static final Color PROVINCE_SELECTED_BORDER = Color.CYAN;
 	public static final Color PROVINCE_EMPHASIZE = Color.GREEN;
 	public static final Color PROVINCE_HIGHLIGHT = Color.GRAY.darker().darker().darker().darker();
+	public static final int MAX_NUM_PLAYERS = 6;
 
 	private Globals() {}
 

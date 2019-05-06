@@ -22,18 +22,10 @@
 		<key>RULES</key>
 		<value>regeln</value>
 	</pair>
-	
-	
-	
 	<pair>
 		<key>EXIT</key>
 		<value>beenden</value>
 	</pair>
-	
-	
-	
-	
-	
 	<pair>
 		<key>MASTER</key>
 		<value>gesamt</value>
@@ -81,5 +73,33 @@
 	<pair>
 		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
 		<value>sind sie sicher, dass sie beenden wollen?</value>
+	</pair>
+	<pair>
+		<key>OPEN</key>
+		<value>öffnen</value>
+	</pair>
+	<pair>
+		<key>AIPASSIVE</key>
+		<value>A.I. (passiv)</value>
+	</pair>
+	<pair>
+		<key>AIEASY</key>
+		<value>A.I. (leicht)</value>
+	</pair>
+	<pair>
+		<key>AIMEDIUM</key>
+		<value>A.I. (mittlere)</value>
+	</pair>
+	<pair>
+		<key>AIHARD</key>
+		<value>A.I. (schwierig)</value>
+	</pair>
+	<pair>
+		<key>AIINSANE</key>
+		<value>A.I. (wahnsinnig)</value>
+	</pair>
+	<pair>
+		<key>AICHEATER</key>
+		<value>A.I. (betrüger)</value>
 	</pair>
 </de>

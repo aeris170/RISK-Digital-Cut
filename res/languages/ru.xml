@@ -62,7 +62,7 @@
 		<key>PLAY</key>
 		<value>играть</value>
 	</pair>
-		<pair>
+	<pair>
 		<key>YES</key>
 		<value>да</value>
 	</pair>
@@ -73,5 +73,33 @@
 	<pair>
 		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
 		<value>Ты уверен, что хочешь выйти?</value>
+	</pair>
+	<pair>
+		<key>OPEN</key>
+		<value>открыть</value>
+	</pair>
+	<pair>
+		<key>AIPASSIVE</key>
+		<value>A.I. (passivnyy)</value>
+	</pair>
+	<pair>
+		<key>AIEASY</key>
+		<value>A.I. (легко)</value>
+	</pair>
+	<pair>
+		<key>AIMEDIUM</key>
+		<value>A.I. (средний)</value>
+	</pair>
+	<pair>
+		<key>AIHARD</key>
+		<value>A.I. (трудный)</value>
+	</pair>
+	<pair>
+		<key>AIINSANE</key>
+		<value>A.I. (безумный)</value>
+	</pair>
+	<pair>
+		<key>AICHEATER</key>
+		<value>A.I. (хакер)</value>
 	</pair>
 </ru>

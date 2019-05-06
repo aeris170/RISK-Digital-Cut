@@ -74,4 +74,36 @@
 		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
 		<value>are you sure you want to exit?</value>
 	</pair>
+	<pair>
+		<key>OPEN</key>
+		<value>open</value>
+	</pair>
+	<pair>
+		<key>CLOSED</key>
+		<value>closed</value>
+	</pair>
+	<pair>
+		<key>AIPASSIVE</key>
+		<value>A.I. (Passive)</value>
+	</pair>
+	<pair>
+		<key>AIEASY</key>
+		<value>A.I. (Easy)</value>
+	</pair>
+	<pair>
+		<key>AIMEDIUM</key>
+		<value>A.I. (Medium)</value>
+	</pair>
+	<pair>
+		<key>AIHARD</key>
+		<value>A.I. (Hard)</value>
+	</pair>
+	<pair>
+		<key>AIINSANE</key>
+		<value>A.I. (Insane)</value>
+	</pair>
+	<pair>
+		<key>AICHEATER</key>
+		<value>A.I. (Cheater)</value>
+	</pair>
 </en>

@@ -36,7 +36,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("ArrowRightClick", "/ui/playOffline/arrowPressedRight.png");
 				DoaSprites.createSprite("ArrowDownClick", "/ui/playOffline/arrowPressedDown.png");
 				DoaSprites.createSprite("White", "/ui/playOffline/colour.png");
-				DoaSprites.createSprite("ColorRect", "/ui/playOffline/colourRect.png");
+				DoaSprites.createSprite("ColorBorder", "/ui/playOffline/colourRect.png");
 				DoaSprites.createSprite("MapChooserBackground", "/ui/playOffline/mapChooserContainer.png");
 				DoaSprites.createSprite("MapBorder", "/ui/playOffline/mapContainer.png");
 				DoaSprites.createSprite("PlayerNumberBorder", "/ui/playOffline/playerNoRect.png");

@@ -2,9 +2,12 @@ package com.pmnm.risk.ui;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
+import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
@@ -23,6 +26,9 @@ public class SinglePlayerMenu extends DoaPanel {
 
 	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
+	ComboBoxText t;
+	ComboBoxImage f;
+
 	public SinglePlayerMenu(MainMenu mm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		playButton.addAction(() -> {
@@ -36,7 +42,21 @@ public class SinglePlayerMenu extends DoaPanel {
 		});
 		add(playButton);
 		add(backButton);
-		add(DoaHandler.instantiate(ComboBox.class, new DoaVectorF(300f, 300f), 500, 500));
+		DoaSprite[] colors = new DoaSprite[PlayerColorBank.size()];
+		for (int i = 0; i < PlayerColorBank.size(); i++) {
+			DoaSprite w = DoaSprites.deepCopyDoaSprite(DoaSprites.get("White"));
+			Utils.paintImage(w, PlayerColorBank.get(i));
+			colors[i] = w;
+		}
+		String[] options = new String[] { "OPEN", "HUMAN", "AIPASSIVE", "AIEASY", "AIMEDIUM", "AIHARD", "AIINSANE", "AICHEATER" };
+		for (int i = 0; i < 1; i++) {
+			t = DoaHandler.instantiate(ComboBoxText.class, new DoaVectorF(300f, 300f), (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f),
+			        DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownClick"), options);
+			add(t);
+			f = DoaHandler.instantiate(ComboBoxImage.class, new DoaVectorF(600f, 300f), (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f),
+			        DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownClick"), colors);
+			add(f);
+		}
 	}
 
 	@Override
@@ -52,13 +72,15 @@ public class SinglePlayerMenu extends DoaPanel {
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - UIInit.FLEUR_HEIGHT * 1.5d - DoaSprites.get("MainMenuTopRing").getHeight());
 		g.drawImage(DoaSprites.get("MainScroll"), Main.WINDOW_WIDTH * 0.0125f, Main.WINDOW_HEIGHT * 0.163f);
 		g.setColor(UIInit.FONT_COLOR);
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < Globals.MAX_NUM_PLAYERS; i++) {
 			g.drawImage(DoaSprites.get("PlayerNumberBorder"), Main.WINDOW_WIDTH * 0.079f, Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i));
 			String s = (Translator.getInstance().getTranslatedString("PLAYER") + " " + (i + 1) + ":").toUpperCase();
 			g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, s)));
 			g.drawString(s, Main.WINDOW_WIDTH * 0.082f, Main.WINDOW_HEIGHT * 0.305f + (Main.WINDOW_HEIGHT * 0.048f * i));
 			g.drawImage(DoaSprites.get("PlayerTypeBorder"), Main.WINDOW_WIDTH * 0.178f, Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i));
-			g.drawImage(DoaSprites.get("ColorRect"), Main.WINDOW_WIDTH * 0.251f, Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i));
+			g.drawImage(DoaSprites.get("ColorBorder"), Main.WINDOW_WIDTH * 0.251f, Main.WINDOW_HEIGHT * 0.272f + (Main.WINDOW_HEIGHT * 0.048f * i));
 		}
+		t.setPosition(new DoaVectorF(440f, 296f));
+		f.setPosition(new DoaVectorF(535f, 296f));
 	}
 }
