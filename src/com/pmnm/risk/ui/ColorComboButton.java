@@ -26,7 +26,7 @@ public class ColorComboButton extends DoaImageButton {
 	int index = 0;
 
 	public ColorComboButton() {
-		super();
+		super(0f, 0f, 0, 0, null);
 	}
 
 }

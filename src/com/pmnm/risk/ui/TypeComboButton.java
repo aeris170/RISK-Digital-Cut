@@ -52,7 +52,7 @@ public class TypeComboButton extends DoaImageButton {
 	public void render(DoaGraphicsContext g) {
 		g.setColor(UIInit.FONT_COLOR);
 		g.drawImage(DoaSprites.get("PlayerTypeBorder"), position.x - Main.WINDOW_WIDTH * 0.103f, position.y - Main.WINDOW_HEIGHT * 0.003f);
-		g.drawString(Translator.getInstance().getTranslatedString(OPTIONS[index]).toUpperCase(), position.x - Main.WINDOW_WIDTH * 0.098f,
+		g.drawString(Translator.getInstance().getTranslatedString(OPTIONS[index]).substring(0, 1).toUpperCase() + Translator.getInstance().getTranslatedString(OPTIONS[index]).substring(1), position.x - Main.WINDOW_WIDTH * 0.098f,
 		        position.y + Main.WINDOW_HEIGHT * 0.029f);
 		super.render(g);
 		if (click) {
@@ -65,7 +65,7 @@ public class TypeComboButton extends DoaImageButton {
 			        height);
 			g.popComposite();
 			for (int i = 0; i < OPTIONS.length; i++) {
-				g.drawString(Translator.getInstance().getTranslatedString(OPTIONS[i]).toUpperCase(), position.x - Main.WINDOW_WIDTH * 0.098f,
+				g.drawString(Translator.getInstance().getTranslatedString(OPTIONS[i]).substring(0, 1).toUpperCase() + Translator.getInstance().getTranslatedString(OPTIONS[i]).substring(1), position.x - Main.WINDOW_WIDTH * 0.098f,
 				        position.y + Main.WINDOW_HEIGHT * 0.070f + (Main.WINDOW_HEIGHT * 0.028f * i));
 			}
 		}
