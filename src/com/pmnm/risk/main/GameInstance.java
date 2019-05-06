@@ -19,21 +19,21 @@ import java.util.Set;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 
-//Java code for serialization and deserialization  
-//of a Java object 
+// Java code for serialization and deserialization
+// of a Java object
 
 public class GameInstance implements Serializable {
 
 	private List<Player> players = new ArrayList<>();
 	private int numberOfPlayers;
 	private boolean manualPlacement;
-	private  boolean isManualPlacementDone;
-	private  int placementCounter;
-	private  TurnPhase currentPhase;
-	private  int reinforcementForThisTurn;
-	private  Player currentPlayer;
-	private  int turnCount;
-	private  Province draftReinforceProvince;
+	private boolean isManualPlacementDone;
+	private int placementCounter;
+	private TurnPhase currentPhase;
+	private int reinforcementForThisTurn;
+	private Player currentPlayer;
+	private int turnCount;
+	private Province draftReinforceProvince;
 	private String currentDate;
 	private String saveName;
 	public Map<String, Continent> NAME_CONTINENT = new LinkedHashMap<>();
@@ -41,132 +41,84 @@ public class GameInstance implements Serializable {
 	public List<Province> UNCLAIMED_PROVINCES = new ArrayList<>();
 	private Set<Province> provinces;
 
-	
-	
-// Default constructor 
+	// Default constructor
 	public GameInstance(String currentDate, String saveName) {
 		this.currentDate = currentDate;
 		this.saveName = saveName;
 	}
-	
-	
-//later save complete
+
+	// later save complete
 	public boolean saveNow(GameInstance NewSave) throws IOException {
 		GameInstance object2 = NewSave;
 		String filename = NewSave.saveName + ".ser";
-
 		if (nameControl(object2.getSaveName())) {
-
 			System.out.println("Save is unsuccessfull, name already exist");
-
 			return false;
-
-		} else {
-			// Save savegame name
-			saveGameNames(NewSave.saveName);
-
-			System.out.println("We controlled the save game names");
-			// reached
-
-			// Serialization
-			try {
-
-				// Saving of object in a file
-				FileOutputStream file = new FileOutputStream(filename);
-				ObjectOutputStream out = new ObjectOutputStream(file);
-
-				// Method for serialization of object
-				out.writeObject(NewSave);
-
-				out.close();
-				file.close();
-
-				System.out.println("Object has been serialized or Game is Saved");
-
-			}
-
-			catch (IOException ex) {
-				ex.printStackTrace();
-				System.out.println("IOException is caught");
-			}
-
-		} // save operation has been made
-
+		}
+		// Save savegame name
+		saveGameNames(NewSave.saveName);
+		System.out.println("We controlled the save game names");
+		// reached
+		// Serialization
+		try {
+			// Saving of object in a file
+			FileOutputStream file = new FileOutputStream(filename);
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			// Method for serialization of object
+			out.writeObject(NewSave);
+			out.close();
+			file.close();
+			System.out.println("Object has been serialized or Game is Saved");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.out.println("IOException is caught");
+		}
+		// save operation has been made
 		return true;
-
 	}
 
-//later save complete
+	// later save complete
 	public GameInstance loadNow(String loadName) {
-
 		GameInstance object1 = null;
 		String filename = loadName + ".ser";
-
 		// Deserialization
 		try {
 			// Reading the object from a file
 			FileInputStream file = new FileInputStream(filename);
 			ObjectInputStream in = new ObjectInputStream(file);
-
 			// Method for deserialization of object
 			object1 = (GameInstance) in.readObject();
-
 			in.close();
 			file.close();
-
 			System.out.println("Object has been deserialized ");
-
+		} catch (IOException | ClassNotFoundException ex) {
+			ex.printStackTrace();
 		}
-
-		catch (IOException ex) {
-			System.out.println("IOException is caught");
-		}
-
-		catch (ClassNotFoundException ex) {
-			System.out.println("ClassNotFoundException is caught");
-		}
-
 		return object1;
-
 	}
-	
-	
-	
-	 private void readObject(ObjectInputStream inputStream)
-	            throws IOException, ClassNotFoundException
-	    {
-	        inputStream.defaultReadObject();
-	        
-	    }    
+
+	private void readObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+		inputStream.defaultReadObject();
+	}
 
 	public void saveGameNames(String saveName) throws IOException {
-
 		PrintWriter writer = new PrintWriter("saveGameNames.txt");
 		writer.println(saveName);
 		writer.close();
-
 	}
 
 	public boolean nameControl(String saveName) throws IOException {
-
 		File file = new File("saveGameNames.txt");
-
 		BufferedReader br = new BufferedReader(new FileReader(file));
-
 		String names;
-
 		boolean nameExist = false;
-
 		while ((names = br.readLine()) != null) {
 			if (names.equals(saveName)) {
 				nameExist = true;
 			}
 		}
-
 		System.out.println("We controlled the save names");
-
 		return nameExist;
-
 	}
 
 	public int getNumberOfPlayers() {
@@ -233,7 +185,6 @@ public class GameInstance implements Serializable {
 		this.turnCount = turnCount;
 	}
 
-
 	public Province getDraftReinforceProvince() {
 		return draftReinforceProvince;
 	}
@@ -274,8 +225,6 @@ public class GameInstance implements Serializable {
 		NAME_CONTINENT = nAME_CONTINENT;
 	}
 
-	
-
 	public List<Province> getALL_PROVINCES() {
 		return ALL_PROVINCES;
 	}
@@ -299,8 +248,4 @@ public class GameInstance implements Serializable {
 	public void setProvinces(Set<Province> provinces) {
 		this.provinces = provinces;
 	}
-
-
-	
-		
 }
