@@ -74,4 +74,44 @@
 		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
 		<value>çıkmak istediğinize emin misiniz?</value>
 	</pair>
+	<pair>
+		<key>OPEN</key>
+		<value>açık</value>
+	</pair>
+	<pair>
+		<key>CLOSED</key>
+		<value>kapalı</value>
+	</pair>
+	<pair>
+		<key>HUMAN</key>
+		<value>insan</value>
+	</pair>
+	<pair>
+		<key>COMPUTER</key>
+		<value>bilgisayar</value>
+	</pair>
+	<pair>
+		<key>PASSIVE</key>
+		<value>Pasif</value>
+	</pair>
+	<pair>
+		<key>EASY</key>
+		<value>Kolay</value>
+	</pair>
+	<pair>
+		<key>MEDIUM</key>
+		<value>orta</value>
+	</pair>
+	<pair>
+		<key>HARD</key>
+		<value>zor</value>
+	</pair>
+	<pair>
+		<key>INSANE</key>
+		<value>çılgın</value>
+	</pair>
+	<pair>
+		<key>CHEATER</key>
+		<value>hilekâr</value>
+	</pair>
 </tr>

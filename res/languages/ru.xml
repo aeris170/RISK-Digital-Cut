@@ -79,27 +79,39 @@
 		<value>открыть</value>
 	</pair>
 	<pair>
-		<key>AIPASSIVE</key>
-		<value>A.I. (passivnyy)</value>
+		<key>CLOSED</key>
+		<value>closed</value>
 	</pair>
 	<pair>
-		<key>AIEASY</key>
-		<value>A.I. (легко)</value>
+		<key>HUMAN</key>
+		<value>human</value>
 	</pair>
 	<pair>
-		<key>AIMEDIUM</key>
-		<value>A.I. (средний)</value>
+		<key>COMPUTER</key>
+		<value>bilgisayar</value>
 	</pair>
 	<pair>
-		<key>AIHARD</key>
-		<value>A.I. (трудный)</value>
+		<key>PASSIVE</key>
+		<value>passivnyy</value>
 	</pair>
 	<pair>
-		<key>AIINSANE</key>
-		<value>A.I. (безумный)</value>
+		<key>EASY</key>
+		<value>легко</value>
 	</pair>
 	<pair>
-		<key>AICHEATER</key>
-		<value>A.I. (хакер)</value>
+		<key>MEDIUM</key>
+		<value>средний</value>
+	</pair>
+	<pair>
+		<key>HARD</key>
+		<value>трудный</value>
+	</pair>
+	<pair>
+		<key>INSANE</key>
+		<value>безумный</value>
+	</pair>
+	<pair>
+		<key>CHEATER</key>
+		<value>хакер</value>
 	</pair>
 </ru>

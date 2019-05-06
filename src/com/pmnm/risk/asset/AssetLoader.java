@@ -17,7 +17,7 @@ public final class AssetLoader {
 
 	public static void initializeAssets() {
 		try {
-			DoaSprites.createSprite("WorldMap", "/maps/GeographicMap.png");
+			DoaSprites.createSprite("WorldMap", "/maps/classic/map.png");
 			DoaSprites.createSprite("MainMenuBackground", "/ui/MainMenuBackground.png");
 			DoaSprites.createSprite("MainMenuTopRing", "/ui/TopRing.png");
 			DoaSprites.createSprite("MainMenuBottomRing", "/ui/BottomRing.png");

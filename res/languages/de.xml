@@ -79,27 +79,39 @@
 		<value>öffnen</value>
 	</pair>
 	<pair>
-		<key>AIPASSIVE</key>
-		<value>A.I. (passiv)</value>
+		<key>CLOSED</key>
+		<value>closed</value>
 	</pair>
 	<pair>
-		<key>AIEASY</key>
-		<value>A.I. (leicht)</value>
+		<key>HUMAN</key>
+		<value>human</value>
 	</pair>
 	<pair>
-		<key>AIMEDIUM</key>
-		<value>A.I. (mittlere)</value>
+		<key>COMPUTER</key>
+		<value>bilgisayar</value>
 	</pair>
 	<pair>
-		<key>AIHARD</key>
-		<value>A.I. (schwierig)</value>
+		<key>PASSIVE</key>
+		<value>passiv</value>
 	</pair>
 	<pair>
-		<key>AIINSANE</key>
-		<value>A.I. (wahnsinnig)</value>
+		<key>EASY</key>
+		<value>leicht</value>
 	</pair>
 	<pair>
-		<key>AICHEATER</key>
-		<value>A.I. (betrüger)</value>
+		<key>MEDIUM</key>
+		<value>mittlere</value>
+	</pair>
+	<pair>
+		<key>HARD</key>
+		<value>schwierig</value>
+	</pair>
+	<pair>
+		<key>INSANE</key>
+		<value>wahnsinnig</value>
+	</pair>
+	<pair>
+		<key>CHEATER</key>
+		<value>betrüger</value>
 	</pair>
 </de>

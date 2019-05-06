@@ -83,27 +83,35 @@
 		<value>closed</value>
 	</pair>
 	<pair>
-		<key>AIPASSIVE</key>
-		<value>A.I. (Passive)</value>
+		<key>HUMAN</key>
+		<value>human</value>
 	</pair>
 	<pair>
-		<key>AIEASY</key>
-		<value>A.I. (Easy)</value>
+		<key>COMPUTER</key>
+		<value>computer</value>
 	</pair>
 	<pair>
-		<key>AIMEDIUM</key>
-		<value>A.I. (Medium)</value>
+		<key>PASSIVE</key>
+		<value>passive</value>
 	</pair>
 	<pair>
-		<key>AIHARD</key>
-		<value>A.I. (Hard)</value>
+		<key>EASY</key>
+		<value>easy</value>
 	</pair>
 	<pair>
-		<key>AIINSANE</key>
-		<value>A.I. (Insane)</value>
+		<key>MEDIUM</key>
+		<value>medium</value>
 	</pair>
 	<pair>
-		<key>AICHEATER</key>
-		<value>A.I. (Cheater)</value>
+		<key>HARD</key>
+		<value>hard</value>
+	</pair>
+	<pair>
+		<key>INSANE</key>
+		<value>insane</value>
+	</pair>
+	<pair>
+		<key>CHEATER</key>
+		<value>cheater</value>
 	</pair>
 </en>
