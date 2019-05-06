@@ -14,7 +14,9 @@ public class PlayerTypeComboBox extends DoaPanel {
 	private DoaButton humanButton;
 	private DoaButton computerButton;
 
-	public PlayerTypeComboBox() {}
+	public PlayerTypeComboBox(){
+		super(0f, 0f, 0, 0);
+	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
