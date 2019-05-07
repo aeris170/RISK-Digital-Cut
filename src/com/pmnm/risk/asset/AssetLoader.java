@@ -45,6 +45,8 @@ public final class AssetLoader {
 				DoaSprites.createSprite("DropDownTex", "/ui/playOffline/droppedComboBox.png");
 				DoaSprites.createSprite("DropDownType", "/ui/playOffline/droppedComboBoxPlainType.png");
 				DoaSprites.createSprite("DropDownTexType", "/ui/playOffline/droppedComboBoxType.png");
+				DoaSprites.createSprite("DropDownColor", "/ui/playOffline/droppedComboBoxPlainColor.png");
+				DoaSprites.createSprite("DropDownColorType", "/ui/playOffline/droppedComboBoxColor.png");
 				{// MULTIPLAYER MENU
 					DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
 					DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");
