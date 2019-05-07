@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE provinceCards [
+<!ELEMENT provinceCards (pair+)>
+<!ELEMENT pair (key, value)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+]>
+<provinceCards>
+<!-- North America -->
+	<pair>
+		<key>alaska</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>northwest territory</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>greenland</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>alberta</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>ontario</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>quebec</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>western united states</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>eastern united states</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>central america</key>
+		<value>infantry</value>
+	</pair>
+	
+<!-- South America -->	
+	<pair>
+		<key>venezuela</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>brazil</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>peru</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>argentina</key>
+		<value>infantry</value>
+	</pair>
+	
+<!-- Europe -->		
+	<pair>
+		<key>iceland</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>scandinavia</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>great britain</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>ukraine</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>northern europe</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>western europe</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>southern europe</key>
+		<value>infantry</value>
+	</pair>
+	
+<!-- Africa by Toto -->	
+	<pair>
+		<key>north africa</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>egypt</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>east africa</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>congo</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>madagascar</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>south africa</key>
+		<value>infantry</value>
+	</pair>
+	
+<!-- Asia -->		
+	<pair>
+		<key>ural</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>siberia</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>yakutsk</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>kamchatka</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>irkutsk</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>japan</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>mongolia</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>china</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>afghanistan</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>middle east</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>india</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>siam</key>
+		<value>infantry</value>
+	</pair>
+	
+<!-- Australia -->
+	<pair>
+		<key>indonesia</key>
+		<value>infantry</value>
+	</pair>	
+	<pair>
+		<key>new guinea</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>western australia</key>
+		<value>infantry</value>
+	</pair>
+	<pair>
+		<key>eastern australia</key>
+		<value>infantry</value>
+	</pair>
+	
+</provinceCards>
