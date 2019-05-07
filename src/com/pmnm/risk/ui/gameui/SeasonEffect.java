@@ -3,6 +3,7 @@ package com.pmnm.risk.ui.gameui;
 import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaAnimation;
@@ -45,13 +46,16 @@ public class SeasonEffect extends DoaObject {
 		AffineTransform oldTransform = g.getTransform();
 		switch (Season.getCurrentSeason()) {
 			case WINTER:
-				DoaAnimation anim = DoaAnimations.get("Snowfall");
+				DoaAnimation snowfall = DoaAnimations.get("Snowfall");
 				g.translate(Main.WINDOW_WIDTH / 2f, 0);
-				g.drawAnimation(anim, -anim.getFrames().get(0).getWidth() / 2f, -anim.getFrames().get(0).getHeight() / 3f);
+				// g.setClip(new Ellipse2D.Float(-200, -200, 400, 400)); same as below, made
+				// resolution friendly
+				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+				g.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 3f);
 				g.rotate(Math.toRadians(45));
-				g.drawAnimation(anim, -anim.getFrames().get(0).getWidth() / 2f, -anim.getFrames().get(0).getHeight() / 2f);
+				g.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f);
 				g.rotate(Math.toRadians(-90));
-				g.drawAnimation(anim, -anim.getFrames().get(0).getWidth() / 2f, -anim.getFrames().get(0).getHeight() / 2f);
+				g.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f);
 				break;
 			case SPRING:
 				break;
@@ -64,10 +68,14 @@ public class SeasonEffect extends DoaObject {
 				g.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
 				break;
 			case FALL:
+				DoaAnimation betterFallingLeaves = DoaAnimations.get("FallingLeaves");
+				g.translate(Main.WINDOW_WIDTH / 2f, 0);
+				g.drawAnimation(betterFallingLeaves, -betterFallingLeaves.getFrames().get(0).getWidth() / 2f, -betterFallingLeaves.getFrames().get(0).getHeight() / 3f);
 			default:
 				break;
 		}
 		g.setComposite(oldComposite);
 		g.setTransform(oldTransform);
+		g.setClip(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 	}
 }
