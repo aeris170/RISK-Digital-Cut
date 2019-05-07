@@ -6,6 +6,7 @@
 <!ELEMENT value (#PCDATA)>
 ]>
 <provinceCards>
+<!-- Original Card info from https://drive.google.com/file/d/0BwJ1gMT0fLRPd1gzUmlZRXplaUk/view -->
 <!-- North America -->
 	<pair>
 		<key>alaska</key>
@@ -13,35 +14,35 @@
 	</pair>
 	<pair>
 		<key>northwest territory</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>greenland</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>alberta</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>ontario</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>quebec</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>western united states</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>eastern united states</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>central america</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	
 <!-- South America -->	
@@ -51,7 +52,7 @@
 	</pair>
 	<pair>
 		<key>brazil</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>peru</key>
@@ -69,33 +70,33 @@
 	</pair>
 	<pair>
 		<key>scandinavia</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>great britain</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>ukraine</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>northern europe</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>western europe</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>southern europe</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	
 <!-- Africa by Toto -->	
 	<pair>
 		<key>north africa</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>egypt</key>
@@ -111,25 +112,25 @@
 	</pair>
 	<pair>
 		<key>madagascar</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>south africa</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	
 <!-- Asia -->		
 	<pair>
 		<key>ural</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>siberia</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>yakutsk</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>kamchatka</key>
@@ -137,11 +138,11 @@
 	</pair>
 	<pair>
 		<key>irkutsk</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>japan</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>mongolia</key>
@@ -153,7 +154,7 @@
 	</pair>
 	<pair>
 		<key>afghanistan</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>middle east</key>
@@ -161,7 +162,7 @@
 	</pair>
 	<pair>
 		<key>india</key>
-		<value>infantry</value>
+		<value>cavalry</value>
 	</pair>
 	<pair>
 		<key>siam</key>
@@ -171,7 +172,7 @@
 <!-- Australia -->
 	<pair>
 		<key>indonesia</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>	
 	<pair>
 		<key>new guinea</key>
@@ -179,11 +180,11 @@
 	</pair>
 	<pair>
 		<key>western australia</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	<pair>
 		<key>eastern australia</key>
-		<value>infantry</value>
+		<value>artillery</value>
 	</pair>
 	
 </provinceCards>
