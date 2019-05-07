@@ -283,6 +283,7 @@ public class GameManager extends DoaObject {
 		markAttackerProvince(null);
 		markDefenderProvince(null);
 		BottomPanel.nextPhaseButton.disable();
+		currentPlayer.addCard(Card.getRandomCard());
 	}
 
 	public static ProvinceHitArea getReinforcingProvince() {

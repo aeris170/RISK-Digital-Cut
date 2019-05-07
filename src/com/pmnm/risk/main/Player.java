@@ -1,6 +1,7 @@
 package com.pmnm.risk.main;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class Player extends DoaObject {
 	protected boolean isInTurn;
 	private int id;
 	private boolean isLocalPlayer;
+	private List<Card> cards = new ArrayList<>();
 
 	private Province source = null;
 	private Province destination = null;
@@ -98,6 +100,9 @@ public class Player extends DoaObject {
 				}
 			}
 		}
+		if (DoaMouse.MB3) {
+			cards.forEach(c -> System.out.println(c.toString()));
+		}
 	}
 
 	@Override
@@ -145,6 +150,14 @@ public class Player extends DoaObject {
 
 	public boolean isLocalPlayer() {
 		return isLocalPlayer;
+	}
+
+	public void addCard(Card c) {
+		cards.add(c);
+	}
+
+	public void removeCard(Card c) {
+		cards.remove(c);
 	}
 
 	@Override

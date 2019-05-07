@@ -17,6 +17,9 @@ import org.jdom2.input.SAXBuilder;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
+import com.pmnm.risk.exceptions.RiskException;
+import com.pmnm.risk.main.Card;
+import com.pmnm.risk.main.CardType;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
@@ -35,6 +38,7 @@ public final class MapLoader {
 			groupProvinces(new File(path + "/continents.xml"));
 			connectProvinces(new File(path + "/neighbours.xml"));
 			solidifyProvinces(new File(path + "/vertices.xml"));
+			generateCards(new File(path + "/cards.xml"));
 			DoaSprites.createSprite("MapBackground", path.substring(path.indexOf("/"), path.length()) + "/map.png");
 		} catch (JDOMException | IOException ex) {
 			ex.printStackTrace();
@@ -96,5 +100,29 @@ public final class MapLoader {
 			});
 			DoaHandler.instantiate(ProvinceHitArea.class, province, 0f, 0f, 0, 0);
 		});
+	}
+
+	private static void generateCards(File cardsFile) throws JDOMException, IOException {
+		Document cardsDocument = new SAXBuilder().build(cardsFile);
+		Element cardsElement = cardsDocument.getRootElement();
+		for (Element card : cardsElement.getChildren()) {
+			Province p = Province.ALL_PROVINCES.stream().filter(province -> province.getName().equalsIgnoreCase(card.getChildText("province"))).findFirst().get();
+			CardType t;
+			String typeText = card.getChildText("type");
+			if (typeText.equalsIgnoreCase("infantry")) {
+				t = CardType.INFANTRY;
+			} else if (typeText.equalsIgnoreCase("cavalry")) {
+				t = CardType.CAVALRY;
+			} else if (typeText.equalsIgnoreCase("artillery")) {
+				t = CardType.ARTILLERY;
+			} else {
+				throw new RiskException("cards.xml file has corrupt data for at least one type field");
+			}
+			Card.PROVINCE_CARDS.put(p, new Card().setProvince(p).setType(t));
+		}
+		Card.PROVINCE_CARDS.remove(null);
+		if (Card.PROVINCE_CARDS.size() != Province.ALL_PROVINCES.size()) {
+			throw new RiskException("Card.PROVINCE_CARDS.size() != Province.ALL_PROVINCES.size()! CHECK CARDS.XML AND PROVINCES.XML");
+		}
 	}
 }
