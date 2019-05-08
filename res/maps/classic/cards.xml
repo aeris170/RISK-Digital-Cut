@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cards [
+<!ELEMENT cards (card+)>
+<!ELEMENT card (province, type)>
+<!ELEMENT province (#PCDATA)>
+<!ELEMENT type (#PCDATA)>
+]>
+<cards>
+	<card>
+		<province>alaska</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>northwest territory</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>greenland</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>alberta</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>ontario</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>quebec</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>western united states</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>eastern united states</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>central america</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>venezuela</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>brazil</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>peru</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>argentina</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>iceland</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>scandinavia</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>great britain</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>ukraine</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>northern europe</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>western europe</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>southern europe</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>north africa</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>egypt</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>east africa</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>congo</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>madagascar</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>south africa</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>ural</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>siberia</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>yakutsk</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>kamchatka</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>irkutsk</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>japan</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>mongolia</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>china</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>afghanistan</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>middle east</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>india</province>
+		<type>cavalry</type>
+	</card>
+	<card>
+		<province>siam</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>indonesia</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>new guinea</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>western australia</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>eastern australia</province>
+		<type>artillery</type>
+	</card>
+</cards>

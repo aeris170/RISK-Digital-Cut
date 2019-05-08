@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE de [
+<!ELEMENT de (pair+)>
+<!ELEMENT pair (key, value)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+]>
+<de>
+	<pair>
+		<key>PLAY_OFFLINE</key>
+		<value>offline spielen</value>
+	</pair>
+	<pair>
+		<key>PLAY_ONLINE</key>
+		<value>online spielen</value>
+	</pair>
+	<pair>
+		<key>SETTINGS</key>
+		<value>einstellungen</value>
+	</pair>
+	<pair>
+		<key>RULES</key>
+		<value>regeln</value>
+	</pair>
+	<pair>
+		<key>EXIT</key>
+		<value>beenden</value>
+	</pair>
+	<pair>
+		<key>MASTER</key>
+		<value>gesamt</value>
+	</pair>
+	<pair>
+		<key>MUSIC</key>
+		<value>musik</value>
+	</pair>
+	<pair>
+		<key>SFX</key>
+		<value>SFX</value>
+	</pair>
+	<pair>
+		<key>OK</key>
+		<value>fertig</value>
+	</pair>
+	<pair>
+		<key>BACK</key>
+		<value>zurück</value>
+	</pair>
+	<pair>
+		<key>NEXT</key>
+		<value>neben</value>
+	</pair>
+	<pair>
+		<key>PLAYER</key>
+		<value>spieler</value>
+	</pair>
+	<pair>
+		<key>READY</key>
+		<value>bereit</value>
+	</pair>
+	<pair>
+		<key>PLAY</key>
+		<value>spiel</value>
+	</pair>
+	<pair>
+		<key>YES</key>
+		<value>ja</value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value>nein</value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value>sind sie sicher, dass sie beenden wollen?</value>
+	</pair>
+	<pair>
+		<key>OPEN</key>
+		<value>öffnen</value>
+	</pair>
+	<pair>
+		<key>CLOSED</key>
+		<value>geschlossen</value>
+	</pair>
+	<pair>
+		<key>HUMAN</key>
+		<value>mensch</value>
+	</pair>
+	<pair>
+		<key>COMPUTER</key>
+		<value>computer</value>
+	</pair>
+	<pair>
+		<key>PASSIVE</key>
+		<value>passiv</value>
+	</pair>
+	<pair>
+		<key>EASY</key>
+		<value>leicht</value>
+	</pair>
+	<pair>
+		<key>MEDIUM</key>
+		<value>mittlere</value>
+	</pair>
+	<pair>
+		<key>HARD</key>
+		<value>schwierig</value>
+	</pair>
+	<pair>
+		<key>INSANE</key>
+		<value>verrückt</value>
+	</pair>
+	<pair>
+		<key>CHEATER</key>
+		<value>betrüger</value>
+	</pair>
+</de>

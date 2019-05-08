@@ -15,10 +15,15 @@ import com.pmnm.risk.ui.actions.SettingsButtonAction;
 
 public final class UIInit {
 
-	private static final String BUTTON_IDLE_SPRITE = "ButtonIdle";
-	private static final String BUTTON_HOVER_SPRITE = "ButtonHover";
+	public static final String FLEUR_DE_LIS = "FleurDeLis";
 
-	private static final DoaVectorI MM_BUTTON_SIZE = new DoaVectorI(387, 60);
+	public static final int FLEUR_WIDTH = DoaSprites.get(FLEUR_DE_LIS).getWidth() / 6;
+	public static final int FLEUR_HEIGHT = DoaSprites.get(FLEUR_DE_LIS).getHeight() / 6;
+
+	public static final String BUTTON_IDLE_SPRITE = "ButtonIdle";
+	public static final String BUTTON_HOVER_SPRITE = "ButtonHover";
+
+	public static final DoaVectorI BUTTON_SIZE = new DoaVectorI(387, 60);
 
 	private static final DoaVectorF MM_PLAY_OFFLINE_LOCATION = new DoaVectorF(1377f, 511f);
 	private static final DoaVectorF MM_PLAY_ONLINE_LOCATION = new DoaVectorF(1377f, 584f);
@@ -34,21 +39,26 @@ public final class UIInit {
 
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
-		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY OFFLINE", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton playOnlineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY ONLINE", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton settingsButton = DoaHandler.instantiate(TextImageButton.class, MM_SETTING_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
+		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, mm);
+		MultiPlayerMenu mpm = DoaHandler.instantiate(MultiPlayerMenu.class, mm);
+		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
+		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class);
+		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
+		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y,
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY_OFFLINE", FONT_COLOR, HOVER_FONT_COLOR);
+		TextImageButton playOnlineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_ONLINE_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y,
+		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY_ONLINE", FONT_COLOR, HOVER_FONT_COLOR);
+		TextImageButton settingsButton = DoaHandler.instantiate(TextImageButton.class, MM_SETTING_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "SETTINGS", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton rulesButton = DoaHandler.instantiate(TextImageButton.class, MM_RULES_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
-		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, MM_BUTTON_SIZE.x, MM_BUTTON_SIZE.y,
-		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
-		playOfflineButton.addAction(new PlayOfflineButtonAction(mm));
-		playOnlineButton.addAction(new PlayOnlineButtonAction());
-		settingsButton.addAction(new SettingsButtonAction());
-		rulesButton.addAction(new RulesButtonAction());
-		exitButton.addAction(new ExitButtonAction());
+		TextImageButton rulesButton = DoaHandler.instantiate(TextImageButton.class, MM_RULES_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y, DoaSprites.get(BUTTON_IDLE_SPRITE),
+		        DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
+		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y, DoaSprites.get(BUTTON_IDLE_SPRITE),
+		        DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
+		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, spm, ep));
+		playOnlineButton.addAction(new PlayOnlineButtonAction(mm, mpm, ep));
+		settingsButton.addAction(new SettingsButtonAction(mm, sm, ep));
+		rulesButton.addAction(new RulesButtonAction(mm, rm, ep));
+		exitButton.addAction(new ExitButtonAction(ep));
 		mm.add(playOfflineButton);
 		mm.add(playOnlineButton);
 		mm.add(settingsButton);

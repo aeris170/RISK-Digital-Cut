@@ -17,7 +17,6 @@ public final class AssetLoader {
 
 	public static void initializeAssets() {
 		try {
-			DoaSprites.createSprite("WorldMap", "/maps/GeographicMap.png");
 			DoaSprites.createSprite("MainMenuBackground", "/ui/MainMenuBackground.png");
 			DoaSprites.createSprite("MainMenuTopRing", "/ui/TopRing.png");
 			DoaSprites.createSprite("MainMenuBottomRing", "/ui/BottomRing.png");
@@ -26,6 +25,53 @@ public final class AssetLoader {
 			DoaSprites.createSprite("FleurDeLisGold", "/ui/FleurDeLisGold.png");
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
+			DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
+
+			{// SINGLEPLAYER MENU
+				DoaSprites.createSprite("ArrowLeftIdle", "/ui/playOffline/arrowUnpressedLeft.png");
+				DoaSprites.createSprite("ArrowRightIdle", "/ui/playOffline/arrowUnpressedRight.png");
+				DoaSprites.createSprite("ArrowDownIdle", "/ui/playOffline/arrowUnpressedDown.png");
+				DoaSprites.createSprite("ArrowLeftClick", "/ui/playOffline/arrowPressedLeft.png");
+				DoaSprites.createSprite("ArrowRightClick", "/ui/playOffline/arrowPressedRight.png");
+				DoaSprites.createSprite("ArrowDownClick", "/ui/playOffline/arrowPressedDown.png");
+				DoaSprites.createSprite("White", "/ui/playOffline/colour.png");
+				DoaSprites.createSprite("ColorBorder", "/ui/playOffline/colourRect.png");
+				DoaSprites.createSprite("MapChooserBackground", "/ui/playOffline/mapChooserContainer.png");
+				DoaSprites.createSprite("MapBorder", "/ui/playOffline/mapContainer.png");
+				DoaSprites.createSprite("PlayerTypeBorder", "/ui/playOffline/playerType.png");
+				DoaSprites.createSprite("MainScroll", "/ui/playOffline/playersScroll.png");
+				DoaSprites.createSprite("DifficutyBorder", "/ui/playOffline/difficuty.png");
+				DoaSprites.createSprite("DropDown", "/ui/playOffline/droppedComboBoxPlain.png");
+				DoaSprites.createSprite("DropDownTex", "/ui/playOffline/droppedComboBox.png");
+				DoaSprites.createSprite("DropDownType", "/ui/playOffline/droppedComboBoxPlainType.png");
+				DoaSprites.createSprite("DropDownTexType", "/ui/playOffline/droppedComboBoxType.png");
+				DoaSprites.createSprite("DropDownColor", "/ui/playOffline/droppedComboBoxPlainColor.png");
+				DoaSprites.createSprite("DropDownColorType", "/ui/playOffline/droppedComboBoxColor.png");
+				{// MULTIPLAYER MENU
+					DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
+					DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");
+				}
+			}
+
+			{// SETTINGS MENU
+				DoaSprites.createSprite("Lens", "/ui/settings/lensEffect.png");
+				DoaSprites.createSprite("LensHover", "/ui/settings/lensEffectHover.png");
+				DoaSprites.createSprite("LensSelect", "/ui/settings/lensEffectSelected.png");
+				DoaSprites.createSprite("English", "/ui/settings/englis.png");
+				DoaSprites.createSprite("Deutch", "/ui/settings/deutsc.png");
+				DoaSprites.createSprite("Espanol", "/ui/settings/espano.png");
+				DoaSprites.createSprite("France", "/ui/settings/franc.png");
+				DoaSprites.createSprite("Italian", "/ui/settings/itali.png");
+				DoaSprites.createSprite("Russian", "/ui/settings/rusk.png");
+				DoaSprites.createSprite("Turkish", "/ui/settings/turkis.png");
+			}
+
+			{// EXIT POPUP
+				DoaSprites.createSprite("ExitPopupBackground", "/ui/popupBox.png");
+				DoaSprites.createSprite("MiniButtonIdle", "/ui/MiniButtonIdle.png");
+				DoaSprites.createSprite("MiniButtonHover", "/ui/MiniButtonHover.png");
+				DoaSprites.createSprite("MiniButtonClick", "/ui/MiniButtonPressed.png");
+			}
 
 			{// TOP INFO
 				DoaSprites.createSprite("timerBottomRing", "/ui/gameScreenElements/topInfo/timerBottomRing.png");
@@ -36,6 +82,9 @@ public final class AssetLoader {
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
+				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
+				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif", 100);
+				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 150);
 			}
 
 			{// BOTTOM INFO

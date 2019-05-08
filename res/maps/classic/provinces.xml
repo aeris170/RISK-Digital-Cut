@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE provinces [
+<!ELEMENT provinces (province+)>
+<!ELEMENT province (#PCDATA)>
+]>
+<provinces>
+	<province>alaska</province>
+	<province>northwest territory</province>
+	<province>greenland</province>
+	<province>alberta</province>
+	<province>ontario</province>
+	<province>quebec</province>
+	<province>western united states</province>
+	<province>eastern united states</province>
+	<province>central america</province>
+	<province>venezuela</province>
+	<province>brazil</province>
+	<province>peru</province>
+	<province>argentina</province>
+	<province>iceland</province>
+	<province>scandinavia</province>
+	<province>great britain</province>
+	<province>ukraine</province>
+	<province>northern europe</province>
+	<province>western europe</province>
+	<province>southern europe</province>
+	<province>north africa</province>
+	<province>egypt</province>
+	<province>east africa</province>
+	<province>congo</province>
+	<province>madagascar</province>
+	<province>south africa</province>
+	<province>ural</province>
+	<province>siberia</province>
+	<province>yakutsk</province>
+	<province>kamchatka</province>
+	<province>irkutsk</province>
+	<province>japan</province>
+	<province>mongolia</province>
+	<province>china</province>
+	<province>afghanistan</province>
+	<province>middle east</province>
+	<province>india</province>
+	<province>siam</province>
+	<province>indonesia</province>
+	<province>new guinea</province>
+	<province>western australia</province>
+	<province>eastern australia</province>
+</provinces>

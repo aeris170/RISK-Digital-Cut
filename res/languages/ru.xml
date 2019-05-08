@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ru [
+<!ELEMENT ru (pair+)>
+<!ELEMENT pair (key, value)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+]>
+<ru>
+	<pair>
+		<key>PLAY_OFFLINE</key>
+		<value>одиночная игра</value>
+	</pair>
+	<pair>
+		<key>PLAY_ONLINE</key>
+		<value>играть с друзьями</value>
+	</pair>
+	<pair>
+		<key>SETTINGS</key>
+		<value>опции</value>
+	</pair>
+	<pair>
+		<key>RULES</key>
+		<value>правилы</value>
+	</pair>
+	<pair>
+		<key>EXIT</key>
+		<value>выйти</value>
+	</pair>
+	<pair>
+		<key>MASTER</key>
+		<value>мастер</value>
+	</pair>
+	<pair>
+		<key>MUSIC</key>
+		<value>Музыка</value>
+	</pair>
+	<pair>
+		<key>SFX</key>
+		<value>SFX</value>
+	</pair>
+	<pair>
+		<key>OK</key>
+		<value>OК</value>
+	</pair>
+	<pair>
+		<key>BACK</key>
+		<value>назад</value>
+	</pair>
+	<pair>
+		<key>NEXT</key>
+		<value>следующий</value>
+	</pair>
+	<pair>
+		<key>PLAYER</key>
+		<value>игрок</value>
+	</pair>
+	<pair>
+		<key>READY</key>
+		<value>готов</value>
+	</pair>
+	<pair>
+		<key>PLAY</key>
+		<value>играть</value>
+	</pair>
+	<pair>
+		<key>YES</key>
+		<value>да</value>
+	</pair>
+	<pair>
+		<key>NO</key>
+		<value>нет</value>
+	</pair>
+	<pair>
+		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+		<value>Ты уверен, что хочешь выйти?</value>
+	</pair>
+	<pair>
+		<key>OPEN</key>
+		<value>открыть</value>
+	</pair>
+	<pair>
+		<key>CLOSED</key>
+		<value>closed</value>
+	</pair>
+	<pair>
+		<key>HUMAN</key>
+		<value>human</value>
+	</pair>
+	<pair>
+		<key>COMPUTER</key>
+		<value>bilgisayar</value>
+	</pair>
+	<pair>
+		<key>PASSIVE</key>
+		<value>passivnyy</value>
+	</pair>
+	<pair>
+		<key>EASY</key>
+		<value>легко</value>
+	</pair>
+	<pair>
+		<key>MEDIUM</key>
+		<value>средний</value>
+	</pair>
+	<pair>
+		<key>HARD</key>
+		<value>трудный</value>
+	</pair>
+	<pair>
+		<key>INSANE</key>
+		<value>безумный</value>
+	</pair>
+	<pair>
+		<key>CHEATER</key>
+		<value>хакер</value>
+	</pair>
+</ru>

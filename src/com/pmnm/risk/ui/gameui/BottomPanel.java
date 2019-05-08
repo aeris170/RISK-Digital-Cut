@@ -61,7 +61,10 @@ public class BottomPanel extends DoaPanel {
 
 	@Override
 	public void tick() {
-		centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
+		try {
+			centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
+		} catch (Exception e3) {// TODO wtf
+		}
 	}
 
 	@Override

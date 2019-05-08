@@ -1,6 +1,7 @@
 package com.pmnm.risk.main;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class Player extends DoaObject {
 	protected boolean isInTurn;
 	private int id;
 	private boolean isLocalPlayer;
+	private List<Card> cards = new ArrayList<>();
 
 	private Province source = null;
 	private Province destination = null;
@@ -65,7 +67,7 @@ public class Player extends DoaObject {
 						GameManager.setDraftReinforceProvince(clickedProvince);
 					}
 				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
-					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1) {
+					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && GameManager.moveAfterOccupySource == null) {
 						GameManager.markAttackerProvince(clickedHitArea);
 						GameManager.markDefenderProvince(null);
 					} else if (GameManager.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
@@ -97,6 +99,9 @@ public class Player extends DoaObject {
 					ProvinceHitArea.selectedProvinceByMouse = null;
 				}
 			}
+		}
+		if (DoaMouse.MB3) {
+			cards.forEach(c -> System.out.println(c.toString()));
 		}
 	}
 
@@ -147,9 +152,17 @@ public class Player extends DoaObject {
 		return isLocalPlayer;
 	}
 
+	public void addCard(Card c) {
+		cards.add(c);
+	}
+
+	public void removeCard(Card c) {
+		cards.remove(c);
+	}
+
 	@Override
 	public String toString() {
-		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id="
-				+ id + ", isLocalPlayer=" + isLocalPlayer + ", source=" + source + ", destination=" + destination + "]";
+		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id=" + id + ", isLocalPlayer=" + isLocalPlayer
+		        + ", source=" + source + ", destination=" + destination + "]";
 	}
 }
