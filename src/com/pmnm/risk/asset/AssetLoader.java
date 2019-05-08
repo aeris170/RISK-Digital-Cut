@@ -141,6 +141,16 @@ public final class AssetLoader {
 				DoaSprites.createSprite("blitzIdle", "/ui/gameScreenElements/diceScroll/blitzNormal.png");
 				DoaSprites.createSprite("blitzHover", "/ui/gameScreenElements/diceScroll/blitzHover.png");
 			}
+			
+			{// CARD PANEL
+				DoaSprites.createSprite("artillery", "/ui/gameScreenElements/cardScroll/artillery.png");
+				DoaSprites.createSprite("cavalry", "/ui/gameScreenElements/cardScroll/cavalry.png");
+				DoaSprites.createSprite("infantry", "/ui/gameScreenElements/cardScroll/infantry.png");
+				DoaSprites.createSprite("card", "/ui/gameScreenElements/cardScroll/card.png");
+				DoaSprites.createSprite("trump", "/ui/gameScreenElements/cardScroll/eyeOnBoxTrump.png");
+				DoaSprites.createSprite("cardScoll", "/ui/gameScreenElements/cardScroll/cardScroll.png");
+				DoaSprites.createSprite("scrollFrame", "/ui/gameScreenElements/cardScroll/scrollFrame.png");
+			}
 
 			List<DoaSprite> riskLogoKeyFrames = new ArrayList<>();
 			for (int i = 1; i <= 11; i++) {
