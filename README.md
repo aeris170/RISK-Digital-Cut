@@ -35,15 +35,25 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 ### Iteration 1
 
-* [Analysis Report]	[link][3]
-* [Design Report]	[link][4]
-* [Final Report]	[link][5]
+* [Analysis Report][3]
+  - **PASSED**
+* [Design Report][4]
+  - **PASSED**
+* [Final Report][5]
+  - **PASSED**
+* Presentation and Demo
+  - **PASSED**		
 
 ### Iteration 2
 
-* [Analysis Report]	[link][6]
-* [Design Report]	[link][7]
-* [Final Report]	TBA
+* [Analysis Report][6]
+  - ? / 100
+* [Design Report][7]
+  - ? / 100
+* [Final Report][8]
+  - ? / 100
+* Presentation and Demo
+  - ? / 100
 
 ## Meeting Hours
 
@@ -57,3 +67,4 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 [5]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Implementation_Report_Iteration_1.docx?raw=true
 [6]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Analysis_Report_Iteration_2.docx?raw=true
 [7]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_2.docx?raw=true
+[7]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Implementation_Report_Iteration_2.docx?raw=true

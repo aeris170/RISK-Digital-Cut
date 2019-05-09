@@ -18,6 +18,7 @@ import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
+import com.pmnm.risk.card.Card;
 import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.PlayerColorBank;
@@ -26,9 +27,9 @@ import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
-import com.pmnm.risk.ui.gameui.BottomPanel;
-import com.pmnm.risk.ui.gameui.DicePanel;
-import com.pmnm.risk.ui.gameui.RiskGameScreenUI;
+import com.pmnm.roy.ui.gameui.BottomPanel;
+import com.pmnm.roy.ui.gameui.DicePanel;
+import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 public class GameManager extends DoaObject {
 
@@ -451,9 +452,8 @@ public class GameManager extends DoaObject {
 			System.out.println(Province.ALL_PROVINCES.get(i).getName() + "   " + Province.ALL_PROVINCES.get(i).getTroops());
 		}
 
-		for (ProvinceHitArea p : ProvinceHitArea.ALL_PROVINCE_HIT_AREAS) {
-			DoaHandler.remove(p);
-		}
+		/* for (ProvinceHitArea p : ProvinceHitArea.ALL_PROVINCE_HIT_AREAS) {
+		 * DoaHandler.remove(p); } */
 
 		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
 
@@ -463,7 +463,6 @@ public class GameManager extends DoaObject {
 			// DoaHandler.remove(o);
 			DoaHandler.instantiate(ProvinceHitArea.class, newAllProvinces.get(i), 0f, 0f, 0, 0);
 		}
-
 		System.out.println("Game is updated");
 	}
 
