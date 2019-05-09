@@ -1,8 +1,10 @@
 package com.pmnm.risk.ui.gameui;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Font;
+import java.awt.geom.Rectangle2D;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
@@ -21,6 +23,7 @@ public class TopPanel extends DoaPanel {
 	private DoaTaskGuard threeSecondGuard = new DoaTaskGuard();
 	private float alpha;
 	private float delta = 0.1f;
+	private Color timerColour;
 
 	public TopPanel() {
 		super(0f, 0f, 0, 0);
@@ -30,6 +33,12 @@ public class TopPanel extends DoaPanel {
 
 	@Override
 	public void tick() {
+		for (int i = 0; i < GameManager.numberOfPlayers; i++){
+			if(GameManager.players.get(i).isTurn()){
+				timerColour = GameManager.players.get(i).getColor();
+			}
+		}
+		
 		if (threeSecondGuard.get()) {
 			threeSecondGuard.set(false);
 			DoaTasker.executeLater(() -> {
@@ -49,6 +58,12 @@ public class TopPanel extends DoaPanel {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
+		//timer block
+		Rectangle2D.Float rect = new Rectangle2D.Float(0f, Main.WINDOW_HEIGHT * 0.027f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT * 0.021f);
+		g.setColor(timerColour);
+		g.fill(rect);
+		g.draw(rect);
+		
 		Composite oldComposite = g.getComposite();
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, -6);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
@@ -56,7 +71,7 @@ public class TopPanel extends DoaPanel {
 		g.drawImage(DoaSprites.get(Season.getCurrentSeason().toString()), (Main.WINDOW_WIDTH - DoaSprites.get(Season.getCurrentSeason().toString()).getWidth()) / 2f, 0);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 26f));
 		g.setColor(UIInit.FONT_COLOR);
-
+		
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
 		String turn = "TURN: " + (GameManager.turnCount + 1);
 		g.drawString(turn, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(turn)) / 2f, 110);

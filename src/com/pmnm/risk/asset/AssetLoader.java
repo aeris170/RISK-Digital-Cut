@@ -85,6 +85,8 @@ public final class AssetLoader {
 				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
 				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif", 100);
 				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 150);
+				DoaAnimations.createAnimation("CherryPetals", "/ui/gameScreenElements/topInfo/cherryPetals.gif", 60);
+				DoaAnimations.createAnimation("Rain", "/ui/gameScreenElements/topInfo/rainLight.gif", 40);
 			}
 
 			{// BOTTOM INFO
@@ -145,7 +147,7 @@ public final class AssetLoader {
 			{// CARD PANEL
 				DoaSprites.createSprite("artillery", "/ui/gameScreenElements/cardScroll/artillery.png");
 				DoaSprites.createSprite("cavalry", "/ui/gameScreenElements/cardScroll/cavalry.png");
-				DoaSprites.createSprite("infantry", "/ui/gameScreenElements/cardScroll/infantry.png");
+				DoaSprites.createSprite("infantry", "/ui/gameScreenElements/cardScroll/footman.png");
 				DoaSprites.createSprite("card", "/ui/gameScreenElements/cardScroll/card.png");
 				DoaSprites.createSprite("trump", "/ui/gameScreenElements/cardScroll/eyeOnBoxTrump.png");
 				DoaSprites.createSprite("cardScoll", "/ui/gameScreenElements/cardScroll/cardScroll.png");

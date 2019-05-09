@@ -7,7 +7,7 @@ import com.pmnm.risk.main.GameManager;
 
 public enum Season {
 
-	WINTER("winter", Color.CYAN), SPRING("spring", Color.GREEN), SUMMER("summer", Color.YELLOW), FALL("fall", new Color(205, 133, 63));
+	WINTER("winter", new Color(218, 255, 255)), SPRING("spring", new Color(123, 215, 109)), SUMMER("summer", new Color(211, 242, 150)), FALL("fall", new Color(229, 178, 76));
 
 	private String lower;
 	private Color color;
@@ -30,7 +30,8 @@ public enum Season {
 	private static Season currentSeason = seasons[Calendar.getInstance().get(Calendar.MONTH)];
 
 	public static void updateSeason() {
-		currentSeason = seasons[(Calendar.MONTH + GameManager.turnCount / 4) % 12];
+		currentSeason = FALL;
+				//seasons[(Calendar.MONTH + GameManager.turnCount) % 12];
 	}
 
 	public static Season getCurrentSeason() {

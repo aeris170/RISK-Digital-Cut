@@ -136,7 +136,7 @@ public class Camera extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.setColor(Color.WHITE);
+		/*g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.drawString("DCam Pos: " + DoaCamera.getX() + " " + DoaCamera.getY(), 0, 20);
 		g.drawString("Cam Pos: " + position.toString(), 0, 40);
@@ -162,6 +162,7 @@ public class Camera extends DoaObject {
 			g.setColor(Color.WHITE);
 			g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
 		}
+		*/
 	}
 	
 	

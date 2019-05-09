@@ -111,6 +111,10 @@ public class Player extends DoaObject {
 	public void turn() {
 		isInTurn = true;
 	}
+	
+	public boolean isTurn() {
+		return isInTurn;
+	}
 
 	public String getName() {
 		return playerName;

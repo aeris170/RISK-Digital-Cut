@@ -43,7 +43,7 @@ public class Main {
 		DoaCamera.enableMouseZoom(null, 0.8f, 10f);
 
 		DoaCamera.adjustCamera(Camera.getInstance(), -10000, -10000, 10000, 10000);
-		DoaHandler.instantiate(DebugPanel.class);
+		//DoaHandler.instantiate(DebugPanel.class);
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}
 

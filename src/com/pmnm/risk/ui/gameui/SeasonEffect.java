@@ -47,17 +47,20 @@ public class SeasonEffect extends DoaObject {
 		switch (Season.getCurrentSeason()) {
 			case WINTER:
 				DoaAnimation snowfall = DoaAnimations.get("Snowfall");
-				g.translate(Main.WINDOW_WIDTH / 2f, 0);
+				g.translate(Main.WINDOW_WIDTH / 2f,0);
 				// g.setClip(new Ellipse2D.Float(-200, -200, 400, 400)); same as below, made
 				// resolution friendly
 				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
-				g.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 3f);
-				g.rotate(Math.toRadians(45));
-				g.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f);
-				g.rotate(Math.toRadians(-90));
+				g.scale(1.5f, 1.5f);
 				g.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f);
 				break;
 			case SPRING:
+				DoaAnimation petals = DoaAnimations.get("CherryPetals");
+				g.translate(Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT * 0.05f);
+				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+				g.scale(1.5f, 1.5f);
+				g.rotate(45f);
+				g.drawAnimation(petals, -petals.getFrames().get(0).getWidth() / 2f, -petals.getFrames().get(0).getHeight() / 2f);
 				break;
 			case SUMMER:
 				DoaSprite godray = DoaSprites.get("godray");
@@ -68,10 +71,12 @@ public class SeasonEffect extends DoaObject {
 				g.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
 				break;
 			case FALL:
-				DoaAnimation betterFallingLeaves = DoaAnimations.get("FallingLeaves");
+				DoaAnimation rain = DoaAnimations.get("Rain");
 				g.translate(Main.WINDOW_WIDTH / 2f, 0);
-				g.drawAnimation(betterFallingLeaves, -betterFallingLeaves.getFrames().get(0).getWidth() / 2f, -betterFallingLeaves.getFrames().get(0).getHeight() / 3f);
-			default:
+				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+				g.scale(1.5f, 1.5f);
+				g.rotate(22.5f);
+				g.drawAnimation(rain, -rain.getFrames().get(0).getWidth() / 2f, -rain.getFrames().get(0).getHeight() / 2f);
 				break;
 		}
 		g.setComposite(oldComposite);
