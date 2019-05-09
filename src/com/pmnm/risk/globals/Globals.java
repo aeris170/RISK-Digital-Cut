@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.pmnm.risk.asset.AssetLoader;
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.ui.UIInit;
+import com.pmnm.roy.ui.UIInit;
 
 public final class Globals {
 

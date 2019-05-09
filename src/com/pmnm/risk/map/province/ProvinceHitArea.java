@@ -29,7 +29,7 @@ import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.toolkit.Utils;
-import com.pmnm.risk.ui.UIInit;
+import com.pmnm.roy.ui.UIInit;
 
 public class ProvinceHitArea extends DoaObject {
 
@@ -425,6 +425,5 @@ public class ProvinceHitArea extends DoaObject {
 	public void setProvince(Province province) {
 		this.province = province;
 	}
-	
-	
+
 }

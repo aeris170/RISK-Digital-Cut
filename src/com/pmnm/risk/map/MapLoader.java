@@ -17,9 +17,9 @@ import org.jdom2.input.SAXBuilder;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
+import com.pmnm.risk.card.Card;
+import com.pmnm.risk.card.CardType;
 import com.pmnm.risk.exceptions.RiskException;
-import com.pmnm.risk.main.Card;
-import com.pmnm.risk.main.CardType;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
