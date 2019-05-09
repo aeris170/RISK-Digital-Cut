@@ -451,9 +451,9 @@ public class GameManager extends DoaObject {
 			System.out.println(Province.ALL_PROVINCES.get(i).getName() + "   " + Province.ALL_PROVINCES.get(i).getTroops());
 		}
 
-		for (ProvinceHitArea p : ProvinceHitArea.ALL_PROVINCE_HIT_AREAS) {
+	/*	for (ProvinceHitArea p : ProvinceHitArea.ALL_PROVINCE_HIT_AREAS) {
 			DoaHandler.remove(p);
-		}
+		}*/
 
 		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
 
