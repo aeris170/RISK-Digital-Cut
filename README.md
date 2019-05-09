@@ -32,6 +32,7 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 
 ## Links to Project Reports
+The first iteration is not graded, whereas the second is.
 
 ### Iteration 1
 
