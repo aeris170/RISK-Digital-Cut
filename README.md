@@ -35,17 +35,19 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 ### Iteration 1
 
-* [Analysis Report]		[link][3]	**PASSED**
-* [Design Report]		[link][4]	**PASSED**
-* [Final Report]		[link][5]	**PASSED**
-* Presentation and Demo				**PASSED**
+* [Analysis Report]	
+* - **PASSED** 
+* - [link][3]
+* [Design Report]	**PASSED** [link][4]	
+* [Final Report]	**PASSED** [link][5]	
+* [Presentation and Demo]	**PASSED**		
 
 ### Iteration 2
 
 * [Analysis Report]		[link][6]	? / 100
 * [Design Report]		[link][7]	? / 100
 * [Final Report]		TBA			? / 100
-* Presentation and Demo TBA			? / 100
+* [Presentation and Demo] TBA			? / 100
 
 ## Meeting Hours
 
