@@ -463,7 +463,6 @@ public class GameManager extends DoaObject {
 			// DoaHandler.remove(o);
 			DoaHandler.instantiate(ProvinceHitArea.class, newAllProvinces.get(i), 0f, 0f, 0, 0);
 		}
-
 		System.out.println("Game is updated");
 	}
 
