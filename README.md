@@ -50,7 +50,7 @@ Shortly said, this will be an extended version of the traditional Risk game, des
   - ? / 100
 * [Design Report][7]
   - ? / 100
-* [Final Report][8] TBA
+* [Final Report][8]
   - ? / 100
 * Presentation and Demo
   - ? / 100
