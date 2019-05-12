@@ -80,6 +80,9 @@ public final class AssetLoader {
 				DoaSprites.createSprite("spring", "/ui/gameScreenElements/topInfo/spring.png");
 				DoaSprites.createSprite("fall", "/ui/gameScreenElements/topInfo/fall.png");
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
+			}
+			
+			{//WEATHER EFFECTS
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
 				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
@@ -87,6 +90,10 @@ public final class AssetLoader {
 				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 150);
 				DoaAnimations.createAnimation("CherryPetals", "/ui/gameScreenElements/topInfo/cherryPetals.gif", 60);
 				DoaAnimations.createAnimation("Rain", "/ui/gameScreenElements/topInfo/rainLight.gif", 40);
+				DoaSprites.createSprite("fallTex", "/ui/gameScreenElements/waterTextures/fallWaterTexture.jpg");
+				DoaSprites.createSprite("springTex", "/ui/gameScreenElements/waterTextures/springWaterTexture.jpg");
+				DoaSprites.createSprite("summerTex", "/ui/gameScreenElements/waterTextures/summerWaterTexture.jpg");
+				DoaSprites.createSprite("winterTex", "/ui/gameScreenElements/waterTextures/winterWaterTexture.jpg");
 			}
 
 			{// BOTTOM INFO
