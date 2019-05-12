@@ -32,6 +32,7 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 
 
 ## Links to Project Reports
+The first iteration is not graded, whereas the second is.
 
 ### Iteration 1
 
@@ -41,18 +42,18 @@ Shortly said, this will be an extended version of the traditional Risk game, des
   - **PASSED**
 * [Final Report][5]
   - **PASSED**
-* Presentation and Demo
+* [Presentation][6] and [Demo][7]
   - **PASSED**		
 
 ### Iteration 2
 
-* [Analysis Report][6]
+* [Analysis Report][8]
   - ? / 100
-* [Design Report][7]
+* [Design Report][9]
   - ? / 100
-* [Final Report][8]
+* [Final Report][10]
   - ? / 100
-* Presentation and Demo
+* [Presentation][11] and [Demo][12]
   - ? / 100
 
 ## Meeting Hours
@@ -65,6 +66,10 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 [3]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Analysis_Report_Iteration_1.docx?raw=true
 [4]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_1.docx?raw=true
 [5]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Implementation_Report_Iteration_1.docx?raw=true
-[6]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Analysis_Report_Iteration_2.docx?raw=true
-[7]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_2.docx?raw=true
-[7]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Implementation_Report_Iteration_2.docx?raw=true
+[6]: https://docs.google.com/presentation/d/18gTOjGOS44AbXD0rXLQROiZ1ruPXPHoHsgGxTACN0g4/edit?usp=sharing
+[7]: https://youtu.be/6uypCawDsng
+[8]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Analysis_Report_Iteration_2.docx?raw=true
+[9]: https://github.com/aeris170/CS319-MP-Risk/blob/unstable/doc/Design_Report_Iteration_2.docx?raw=true
+[10]: https://github.com/aeris170/CS319-MP-Risk/blob/master/doc/Implementation_Report_Iteration_2.docx
+[11]: https://docs.google.com/presentation/d/1UOGshbKpACs9ssDF4Yug96hiQCQFxvzag8nqZm8dD0E/edit?usp=sharing
+[12]: https://youtu.be/XKDfyq4XJg8
