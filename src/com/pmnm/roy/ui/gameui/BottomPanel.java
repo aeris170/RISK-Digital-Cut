@@ -63,7 +63,11 @@ public class BottomPanel extends DoaPanel {
 	public void tick() {
 		try {
 			centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
-		} catch (Exception e3) {// TODO wtf
+		} catch (Exception ex) {
+			// TODO have no idea why this catch block is here, if you come across an
+			// exception getting thrown, feel free to fix.
+			// and don't ask me how do i fix this, just fix it ffs.
+			ex.printStackTrace();
 		}
 	}
 

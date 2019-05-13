@@ -112,7 +112,7 @@ public class Player extends DoaObject {
 	public void turn() {
 		isInTurn = true;
 	}
-	
+
 	public boolean isTurn() {
 		return isInTurn;
 	}
@@ -145,6 +145,7 @@ public class Player extends DoaObject {
 		return reinforcementsForThisTurn;
 	}
 
+	// TODO DOA OPTIMIZE
 	public static List<Province> getPlayerProvinces(Player player) {
 		return Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == player).collect(Collectors.toList());
 	}

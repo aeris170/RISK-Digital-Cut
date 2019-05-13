@@ -21,8 +21,8 @@ public class Water extends DoaObject {
 
 	private static final long serialVersionUID = -3289865017771805571L;
 
-	private static final int SEG_X = 6;
-	private static final int SEG_Y = 3;
+	private static final int SEG_X = 16;
+	private static final int SEG_Y = 9;
 
 	BufferedImage tex = null;
 	BufferedImage bigWinter = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -90,8 +90,8 @@ public class Water extends DoaObject {
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				Point2D p = points[x][y];
-				double px = x * Main.WINDOW_WIDTH / (SEG_X - 1) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000973);
-				double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000791);
+				double px = x * Main.WINDOW_WIDTH / (SEG_X - 1) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000573);
+				double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000291);
 				p.setLocation(px, py);
 			}
 		}
