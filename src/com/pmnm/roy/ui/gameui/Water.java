@@ -27,9 +27,9 @@ public class Water extends DoaObject {
 	BufferedImage bigSummer = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);;
 	BufferedImage bigFall = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);;
 
-	Point2D[][] points = new Point2D.Double[18][11];
-	long[][] startTime = new long[18][11];
-	double[][] intensity = new double[18][11];
+	Point2D[][] points = new Point2D.Double[6][3];
+	long[][] startTime = new long[6][3];
+	double[][] intensity = new double[6][3];
 
 	List<TriangularSurface> mesh = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class Water extends DoaObject {
 		super(0f, 0f, -2);
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
-				points[x][y] = new Point2D.Double(x * 120, y * 120);
+				points[x][y] = new Point2D.Double(x * 320, y * 360);
 				startTime[x][y] = ThreadLocalRandom.current().nextLong();
 				intensity[x][y] = ThreadLocalRandom.current().nextInt(1, 2);
 			}
@@ -79,8 +79,8 @@ public class Water extends DoaObject {
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				Point2D p = points[x][y];
-				double px = x * 120 + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000473);
-				double py = y * 120 + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000291);
+				double px = x * 320 + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000473);
+				double py = y * 360 + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000291);
 				p.setLocation(px, py);
 			}
 		}
@@ -104,7 +104,7 @@ public class Water extends DoaObject {
 		}
 		g.pushTransform();
 		g.translate(-50, -50);
-		g.scale(1.1, 1.1);
+		g.scale(1.3, 1.7);
 		mesh.forEach(surface -> surface.render(g));
 		g.popTransform();
 	}

@@ -5,7 +5,6 @@ import java.awt.Composite;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaAnimation;
 import com.doa.engine.graphics.DoaAnimations;
@@ -14,7 +13,6 @@ import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaMath;
 import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.UIInit;
 
 public class SeasonEffect extends DoaObject {
 
@@ -26,7 +24,7 @@ public class SeasonEffect extends DoaObject {
 
 	public SeasonEffect() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, 100);
-		DoaHandler.instantiate(Water.class);
+		// DoaHandler.instantiate(Water.class);
 	}
 
 	@Override
