@@ -54,7 +54,7 @@ public class ProvinceHitArea extends DoaObject {
 	private List<GeneralPath> meshes = new ArrayList<>();
 
 	private transient BufferedImage unoccupiedMesh;
-	private Map<Color, BufferedImage> playerOwnedMeshes = new HashMap<>();
+	private transient Map<Color, BufferedImage> playerOwnedMeshes = new HashMap<>();
 	private transient BufferedImage selectedMesh;
 	private transient BufferedImage selectedBorder;
 	private transient BufferedImage emphasizedBorder;

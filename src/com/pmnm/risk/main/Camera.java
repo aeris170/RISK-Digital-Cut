@@ -1,7 +1,5 @@
 package com.pmnm.risk.main;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,8 +30,7 @@ public class Camera extends DoaObject {
 
 	private static Camera _this = null;
 	static int value = 0;
-	
-	
+
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
 	private PrintWriter writer;
@@ -110,15 +107,14 @@ public class Camera extends DoaObject {
 				writer.flush();
 			}
 		}
-		
+
 		if (vertexLogKeyGuard.get() && DoaKeyboard.L) {
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			System.out.println("L is pressed");
 			GameManager.loadGame("firstSave");
 		}
-		
-		
+
 		if (isLoggingVertices) {
 			if (DoaMouse.MB1) {
 				writeVertices();
@@ -136,45 +132,32 @@ public class Camera extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		/*g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial", Font.BOLD, 20));
-		g.drawString("DCam Pos: " + DoaCamera.getX() + " " + DoaCamera.getY(), 0, 20);
-		g.drawString("Cam Pos: " + position.toString(), 0, 40);
-		g.drawString("Cam Top Left Bound: " + topLeftBound.toString(), 0, 60);
-		g.drawString("Cam Bottom Right Bound: " + bottomRightBound.toString(), 0, 80);
-		g.drawString("Absolute Mouse Pos: " + new DoaVectorF((float) DoaMouse.X, (float) DoaMouse.Y).toString(), 0, 100);
-		g.drawString("Mapped Mouse Pos: " + Utils.mapMouseCoordinatesByZoom().toString(), 0, 120);
-		if (isLoggingVertices) {
-			if(value == 0) { 
-		     	saveGameFromCamera();
-		     	value++;
-				}
-			g.setColor(Color.RED);
-			g.fillRect(0, 160, 290, 23);
-			g.setColor(Color.BLACK);
-			g.drawString("VERTEX LOGGING ENABLED!", 0, 180);
-		}
-		g.setColor(Color.WHITE);
-		g.drawString("Phase: " + GameManager.currentPhase, 0, 200);
-		if (GameManager.currentPlayer != null) {
-			g.setColor(GameManager.currentPlayer.getColor());
-			g.fillRect(0, 200, 130, 23);
-			g.setColor(Color.WHITE);
-			g.drawString("Turn: " + GameManager.currentPlayer.getName(), 0, 220);
-		}
-		*/
+		/* g.setColor(Color.WHITE); g.setFont(new Font("Arial", Font.BOLD, 20));
+		 * g.drawString("DCam Pos: " + DoaCamera.getX() + " " + DoaCamera.getY(), 0,
+		 * 20); g.drawString("Cam Pos: " + position.toString(), 0, 40);
+		 * g.drawString("Cam Top Left Bound: " + topLeftBound.toString(), 0, 60);
+		 * g.drawString("Cam Bottom Right Bound: " + bottomRightBound.toString(), 0,
+		 * 80); g.drawString("Absolute Mouse Pos: " + new DoaVectorF((float) DoaMouse.X,
+		 * (float) DoaMouse.Y).toString(), 0, 100); g.drawString("Mapped Mouse Pos: " +
+		 * Utils.mapMouseCoordinatesByZoom().toString(), 0, 120); if (isLoggingVertices)
+		 * { if(value == 0) { saveGameFromCamera(); value++; } g.setColor(Color.RED);
+		 * g.fillRect(0, 160, 290, 23); g.setColor(Color.BLACK);
+		 * g.drawString("VERTEX LOGGING ENABLED!", 0, 180); } g.setColor(Color.WHITE);
+		 * g.drawString("Phase: " + GameManager.currentPhase, 0, 200); if
+		 * (GameManager.currentPlayer != null) {
+		 * g.setColor(GameManager.currentPlayer.getColor()); g.fillRect(0, 200, 130,
+		 * 23); g.setColor(Color.WHITE); g.drawString("Turn: " +
+		 * GameManager.currentPlayer.getName(), 0, 220); } */
 	}
-	
-	
-	public void  saveGameFromCamera() {
+
+	public void saveGameFromCamera() {
 		try {
 			GameManager.saveGame("Ege");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
+
 }
