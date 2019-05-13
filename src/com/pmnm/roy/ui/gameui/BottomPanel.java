@@ -3,12 +3,12 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
@@ -27,9 +27,9 @@ public class BottomPanel extends DoaPanel {
 
 	private static final long serialVersionUID = -59674351675589726L;
 
-	private static final DoaSprite MIDDLE = DoaSprites.get("gaugeBig");
-	private static final DoaSprite LEFT = DoaSprites.get("gaugeLeft");
-	private static final DoaSprite RIGHT = DoaSprites.get("gaugeRight");
+	private static final BufferedImage MIDDLE = DoaSprites.get("gaugeBig");
+	private static final BufferedImage LEFT = DoaSprites.get("gaugeLeft");
+	private static final BufferedImage RIGHT = DoaSprites.get("gaugeRight");
 
 	public static DoaImageButton nextPhaseButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.622f, Main.WINDOW_HEIGHT * 0.898f, 70, 70,
 	        DoaSprites.get("nextPhaseButtonIdle"), DoaSprites.get("nextPhaseButtonHover"), DoaSprites.get("nextPhaseButtonPressed"),
@@ -72,19 +72,19 @@ public class BottomPanel extends DoaPanel {
 		Province clickedProvince = GameManager.clickedHitArea != null ? GameManager.clickedHitArea.getProvince() : null;
 
 		String garrisonText = "";
-		DoaSprite garrisonSprite = DoaSprites.get("garrisonHolder");
+		BufferedImage garrisonSprite = DoaSprites.get("garrisonHolder");
 		DoaVectorF garrisonTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.454f, Main.WINDOW_HEIGHT * 0.836f);
 
 		String ownerText = "";
-		DoaSprite ownerSprite = DoaSprites.get("ownerHolder");
+		BufferedImage ownerSprite = DoaSprites.get("ownerHolder");
 		DoaVectorF ownerTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.447f, Main.WINDOW_HEIGHT * 0.874f);
 
 		String nameText = "";
-		DoaSprite nameSprite = DoaSprites.get("provinceNameHolder");
+		BufferedImage nameSprite = DoaSprites.get("provinceNameHolder");
 		DoaVectorF nameTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.436f, Main.WINDOW_HEIGHT * 0.912f);
 
 		String continentText = "";
-		DoaSprite continentSprite = DoaSprites.get("continentHolder");
+		BufferedImage continentSprite = DoaSprites.get("continentHolder");
 		DoaVectorF continentTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.430f, Main.WINDOW_HEIGHT * 0.950f);
 
 		if (clickedProvince != null) {

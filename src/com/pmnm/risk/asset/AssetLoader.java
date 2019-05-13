@@ -3,12 +3,12 @@ package com.pmnm.risk.asset;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.doa.engine.graphics.DoaAnimations;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 
 public final class AssetLoader {
@@ -81,8 +81,8 @@ public final class AssetLoader {
 				DoaSprites.createSprite("fall", "/ui/gameScreenElements/topInfo/fall.png");
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
 			}
-			
-			{//WEATHER EFFECTS
+
+			{// WEATHER EFFECTS
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
 				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
@@ -150,7 +150,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("blitzIdle", "/ui/gameScreenElements/diceScroll/blitzNormal.png");
 				DoaSprites.createSprite("blitzHover", "/ui/gameScreenElements/diceScroll/blitzHover.png");
 			}
-			
+
 			{// CARD PANEL
 				DoaSprites.createSprite("artillery", "/ui/gameScreenElements/cardScroll/artillery.png");
 				DoaSprites.createSprite("cavalry", "/ui/gameScreenElements/cardScroll/cavalry.png");
@@ -161,7 +161,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("scrollFrame", "/ui/gameScreenElements/cardScroll/scrollFrame.png");
 			}
 
-			List<DoaSprite> riskLogoKeyFrames = new ArrayList<>();
+			List<BufferedImage> riskLogoKeyFrames = new ArrayList<>();
 			for (int i = 1; i <= 11; i++) {
 				riskLogoKeyFrames.add(DoaSprites.createSprite("KEYFRAME" + i, "/ui/logoKeyframes/" + i + ".png"));
 			}

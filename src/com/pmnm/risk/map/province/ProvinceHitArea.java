@@ -21,7 +21,6 @@ import java.util.Map;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
@@ -404,8 +403,8 @@ public class ProvinceHitArea extends DoaObject {
 				g.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
 				FontMetrics fm = g.getFontMetrics();
 				g.setColor(Color.BLACK);
-				DoaSprite ownerLogo = DoaSprites.get("p" + p.getOwner().getID() + "Pawn");
-				DoaSprite continentLogo = DoaSprites.get(p.getContinent().getAbbreviation());
+				BufferedImage ownerLogo = DoaSprites.get("p" + p.getOwner().getID() + "Pawn");
+				BufferedImage continentLogo = DoaSprites.get(p.getContinent().getAbbreviation());
 				g.drawImage(continentLogo, centerX - continentLogo.getWidth() * 0.33f, centerY - continentLogo.getHeight() * 0.33f, continentLogo.getWidth() * 0.66f,
 				        continentLogo.getHeight() * 0.66f);
 				g.drawImage(ownerLogo, centerX - ownerLogo.getWidth() * 0.33f, centerY - ownerLogo.getHeight() * 0.33f, ownerLogo.getWidth() * 0.66f,

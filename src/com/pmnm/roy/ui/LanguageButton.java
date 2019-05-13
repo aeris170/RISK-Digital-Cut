@@ -1,9 +1,9 @@
 package com.pmnm.roy.ui;
 
 import java.awt.AlphaComposite;
+import java.awt.image.BufferedImage;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
@@ -12,11 +12,11 @@ public class LanguageButton extends DoaImageButton {
 
 	private static final long serialVersionUID = -3852059675270216284L;
 
-	private DoaSprite idleImage;
+	private BufferedImage idleImage;
 
 	private boolean selected = false;
 
-	public LanguageButton(DoaVectorF position, Integer width, Integer height, DoaSprite idleImage) {
+	public LanguageButton(DoaVectorF position, Integer width, Integer height, BufferedImage idleImage) {
 		super(position, width, height, idleImage);
 		this.idleImage = idleImage;
 	}

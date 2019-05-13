@@ -2,7 +2,6 @@ package com.pmnm.roy.ui.gameui;
 
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
@@ -13,23 +12,30 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.task.DoaTaskGuard;
+import com.doa.engine.task.DoaTasker;
 import com.pmnm.risk.main.Main;
 
 public class Water extends DoaObject {
 
 	private static final long serialVersionUID = -3289865017771805571L;
 
-	BufferedImage tex = null;
-	BufferedImage bigWinter = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);;
-	BufferedImage bigSpring = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);;
-	BufferedImage bigSummer = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);;
-	BufferedImage bigFall = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);;
+	private static final int SEG_X = 6;
+	private static final int SEG_Y = 3;
 
-	Point2D[][] points = new Point2D.Double[6][3];
-	long[][] startTime = new long[6][3];
-	double[][] intensity = new double[6][3];
+	BufferedImage tex = null;
+	BufferedImage bigWinter = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage bigSpring = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage bigSummer = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage bigFall = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage currentWaterTexCache = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+
+	DoaTaskGuard renderGuard = new DoaTaskGuard();
+
+	Point2D[][] points = new Point2D.Double[SEG_X][SEG_Y];
+	long[][] startTime = new long[SEG_X][SEG_Y];
+	double[][] intensity = new double[SEG_X][SEG_Y];
 
 	List<TriangularSurface> mesh = new ArrayList<>();
 
@@ -37,7 +43,7 @@ public class Water extends DoaObject {
 		super(0f, 0f, -2);
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
-				points[x][y] = new Point2D.Double(x * 320, y * 360);
+				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1), y * Main.WINDOW_HEIGHT / (SEG_Y - 1));
 				startTime[x][y] = ThreadLocalRandom.current().nextLong();
 				intensity[x][y] = ThreadLocalRandom.current().nextInt(1, 2);
 			}
@@ -54,16 +60,21 @@ public class Water extends DoaObject {
 				mesh.add(new TriangularSurface(pb1, pb2, pb3));
 			}
 		}
-		DoaSprite winterSpr = DoaSprites.get("winterTex");
-		DoaSprite springSpr = DoaSprites.get("springTex");
-		DoaSprite summerSpr = DoaSprites.get("summerTex");
-		DoaSprite fallSpr = DoaSprites.get("fallTex");
+		BufferedImage winterSpr = DoaSprites.get("winterTex");
+		BufferedImage springSpr = DoaSprites.get("springTex");
+		BufferedImage summerSpr = DoaSprites.get("summerTex");
+		BufferedImage fallSpr = DoaSprites.get("fallTex");
+		winterSpr.setAccelerationPriority(1);
+		springSpr.setAccelerationPriority(1);
+		summerSpr.setAccelerationPriority(1);
+		fallSpr.setAccelerationPriority(1);
+		currentWaterTexCache.setAccelerationPriority(1);
 		Graphics2D bigWinterRenderer = bigWinter.createGraphics();
 		Graphics2D bigSpringRenderer = bigSpring.createGraphics();
 		Graphics2D bigSummerRenderer = bigSummer.createGraphics();
 		Graphics2D bigFallRenderer = bigFall.createGraphics();
-		int texW = winterSpr.getWidth() / 6;
-		int texH = winterSpr.getHeight() / 6;
+		int texW = winterSpr.getWidth() / 3;
+		int texH = winterSpr.getHeight() / 3;
 		for (int i = -50; i < Main.WINDOW_WIDTH + 50; i += texW) {
 			for (int j = -50; j < Main.WINDOW_HEIGHT + 50; j += texH) {
 				bigWinterRenderer.drawImage(winterSpr, i, j, texW, texH, null);
@@ -79,8 +90,8 @@ public class Water extends DoaObject {
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				Point2D p = points[x][y];
-				double px = x * 320 + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000473);
-				double py = y * 360 + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000291);
+				double px = x * Main.WINDOW_WIDTH / (SEG_X - 1) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000973);
+				double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000791);
 				p.setLocation(px, py);
 			}
 		}
@@ -88,25 +99,24 @@ public class Water extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		switch (Season.getCurrentSeason()) {
-			case WINTER:
-				tex = bigWinter;
-				break;
-			case SPRING:
-				tex = bigSpring;
-				break;
-			case SUMMER:
-				tex = bigSummer;
-				break;
-			case FALL:
-				tex = bigFall;
-				break;
-		}
-		g.pushTransform();
-		g.translate(-50, -50);
-		g.scale(1.3, 1.7);
-		mesh.forEach(surface -> surface.render(g));
-		g.popTransform();
+		DoaTasker.guardExecution(() -> {
+			switch (Season.getCurrentSeason()) {
+				case WINTER:
+					tex = bigWinter;
+					break;
+				case SPRING:
+					tex = bigSpring;
+					break;
+				case SUMMER:
+					tex = bigSummer;
+					break;
+				case FALL:
+					tex = bigFall;
+					break;
+			}
+			mesh.parallelStream().forEach(surface -> surface.render());
+		}, renderGuard, 75);
+		g.drawImage(currentWaterTexCache, 0, 0);
 	}
 
 	private class TriangularSurface {
@@ -127,20 +137,19 @@ public class Water extends DoaObject {
 			}
 		}
 
-		public void render(DoaGraphicsContext g) {
+		public void render() {
+			Graphics2D g2d = currentWaterTexCache.createGraphics();
 			polygon.reset();
 			for (Point2D p : points) {
 				polygon.addPoint((int) p.getX(), (int) p.getY());
 			}
-			Shape originalClip = g.getClip();
-			g.clip(polygon);
+			g2d.setClip(polygon);
 			Point2D a = points[0];
 			Point2D b = points[1];
 			Point2D c = points[2];
 			t2.setTransform(a.getX() - c.getX(), a.getY() - c.getY(), b.getX() - c.getX(), b.getY() - c.getY(), c.getX(), c.getY());
 			t2.concatenate(t1);
-			g.drawImage(tex, t2);
-			g.setClip(originalClip);
+			g2d.drawImage(tex, t2, null);
 		}
 	}
 }

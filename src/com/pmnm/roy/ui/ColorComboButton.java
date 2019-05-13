@@ -2,11 +2,11 @@ package com.pmnm.roy.ui;
 
 import java.awt.AlphaComposite;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
@@ -20,11 +20,11 @@ public class ColorComboButton extends DoaImageButton {
 
 	private static final long serialVersionUID = 2677754096284998205L;
 
-	private static final DoaSprite[] OPTIONS = new DoaSprite[PlayerColorBank.size()];
+	private static final BufferedImage[] OPTIONS = new BufferedImage[PlayerColorBank.size()];
 
 	static {
 		for (int i = 0; i < PlayerColorBank.size(); i++) {
-			DoaSprite w = DoaSprites.deepCopyDoaSprite(DoaSprites.get("White"));
+			BufferedImage w = DoaSprites.deepCopyDoaSprite(DoaSprites.get("White"));
 			Utils.paintImage(w, PlayerColorBank.get(i));
 			OPTIONS[i] = w;
 		}

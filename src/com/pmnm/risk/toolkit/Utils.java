@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
 import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
@@ -63,7 +63,7 @@ public final class Utils {
 		return rect.getWidth() * rect.getHeight();
 	}
 
-	public static void paintImage(DoaSprite sp, Color c) {
+	public static void paintImage(BufferedImage sp, Color c) {
 		float cRed = c.getRed() / 255f;
 		float cBlue = c.getBlue() / 255f;
 		float cGreen = c.getGreen() / 255f;
