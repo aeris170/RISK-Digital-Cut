@@ -10,16 +10,19 @@ import com.pmnm.risk.map.board.GameBoard;
 public final class RiskGameScreenUI {
 
 	public static DicePanel DicePanel;
+	public static CardPanel CardPanel;
 
 	private RiskGameScreenUI() {}
 
 	public static void initUI() {
 		MapLoader.readMapData(new File("classic"));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
+		CardPanel = DoaHandler.instantiate(CardPanel.class);
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);
 		DoaHandler.instantiate(GameManager.class);
 		DoaHandler.instantiate(GameBoard.class);
 		GameManager.dicePanel = DicePanel;
+		GameManager.cardPanel = CardPanel;
 	}
 }

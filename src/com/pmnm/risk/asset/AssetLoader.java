@@ -159,6 +159,8 @@ public final class AssetLoader {
 				DoaSprites.createSprite("trump", "/ui/gameScreenElements/cardScroll/eyeOnBoxTrump.png");
 				DoaSprites.createSprite("cardScoll", "/ui/gameScreenElements/cardScroll/cardScroll.png");
 				DoaSprites.createSprite("scrollFrame", "/ui/gameScreenElements/cardScroll/scrollFrame.png");
+				DoaSprites.createSprite("bar", "/ui/gameScreenElements/cardScroll/bar.png");
+				DoaSprites.createSprite("dragButton", "/ui/gameScreenElements/cardScroll/dragButton.png");
 			}
 
 			List<BufferedImage> riskLogoKeyFrames = new ArrayList<>();
