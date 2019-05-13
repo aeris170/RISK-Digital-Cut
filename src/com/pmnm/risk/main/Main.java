@@ -11,7 +11,6 @@ import javax.swing.SwingUtilities;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaEngine;
-import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaRenderingMode;
 import com.doa.engine.DoaWindow;
 import com.doa.engine.input.DoaMouse;
@@ -43,7 +42,7 @@ public class Main {
 		DoaCamera.enableMouseZoom(null, 0.8f, 10f);
 
 		DoaCamera.adjustCamera(Camera.getInstance(), -10000, -10000, 10000, 10000);
-		//DoaHandler.instantiate(DebugPanel.class);
+		// DoaHandler.instantiate(DebugPanel.class);
 		SwingUtilities.invokeLater(() -> configureGUI());
 	}
 
