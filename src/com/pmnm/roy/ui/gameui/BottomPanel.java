@@ -73,7 +73,8 @@ public class BottomPanel extends DoaPanel {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		Province clickedProvince = GameManager.clickedHitArea != null ? GameManager.clickedHitArea.getProvince() : null;
+		GameManager gm = GameManager.INSTANCE;
+		Province clickedProvince = gm.clickedHitArea != null ? gm.clickedHitArea.getProvince() : null;
 
 		String garrisonText = "";
 		BufferedImage garrisonSprite = DoaSprites.get("garrisonHolder");
@@ -104,10 +105,10 @@ public class BottomPanel extends DoaPanel {
 		g.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (double) Main.WINDOW_HEIGHT - LEFT.getHeight());
 		g.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (double) Main.WINDOW_HEIGHT - RIGHT.getHeight());
 
-		String phaseText = GameManager.currentPhase.name();
+		String phaseText = gm.currentPhase.name();
 		DoaVectorF phaseArea = new DoaVectorF(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, phaseArea, phaseText)));
-		g.drawString(GameManager.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
+		g.drawString(gm.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
 
 		g.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (double) Main.WINDOW_HEIGHT - MIDDLE.getHeight());
 
@@ -127,7 +128,7 @@ public class BottomPanel extends DoaPanel {
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 30f));
 		fm = g.getFontMetrics();
 		if (clickedProvince != null) {
-			g.setColor(GameManager.clickedHitArea.getProvince().getOwner().getColor());
+			g.setColor(gm.clickedHitArea.getProvince().getOwner().getColor());
 		}
 		g.drawString(ownerText, ownerTopLeft.x + (ownerSprite.getWidth() - fm.stringWidth(ownerText)) / 2f, ownerTopLeft.y * 1.03f);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN,

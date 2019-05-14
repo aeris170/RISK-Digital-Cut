@@ -14,8 +14,8 @@ public class Province implements Serializable {
 
 	private static final long serialVersionUID = 157817527974605181L;
 
-	public static final List<Province> ALL_PROVINCES = new ArrayList<>();
-	public static final List<Province> UNCLAIMED_PROVINCES = new ArrayList<>();
+	public static List<Province> ALL_PROVINCES = new ArrayList<>();
+	public static List<Province> UNCLAIMED_PROVINCES = new ArrayList<>();
 
 	private Continent continent;
 	private String name;
@@ -81,9 +81,8 @@ public class Province implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Province [continent=" + continent + ", name=" + name + ", neighbours=" + neighbours + ", meshes="
-				+ meshes + ", center=" + center + ", isClaimed=" + isClaimed + ", owner=" + owner + ", troops=" + troops
-				+ "]";
+		return "Province [continent=" + continent + ", name=" + name + ", neighbours=" + neighbours + ", meshes=" + meshes + ", center=" + center + ", isClaimed="
+		        + isClaimed + ", owner=" + owner + ", troops=" + troops + "]";
 	}
 
 	public static void printAllProvinces() {

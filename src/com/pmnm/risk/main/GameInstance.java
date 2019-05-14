@@ -1,251 +1,107 @@
 package com.pmnm.risk.main;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import com.doa.engine.DoaHandler;
+import com.pmnm.risk.card.Card;
+import com.pmnm.risk.map.board.ProvinceConnector;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
+import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.map.province.ProvinceHitArea.ProvinceSymbol;
+import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
-// Java code for serialization and deserialization
-// of a Java object
+public final class GameInstance implements Serializable {
 
-public class GameInstance implements Serializable {
+	private static final long serialVersionUID = 3374349513952165496L;
 
-	private List<Player> players = new ArrayList<>();
-	private int numberOfPlayers;
-	private boolean manualPlacement;
-	private boolean isManualPlacementDone;
-	private int placementCounter;
-	private TurnPhase currentPhase;
-	private int reinforcementForThisTurn;
-	private Player currentPlayer;
-	private int turnCount;
-	private Province draftReinforceProvince;
-	private String currentDate;
-	private String saveName;
-	public Map<String, Continent> NAME_CONTINENT = new LinkedHashMap<>();
-	public List<Province> ALL_PROVINCES = new ArrayList<>();
-	public List<Province> UNCLAIMED_PROVINCES = new ArrayList<>();
-	private Set<Province> provinces;
+	List<Province> provinces;
+	Map<String, Continent> continents;
+	GameManager gm;
+	ProvinceConnector pc;
 
-	// Default constructor
-	public GameInstance(String currentDate, String saveName) {
-		this.currentDate = currentDate;
-		this.saveName = saveName;
+	List<Card> UNDISTRIBUTED_CARDS;
+	Map<Province, Card> PROVINCE_CARDS;
+	Map<String, Player> NAME_PLAYER;
+	List<Province> UNCLAIMED_PROVINCES;
+	List<ProvinceHitArea> ALL_PROVINCE_HIT_AREAS;
+	List<ProvinceSymbol> ALL_PROVINCE_SYMBOLS;
+
+	private GameInstance() {
+		this.provinces = Province.ALL_PROVINCES;
+		this.continents = Continent.NAME_CONTINENT;
+		this.gm = GameManager.INSTANCE;
+		this.pc = ProvinceConnector.getInstance();
+		UNDISTRIBUTED_CARDS = Card.UNDISTRIBUTED_CARDS;
+		PROVINCE_CARDS = Card.PROVINCE_CARDS;
+		NAME_PLAYER = Player.NAME_PLAYER;
+		UNCLAIMED_PROVINCES = Province.UNCLAIMED_PROVINCES;
+		ALL_PROVINCE_HIT_AREAS = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS;
+		ALL_PROVINCE_SYMBOLS = ProvinceHitArea.ALL_PROVINCE_SYMBOLS;
 	}
 
-	// later save complete
-	public boolean saveNow(GameInstance NewSave) throws IOException {
-		GameInstance object2 = NewSave;
-		String filename = NewSave.saveName + ".ser";
-		if (nameControl(object2.getSaveName())) {
-			System.out.println("Save is unsuccessfull, name already exist");
-			return false;
-		}
-		// Save savegame name
-		saveGameNames(NewSave.saveName);
-		System.out.println("We controlled the save game names");
-		// reached
-		// Serialization
-		try {
-			// Saving of object in a file
-			FileOutputStream file = new FileOutputStream(filename);
-			ObjectOutputStream out = new ObjectOutputStream(file);
-			// Method for serialization of object
-			out.writeObject(NewSave);
-			out.close();
-			file.close();
-			System.out.println("Object has been serialized or Game is Saved");
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.out.println("IOException is caught");
-		}
-		// save operation has been made
-		return true;
-	}
-
-	// later save complete
-	public GameInstance loadNow(String loadName) {
-		GameInstance object1 = null;
-		String filename = loadName + ".ser";
-		// Deserialization
-		try {
-			// Reading the object from a file
-			FileInputStream file = new FileInputStream(filename);
-			ObjectInputStream in = new ObjectInputStream(file);
-			// Method for deserialization of object
-			object1 = (GameInstance) in.readObject();
-			in.close();
-			file.close();
-			System.out.println("Object has been deserialized ");
-		} catch (IOException | ClassNotFoundException ex) {
-			ex.printStackTrace();
-		}
-		return object1;
-	}
-
-	private void readObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-		inputStream.defaultReadObject();
-	}
-
-	public void saveGameNames(String saveName) throws IOException {
-		PrintWriter writer = new PrintWriter("saveGameNames.txt");
-		writer.println(saveName);
-		writer.close();
-	}
-
-	public boolean nameControl(String saveName) throws IOException {
-		File file = new File("saveGameNames.txt");
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		String names;
-		boolean nameExist = false;
-		while ((names = br.readLine()) != null) {
-			if (names.equals(saveName)) {
-				nameExist = true;
+	public static void saveGame() throws IOException {
+		GameInstance gi = new GameInstance();
+		String mapName = GameManager.INSTANCE.currentMapName;
+		String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName + "\\";
+		File f = new File(dir);
+		f.mkdirs();
+		try (FileOutputStream file = new FileOutputStream(dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
+			try (ObjectOutputStream out = new ObjectOutputStream(file)) {
+				out.writeObject(gi);
+				System.out.println("Object has been serialized");
 			}
 		}
-		System.out.println("We controlled the save names");
-		return nameExist;
 	}
 
-	public int getNumberOfPlayers() {
-		return numberOfPlayers;
+	public static void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+		// TODO take input from UI
+		String mapName = GameManager.INSTANCE.currentMapName;
+		String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName + "\\save_20190514_124759_classic.sav";
+
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> DoaHandler.remove(pha));
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
+		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.forEach(ps -> DoaHandler.remove(ps));
+		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.clear();
+		Player.NAME_PLAYER.values().forEach(p -> DoaHandler.remove(p));
+		Player.NAME_PLAYER.clear();
+		DoaHandler.remove(GameManager.INSTANCE);
+
+		try (FileInputStream file = new FileInputStream(dir)) {
+			try (ObjectInputStream in = new ObjectInputStream(file)) {
+				GameInstance loadedGame = (GameInstance) in.readObject();
+				GameManager.INSTANCE = loadedGame.gm;
+				GameManager.INSTANCE.dicePanel = RiskGameScreenUI.DicePanel;
+				DoaHandler.add(GameManager.INSTANCE);
+				Province.ALL_PROVINCES = loadedGame.provinces;
+				Continent.NAME_CONTINENT = loadedGame.continents;
+				Card.UNDISTRIBUTED_CARDS = loadedGame.UNDISTRIBUTED_CARDS;
+				Card.PROVINCE_CARDS = loadedGame.PROVINCE_CARDS;
+				Player.NAME_PLAYER = loadedGame.NAME_PLAYER;
+				Province.UNCLAIMED_PROVINCES = loadedGame.UNCLAIMED_PROVINCES;
+				ProvinceHitArea.ALL_PROVINCE_HIT_AREAS = loadedGame.ALL_PROVINCE_HIT_AREAS;
+				ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> {
+					pha.cacheMeshAsImage();
+					DoaHandler.add(pha);
+				});
+				ProvinceHitArea.ALL_PROVINCE_SYMBOLS = loadedGame.ALL_PROVINCE_SYMBOLS;
+				ProvinceHitArea.ALL_PROVINCE_SYMBOLS.forEach(ps -> DoaHandler.add(ps));
+				ProvinceConnector.deserialize(loadedGame.pc);
+				Player.NAME_PLAYER.values().forEach(p -> DoaHandler.add(p));
+				System.out.println("Object has been deserialized ");
+			}
+		}
 	}
 
-	public void setNumberOfPlayers(int numberOfPlayers) {
-		this.numberOfPlayers = numberOfPlayers;
-	}
-
-	public boolean isManualPlacement() {
-		return manualPlacement;
-	}
-
-	public void setManualPlacement(boolean manualPlacement) {
-		this.manualPlacement = manualPlacement;
-	}
-
-	public boolean isManualPlacementDone() {
-		return isManualPlacementDone;
-	}
-
-	public void setManualPlacementDone(boolean isManualPlacementDone) {
-		this.isManualPlacementDone = isManualPlacementDone;
-	}
-
-	public int getPlacementCounter() {
-		return placementCounter;
-	}
-
-	public void setPlacementCounter(int placementCounter) {
-		this.placementCounter = placementCounter;
-	}
-
-	public TurnPhase getCurrentPhase() {
-		return currentPhase;
-	}
-
-	public void setCurrentPhase(TurnPhase currentPhase) {
-		this.currentPhase = currentPhase;
-	}
-
-	public int getReinforcementForThisTurn() {
-		return reinforcementForThisTurn;
-	}
-
-	public void setReinforcementForThisTurn(int reinforcementForThisTurn) {
-		this.reinforcementForThisTurn = reinforcementForThisTurn;
-	}
-
-	public Player getCurrentPlayer() {
-		return currentPlayer;
-	}
-
-	public void setCurrentPlayer(Player currentPlayer) {
-		this.currentPlayer = currentPlayer;
-	}
-
-	public int getTurnCount() {
-		return turnCount;
-	}
-
-	public void setTurnCount(int turnCount) {
-		this.turnCount = turnCount;
-	}
-
-	public Province getDraftReinforceProvince() {
-		return draftReinforceProvince;
-	}
-
-	public void setDraftReinforceProvince(Province draftReinforceProvince) {
-		this.draftReinforceProvince = draftReinforceProvince;
-	}
-
-	public String getCurrentDate() {
-		return currentDate;
-	}
-
-	public void setCurrentDate(String currentDate) {
-		this.currentDate = currentDate;
-	}
-
-	public String getSaveName() {
-		return saveName;
-	}
-
-	public void setSaveName(String saveName) {
-		this.saveName = saveName;
-	}
-
-	public List<Player> getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(List<Player> players) {
-		this.players = players;
-	}
-
-	public Map<String, Continent> getNAME_CONTINENT() {
-		return NAME_CONTINENT;
-	}
-
-	public void setNAME_CONTINENT(Map<String, Continent> nAME_CONTINENT) {
-		NAME_CONTINENT = nAME_CONTINENT;
-	}
-
-	public List<Province> getALL_PROVINCES() {
-		return ALL_PROVINCES;
-	}
-
-	public void setALL_PROVINCES(List<Province> aLL_PROVINCES) {
-		ALL_PROVINCES = aLL_PROVINCES;
-	}
-
-	public List<Province> getUNCLAIMED_PROVINCES() {
-		return UNCLAIMED_PROVINCES;
-	}
-
-	public void setUNCLAIMED_PROVINCES(List<Province> uNCLAIMED_PROVINCES) {
-		UNCLAIMED_PROVINCES = uNCLAIMED_PROVINCES;
-	}
-
-	public Set<Province> getProvinces() {
-		return provinces;
-	}
-
-	public void setProvinces(Set<Province> provinces) {
-		this.provinces = provinces;
-	}
 }

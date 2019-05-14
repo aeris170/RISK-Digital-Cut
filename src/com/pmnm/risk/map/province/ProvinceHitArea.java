@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
@@ -47,14 +48,15 @@ public class ProvinceHitArea extends DoaObject {
 		HINTS.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	}
 
-	public static final List<ProvinceHitArea> ALL_PROVINCE_HIT_AREAS = new ArrayList<>();
+	public static List<ProvinceHitArea> ALL_PROVINCE_HIT_AREAS = new CopyOnWriteArrayList<>();
+	public static List<ProvinceSymbol> ALL_PROVINCE_SYMBOLS = new CopyOnWriteArrayList<>();
 	public static ProvinceHitArea selectedProvinceByMouse = null;
 
 	private Province province;
 	private List<GeneralPath> meshes = new ArrayList<>();
 
 	private transient BufferedImage unoccupiedMesh;
-	private transient Map<Color, BufferedImage> playerOwnedMeshes = new HashMap<>();
+	private transient Map<Color, BufferedImage> playerOwnedMeshes;
 	private transient BufferedImage selectedMesh;
 	private transient BufferedImage selectedBorder;
 	private transient BufferedImage emphasizedBorder;
@@ -82,8 +84,8 @@ public class ProvinceHitArea extends DoaObject {
 	private float selectedMeshAlpha = 0f;
 	private float selectedMeshAlphaDelta = 0.005f;
 
-	public ProvinceHitArea(Province province, float x, float y, int width, int height) {
-		super(x, y, width, height, 0);
+	public ProvinceHitArea(Province province) {
+		super(0f, 0f, 0, 0, 0);
 		this.province = province;
 		province.getMeshes().forEach(mesh -> {
 			GeneralPath hitArea = new GeneralPath();
@@ -118,15 +120,15 @@ public class ProvinceHitArea extends DoaObject {
 			selectedProvinceByMouse = this;
 			isSelected = true;
 		}
-		setzOrder(1);
+
 		if (isHighlighted) {
 			setzOrder(2);
-		}
-		if (isEmphasized) {
+		} else if (isEmphasized) {
 			setzOrder(3);
-		}
-		if (isAttacker || isDefender || isReinforcing || isReinforced) {
+		} else if (isAttacker || isDefender || isReinforcing || isReinforced) {
 			setzOrder(4);
+		} else if (getzOrder() != 1) {
+			setzOrder(1);
 		}
 		if (isSelected) {
 			setzOrder(5);
@@ -140,6 +142,9 @@ public class ProvinceHitArea extends DoaObject {
 			}
 		} else {
 			selectedMeshAlpha = 0f;
+			if (getzOrder() != 1) {
+				setzOrder(1);
+			}
 		}
 	}
 
@@ -182,7 +187,8 @@ public class ProvinceHitArea extends DoaObject {
 		}
 	}
 
-	private void cacheMeshAsImage() {
+	public void cacheMeshAsImage() {
+		playerOwnedMeshes = new HashMap<>();
 		for (GeneralPath mesh : meshes) {
 			double[][] vertices = getPoints(mesh);
 			for (int i = 0; i < vertices.length; i++) {
@@ -391,6 +397,7 @@ public class ProvinceHitArea extends DoaObject {
 
 		public ProvinceSymbol() {
 			super((float) centerX, (float) centerY, 0, 0, 9);
+			ALL_PROVINCE_SYMBOLS.add(this);
 		}
 
 		@Override
@@ -424,5 +431,4 @@ public class ProvinceHitArea extends DoaObject {
 	public void setProvince(Province province) {
 		this.province = province;
 	}
-
 }

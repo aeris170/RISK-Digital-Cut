@@ -21,7 +21,8 @@ public class Player extends DoaObject {
 
 	private static final long serialVersionUID = 1411773994871441922L;
 
-	public static final Map<String, Player> NAME_PLAYER = new HashMap<>();
+	public static Map<String, Player> NAME_PLAYER = new HashMap<>();
+
 	private static int number = 1;
 
 	private Color playerColor;
@@ -54,46 +55,48 @@ public class Player extends DoaObject {
 			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 			if (clickedHitArea != null) {
 				Province clickedProvince = clickedHitArea.getProvince();
-				if (!GameManager.isManualPlacementDone) {
+				GameManager gm = GameManager.INSTANCE;
+				if (!gm.isManualPlacementDone) {
 					if (!clickedProvince.isClaimed()) {
-						GameManager.claimProvince(clickedProvince);
+						gm.claimProvince(clickedProvince);
 						isInTurn = false;
-					} else if (clickedProvince.isOwnedBy(this) && GameManager.areAllProvincesClaimed()) {
-						GameManager.setDraftReinforceProvince(clickedProvince);
-						GameManager.draftReinforce(1);
+					} else if (clickedProvince.isOwnedBy(this) && gm.areAllProvincesClaimed()) {
+						gm.setDraftReinforceProvince(clickedProvince);
+						gm.draftReinforce(1);
 						isInTurn = false;
 					}
-				} else if (GameManager.currentPhase == TurnPhase.DRAFT) {
-					if (GameManager.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
-						GameManager.setDraftReinforceProvince(clickedProvince);
+				} else if (gm.currentPhase == TurnPhase.DRAFT) {
+					if (gm.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
+						gm.setDraftReinforceProvince(clickedProvince);
 					}
-				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
-					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && GameManager.moveAfterOccupySource == null) {
-						GameManager.markAttackerProvince(clickedHitArea);
-						GameManager.markDefenderProvince(null);
-					} else if (GameManager.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
-					        && GameManager.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
-						GameManager.markDefenderProvince(clickedHitArea);
+				} else if (gm.currentPhase == TurnPhase.ATTACK) {
+					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && gm.moveAfterOccupySource == null) {
+						gm.markAttackerProvince(clickedHitArea);
+						gm.markDefenderProvince(null);
+					} else if (gm.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
+					        && gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
+						gm.markDefenderProvince(clickedHitArea);
 					}
-				} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
+				} else if (gm.currentPhase == TurnPhase.REINFORCE) {
 					if (clickedProvince.isOwnedBy(this)) {
-						if (clickedProvince.getTroops() > 1 && GameManager.getReinforcingProvince() == null) {
-							GameManager.markReinforcingProvince(clickedHitArea);
-						} else if (GameManager.getReinforcingProvince() != null && destination == null) {
-							GameManager.markReinforcedProvince(clickedHitArea);
+						if (clickedProvince.getTroops() > 1 && gm.getReinforcingProvince() == null) {
+							gm.markReinforcingProvince(clickedHitArea);
+						} else if (gm.getReinforcingProvince() != null && destination == null) {
+							gm.markReinforcedProvince(clickedHitArea);
 						}
 					}
 				}
 			} else if (DoaMouse.MB1) {
-				GameManager.clickedHitArea = null;
-				if (GameManager.currentPhase == TurnPhase.DRAFT) {
-					GameManager.setDraftReinforceProvince(null);
-				} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
-					GameManager.markAttackerProvince(null);
-					GameManager.markDefenderProvince(null);
-				} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
-					GameManager.markReinforcingProvince(null);
-					GameManager.markReinforcedProvince(null);
+				GameManager gm = GameManager.INSTANCE;
+				gm.clickedHitArea = null;
+				if (gm.currentPhase == TurnPhase.DRAFT) {
+					gm.setDraftReinforceProvince(null);
+				} else if (gm.currentPhase == TurnPhase.ATTACK) {
+					gm.markAttackerProvince(null);
+					gm.markDefenderProvince(null);
+				} else if (gm.currentPhase == TurnPhase.REINFORCE) {
+					gm.markReinforcingProvince(null);
+					gm.markReinforcedProvince(null);
 				}
 				if (ProvinceHitArea.selectedProvinceByMouse != null) {
 					ProvinceHitArea.selectedProvinceByMouse.isSelected = false;

@@ -11,16 +11,17 @@ public class CenterPieceButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		if (GameManager.currentPhase == TurnPhase.DRAFT) {
-			GameManager.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
-		} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
+		GameManager gm = GameManager.INSTANCE;
+		if (gm.currentPhase == TurnPhase.DRAFT) {
+			gm.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+		} else if (gm.currentPhase == TurnPhase.ATTACK) {
 			if (BottomPanel.spinnerValues != null) {
-				GameManager.moveTroopsAfterOccupying(BottomPanel.spinnerValues.get(BottomPanel.index));
+				gm.moveTroopsAfterOccupying(BottomPanel.spinnerValues.get(BottomPanel.index));
 				BottomPanel.nextPhaseButton.enable();
 				BottomPanel.nullSpinner();
 			}
-		} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
-			GameManager.reinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+		} else if (gm.currentPhase == TurnPhase.REINFORCE) {
+			gm.reinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
 		}
 	}
 }
