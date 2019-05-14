@@ -127,6 +127,10 @@ public class Player extends DoaObject {
 	public Color getColor() {
 		return playerColor;
 	}
+	
+	public void setColor(Color pColor) {
+		playerColor = pColor;
+	}
 
 	public int getID() {
 		return id;

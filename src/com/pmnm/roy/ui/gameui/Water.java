@@ -73,8 +73,8 @@ public class Water extends DoaObject {
 		Graphics2D bigSpringRenderer = bigSpring.createGraphics();
 		Graphics2D bigSummerRenderer = bigSummer.createGraphics();
 		Graphics2D bigFallRenderer = bigFall.createGraphics();
-		int texW = winterSpr.getWidth() / 3;
-		int texH = winterSpr.getHeight() / 3;
+		int texW = winterSpr.getWidth() / 10;
+		int texH = winterSpr.getHeight() / 10;
 		for (int i = -50; i < Main.WINDOW_WIDTH + 50; i += texW) {
 			for (int j = -50; j < Main.WINDOW_HEIGHT + 50; j += texH) {
 				bigWinterRenderer.drawImage(winterSpr, i, j, texW, texH, null);

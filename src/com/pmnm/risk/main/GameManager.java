@@ -23,6 +23,7 @@ import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 import com.pmnm.roy.ui.gameui.DicePanel;
+import com.pmnm.roy.ui.gameui.CardPanel;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 public class GameManager extends DoaObject {
@@ -89,6 +90,7 @@ public class GameManager extends DoaObject {
 		if (currentPhase == TurnPhase.DRAFT) {
 			currentPhase = TurnPhase.ATTACK;
 			if (currentPlayer.isLocalPlayer()) {
+				cardPanel.hide();
 				BottomPanel.nextPhaseButton.enable();
 			}
 			BottomPanel.nullSpinner();
@@ -107,6 +109,9 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
+			if (currentPlayer.isLocalPlayer()) {
+				cardPanel.show();
+			}
 		}
 	}
 
