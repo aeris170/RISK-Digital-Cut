@@ -6,13 +6,11 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.DoaUIContainer;
 import com.doa.ui.button.DoaImageButton;
-import com.pmnm.roy.ui.gameui.actions.BlitzButtonAction;
-import com.pmnm.roy.ui.gameui.actions.DiceButtonAction;
+import com.pmnm.risk.card.Card;
 
 public class CardPanel extends DoaUIContainer {
 
 	//serial version UID needed;
-	//private Arraylist
 
 
 	public CardPanel() {
@@ -37,5 +35,6 @@ public class CardPanel extends DoaUIContainer {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		g.drawImage(DoaSprites.get("scroll"), 1404f, 258f);
+		
 	}
 }
