@@ -89,8 +89,8 @@ public class GameManager extends DoaObject {
 	public static void nextPhase() {
 		if (currentPhase == TurnPhase.DRAFT) {
 			currentPhase = TurnPhase.ATTACK;
-			cardPanel.hide();
 			if (currentPlayer.isLocalPlayer()) {
+				cardPanel.hide();
 				BottomPanel.nextPhaseButton.enable();
 			}
 			BottomPanel.nullSpinner();
@@ -109,7 +109,9 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			cardPanel.show();
+			if (currentPlayer.isLocalPlayer()) {
+				cardPanel.show();
+			}		
 		}
 	}
 

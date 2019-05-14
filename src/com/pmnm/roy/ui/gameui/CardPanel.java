@@ -12,6 +12,7 @@ import com.pmnm.roy.ui.gameui.actions.DiceButtonAction;
 public class CardPanel extends DoaUIContainer {
 
 	//serial version UID needed;
+	//private Arraylist
 
 
 	public CardPanel() {
@@ -35,6 +36,6 @@ public class CardPanel extends DoaUIContainer {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.drawImage(DoaSprites.get("cardScroll"), 1404f, 258f);
+		g.drawImage(DoaSprites.get("scroll"), 1404f, 258f);
 	}
 }

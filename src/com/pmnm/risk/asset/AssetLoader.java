@@ -157,7 +157,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("infantry", "/ui/gameScreenElements/cardScroll/footman.png");
 				DoaSprites.createSprite("card", "/ui/gameScreenElements/cardScroll/card.png");
 				DoaSprites.createSprite("trump", "/ui/gameScreenElements/cardScroll/eyeOnBoxTrump.png");
-				DoaSprites.createSprite("cardScoll", "/ui/gameScreenElements/cardScroll/cardScroll.png");
+				DoaSprites.createSprite("scroll", "/ui/gameScreenElements/cardScroll/scroll.png");
 				DoaSprites.createSprite("scrollFrame", "/ui/gameScreenElements/cardScroll/scrollFrame.png");
 				DoaSprites.createSprite("bar", "/ui/gameScreenElements/cardScroll/bar.png");
 				DoaSprites.createSprite("dragButton", "/ui/gameScreenElements/cardScroll/dragButton.png");

@@ -6,6 +6,7 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
@@ -49,6 +50,7 @@ public class SinglePlayerMenu extends DoaPanel {
 			add(ccb);
 			ccba[i] = ccb;
 		}
+		//GameManager.players.get(0).setColor(ccba[0].getColor());
 		tbca[0].index = 1;
 		tbca[1].index = 2;
 		tbca[2].index = 2;

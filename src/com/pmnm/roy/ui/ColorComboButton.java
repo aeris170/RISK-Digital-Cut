@@ -1,6 +1,7 @@
 package com.pmnm.roy.ui;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -87,6 +88,9 @@ public class ColorComboButton extends DoaImageButton {
 				        OPTIONS[i].getWidth() + Main.WINDOW_WIDTH * 0.020f, OPTIONS[i].getHeight());
 			}
 		}
+	}
+	public Color getColor() {
+		return PlayerColorBank.get(index);
 	}
 
 	private Rectangle2D firstColorHitBox() {
