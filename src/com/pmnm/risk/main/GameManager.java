@@ -22,8 +22,8 @@ import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.BottomPanel;
-import com.pmnm.roy.ui.gameui.DicePanel;
 import com.pmnm.roy.ui.gameui.CardPanel;
+import com.pmnm.roy.ui.gameui.DicePanel;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 public class GameManager extends DoaObject {
@@ -49,6 +49,7 @@ public class GameManager extends DoaObject {
 	public ProvinceHitArea attackerProvinceHitArea = null;
 	public ProvinceHitArea defenderProvinceHitArea = null;
 	public transient DicePanel dicePanel = RiskGameScreenUI.DicePanel;
+	public transient CardPanel cardPanel = RiskGameScreenUI.CardPanel;
 
 	public ProvinceHitArea moveAfterOccupySource = null;
 	public ProvinceHitArea moveAfterOccupyDestination = null;

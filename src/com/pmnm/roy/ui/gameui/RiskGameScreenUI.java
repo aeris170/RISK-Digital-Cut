@@ -24,7 +24,5 @@ public final class RiskGameScreenUI {
 		DoaHandler.instantiate(BottomPanel.class);
 		DoaHandler.instantiate(GameManager.class, mapName);
 		DoaHandler.instantiate(GameBoard.class);
-		GameManager.dicePanel = DicePanel;
-		GameManager.cardPanel = CardPanel;
 	}
 }
