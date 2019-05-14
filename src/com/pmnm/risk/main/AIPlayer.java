@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+
 import com.pmnm.risk.map.province.Province;
 
 public class AIPlayer extends Player {
@@ -31,7 +32,6 @@ public class AIPlayer extends Player {
 						if (getPlayerProvinces(this).isEmpty()) {
 							Province provinceToClaim = Province.getRandomUnclaimedProvince();
 							gm.claimProvince(provinceToClaim);
-							claimedProvince = provinceToClaim;
 							isInTurn = false;
 						} else {
 							// TODO - Simge - medium ai i
@@ -39,8 +39,7 @@ public class AIPlayer extends Player {
 					}
 				} else {
 					if (difficulty <= 2) {
-						List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
-								.collect(Collectors.toList());
+						List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this).collect(Collectors.toList());
 						Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
 						gm.setDraftReinforceProvince(p);
 						gm.draftReinforce(1);
@@ -68,8 +67,8 @@ public class AIPlayer extends Player {
 		if (difficulty == 1) {
 			for (int i = 0; i < ownedProvinces.size(); i++) {
 				if (ownedProvinces.get(i).troopCount() > 10) {
-					List<Province> ownedProvinceNeighbours = ownedProvinces.get(i).getNeighbours().stream()
-							.filter(p -> p.getOwner() != this).collect(Collectors.toList());
+					List<Province> ownedProvinceNeighbours = ownedProvinces.get(i).getNeighbours().stream().filter(p -> p.getOwner() != this)
+					        .collect(Collectors.toList());
 					for (int j = 0; j < ownedProvinceNeighbours.size(); j++) {
 						if (ownedProvinces.get(i).troopCount() - ownedProvinceNeighbours.get(j).troopCount() > 5) {
 							gm.markAttackerProvince(ownedProvinces.get(i).getProvinceHitArea());
