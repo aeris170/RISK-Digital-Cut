@@ -1,5 +1,6 @@
 package com.pmnm.risk.main;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPOutputStream;
 
 import com.doa.engine.DoaHandler;
 import com.pmnm.risk.card.Card;
@@ -60,10 +62,59 @@ public final class GameInstance implements Serializable {
 		try (FileOutputStream file = new FileOutputStream(dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
 			try (ObjectOutputStream out = new ObjectOutputStream(file)) {
 				out.writeObject(gi);
+				
 				System.out.println("Object has been serialized");
 			}
 		}
 	}
+	
+	
+	public static void gameInstanceCreation(int userNumber) throws IOException {
+		GameInstance gi = new GameInstance();
+	//	String mapName = GameManager.INSTANCE.currentMapName;
+	//	String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName + "\\";
+	//	File f = new File(dir);
+	//	f.mkdirs();
+		//try (FileOutputStream file = new FileOutputStream(dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
+		//	try (ObjectOutputStream out = new ObjectOutputStream(file)) {
+			//	out.writeObject(gi);
+				compress(gi, userNumber);
+				System.out.println("Object has been compressed");
+			//}
+	
+	}
+	
+	public static void compress(GameInstance t, int userNumber) throws IOException {
+		FileOutputStream fos = null;
+        GZIPOutputStream gos = null;
+        ObjectOutputStream oos = null;
+        
+        try {
+            fos = new FileOutputStream("clientFiles\\currentGame.gz");
+            gos = new GZIPOutputStream(fos);
+            oos = new ObjectOutputStream(gos);
+            oos.writeObject(t);
+            oos.writeObject(t);
+            oos.flush();
+            System.out.println("Done... Objects are compressed and stored");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally{
+            try{
+                if(oos != null) oos.close();
+                if(fos != null) fos.close();
+            } catch(Exception ex){
+                 
+            }
+        }
+	}
+	
+	
+	
 
 	public static void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
 		// TODO take input from UI

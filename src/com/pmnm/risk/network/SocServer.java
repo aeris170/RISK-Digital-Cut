@@ -21,13 +21,15 @@ public class SocServer implements Runnable {
 
 	private int serverCapacity; // Exactly how many people will connect.
 	private AtomicInteger threadsFinished = new AtomicInteger(0); // Used for synchronisation.
-
+	public static int controller = 1;
 	private ServerSocket server;
+	public static Thread t;
 
 	// To create more streams, we use lists.
 	// Transients are useless, I put them to make warnings disappear.
 	private List<Socket> connections; // Socket is basically connection between two computers.
 	private List<ObjectOutputStream> outputs;
+	
 	private List<ObjectInputStream> inputs;
 	private List<Thread> streamThreads; // Socket listeners.
 	private List<Boolean> isThreadFinished; // Used to stop threads that finished listening.
@@ -44,7 +46,19 @@ public class SocServer implements Runnable {
 	public static void main(String[] args) {
 		// User will specify the server capacity.
 		SocServer serverProtocol = new SocServer(2);
-		new Thread(serverProtocol).start();
+		//t = new Thread(new SocServer(10));
+	//	t.start();
+		//
+	}
+	
+	public static void starterPack() {
+		t = new Thread(new SocServer(10));
+		t.start();
+	}
+	
+	public static void secondaryPack(int capacityOfServer) {
+		new Thread(new SocServer(capacityOfServer)).start();
+		System.out.println("***********************");
 	}
 
 	// *************************************************************************
@@ -56,9 +70,14 @@ public class SocServer implements Runnable {
 			server = sv;
 			// Auto connect to server.
 			// User specifies the name ("HOST")
-			connections.add(new Client("HOST", "localhost").getSocket());
+			System.out.println("egegegegegeegegegegegegegegege");
 			// Wait for connections to be made.
+			if(controller == 2) {
+			System.out.println("comes */*/**/*/*/");
+			connections.add(new Client("HOST", "localhost").getSocket());
+			}
 			waitForConnection();
+			
 			// Loop forever to get chat and MP. Finish when everyone leaves.
 			whileChatting();
 		} catch (IOException ex) {
@@ -72,12 +91,12 @@ public class SocServer implements Runnable {
 	private void waitForConnection() throws IOException {
 		// Wait for all connections. Exactly the value of serverCapacity connections
 		// must be made.
-		for (int i = 0; i < serverCapacity; i++) {
+		//for (int i = 0; i < serverCapacity; i++) {
+		while(true) {
 			Socket connection = server.accept();
 			connections.add(connection);
 			setupStreams(connection);
 		}
-
 	}
 
 	// *************************************************************************
@@ -188,4 +207,7 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
+
+	
+	
 }
