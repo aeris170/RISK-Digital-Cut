@@ -15,14 +15,14 @@ public final class RiskGameScreenUI {
 	private RiskGameScreenUI() {}
 
 	public static void initUI() {
-		MapLoader.readMapData(new File("classic"));
+		// TODO make mapName a parameter and pass from UI
+		String mapName = "classic";
+		MapLoader.readMapData(new File(mapName));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
 		CardPanel = DoaHandler.instantiate(CardPanel.class);
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);
-		DoaHandler.instantiate(GameManager.class);
+		DoaHandler.instantiate(GameManager.class, mapName);
 		DoaHandler.instantiate(GameBoard.class);
-		GameManager.dicePanel = DicePanel;
-		GameManager.cardPanel = CardPanel;
 	}
 }

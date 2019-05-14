@@ -108,11 +108,26 @@ public class Camera extends DoaObject {
 			}
 		}
 
+		if (vertexLogKeyGuard.get() && DoaKeyboard.S) {
+			vertexLogKeyGuard.set(false);
+			DoaTasker.guard(vertexLogKeyGuard, 1000);
+			System.out.println("SAVED!");
+			try {
+				GameInstance.saveGame();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+
 		if (vertexLogKeyGuard.get() && DoaKeyboard.L) {
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
-			System.out.println("L is pressed");
-			GameManager.loadGame("firstSave");
+			System.out.println("LOADED!");
+			try {
+				GameInstance.loadGame();
+			} catch (IOException | ClassNotFoundException ex) {
+				ex.printStackTrace();
+			}
 		}
 
 		if (isLoggingVertices) {
@@ -149,15 +164,4 @@ public class Camera extends DoaObject {
 		 * 23); g.setColor(Color.WHITE); g.drawString("Turn: " +
 		 * GameManager.currentPlayer.getName(), 0, 220); } */
 	}
-
-	public void saveGameFromCamera() {
-		try {
-			GameManager.saveGame("Ege");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
 }

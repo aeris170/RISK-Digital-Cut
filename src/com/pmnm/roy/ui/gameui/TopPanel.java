@@ -33,7 +33,7 @@ public class TopPanel extends DoaPanel {
 
 	@Override
 	public void tick() {
-		timerColour = GameManager.currentPlayer.getColor();
+		timerColour = GameManager.INSTANCE.currentPlayer.getColor();
 		if (threeSecondGuard.get()) {
 			threeSecondGuard.set(false);
 			DoaTasker.executeLater(() -> {
@@ -53,6 +53,7 @@ public class TopPanel extends DoaPanel {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
+		GameManager gm = GameManager.INSTANCE;
 		// timer block
 		if (timerColour != null) {
 			Rectangle2D.Float rect = new Rectangle2D.Float(0f, Main.WINDOW_HEIGHT * 0.027f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT * 0.021f);
@@ -70,12 +71,12 @@ public class TopPanel extends DoaPanel {
 		g.setColor(UIInit.FONT_COLOR);
 
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
-		String turn = "TURN: " + (GameManager.turnCount + 1);
+		String turn = "TURN: " + (gm.turnCount + 1);
 		g.drawString(turn, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(turn)) / 2f, 110);
 
-		g.setColor(GameManager.currentPlayer.getColor());
+		g.setColor(gm.currentPlayer.getColor());
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(1 - alpha, 0)));
-		String player = GameManager.currentPlayer.getName();
+		String player = gm.currentPlayer.getName();
 		g.drawString(player, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(player)) / 2f, 110);
 		g.setComposite(oldComposite);
 	}

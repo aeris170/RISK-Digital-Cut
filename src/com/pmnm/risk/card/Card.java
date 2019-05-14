@@ -1,5 +1,6 @@
 package com.pmnm.risk.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,11 +9,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.pmnm.risk.map.province.Province;
 
-public class Card {
+public class Card implements Serializable {
 
-	public static final Map<Province, Card> PROVINCE_CARDS = new HashMap<>();
+	private static final long serialVersionUID = -3610958010376376612L;
 
-	private static final List<Card> UNDISTRIBUTED_CARDS = new ArrayList<>();
+	public static Map<Province, Card> PROVINCE_CARDS = new HashMap<>();
+
+	public static List<Card> UNDISTRIBUTED_CARDS = new ArrayList<>();
 
 	private Province province;
 	private CardType type;
