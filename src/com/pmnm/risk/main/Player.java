@@ -151,6 +151,11 @@ public class Player extends DoaObject {
 		}
 		return reinforcementsForThisTurn;
 	}
+	
+	public static boolean hasProvinces(Player player) {
+		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
+		return !playerProvinces.isEmpty();
+	}
 
 	// TODO DOA OPTIMIZE
 	public static List<Province> getPlayerProvinces(Player player) {
@@ -171,6 +176,12 @@ public class Player extends DoaObject {
 
 	public void removeCard(Card c) {
 		cards.remove(c);
+	}
+	
+	public void removeAllCards() {
+		for(int i = 0; i < cards.size(); i++) {
+			cards.remove(i);
+		}
 	}
 
 	@Override

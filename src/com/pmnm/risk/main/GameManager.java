@@ -288,6 +288,10 @@ public class GameManager extends DoaObject {
 		defenderProvinceHitArea.deemphasizeForAttack();
 		moveAfterOccupySource = attackerProvinceHitArea;
 		moveAfterOccupyDestination = defenderProvinceHitArea;
+		Player defender = defenderProvinceHitArea.getProvince().getOwner();
+		if(!Player.hasProvinces(defender)) {
+			defender.removeAllCards();
+		}
 		markAttackerProvince(null);
 		markDefenderProvince(null);
 		BottomPanel.nextPhaseButton.disable();
