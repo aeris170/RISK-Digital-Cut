@@ -23,7 +23,7 @@ public final class EscPopup extends DoaPanel {
 	public EscPopup() {
 		super(Main.WINDOW_WIDTH * 0.376f, Main.WINDOW_HEIGHT * 0.291f, (int) (Main.WINDOW_WIDTH * 0.240f),
 				(int) (Main.WINDOW_HEIGHT * 0.419f));
-		super.show();
+		//super.show();
 	}
 
 	@Override

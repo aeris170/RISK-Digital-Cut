@@ -66,6 +66,14 @@ public final class AssetLoader {
 				DoaSprites.createSprite("Russian", "/ui/settings/rusk.png");
 				DoaSprites.createSprite("Turkish", "/ui/settings/turkis.png");
 			}
+			
+			{// RULES
+				DoaSprites.createSprite("pt1", "/ui/rules/turnpt1.png");
+				DoaSprites.createSprite("pt2", "/ui/rules/turnpt2.png");
+				DoaSprites.createSprite("pt3", "/ui/rules/turnpt3.png");
+				DoaSprites.createSprite("pt4", "/ui/rules/turnpt4.png");
+				DoaSprites.createSprite("pt5", "/ui/rules/turnpt5.png");
+			}
 
 			{// EXIT POPUP
 				DoaSprites.createSprite("ExitPopupBackground", "/ui/popupBox.png");
