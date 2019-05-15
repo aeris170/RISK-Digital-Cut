@@ -24,8 +24,8 @@ public class CardPanel extends DoaUIContainer {
 		super(881f, 258f, 1011, 558);
 		super.show();
 		for (int i = 0; i < 6; i++) {
-			buttonList.add(DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f),
-					CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, DoaSprites.get("card")));
+			buttonList
+			        .add(DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f), CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, DoaSprites.get("card")));
 		}
 	}
 
@@ -35,12 +35,10 @@ public class CardPanel extends DoaUIContainer {
 	}
 
 	@Override
-	public void show() {
-	}
+	public void show() {}
 
 	@Override
-	public void hide() {
-	}
+	public void hide() {}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
@@ -54,7 +52,7 @@ public class CardPanel extends DoaUIContainer {
 
 	public void updateCards() {
 		buttonList.forEach(b -> b.hide());
-		List<Card> cardList = GameManager.currentPlayer.getCards();
+		List<Card> cardList = GameManager.INSTANCE.currentPlayer.getCards();
 		for (int i = 0; i < cardList.size(); i++) {
 			CardButton curButton = buttonList.get(i);
 			curButton.configure(cardList.get(i));
