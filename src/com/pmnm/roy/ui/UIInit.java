@@ -40,7 +40,9 @@ public final class UIInit {
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
 		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, mm);
-		MultiPlayerMenu mpm = DoaHandler.instantiate(MultiPlayerMenu.class, mm);
+		MultiPlayerMenuHost mpmh = DoaHandler.instantiate(MultiPlayerMenuHost.class, mm);
+		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, spm);
+		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm, mpmh);
 		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
 		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class);
 		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
@@ -54,8 +56,8 @@ public final class UIInit {
 		        DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y, DoaSprites.get(BUTTON_IDLE_SPRITE),
 		        DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
-		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, spm, ep));
-		playOnlineButton.addAction(new PlayOnlineButtonAction(mm, mpm, ep));
+		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, pom, ep));
+		playOnlineButton.addAction(new PlayOnlineButtonAction(mm, ponm, ep));
 		settingsButton.addAction(new SettingsButtonAction(mm, sm, ep));
 		rulesButton.addAction(new RulesButtonAction(mm, rm, ep));
 		exitButton.addAction(new ExitButtonAction(ep));

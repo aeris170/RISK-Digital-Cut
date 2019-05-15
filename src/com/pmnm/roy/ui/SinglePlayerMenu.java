@@ -20,14 +20,17 @@ public class SinglePlayerMenu extends DoaPanel {
 	TextImageButton backButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f),
 	        UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR,
 	        UIInit.HOVER_FONT_COLOR);
+	
+	TextImageButton nextMapButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f),
+	        UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "PLAY", UIInit.FONT_COLOR,
+	        UIInit.HOVER_FONT_COLOR);
 
 	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
 	TypeComboButton[] tbca = new TypeComboButton[Globals.MAX_NUM_PLAYERS];
 	ColorComboButton[] ccba = new ColorComboButton[Globals.MAX_NUM_PLAYERS];
 	
-	String path = "res/maps/";
-	File folder = new File(path);
+	File folder = new File("res/maps/");
 	String s = folder.listFiles()[0].getName();
 	
 	int numberOfPlayers = 2;

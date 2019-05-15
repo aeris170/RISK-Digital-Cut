@@ -77,7 +77,7 @@ public class AIPlayer extends Player {
 							gm.blitz();
 							if (ownedProvinces.get(i).troopCount() > 3) {
 								gm.moveTroopsAfterOccupying(3);
-							} else {
+							} else if (ownedProvinces.get(i).troopCount() < 1) {
 								gm.moveTroopsAfterOccupying(1);
 							}
 						}
