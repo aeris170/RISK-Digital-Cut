@@ -46,21 +46,14 @@ public class GameManager extends DoaObject {
 	public Player currentPlayer;
 	public int turnCount = 0;
 
-	public ProvinceHitArea attackerProvinceHitArea = null;
-	public ProvinceHitArea defenderProvinceHitArea = null;
-	public transient DicePanel dicePanel = RiskGameScreenUI.DicePanel;
-	public transient CardPanel cardPanel = RiskGameScreenUI.CardPanel;
-
-
 	public ProvinceHitArea moveAfterOccupySource = null;
 	public ProvinceHitArea moveAfterOccupyDestination = null;
-  
+
 	public static ProvinceHitArea attackerProvinceHitArea = null;
 	public static ProvinceHitArea defenderProvinceHitArea = null;
 	public static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
 	public static CardPanel cardPanel = RiskGameScreenUI.CardPanel;
 	public static boolean cardWillBeGiven = false;
-
 
 	public ProvinceHitArea reinforcingProvince = null;
 	public ProvinceHitArea reinforcedProvince = null;
@@ -109,7 +102,7 @@ public class GameManager extends DoaObject {
 			markDefenderProvince(null);
 		} else if (currentPhase == TurnPhase.REINFORCE) {
 			currentPhase = TurnPhase.DRAFT;
-			if(cardWillBeGiven) {
+			if (cardWillBeGiven) {
 				currentPlayer.addCard(Card.getRandomCard());
 				cardWillBeGiven = false;
 			}
@@ -302,7 +295,7 @@ public class GameManager extends DoaObject {
 		moveAfterOccupySource = attackerProvinceHitArea;
 		moveAfterOccupyDestination = defenderProvinceHitArea;
 		Player defender = defenderProvinceHitArea.getProvince().getOwner();
-		if(!Player.hasProvinces(defender)) {
+		if (!Player.hasProvinces(defender)) {
 			defender.removeAllCards();
 		}
 		markAttackerProvince(null);
