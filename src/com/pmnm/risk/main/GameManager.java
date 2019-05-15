@@ -56,6 +56,7 @@ public class GameManager extends DoaObject {
 	public static ProvinceHitArea defenderProvinceHitArea = null;
 	public static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
 	public static CardPanel cardPanel = RiskGameScreenUI.CardPanel;
+	public static boolean cardWillBeGiven = false;
 
 	public static ProvinceHitArea moveAfterOccupySource = null;
 	public static ProvinceHitArea moveAfterOccupyDestination = null;
@@ -100,6 +101,10 @@ public class GameManager extends DoaObject {
 			markDefenderProvince(null);
 		} else if (currentPhase == TurnPhase.REINFORCE) {
 			currentPhase = TurnPhase.DRAFT;
+			if(cardWillBeGiven) {
+				currentPlayer.addCard(Card.getRandomCard());
+				cardWillBeGiven = false;
+			}
 			currentPlayer.endTurn();
 			GameManager.turnCount++;
 			currentPlayer = players.get(turnCount % players.size());
@@ -110,6 +115,7 @@ public class GameManager extends DoaObject {
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
 			if (currentPlayer.isLocalPlayer()) {
+				cardPanel.updateCards();
 				cardPanel.show();
 			}		
 		}
@@ -294,7 +300,7 @@ public class GameManager extends DoaObject {
 		markAttackerProvince(null);
 		markDefenderProvince(null);
 		BottomPanel.nextPhaseButton.disable();
-		currentPlayer.addCard(Card.getRandomCard());
+		cardWillBeGiven = true;
 	}
 
 	public static ProvinceHitArea getReinforcingProvince() {

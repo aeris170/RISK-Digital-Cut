@@ -166,6 +166,10 @@ public class Player extends DoaObject {
 	public boolean isLocalPlayer() {
 		return isLocalPlayer;
 	}
+	
+	public List<Card> getCards() {//TODO find a better solution to not fuck up the encapsulation
+		return cards;
+	}
 
 	public void addCard(Card c) {
 		cards.add(c);

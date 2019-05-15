@@ -156,11 +156,14 @@ public final class AssetLoader {
 				DoaSprites.createSprite("cavalry", "/ui/gameScreenElements/cardScroll/cavalry.png");
 				DoaSprites.createSprite("infantry", "/ui/gameScreenElements/cardScroll/footman.png");
 				DoaSprites.createSprite("card", "/ui/gameScreenElements/cardScroll/card.png");
+				DoaSprites.createSprite("cardHover", "/ui/gameScreenElements/cardScroll/cardHover.png");
+				DoaSprites.createSprite("cardSelected", "/ui/gameScreenElements/cardScroll/cardSelected.png");
 				DoaSprites.createSprite("trump", "/ui/gameScreenElements/cardScroll/eyeOnBoxTrump.png");
 				DoaSprites.createSprite("scroll", "/ui/gameScreenElements/cardScroll/scroll.png");
-				DoaSprites.createSprite("scrollFrame", "/ui/gameScreenElements/cardScroll/scrollFrame.png");
-				DoaSprites.createSprite("bar", "/ui/gameScreenElements/cardScroll/bar.png");
-				DoaSprites.createSprite("dragButton", "/ui/gameScreenElements/cardScroll/dragButton.png");
+				DoaSprites.createSprite("cardButtonHover", "/ui/gameScreenElements/cardScroll/buttonHover.png");
+				DoaSprites.createSprite("cardButtonIdle", "/ui/gameScreenElements/cardScroll/buttonIdle.png");
+				DoaSprites.createSprite("cardButtonLocked", "/ui/gameScreenElements/cardScroll/buttonLocked.png");
+				DoaSprites.createSprite("cardButtonPressed", "/ui/gameScreenElements/cardScroll/buttonPressed.png");
 			}
 
 			List<BufferedImage> riskLogoKeyFrames = new ArrayList<>();
