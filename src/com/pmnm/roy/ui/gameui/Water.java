@@ -15,6 +15,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
+import com.doa.utils.DoaUtils;
 import com.pmnm.risk.main.Main;
 
 public class Water extends DoaObject {
@@ -41,11 +42,20 @@ public class Water extends DoaObject {
 
 	Water() {
 		super(0f, 0f, -2);
+		
+		new Thread(()-> {
+			int i = 0;
+			while(true) {
+			DoaUtils.sleepFor(3000);
+				Season.currentSeason = Season.values()[i++ % Season.values().length];
+			}
+		});//.start();
+		
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1), y * Main.WINDOW_HEIGHT / (SEG_Y - 1));
 				startTime[x][y] = ThreadLocalRandom.current().nextLong();
-				intensity[x][y] = ThreadLocalRandom.current().nextInt(1, 2);
+				intensity[x][y] = ThreadLocalRandom.current().nextInt(1, 10);
 			}
 		}
 		for (int y = 0; y < points[0].length - 1; y++) {
@@ -60,10 +70,10 @@ public class Water extends DoaObject {
 				mesh.add(new TriangularSurface(pb1, pb2, pb3));
 			}
 		}
-		BufferedImage winterSpr = DoaSprites.get("winterTex");
-		BufferedImage springSpr = DoaSprites.get("springTex");
+		BufferedImage winterSpr = DoaSprites.get("summerTex");
+		BufferedImage springSpr = DoaSprites.get("summerTex");
 		BufferedImage summerSpr = DoaSprites.get("summerTex");
-		BufferedImage fallSpr = DoaSprites.get("fallTex");
+		BufferedImage fallSpr = DoaSprites.get("summerTex");
 		winterSpr.setAccelerationPriority(1);
 		springSpr.setAccelerationPriority(1);
 		summerSpr.setAccelerationPriority(1);
@@ -73,8 +83,8 @@ public class Water extends DoaObject {
 		Graphics2D bigSpringRenderer = bigSpring.createGraphics();
 		Graphics2D bigSummerRenderer = bigSummer.createGraphics();
 		Graphics2D bigFallRenderer = bigFall.createGraphics();
-		int texW = winterSpr.getWidth() / 10;
-		int texH = winterSpr.getHeight() / 10;
+		int texW = winterSpr.getWidth() / 8;
+		int texH = winterSpr.getHeight() / 8;
 		for (int i = -50; i < Main.WINDOW_WIDTH + 50; i += texW) {
 			for (int j = -50; j < Main.WINDOW_HEIGHT + 50; j += texH) {
 				bigWinterRenderer.drawImage(winterSpr, i, j, texW, texH, null);
