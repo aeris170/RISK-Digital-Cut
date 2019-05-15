@@ -13,6 +13,7 @@ import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
 import com.pmnm.risk.card.Card;
 import com.pmnm.risk.dice.Dice;
@@ -22,6 +23,7 @@ import com.pmnm.risk.map.board.ProvinceConnector;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.ui.EscPopup;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 import com.pmnm.roy.ui.gameui.CardPanel;
 import com.pmnm.roy.ui.gameui.DicePanel;
@@ -72,6 +74,7 @@ public class GameManager extends DoaObject {
 		if (INSTANCE != null) {
 			DoaHandler.remove(INSTANCE);
 		}
+		EscPopup esc = DoaHandler.instantiate(EscPopup.class);
 		currentMapName = mapName;
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
 		for (int i = 0; i < numberOfPlayers; i++) {
@@ -130,6 +133,9 @@ public class GameManager extends DoaObject {
 
 	@Override
 	public void tick() {
+		if(DoaKeyboard.ESCAPE) {
+			//esc.s
+		}
 		if (DoaMouse.MB1) {
 			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked())
 					.findFirst().orElse(null);
@@ -159,7 +165,7 @@ public class GameManager extends DoaObject {
 			BottomPanel.nextPhaseButton.disable();
 			if (currentPlayer.isLocalPlayer()) {
 				cardPanel.updateCards();
-				cardPanel.show();
+				//cardPanel.show();
 			}
 			timer = 0;
 		}

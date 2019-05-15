@@ -88,7 +88,7 @@ public final class AssetLoader {
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
 				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
 				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif", 100);
-				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 150);
+				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 100);
 				DoaAnimations.createAnimation("CherryPetals", "/ui/gameScreenElements/topInfo/cherryPetals.gif", 60);
 				DoaAnimations.createAnimation("Rain", "/ui/gameScreenElements/topInfo/rainLight.gif", 40);
 				DoaSprites.createSprite("fallTex", "/ui/gameScreenElements/waterTextures/fallWaterTexture.jpg");
