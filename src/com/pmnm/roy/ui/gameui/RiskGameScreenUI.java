@@ -14,9 +14,8 @@ public final class RiskGameScreenUI {
 
 	private RiskGameScreenUI() {}
 
-	public static void initUI() {
+	public static void initUI(String mapName) {
 		// TODO make mapName a parameter and pass from UI
-		String mapName = "classic";
 		MapLoader.readMapData(new File(mapName));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
 		CardPanel = DoaHandler.instantiate(CardPanel.class);

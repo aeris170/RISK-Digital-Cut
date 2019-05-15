@@ -1,12 +1,12 @@
 package com.pmnm.roy.ui;
 
+import java.io.File;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
@@ -25,13 +25,26 @@ public class SinglePlayerMenu extends DoaPanel {
 
 	TypeComboButton[] tbca = new TypeComboButton[Globals.MAX_NUM_PLAYERS];
 	ColorComboButton[] ccba = new ColorComboButton[Globals.MAX_NUM_PLAYERS];
+	
+	String path = "res/maps/";
+	File folder = new File(path);
+	String s = folder.listFiles()[0].getName();
+	
+	int numberOfPlayers = 2;
 
 	public SinglePlayerMenu(MainMenu mm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		playButton.addAction(() -> {
 			hide();
 			// TODO find a better way
-			RiskGameScreenUI.initUI();
+			//List<Player> players = new ArrayList<>();
+			for (int i = 0; i < Globals.MAX_NUM_PLAYERS; i++) {
+				if(tbca[i].index != 0) {
+					//Player p = DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i), true);
+					//players.add(p);
+				}
+			}
+			RiskGameScreenUI.initUI(s);
 		});
 		backButton.addAction(() -> {
 			hide();
@@ -50,10 +63,11 @@ public class SinglePlayerMenu extends DoaPanel {
 			add(ccb);
 			ccba[i] = ccb;
 		}
-		//GameManager.players.get(0).setColor(ccba[0].getColor());
 		tbca[0].index = 1;
 		tbca[1].index = 2;
 		tbca[2].index = 2;
+		
+		System.out.println(ccba[0].getColor());
 	}
 
 	@Override
@@ -80,5 +94,25 @@ public class SinglePlayerMenu extends DoaPanel {
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, UIInit.FLEUR_HEIGHT * 1.5d);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - UIInit.FLEUR_HEIGHT * 1.5d - DoaSprites.get("MainMenuTopRing").getHeight());
 		g.drawImage(DoaSprites.get("MainScroll"), Main.WINDOW_WIDTH * 0.0125f, Main.WINDOW_HEIGHT * 0.163f);
+		g.drawImage(DoaSprites.get("MapChooserBackground"), Main.WINDOW_WIDTH * 0.71f, Main.WINDOW_HEIGHT * 0.24f);
+		g.drawImage(DoaSprites.get("ArrowLeftIdle"), Main.WINDOW_WIDTH * 0.74f, Main.WINDOW_HEIGHT * 0.27f);
+		
+		g.drawString(s, Main.WINDOW_WIDTH * 0.8f, Main.WINDOW_HEIGHT * 0.3f);
+		
+		g.drawImage(DoaSprites.get("ArrowRightIdle"), Main.WINDOW_WIDTH * 0.88f, Main.WINDOW_HEIGHT * 0.27f);
+		g.drawImage(DoaSprites.get("MapBorder"), Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
+		
+		/*
+		File sourceimage = new File(path + "classic/map.png");
+		try {
+				BufferedImage image = ImageIO.read(sourceimage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		
+		
+		
+
+
 	}
 }
