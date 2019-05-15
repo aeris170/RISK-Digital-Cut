@@ -1,5 +1,6 @@
 package com.pmnm.roy.ui.gameui;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,12 @@ import com.doa.maths.DoaVectorI;
 import com.doa.ui.DoaUIContainer;
 import com.pmnm.risk.card.Card;
 import com.pmnm.risk.main.GameManager;
-import com.pmnm.roy.ui.CardButton;
 
 public class CardPanel extends DoaUIContainer {
 
 	private static final DoaVectorI CARD_BUTTON_SIZE = new DoaVectorI(126, 244);
 	// serial version UID needed;
+	public static final BufferedImage CardBG = DoaSprites.get("card");
 
 	List<CardButton> buttonList = new ArrayList<>();
 
@@ -24,8 +25,7 @@ public class CardPanel extends DoaUIContainer {
 		super(881f, 258f, 1011, 558);
 		super.show();
 		for (int i = 0; i < 6; i++) {
-			buttonList
-			        .add(DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f), CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, DoaSprites.get("card")));
+			buttonList.add(DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f), CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, CardBG));
 		}
 	}
 

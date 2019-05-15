@@ -1,7 +1,6 @@
-package com.pmnm.roy.ui;
+package com.pmnm.roy.ui.gameui;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
@@ -12,8 +11,8 @@ import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.card.Card;
 import com.pmnm.risk.card.CardType;
-import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.ui.UIInit;
 
 public class CardButton extends DoaImageButton {
 
@@ -40,34 +39,23 @@ public class CardButton extends DoaImageButton {
 
 			BufferedImage cardTypeSprite = DoaSprites.get(cardType.toString());
 			g.drawImage(cardTypeSprite, position.x + (idleImage.getWidth() - cardTypeSprite.getWidth()) / 2,
-					position.y + idleImage.getHeight() * 0.9f - cardTypeSprite.getHeight(), cardTypeSprite.getWidth(),
-					cardTypeSprite.getHeight());
+			        position.y + idleImage.getHeight() * 0.9f - cardTypeSprite.getHeight(), cardTypeSprite.getWidth(), cardTypeSprite.getHeight());
 
 			BufferedImage nameHolder = DoaSprites.get("provinceNameHolder");
 			g.drawImage(nameHolder, position.x + (idleImage.getWidth() - nameHolder.getWidth() / 2) / 2,
-					position.y + (idleImage.getHeight() - nameHolder.getHeight()) / 2, nameHolder.getWidth() / 2,
-					nameHolder.getHeight());
-			g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN,
-					Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT,
-							new DoaVectorF(nameHolder.getWidth() / 2 * 0.95f, nameHolder.getHeight()),
-							cardName.toUpperCase())));
+			        position.y + (idleImage.getHeight() - nameHolder.getHeight()) / 2, nameHolder.getWidth() / 2, nameHolder.getHeight());
+			g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT,
+			        new DoaVectorF(nameHolder.getWidth() / 2 * 0.95f, nameHolder.getHeight()), cardName.toUpperCase())));
 			FontMetrics fm = g.getFontMetrics();
 			g.setColor(UIInit.FONT_COLOR);
 			fm = g.getFontMetrics();
 			g.drawString(cardName.toUpperCase(),
-					position.x + ((idleImage.getWidth() - nameHolder.getWidth()) / 2
-							+ (nameHolder.getWidth() - fm.stringWidth(cardName)) / 2f) * 0.5f,
-					position.y + (idleImage.getHeight() / 2) * 1.03f);
+			        position.x + ((idleImage.getWidth() - nameHolder.getWidth()) / 2 + (nameHolder.getWidth() - fm.stringWidth(cardName)) / 2f) * 0.5f,
+			        position.y + (idleImage.getHeight() / 2) * 1.03f);
 
-			g.setColor(Color.RED);
-			g.drawRect(position.x, position.y, 5f, 5f);
-			g.drawImage(cardTex, 100,
-					100 , 126,
-					244);
+			g.drawImage(cardTex, position.x + (idleImage.getWidth() - cardTex.getWidth()) / 2d, position.y * 1.06f);
 
 			g.pushComposite();
-			// g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-			// g.drawImage(DoaSprites.get("card"), position.x, position.y, width, height);
 			if (selected) {
 				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
 				g.drawImage(DoaSprites.get("cardSelected"), position.x, position.y, width, height);
@@ -89,8 +77,7 @@ public class CardButton extends DoaImageButton {
 
 	public void configure(Card card) {
 		cardType = card.getType();
-		Province tempProvince = card.getProvince();
-		cardName = tempProvince.getName();
+		cardName = card.getProvince().getName();
 		cardTex = card.getTex();
 	}
 }

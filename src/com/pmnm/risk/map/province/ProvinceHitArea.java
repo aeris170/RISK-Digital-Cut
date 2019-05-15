@@ -35,7 +35,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
-	private static final Map<RenderingHints.Key, Object> HINTS = new HashMap<>();
+	public static final Map<RenderingHints.Key, Object> HINTS = new HashMap<>();
 	static {
 		HINTS.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		HINTS.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -213,8 +213,7 @@ public class ProvinceHitArea extends DoaObject {
 		emphasizedBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		highlightBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		for (int i = 0; i < PlayerColorBank.size(); i++) {
-			BufferedImage meshTexture = new BufferedImage(maxX - minX + 8, maxY - minY + 8,
-					BufferedImage.TYPE_INT_ARGB);
+			BufferedImage meshTexture = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 			meshTexture.setAccelerationPriority(1);
 			Graphics2D meshRenderer = meshTexture.createGraphics();
 			meshRenderer.translate(-minX + 4, -minY + 4);
@@ -296,8 +295,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	public boolean isMouseClicked() {
 		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
-		return meshes.stream()
-				.anyMatch(mesh -> mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y) && DoaMouse.MB1);
+		return meshes.stream().anyMatch(mesh -> mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y) && DoaMouse.MB1);
 	}
 
 	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath
@@ -308,20 +306,20 @@ public class ProvinceHitArea extends DoaObject {
 		int numSubPaths = 0;
 		for (PathIterator pi = path.getPathIterator(null); !pi.isDone(); pi.next()) {
 			switch (pi.currentSegment(coords)) {
-			case PathIterator.SEG_MOVETO:
-				pointList.add(Arrays.copyOf(coords, 2));
-				++numSubPaths;
-				break;
-			case PathIterator.SEG_LINETO:
-				pointList.add(Arrays.copyOf(coords, 2));
-				break;
-			case PathIterator.SEG_CLOSE:
-				if (numSubPaths > 1) {
-					throw new IllegalArgumentException("Path contains multiple subpaths");
-				}
-				return pointList.toArray(new double[pointList.size()][]);
-			default:
-				throw new IllegalArgumentException("Path contains curves");
+				case PathIterator.SEG_MOVETO:
+					pointList.add(Arrays.copyOf(coords, 2));
+					++numSubPaths;
+					break;
+				case PathIterator.SEG_LINETO:
+					pointList.add(Arrays.copyOf(coords, 2));
+					break;
+				case PathIterator.SEG_CLOSE:
+					if (numSubPaths > 1) {
+						throw new IllegalArgumentException("Path contains multiple subpaths");
+					}
+					return pointList.toArray(new double[pointList.size()][]);
+				default:
+					throw new IllegalArgumentException("Path contains curves");
 			}
 		}
 		throw new IllegalArgumentException("Unclosed path");
@@ -408,8 +406,7 @@ public class ProvinceHitArea extends DoaObject {
 		}
 
 		@Override
-		public void tick() {
-		}
+		public void tick() {}
 
 		@Override
 		public void render(DoaGraphicsContext g) {
@@ -420,11 +417,10 @@ public class ProvinceHitArea extends DoaObject {
 				g.setColor(Color.BLACK);
 				BufferedImage ownerLogo = DoaSprites.get("p" + p.getOwner().getID() + "Pawn");
 				BufferedImage continentLogo = DoaSprites.get(p.getContinent().getAbbreviation());
-				g.drawImage(continentLogo, centerX - continentLogo.getWidth() * 0.33f,
-						centerY - continentLogo.getHeight() * 0.33f, continentLogo.getWidth() * 0.66f,
-						continentLogo.getHeight() * 0.66f);
-				g.drawImage(ownerLogo, centerX - ownerLogo.getWidth() * 0.33f, centerY - ownerLogo.getHeight() * 0.33f,
-						ownerLogo.getWidth() * 0.66f, ownerLogo.getHeight() * 0.66f);
+				g.drawImage(continentLogo, centerX - continentLogo.getWidth() * 0.33f, centerY - continentLogo.getHeight() * 0.33f, continentLogo.getWidth() * 0.66f,
+				        continentLogo.getHeight() * 0.66f);
+				g.drawImage(ownerLogo, centerX - ownerLogo.getWidth() * 0.33f, centerY - ownerLogo.getHeight() * 0.33f, ownerLogo.getWidth() * 0.66f,
+				        ownerLogo.getHeight() * 0.66f);
 				int troopCount = p.getTroops();
 				String troops = "";
 				if (troopCount == -1) {
@@ -432,8 +428,7 @@ public class ProvinceHitArea extends DoaObject {
 				} else {
 					troops = "" + troopCount;
 				}
-				g.drawString(troops, centerX - fm.stringWidth(troops) / 2f,
-						centerY + (fm.getHeight() - fm.getAscent()) / 2f);
+				g.drawString(troops, centerX - fm.stringWidth(troops) / 2f, centerY + (fm.getHeight() - fm.getAscent()) / 2f);
 			}
 		}
 	}

@@ -1,33 +1,32 @@
 package com.pmnm.risk.card;
 
-import java.io.Serializable;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.ui.gameui.CardPanel;
 
 public class Card implements Serializable {
 
 	private static final long serialVersionUID = -3610958010376376612L;
 
-
 	public static Map<Province, Card> PROVINCE_CARDS = new HashMap<>();
 
 	public static List<Card> UNDISTRIBUTED_CARDS = new ArrayList<>();
 
-	private static final Color strokeColor = Color.RED;
-			//new Color(68, 66, 41);
-
+	private static final Color strokeColor = new Color(68, 66, 41);
 
 	private Province province;
 	private CardType type;
@@ -61,10 +60,10 @@ public class Card implements Serializable {
 	}
 
 	public void cacheMeshAsImage() {
-		int minX = 0;
-		int minY = 0;
-		int maxX = 0;
-		int maxY = 0;
+		int minX = Integer.MAX_VALUE;
+		int minY = Integer.MAX_VALUE;
+		int maxX = Integer.MIN_VALUE;
+		int maxY = Integer.MIN_VALUE;
 		List<GeneralPath> meshes = province.getProvinceHitArea().getMesh();
 		for (GeneralPath mesh : meshes) {
 			double[][] vertices = ProvinceHitArea.getPoints(mesh);
@@ -87,13 +86,20 @@ public class Card implements Serializable {
 		provinceTex.setAccelerationPriority(1);
 		Graphics2D hbr = provinceTex.createGraphics();
 		hbr.translate(-minX + 4, -minY + 4);
-		//hbr.setRenderingHints(HINTS);
+		hbr.setRenderingHints(ProvinceHitArea.HINTS);
 		hbr.setColor(strokeColor);
-		hbr.setStroke(new BasicStroke(20));
+		hbr.setStroke(new BasicStroke(2));
 		for (GeneralPath gp : meshes) {
-			hbr.draw(gp);
+			hbr.fill(gp);
 		}
+		hbr.setColor(Color.RED);
+		hbr.drawRect(0, 0, provinceTex.getWidth() - 1, provinceTex.getHeight() - 1);
 		hbr.dispose();
+		BufferedImage bf = CardPanel.CardBG;
+		double scalex = (double) (bf.getWidth() * 0.9f) / provinceTex.getWidth();
+		double scaley = (double) (bf.getHeight() * 0.3f) / provinceTex.getHeight();
+		double r = Math.min(scalex, scaley);
+		provinceTex = Utils.toBufferedImage(provinceTex.getScaledInstance((int) (provinceTex.getWidth() * r), (int) (provinceTex.getHeight() * r), Image.SCALE_SMOOTH));
 	}
 
 	/**
@@ -104,7 +110,6 @@ public class Card implements Serializable {
 	public static Card getRandomCard() {
 		return UNDISTRIBUTED_CARDS.remove(ThreadLocalRandom.current().nextInt(UNDISTRIBUTED_CARDS.size() - 1));
 	}
-
 
 	public static void printAllCards() {
 		PROVINCE_CARDS.entrySet().forEach(entry -> System.out.println(entry.getValue().toString()));
