@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE continents [
+<!ELEMENT continents (continent*)>
+<!ELEMENT continent (name, color, capture-bonus, abbreviation, province+)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT color (#PCDATA)>
+<!ELEMENT capture-bonus (#PCDATA)>
+<!ELEMENT abbreviation (#PCDATA)>
+<!ELEMENT province (#PCDATA)>
+]>
+<continents>
+	<continent>
+		<name>north</name>
+		<color>255,255,0</color>
+		<capture-bonus>5</capture-bonus>
+		<abbreviation>NA</abbreviation>
+		<province>karhold</province>
+		<province>the dreadfort</province>
+		<province>winterfell</province>
+		<province>widow's watch</province>
+		<province>white harbor</province>
+		<province>wolfwood</province>
+		<province>barrowlands</province>
+		<province>the neck</province>
+		<province>cape kraken</province>
+		<province></province>
+	</continent>
+	<continent>
+		<name>vale</name>
+		<color>255,0,0</color>
+		<capture-bonus>2</capture-bonus>
+		<abbreviation>SA</abbreviation>
+		<province>mountains of the moon</province>
+		<province>the fingers</province>
+		<province>the eyrie</province>
+		<province>gulltown</province>
+	</continent>
+	<continent>
+		<name>riverlands</name>
+		<color>100,200,255</color>
+		<capture-bonus>3</capture-bonus>
+		<abbreviation>EU</abbreviation>
+		<province>the twins</province>
+		<province>the trident</province>
+		<province>riverrun</province>
+		<province>harrenhal</province>
+		<province>stoney sept</province>
+	</continent>
+	<continent>
+		<name>westerlands</name>
+		<color>255,128,0</color>
+		<capture-bonus>3</capture-bonus>
+		<abbreviation>AF</abbreviation>
+		<province>the crag</province>
+		<province>golden tooth</province>
+		<province>casterly rock</province>
+		<province>crakehall</province>
+		<province>silverhill</province>
+	</continent>
+	<continent>
+		<name>reach</name>
+		<color>0,255,0</color>
+		<capture-bonus>7</capture-bonus>
+		<abbreviation>AS</abbreviation>
+		<province>blackwater rush</province>
+		<province>the mander</province>
+		<province>searoad marches</province>
+		<province>highgarden</province>
+		<province>oldtown</province>
+		<province>three tower</province>
+
+	</continent>
+	<continent>
+		<name>dorne</name>
+		<color>255,0,255</color>
+		<capture-bonus>2</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>red mountains</province>
+		<province>sandstone</province>
+		<province>greenblood</province>
+		<province>sunspear</province>
+		</continent>
+	<continent>
+		<name>the iron island</name>
+		<color>255,0,255</color>
+		<capture-bonus>2</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>the iron island</province>
+
+	</continent>
+	<continent>
+		<name>the flatlands</name>
+		<color>255,0,255</color>
+		<capture-bonus>4</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>the flatlands</province>
+		<province>braavosian coastlands</province>
+		<province>the axe</province>
+		<province>hills of norvos</province>
+		<province>forest of qohor</province>
+		<province>upper rhoyne</province>
+		<province>the golden fields</province>
+
+
+	</continent>
+	<continent>
+		<name>myr</name>
+		<color>255,0,255</color>
+		<capture-bonus>3</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>myr</province>
+		<province>tyrosh</province>
+		<province>the orange shore</province>
+		<province>volantis</province>
+		<province>lower rhoyne</province>
+
+	</continent>
+	<continent>
+		<name>dothraki</name>
+		<color>255,0,255</color>
+		<capture-bonus>4</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>sarnor</province>
+		<province>western dothraki sea</province>
+		<province>northern dothraki sea</province>
+		<province>eastern dothraki sea</province>
+		<province>lhazar</province>
+		<province>vaes dothrak</province>
+		<province>the footprint</province>
+
+	</continent>
+	<continent>
+		<name>valyria</name>
+		<color>255,0,255</color>
+		<capture-bonus>2</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>mantarys</province>
+		<province>oros</province>
+		<province>the sea of sights</province>
+		<province>valyria</province>
+
+	</continent>
+	<continent>
+		<name>astapor</name>
+		<color>255,0,255</color>
+		<capture-bonus>3</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>mereen</province>
+		<province>yunkai</province>
+		<province>astapor</province>
+		<province>the red waste</province>
+		<province>old ghis</province>
+
+	</continent>
+	<continent>
+		<name>grass</name>
+		<color>255,0,255</color>
+		<capture-bonus>2</capture-bonus>
+		<abbreviation>AU</abbreviation>
+		<province>northern grass sea</province>
+		<province>samyrian</province>
+		<province>bayasabhad</province>
+		<province>qarth</province>
+
+	</continent>
+
+</continents>
