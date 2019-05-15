@@ -31,7 +31,7 @@ public class AIPlayer extends Player {
 						if (getPlayerProvinces(this).isEmpty()) {
 							Province provinceToClaim = Province.getRandomUnclaimedProvince();
 							gm.claimProvince(provinceToClaim);
-							claimedProvince = provinceToClaim;
+							//claimedProvince = provinceToClaim;
 							isInTurn = false;
 						} else {
 							// TODO - Simge - medium ai i
