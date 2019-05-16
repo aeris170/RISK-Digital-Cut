@@ -67,6 +67,7 @@ public final class GameInstance implements Serializable {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	
 	public static void gameInstanceCreation() throws IOException {
@@ -115,6 +116,8 @@ public final class GameInstance implements Serializable {
 	
 	
 	
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 =======
 >>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 =======
