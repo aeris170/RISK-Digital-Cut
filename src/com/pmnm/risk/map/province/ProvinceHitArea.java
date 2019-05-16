@@ -35,7 +35,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
-	private static final Map<RenderingHints.Key, Object> HINTS = new HashMap<>();
+	public static final Map<RenderingHints.Key, Object> HINTS = new HashMap<>();
 	static {
 		HINTS.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		HINTS.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -281,7 +281,12 @@ public class ProvinceHitArea extends DoaObject {
 		umr.dispose();
 		sbr.dispose();
 		ebr.dispose();
+		hbr.dispose();
 		playerMeshRenderers.forEach(renderer -> renderer.dispose());
+	}
+
+	public List<GeneralPath> getMesh() {
+		return meshes;
 	}
 
 	public Province getProvince() {
@@ -295,7 +300,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath
 	// by finnw
-	private static double[][] getPoints(Path2D path) {
+	public static double[][] getPoints(Path2D path) {
 		List<double[]> pointList = new ArrayList<>();
 		double[] coords = new double[6];
 		int numSubPaths = 0;
