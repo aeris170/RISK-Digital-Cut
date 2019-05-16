@@ -1,6 +1,7 @@
 package com.pmnm.risk.globals;
 
 import java.awt.Color;
+import java.io.File;
 
 import com.pmnm.risk.asset.AssetLoader;
 import com.pmnm.risk.globals.localization.Translator;
@@ -14,6 +15,14 @@ public final class Globals {
 	public static final Color PROVINCE_EMPHASIZE = Color.GREEN;
 	public static final Color PROVINCE_HIGHLIGHT = Color.GRAY.darker().darker().darker().darker();
 	public static final int MAX_NUM_PLAYERS = 6;
+	//public static final String[] MAP_NAMES = new String[new File("map/").listFiles().length];
+
+	/*static {
+		File f = new File("map/");
+		for (int i = 0; i < f.listFiles().length; i++) {
+			MAP_NAMES[i] = f.listFiles()[i].getName();
+		}
+	}*/
 
 	private Globals() {}
 
@@ -21,5 +30,6 @@ public final class Globals {
 		AssetLoader.initializeAssets();
 		Translator.getInstance();
 		UIInit.initUI();
+
 	}
 }

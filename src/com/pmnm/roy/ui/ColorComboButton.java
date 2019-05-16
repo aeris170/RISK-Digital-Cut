@@ -22,9 +22,7 @@ public class ColorComboButton extends DoaImageButton {
 	private static final long serialVersionUID = 2677754096284998205L;
 
 	private static final BufferedImage[] OPTIONS = new BufferedImage[PlayerColorBank.size()];
-
-	public boolean[] beingUsed = new boolean[PlayerColorBank.size()];
-
+	
 	static {
 		for (int i = 0; i < PlayerColorBank.size(); i++) {
 			BufferedImage w = DoaSprites.deepCopyDoaSprite(DoaSprites.get("White"));
@@ -121,6 +119,16 @@ public class ColorComboButton extends DoaImageButton {
 	@Override
 	public void show() {
 		super.show();
+		for(int i = 0; i < COMBO_BUTTONS.size(); i++) {
+			if((COMBO_BUTTONS.get(i).hidden) && COMBO_BUTTONS.get(i).getColor() == getColor()) {
+				for(int j = 0; j < COMBO_BUTTONS.size(); j++) {
+					if(COMBO_BUTTONS.get(j).hidden) {
+						index = j;
+						break;
+					}
+				}
+			}
+		}
 		hidden = false;
 	}
 
