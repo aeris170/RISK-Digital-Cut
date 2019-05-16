@@ -24,9 +24,9 @@ public class CardPanel extends DoaUIContainer {
 	public CardPanel() {
 		super(881f, 258f, 1011, 558);
 		//super.show();
-		for (int i = 0; i < 6; i++) {
+		/*for (int i = 0; i < 6; i++) {
 			buttonList.add(DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f), CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, CardBG));
-		}
+		}*/
 	}
 
 	@Override
