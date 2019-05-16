@@ -24,18 +24,20 @@ public class SocServer implements Runnable {
 
 	private int serverCapacity; // Exactly how many people will connect.
 	private AtomicInteger threadsFinished = new AtomicInteger(0); // Used for synchronisation.
-	public static int controller = 1;
+
 	private ServerSocket server;
+<<<<<<< HEAD
 	public static Thread t;
 	public static int orderOfTheGame = 1;
 	public static  int playOrder[]; //declaration and instantiation  
 	public static int controlledGameUpdate = 0;
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 
 	// To create more streams, we use lists.
 	// Transients are useless, I put them to make warnings disappear.
 	private List<Socket> connections; // Socket is basically connection between two computers.
 	private List<ObjectOutputStream> outputs;
-	
 	private List<ObjectInputStream> inputs;
 	private List<Thread> streamThreads; // Socket listeners.
 	private List<Boolean> isThreadFinished; // Used to stop threads that finished listening.
@@ -52,6 +54,7 @@ public class SocServer implements Runnable {
 	public static void main(String[] args) {
 		// User will specify the server capacity.
 		SocServer serverProtocol = new SocServer(2);
+<<<<<<< HEAD
 		//t = new Thread(new SocServer(10));
 		//	t.start();
 		//
@@ -68,6 +71,9 @@ public class SocServer implements Runnable {
 		playOrder = new int[capacityOfServer];
 		new Thread(new SocServer(capacityOfServer)).start();
 		System.out.println("***********************");
+=======
+		new Thread(serverProtocol).start();
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 	}
 	
 
@@ -80,14 +86,16 @@ public class SocServer implements Runnable {
 			server = sv;
 			// Auto connect to server.
 			// User specifies the name ("HOST")
+<<<<<<< HEAD
 			
 			// Wait for connections to be made.
 			if(controller == 2) {
 			System.out.println("comes */*/**/*/*/");
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 			connections.add(new Client("HOST", "localhost").getSocket());
-			}
+			// Wait for connections to be made.
 			waitForConnection();
-			
 			// Loop forever to get chat and MP. Finish when everyone leaves.
 			whileChatting();
 		} catch (IOException ex) {
@@ -101,12 +109,12 @@ public class SocServer implements Runnable {
 	private void waitForConnection() throws IOException {
 		// Wait for all connections. Exactly the value of serverCapacity connections
 		// must be made.
-		//for (int i = 0; i < serverCapacity; i++) {
-		while(true) {
+		for (int i = 0; i < serverCapacity; i++) {
 			Socket connection = server.accept();
 			connections.add(connection);
 			setupStreams(connection);
 		}
+
 	}
 
 	// *************************************************************************
@@ -226,6 +234,7 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
+<<<<<<< HEAD
 	
 	
 	public void broadcastFile(Object object) {
@@ -262,3 +271,6 @@ public class SocServer implements Runnable {
 	}
 	
 }*/
+=======
+}
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer

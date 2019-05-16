@@ -17,7 +17,6 @@ import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
-import com.pmnm.risk.network.SocServer;
 import com.pmnm.risk.toolkit.Utils;
 
 public class Camera extends DoaObject {
@@ -97,7 +96,6 @@ public class Camera extends DoaObject {
 		position.y = DoaMath.clamp(position.y, topLeftBound.y, bottomRightBound.y);
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.V) {
-			SocServer.starterPack();
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
@@ -128,11 +126,6 @@ public class Camera extends DoaObject {
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.L) {
-			SocServer.t.interrupt();
-			System.out.println("Thread has been completed");
-			int capacityOfServer = 2;
-			SocServer.controller = 2;
-			SocServer.secondaryPack(capacityOfServer);
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			System.out.println("LOADED!");

@@ -1,6 +1,5 @@
 package com.pmnm.risk.main;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.GZIPOutputStream;
 
 import com.doa.engine.DoaHandler;
 import com.pmnm.risk.card.Card;
@@ -62,11 +60,11 @@ public final class GameInstance implements Serializable {
 		try (FileOutputStream file = new FileOutputStream(dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
 			try (ObjectOutputStream out = new ObjectOutputStream(file)) {
 				out.writeObject(gi);
-				
 				System.out.println("Object has been serialized");
 			}
 		}
 	}
+<<<<<<< HEAD
 	
 	
 	public static void gameInstanceCreation() throws IOException {
@@ -115,6 +113,8 @@ public final class GameInstance implements Serializable {
 	
 	
 	
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 
 	public static void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
 		// TODO take input from UI
