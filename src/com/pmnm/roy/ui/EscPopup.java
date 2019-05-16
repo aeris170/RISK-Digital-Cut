@@ -17,24 +17,24 @@ import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.actions.ExitButtonAction;
-import com.pmnm.roy.ui.actions.LoadButtonAction;
 import com.pmnm.roy.ui.actions.RulesButtonAction;
 import com.pmnm.roy.ui.actions.SettingsButtonAction;
+import com.pmnm.roy.ui.actions.LoadButtonAction;
 
 public final class EscPopup extends DoaPanel {
 
-	// needs Serial Version UID
+	private static final long serialVersionUID = 8401721289376342254L;
 
 	private DoaVectorF bounds = new DoaVectorF(Main.WINDOW_WIDTH * 0.300f, Main.WINDOW_HEIGHT * 0.036f);
 
 	// pos width height
 	TextImageButton saveButton = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.342f), (int) (Main.WINDOW_WIDTH * 0.202),
-			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SAVE",
+			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SAVE_GAME",
 			UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
 	TextImageButton loadButtonPop = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.407f), (int) (Main.WINDOW_WIDTH * 0.202),
-			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "LOAD",
+			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "LOAD_GAME",
 			UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
 	TextImageButton rulesButtonPop = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.472f), (int) (Main.WINDOW_WIDTH * 0.202),
@@ -46,28 +46,22 @@ public final class EscPopup extends DoaPanel {
 			"SETTINGS", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
 	TextImageButton exitButtonPop = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.602f), (int) (Main.WINDOW_WIDTH * 0.202),
-			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "QUIT",
+			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "EXIT",
 			UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
 	
 	private boolean hidden = false;	
 	DoaTaskGuard escGuard = new DoaTaskGuard();
 	
-	public EscPopup(MainMenu mm, SettingsMenu sm, RulesMenu rm, LoadMenu lm, ExitPopup ep) {
+	public EscPopup(MainMenu mm, SettingsMenu sm, RulesMenu rm, LoadMenu lm, ExitPopup ep, PlayOfflineMenu pom) {
 		super(Main.WINDOW_WIDTH * 0.376f, Main.WINDOW_HEIGHT * 0.291f, (int) (Main.WINDOW_WIDTH * 0.240f),
 				(int) (Main.WINDOW_HEIGHT * 0.419f));
 
 		exitButtonPop.addAction(new ExitButtonAction(ep));
 		settingsButtonPop.addAction(new SettingsButtonAction(mm, sm, ep));
 		rulesButtonPop.addAction(new RulesButtonAction(mm, rm, ep));
-		// loadButtonPop.addAction(new LoadButtonAction(mm, lm, ep, pom));
+		loadButtonPop.addAction(new LoadButtonAction(mm, lm, ep, pom));
 		saveButton.addAction(() -> {
-			try {
-				GameInstance.saveGame();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				// I do not know what to catch here tbh
-				e.printStackTrace();
-			}
+			GameInstance.saveGame();
 		});
 		show();
 	}
@@ -80,15 +74,14 @@ public final class EscPopup extends DoaPanel {
 			if (DoaKeyboard.ESCAPE) {
 				hidden = !hidden;			
 			}
-			if(!hidden) {
-				exitButtonPop.tick();
-				settingsButtonPop.tick();
-				rulesButtonPop.tick();
-				loadButtonPop.tick();
-				saveButton.tick();
-			}
-		}, escGuard, 1000);
-		
+		}, escGuard, 200);
+		if(!hidden) {
+			exitButtonPop.tick();
+			settingsButtonPop.tick();
+			rulesButtonPop.tick();
+			loadButtonPop.tick();
+			saveButton.tick();
+		}
 	}
 	
 	@Override

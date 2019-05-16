@@ -55,7 +55,9 @@ public class Camera extends DoaObject {
 	}
 
 	public static Camera getInstance() {
-		return _this == null ? _this = DoaHandler.instantiate(Camera.class, Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT / 2f) : _this;
+		return _this == null
+				? _this = DoaHandler.instantiate(Camera.class, Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT / 2f)
+				: _this;
 	}
 
 	@Override
@@ -88,8 +90,11 @@ public class Camera extends DoaObject {
 		if (DoaMouse.X > Main.WINDOW_WIDTH * HIGH_PERCENTAGE_FOR_MOUSE_CAMERA / 100) {
 			position.x += MOUSE_LOOK_SPEED;
 		}
-		topLeftBound = new DoaVectorF(Main.WINDOW_WIDTH / 2f + (Main.WINDOW_WIDTH / 2f - (Main.WINDOW_WIDTH / 2f * DoaCamera.getZ())) / DoaCamera.getZ(),
-		        Main.WINDOW_HEIGHT / 2f + (Main.WINDOW_HEIGHT / 2f - (Main.WINDOW_HEIGHT / 2f * DoaCamera.getZ())) / DoaCamera.getZ());
+		topLeftBound = new DoaVectorF(
+				Main.WINDOW_WIDTH / 2f
+						+ (Main.WINDOW_WIDTH / 2f - (Main.WINDOW_WIDTH / 2f * DoaCamera.getZ())) / DoaCamera.getZ(),
+				Main.WINDOW_HEIGHT / 2f
+						+ (Main.WINDOW_HEIGHT / 2f - (Main.WINDOW_HEIGHT / 2f * DoaCamera.getZ())) / DoaCamera.getZ());
 		bottomRightBound = new DoaVectorF(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT).sub(topLeftBound);
 
 		position.x = DoaMath.clamp(position.x, topLeftBound.x, bottomRightBound.x);
@@ -100,7 +105,8 @@ public class Camera extends DoaObject {
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
 				isLoggingVertices = true;
-				writer.println("LOG::START " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+				writer.println(
+						"LOG::START " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
 			} else {
 				isLoggingVertices = false;
 				writer.println("LOG::END " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
@@ -109,20 +115,10 @@ public class Camera extends DoaObject {
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.S) {
-			try {
-				GameInstance.gameInstanceCreation();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			System.out.println("SAVED!");
-			try {
-				GameInstance.saveGame();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			GameInstance.saveGame();
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.L) {
@@ -153,7 +149,8 @@ public class Camera extends DoaObject {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		/* g.setColor(Color.WHITE); g.setFont(new Font("Arial", Font.BOLD, 20));
+		/*
+		 * g.setColor(Color.WHITE); g.setFont(new Font("Arial", Font.BOLD, 20));
 		 * g.drawString("DCam Pos: " + DoaCamera.getX() + " " + DoaCamera.getY(), 0,
 		 * 20); g.drawString("Cam Pos: " + position.toString(), 0, 40);
 		 * g.drawString("Cam Top Left Bound: " + topLeftBound.toString(), 0, 60);
@@ -168,6 +165,7 @@ public class Camera extends DoaObject {
 		 * (GameManager.currentPlayer != null) {
 		 * g.setColor(GameManager.currentPlayer.getColor()); g.fillRect(0, 200, 130,
 		 * 23); g.setColor(Color.WHITE); g.drawString("Turn: " +
-		 * GameManager.currentPlayer.getName(), 0, 220); } */
+		 * GameManager.currentPlayer.getName(), 0, 220); }
+		 */
 	}
 }

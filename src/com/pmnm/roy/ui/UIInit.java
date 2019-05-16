@@ -44,6 +44,7 @@ public final class UIInit {
 	private static RulesMenu rm;
 	private static LoadMenu lm;
 	private static ExitPopup ep;
+	private static PlayOfflineMenu pom;
 
 	private UIInit() {}
 
@@ -53,7 +54,7 @@ public final class UIInit {
 		rm = DoaHandler.instantiate(RulesMenu.class, mm);
 		lm = DoaHandler.instantiate(LoadMenu.class, mm);
 		ep = DoaHandler.instantiate(ExitPopup.class);
-		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, lm, ep);
+		pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, lm, ep);
 		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm);
 		
 		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y,
@@ -96,5 +97,9 @@ public final class UIInit {
 	
 	public static ExitPopup getEP() {
 		return ep;
+	}
+
+	public static PlayOfflineMenu getPOM() {
+		return pom;
 	}
 }

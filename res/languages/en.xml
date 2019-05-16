@@ -126,6 +126,10 @@
 		<value>load game</value>
 	</pair>
 	<pair>
+		<key>SAVE_GAME</key>
+		<value>save game</value>
+	</pair>
+	<pair>
 		<key>HOST_GAME</key>
 		<value>host game</value>
 	</pair>
@@ -133,4 +137,5 @@
 		<key>JOIN_GAME</key>
 		<value>join game</value>
 	</pair>
+	
 </en>

@@ -57,8 +57,8 @@ public class GameManager extends DoaObject {
 
 	public static ProvinceHitArea attackerProvinceHitArea = null;
 	public static ProvinceHitArea defenderProvinceHitArea = null;
-	public static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
-	public static CardPanel cardPanel = RiskGameScreenUI.CardPanel;
+	public transient static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
+	public transient static CardPanel cardPanel = RiskGameScreenUI.CardPanel;
 	public static boolean cardWillBeGiven = false;
 
 	public ProvinceHitArea reinforcingProvince = null;
@@ -90,7 +90,8 @@ public class GameManager extends DoaObject {
 				startingTroops.put(p, startingTroopCount);
 				pInt++;
 			} else {
-				Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(aiInt), aiColors.get(aiInt), difficulties.get(aiInt));
+				Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(aiInt), aiColors.get(aiInt),
+						difficulties.get(aiInt));
 				players.add(p);
 				startingTroops.put(p, startingTroopCount);
 				aiInt++;
@@ -132,10 +133,10 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			/*if (currentPlayer.isLocalPlayer()) {
-				cardPanel.updateCards();
-				cardPanel.show();
-			}*/
+			/*
+			 * if (currentPlayer.isLocalPlayer()) { cardPanel.updateCards();
+			 * cardPanel.show(); }
+			 */
 			timer = 0;
 		}
 	}
@@ -169,9 +170,9 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			if (currentPlayer.isLocalPlayer()) {							
+			if (currentPlayer.isLocalPlayer()) {
 				cardPanel.updateCards();
-				//cardPanel.show();
+				// cardPanel.show();
 			}
 			timer = 0;
 		}
@@ -431,12 +432,4 @@ public class GameManager extends DoaObject {
 		moveAfterOccupySource = null;
 		ProvinceConnector.getInstance().setPath();
 	}
-
-	public static void gameDataSender() throws IOException {
-		GameInstance.gameInstanceCreation();
-		// file is written to the clientFiles
-		// Client.sendFile();
-
-	}
-
 }

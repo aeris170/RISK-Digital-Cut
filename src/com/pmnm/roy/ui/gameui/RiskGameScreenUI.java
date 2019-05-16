@@ -26,7 +26,7 @@ public final class RiskGameScreenUI {
 		MapLoader.readMapData(new File(mapName));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
 		CardPanel = DoaHandler.instantiate(CardPanel.class);
-		esc = DoaHandler.instantiate(EscPopup.class, UIInit.getMM(), UIInit.getSM(), UIInit.getRM(), UIInit.getLM(), UIInit.getEP());
+		esc = DoaHandler.instantiate(EscPopup.class, UIInit.getMM(), UIInit.getSM(), UIInit.getRM(), UIInit.getLM(), UIInit.getEP(), UIInit.getPOM());
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);
 		DoaHandler.instantiate(GameManager.class, mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties);
