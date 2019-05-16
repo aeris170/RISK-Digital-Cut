@@ -90,7 +90,8 @@ public class GameManager extends DoaObject {
 				startingTroops.put(p, startingTroopCount);
 				pInt++;
 			} else {
-				Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(aiInt), aiColors.get(aiInt), difficulties.get(aiInt));
+				Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(aiInt), aiColors.get(aiInt),
+						difficulties.get(aiInt));
 				players.add(p);
 				startingTroops.put(p, startingTroopCount);
 				aiInt++;
@@ -120,7 +121,7 @@ public class GameManager extends DoaObject {
 		} else if (currentPhase == TurnPhase.REINFORCE) {
 			currentPhase = TurnPhase.DRAFT;
 			if (cardWillBeGiven) {
-				currentPlayer.addCard(Card.getRandomCard());
+				//currentPlayer.addCard(Card.getRandomCard());
 				cardWillBeGiven = false;
 			}
 			currentPlayer.endTurn();
@@ -132,10 +133,10 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			/*if (currentPlayer.isLocalPlayer()) {
-				cardPanel.updateCards();
-				cardPanel.show();
-			}*/
+			/*
+			 * if (currentPlayer.isLocalPlayer()) { cardPanel.updateCards();
+			 * cardPanel.show(); }
+			 */
 			timer = 0;
 		}
 	}
@@ -160,7 +161,7 @@ public class GameManager extends DoaObject {
 		if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
 			currentPhase = TurnPhase.DRAFT;
 			if (cardWillBeGiven) {
-				currentPlayer.addCard(Card.getRandomCard());
+				// currentPlayer.addCard(Card.getRandomCard());
 				cardWillBeGiven = false;
 			}
 			currentPlayer.endTurn();
@@ -172,9 +173,9 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			if (currentPlayer.isLocalPlayer()) {							
+			if (currentPlayer.isLocalPlayer()) {
 				cardPanel.updateCards();
-				//cardPanel.show();
+				// cardPanel.show();
 			}
 			timer = 0;
 		}
@@ -427,12 +428,14 @@ public class GameManager extends DoaObject {
 	}
 
 	public void moveTroopsAfterOccupying(int count) {
-		// 1 is there because it was -1 before
-		moveAfterOccupyDestination.getProvince().addTroops(1 + count);
-		moveAfterOccupySource.getProvince().removeTroops(count);
-		moveAfterOccupyDestination = null;
-		moveAfterOccupySource = null;
-		ProvinceConnector.getInstance().setPath();
+		if (moveAfterOccupyDestination != null) {
+			// 1 is there because it was -1 before
+			moveAfterOccupyDestination.getProvince().addTroops(1 + count);
+			moveAfterOccupySource.getProvince().removeTroops(count);
+			moveAfterOccupyDestination = null;
+			moveAfterOccupySource = null;
+			ProvinceConnector.getInstance().setPath();
+		}
 	}
 
 	public static void gameDataSender() throws IOException {
