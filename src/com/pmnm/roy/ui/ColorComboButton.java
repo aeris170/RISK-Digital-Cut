@@ -119,15 +119,8 @@ public class ColorComboButton extends DoaImageButton {
 	@Override
 	public void show() {
 		super.show();
-		for(int i = 0; i < COMBO_BUTTONS.size(); i++) {
-			if((COMBO_BUTTONS.get(i).hidden) && COMBO_BUTTONS.get(i).getColor() == getColor()) {
-				for(int j = 0; j < COMBO_BUTTONS.size(); j++) {
-					if(COMBO_BUTTONS.get(j).hidden) {
-						index = j;
-						break;
-					}
-				}
-			}
+		if(!isVisible) {
+			index = COMBO_BUTTONS.stream().filter(cb -> !(cb.isVisible)).findFirst().orElse(this).index;
 		}
 		hidden = false;
 	}
