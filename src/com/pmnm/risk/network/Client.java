@@ -4,12 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.zip.GZIPInputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -17,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.network.message.MessageBuilder;
 import com.pmnm.risk.network.message.MessageBuilder.Message;
 import com.pmnm.risk.network.message.MessageType;
@@ -32,18 +38,18 @@ public class Client extends JFrame implements Runnable {
 	private static final long serialVersionUID = 4580330924087695464L;
 
 	// Text Data Entrance Part
-	private JTextField clientText;
+	private static JTextField clientText;
 	private JTextArea chatWindows;
 
 	// Data in and data out
 	// Transients are useless, I put them to make warnings disappear.
-	private transient Socket connection;
+	private transient static Socket connection;
 	private transient ObjectOutputStream output;
 	private transient ObjectInputStream input;
 
 	// Message and IP
 	@SuppressWarnings("unused")
-	private String clientName;
+	private static String clientName;
 	private String serverIP;
 
 	// Socket For Connection
@@ -64,8 +70,15 @@ public class Client extends JFrame implements Runnable {
 
 		// Add ActionListener For Text Field
 		clientText.addActionListener(e -> {
+			if(clientText.getText().equals("send")) {
+				sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
+			}	
+			else {
+			
+			
 			sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
 			clientText.setText("");
+			}
 		});
 
 		addWindowListener(new WindowAdapter() {
@@ -105,6 +118,7 @@ public class Client extends JFrame implements Runnable {
 		try {
 			connectToServer();
 			setupStreams();
+			//sendFile();
 			whileChatting();
 			closeCrap();
 		} catch (IOException | ClassNotFoundException ex) {
@@ -132,7 +146,9 @@ public class Client extends JFrame implements Runnable {
 	private void setupStreams() throws IOException {
 		output = new ObjectOutputStream(connection.getOutputStream());
 		input = new ObjectInputStream(connection.getInputStream());
+		//dos = new DataOutputStream(connection.getOutputStream());
 		showMessage("Connected to: " + connection.getInetAddress().getHostName());
+		
 	}
 
 	// *************************************************************************
@@ -165,6 +181,7 @@ public class Client extends JFrame implements Runnable {
 		output.close();
 		input.close();
 		connection.close();
+		//bos.close();
 	}
 
 	// *************************************************************************
@@ -199,6 +216,69 @@ public class Client extends JFrame implements Runnable {
 		SwingUtilities.invokeLater(() -> clientText.setEditable(condition));
 	}
 
+	
+	
+	
+	public void manageNewTakenGame() throws FileNotFoundException, ClassNotFoundException, IOException {
+		//take the data
+		receiveFile();
+		//decompress the file
+		unzipper();
+		//implement that unzipper serialization file
+		GameInstance.updateNewGame();
+		//after implementation send I am OK to the server
+		sendToServer(new MessageBuilder().setSender(clientName).setType(MessageType.I_AM_OK).build());
+	}
+	
+	
+	public void sendFile(String file) throws IOException {
+		DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
+		FileInputStream fis = new FileInputStream(file);
+		byte[] buffer = new byte[90000];
+		
+		while (fis.read(buffer) > 0) {
+			dos.write(buffer);
+		}
+		
+		fis.close();
+		dos.close();	
+	}
+	
+	/**
+	 * Read taken file and uncompress it
+	 */
+	 public static void unzipper() {
+	    	byte[] buffer = new byte[1024]; 
+	        try
+	        { 
+	            GZIPInputStream is =  
+	                    new GZIPInputStream(new FileInputStream("clientFiles\\currentGame.gz")); 
+	                      
+	            FileOutputStream out = 
+	                    new FileOutputStream("takenData\\unzip"); 
+	              
+	            int totalSize; 
+	            while((totalSize = is.read(buffer)) > 0 ) 
+	            { 
+	                out.write(buffer, 0, totalSize); 
+	            } 
+	              
+	            out.close(); 
+	            is.close(); 
+	              
+	            System.out.println("File Successfully decompressed"); 
+	        } 
+	        catch (IOException e) 
+	        { 
+	            e.printStackTrace(); 
+	        }               
+	    }
+	
+	
+	public void receiveFile() {
+		//receive the file and save it 
+	}
+	
 	public Socket getSocket() {
 		return connection;
 	}

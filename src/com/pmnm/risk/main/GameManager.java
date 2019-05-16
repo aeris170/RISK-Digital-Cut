@@ -1,6 +1,7 @@
 package com.pmnm.risk.main;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,6 +24,7 @@ import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.board.ProvinceConnector;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.network.Client;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.EscPopup;
 import com.pmnm.roy.ui.gameui.BottomPanel;
@@ -45,9 +47,9 @@ public class GameManager extends DoaObject {
 	public final Map<Player, Integer> startingTroops = new HashMap<>();
 	public int placementCounter = 0;
 
-	public TurnPhase currentPhase = TurnPhase.DRAFT;
+	public static TurnPhase currentPhase = TurnPhase.DRAFT;
 	public int reinforcementForThisTurn = 0;
-	public Player currentPlayer;
+	public static Player currentPlayer;
 	public int turnCount = 0;
 
 	public ProvinceHitArea moveAfterOccupySource = null;
@@ -432,4 +434,14 @@ public class GameManager extends DoaObject {
 		moveAfterOccupySource = null;
 		ProvinceConnector.getInstance().setPath();
 	}
+
+
+	public static void gameDataSender() throws IOException {
+		GameInstance.gameInstanceCreation();
+		//file is written to the clientFiles
+		//Client.sendFile();
+
+	}
+
+
 }

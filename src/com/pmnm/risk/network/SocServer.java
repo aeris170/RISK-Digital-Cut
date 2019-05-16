@@ -1,6 +1,9 @@
 package com.pmnm.risk.network;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -21,15 +24,29 @@ public class SocServer implements Runnable {
 
 	private int serverCapacity; // Exactly how many people will connect.
 	private AtomicInteger threadsFinished = new AtomicInteger(0); // Used for synchronisation.
-	public static int controller = 1;
+
 	private ServerSocket server;
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 	public static Thread t;
+	public static int orderOfTheGame = 1;
+	public static  int playOrder[]; //declaration and instantiation  
+	public static int controlledGameUpdate = 0;
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 
 	// To create more streams, we use lists.
 	// Transients are useless, I put them to make warnings disappear.
 	private List<Socket> connections; // Socket is basically connection between two computers.
 	private List<ObjectOutputStream> outputs;
-	
 	private List<ObjectInputStream> inputs;
 	private List<Thread> streamThreads; // Socket listeners.
 	private List<Boolean> isThreadFinished; // Used to stop threads that finished listening.
@@ -46,10 +63,16 @@ public class SocServer implements Runnable {
 	public static void main(String[] args) {
 		// User will specify the server capacity.
 		SocServer serverProtocol = new SocServer(2);
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 		//t = new Thread(new SocServer(10));
-	//	t.start();
+		//	t.start();
 		//
 	}
+	
+	
 	
 	public static void starterPack() {
 		t = new Thread(new SocServer(10));
@@ -57,9 +80,23 @@ public class SocServer implements Runnable {
 	}
 	
 	public static void secondaryPack(int capacityOfServer) {
+		playOrder = new int[capacityOfServer];
 		new Thread(new SocServer(capacityOfServer)).start();
 		System.out.println("***********************");
+=======
+		new Thread(serverProtocol).start();
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+		new Thread(serverProtocol).start();
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+		new Thread(serverProtocol).start();
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+		new Thread(serverProtocol).start();
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 	}
+	
 
 	// *************************************************************************
 	@Override
@@ -70,14 +107,25 @@ public class SocServer implements Runnable {
 			server = sv;
 			// Auto connect to server.
 			// User specifies the name ("HOST")
-			System.out.println("egegegegegeegegegegegegegegege");
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+			
 			// Wait for connections to be made.
 			if(controller == 2) {
 			System.out.println("comes */*/**/*/*/");
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 			connections.add(new Client("HOST", "localhost").getSocket());
-			}
+			// Wait for connections to be made.
 			waitForConnection();
-			
 			// Loop forever to get chat and MP. Finish when everyone leaves.
 			whileChatting();
 		} catch (IOException ex) {
@@ -91,12 +139,12 @@ public class SocServer implements Runnable {
 	private void waitForConnection() throws IOException {
 		// Wait for all connections. Exactly the value of serverCapacity connections
 		// must be made.
-		//for (int i = 0; i < serverCapacity; i++) {
-		while(true) {
+		for (int i = 0; i < serverCapacity; i++) {
 			Socket connection = server.accept();
 			connections.add(connection);
 			setupStreams(connection);
 		}
+
 	}
 
 	// *************************************************************************
@@ -128,8 +176,15 @@ public class SocServer implements Runnable {
 							// Else if it is a chat message, broadcast it to all clients.
 							broadcast(message);
 						} else if (message.getType() == MessageType.GAME_MOVE) {
-							// Else if it is a game move, @EGE @CAGRI you do this part!
-							// TODO IMPLEMENT MULTIPLAYER
+							//send file to the all clients
+							controlledGameUpdate++;
+							if(controlledGameUpdate == serverCapacity) {
+								System.out.println("Everone updated themself");
+							}
+							
+						}
+						else if(message.getType() == MessageType.I_AM_OK) {
+							
 						}
 						// Wait for 200 milliseconds before listening.
 						Thread.sleep(200);
@@ -194,6 +249,8 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
+	
+	
 
 	// *************************************************************************
 	private void broadcast(Message message) {
@@ -207,7 +264,55 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 	
+	
+	public void broadcastFile(Object object) {
+		// Write the message to everyone.
+		outputs.forEach(output -> {
+			try {
+				output.writeObject(object);
+				output.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});		
+	}	
 	
 }
+	
+	
+/*	public static void sendFileFromServer() throws IOException {
+		//sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
+		
+		InputStream in = connection.getInputStream();
+	    bos = new BufferedOutputStream(new FileOutputStream("clientFiles\\currentGame.gz"));
+
+	    int c = 0;
+	    byte[] buff=new byte[2048];
+
+	    while((c=in.read(buff))>0){ // read something from inputstream into buffer
+	        // if something was read 
+	        bos.write(buff, 0, c);
+	    }
+
+	    in.close();
+	  //  bos.close();
+	}
+	
+}*/
+=======
+}
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+}
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+}
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+}
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
