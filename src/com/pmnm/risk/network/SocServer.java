@@ -1,6 +1,9 @@
 package com.pmnm.risk.network;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -138,6 +141,10 @@ public class SocServer implements Runnable {
 							
 							
 						}
+						else {
+							
+							
+						}
 						// Wait for 200 milliseconds before listening.
 						Thread.sleep(200);
 					} catch (ClassNotFoundException | IOException ex) {
@@ -229,4 +236,26 @@ public class SocServer implements Runnable {
 			}
 		});		
 	}	
+	
 }
+	
+	
+/*	public static void sendFileFromServer() throws IOException {
+		//sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
+		
+		InputStream in = connection.getInputStream();
+	    bos = new BufferedOutputStream(new FileOutputStream("clientFiles\\currentGame.gz"));
+
+	    int c = 0;
+	    byte[] buff=new byte[2048];
+
+	    while((c=in.read(buff))>0){ // read something from inputstream into buffer
+	        // if something was read 
+	        bos.write(buff, 0, c);
+	    }
+
+	    in.close();
+	  //  bos.close();
+	}
+	
+}*/

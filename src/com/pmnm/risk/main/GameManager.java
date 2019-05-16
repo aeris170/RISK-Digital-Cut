@@ -391,6 +391,7 @@ public class GameManager extends DoaObject {
 		//file is written to the clientFiles
 		Client.sendFile();
 		
-		
 	}
+	
+	
 }

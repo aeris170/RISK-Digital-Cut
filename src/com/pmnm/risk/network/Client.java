@@ -4,9 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -36,19 +40,20 @@ public class Client extends JFrame implements Runnable {
 	private static final long serialVersionUID = 4580330924087695464L;
 
 	// Text Data Entrance Part
-	private JTextField clientText;
+	private static JTextField clientText;
 	private JTextArea chatWindows;
 	static DataOutputStream dos;
 
 	// Data in and data out
 	// Transients are useless, I put them to make warnings disappear.
-	private transient Socket connection;
+	private transient static Socket connection;
 	private transient ObjectOutputStream output;
 	private transient ObjectInputStream input;
+	static BufferedOutputStream bos;
 
 	// Message and IP
 	@SuppressWarnings("unused")
-	private String clientName;
+	private static String clientName;
 	private String serverIP;
 
 	// Socket For Connection
@@ -137,7 +142,7 @@ public class Client extends JFrame implements Runnable {
 	private void setupStreams() throws IOException {
 		output = new ObjectOutputStream(connection.getOutputStream());
 		input = new ObjectInputStream(connection.getInputStream());
-		dos = new DataOutputStream(connection.getOutputStream());
+		//dos = new DataOutputStream(connection.getOutputStream());
 		showMessage("Connected to: " + connection.getInetAddress().getHostName());
 	}
 
@@ -171,7 +176,7 @@ public class Client extends JFrame implements Runnable {
 		output.close();
 		input.close();
 		connection.close();
-		dos.close();	
+		bos.close();
 	}
 
 	// *************************************************************************
@@ -207,36 +212,69 @@ public class Client extends JFrame implements Runnable {
 	}
 
 	public static void sendFile() throws IOException {
-		FileInputStream fis = new FileInputStream("clientFiles\\currentGame.gz");
-		byte[] buffer = new byte[4096];
 		
-		while (fis.read(buffer) > 0) {
-			dos.write(buffer);
-		}
-		
-		fis.close();
-		//dos.close();	
+		InputStream in = connection.getInputStream();
+	    bos = new BufferedOutputStream(new FileOutputStream("clientFiles\\currentGame.gz"));
+
+	    int c = 0;
+	    byte[] buff=new byte[2048];
+
+	    while((c=in.read(buff))>0){ // read something from inputstream into buffer
+	        // if something was read 
+	        bos.write(buff, 0, c);
+	    }
+
+	    in.close();
+	  //  bos.close();
 	}
 	
+	
+	public void manageNewTakenGame() throws FileNotFoundException, ClassNotFoundException, IOException {
+		//take the data
+		receiveFile();
+		//decompress the file
+		unzipper();
+		//implement that unzipper serialization file
+		GameInstance.updateNewGame();
+		//after implementation send I am OK to the server
+		sendToServer(new MessageBuilder().setSender(clientName).setType(MessageType.I_AM_OK).build());
+		
+	}
+	
+	
+	/**
+	 * Read taken file and uncompress it
+	 */
+	 public static void unzipper() {
+	    	byte[] buffer = new byte[1024]; 
+	        try
+	        { 
+	            GZIPInputStream is =  
+	                    new GZIPInputStream(new FileInputStream("C:\\Users\\AEGEAN\\Documents\\GitHub\\CS319-MP-Risk\\clientFiles\\currentGame.gz")); 
+	                      
+	            FileOutputStream out = 
+	                    new FileOutputStream("C:\\Users\\AEGEAN\\Documents\\GitHub\\CS319-MP-Risk\\takenData\\unzip"); 
+	              
+	            int totalSize; 
+	            while((totalSize = is.read(buffer)) > 0 ) 
+	            { 
+	                out.write(buffer, 0, totalSize); 
+	            } 
+	              
+	            out.close(); 
+	            is.close(); 
+	              
+	            System.out.println("File Successfully decompressed"); 
+	        } 
+	        catch (IOException e) 
+	        { 
+	            e.printStackTrace(); 
+	        }               
+	    }
+	
+	
 	public void receiveFile() {
-		//receive file and decompress it
-		//then load that game instance
-		GameInstance receivedInstance;
-		try{
-		    
-			   FileInputStream fin = new FileInputStream("c:\\address.gz");
-			   GZIPInputStream gis = new GZIPInputStream(fin);
-			   ObjectInputStream ois = new ObjectInputStream(gis);
-			   receivedInstance = (GameInstance) ois.readObject();
-			   ois.close();
-			  
-			   //if we read received file then load it to the our game
-			   GameInstance.implementTheReceivedGameInstance(receivedInstance);
-			   
-		   }catch(Exception ex){
-			   ex.printStackTrace();
-			   
-		   } 
+		//receive the file and save it 
 	}
 	
 	public Socket getSocket() {

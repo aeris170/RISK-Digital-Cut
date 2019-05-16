@@ -157,10 +157,11 @@ public final class GameInstance implements Serializable {
 	}
 	
 	
-	public static void implementTheReceivedGameInstance(GameInstance received) throws FileNotFoundException, IOException, ClassNotFoundException {
-		// TODO take input from UI
-		String mapName = GameManager.INSTANCE.currentMapName;
-		
+	
+	public static void updateNewGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+		//place that we save taken game instance data
+		String dir = "C:\\Users\\AEGEAN\\Documents\\GitHub\\CS319-MP-Risk\\takenData\\unzip";
+
 		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> DoaHandler.remove(pha));
 		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
 		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.forEach(ps -> DoaHandler.remove(ps));
@@ -169,8 +170,9 @@ public final class GameInstance implements Serializable {
 		Player.NAME_PLAYER.clear();
 		DoaHandler.remove(GameManager.INSTANCE);
 
-		
-				GameInstance loadedGame = received;
+		try (FileInputStream file = new FileInputStream("takenData\\unzip")) {
+			try (ObjectInputStream in = new ObjectInputStream(file)) {
+				GameInstance loadedGame = (GameInstance) in.readObject();
 				GameManager.INSTANCE = loadedGame.gm;
 				GameManager.INSTANCE.dicePanel = RiskGameScreenUI.DicePanel;
 				GameManager.INSTANCE.cardPanel = RiskGameScreenUI.CardPanel;
@@ -191,7 +193,22 @@ public final class GameInstance implements Serializable {
 				ProvinceConnector.deserialize(loadedGame.pc);
 				Player.NAME_PLAYER.values().forEach(p -> DoaHandler.add(p));
 				System.out.println("Object has been deserialized ");
-			
+			}
+		}
 	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "GameInstance [provinces=" + provinces + ", continents=" + continents + ", gm=" + gm + ", pc=" + pc
+				+ ", UNDISTRIBUTED_CARDS=" + UNDISTRIBUTED_CARDS + ", PROVINCE_CARDS=" + PROVINCE_CARDS
+				+ ", NAME_PLAYER=" + NAME_PLAYER + ", UNCLAIMED_PROVINCES=" + UNCLAIMED_PROVINCES
+				+ ", ALL_PROVINCE_HIT_AREAS=" + ALL_PROVINCE_HIT_AREAS + ", ALL_PROVINCE_SYMBOLS="
+				+ ALL_PROVINCE_SYMBOLS + "]";
+	}
+	
+	
+	
 
 }
