@@ -4,13 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -42,14 +40,12 @@ public class Client extends JFrame implements Runnable {
 	// Text Data Entrance Part
 	private static JTextField clientText;
 	private JTextArea chatWindows;
-	static DataOutputStream dos;
 
 	// Data in and data out
 	// Transients are useless, I put them to make warnings disappear.
 	private transient static Socket connection;
 	private transient ObjectOutputStream output;
 	private transient ObjectInputStream input;
-	static BufferedOutputStream bos;
 
 	// Message and IP
 	@SuppressWarnings("unused")
@@ -74,8 +70,15 @@ public class Client extends JFrame implements Runnable {
 
 		// Add ActionListener For Text Field
 		clientText.addActionListener(e -> {
+			if(clientText.getText().equals("send")) {
+				sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
+			}	
+			else {
+			
+			
 			sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
 			clientText.setText("");
+			}
 		});
 
 		addWindowListener(new WindowAdapter() {
@@ -115,6 +118,7 @@ public class Client extends JFrame implements Runnable {
 		try {
 			connectToServer();
 			setupStreams();
+			//sendFile();
 			whileChatting();
 			closeCrap();
 		} catch (IOException | ClassNotFoundException ex) {
@@ -144,6 +148,7 @@ public class Client extends JFrame implements Runnable {
 		input = new ObjectInputStream(connection.getInputStream());
 		//dos = new DataOutputStream(connection.getOutputStream());
 		showMessage("Connected to: " + connection.getInetAddress().getHostName());
+		
 	}
 
 	// *************************************************************************
@@ -176,7 +181,7 @@ public class Client extends JFrame implements Runnable {
 		output.close();
 		input.close();
 		connection.close();
-		bos.close();
+		//bos.close();
 	}
 
 	// *************************************************************************
@@ -211,22 +216,7 @@ public class Client extends JFrame implements Runnable {
 		SwingUtilities.invokeLater(() -> clientText.setEditable(condition));
 	}
 
-	public static void sendFile() throws IOException {
-		
-		InputStream in = connection.getInputStream();
-	    bos = new BufferedOutputStream(new FileOutputStream("clientFiles\\currentGame.gz"));
-
-	    int c = 0;
-	    byte[] buff=new byte[2048];
-
-	    while((c=in.read(buff))>0){ // read something from inputstream into buffer
-	        // if something was read 
-	        bos.write(buff, 0, c);
-	    }
-
-	    in.close();
-	  //  bos.close();
-	}
+	
 	
 	
 	public void manageNewTakenGame() throws FileNotFoundException, ClassNotFoundException, IOException {
@@ -240,6 +230,19 @@ public class Client extends JFrame implements Runnable {
 		sendToServer(new MessageBuilder().setSender(clientName).setType(MessageType.I_AM_OK).build());
 	}
 	
+	
+	public void sendFile(String file) throws IOException {
+		DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
+		FileInputStream fis = new FileInputStream(file);
+		byte[] buffer = new byte[90000];
+		
+		while (fis.read(buffer) > 0) {
+			dos.write(buffer);
+		}
+		
+		fis.close();
+		dos.close();	
+	}
 	
 	/**
 	 * Read taken file and uncompress it

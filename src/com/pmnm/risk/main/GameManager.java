@@ -389,7 +389,7 @@ public class GameManager extends DoaObject {
 	public static void gameDataSender() throws IOException {
 		GameInstance.gameInstanceCreation();
 		//file is written to the clientFiles
-		Client.sendFile();
+		//Client.sendFile();
 		
 	}
 	
