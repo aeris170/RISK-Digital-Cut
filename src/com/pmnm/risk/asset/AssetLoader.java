@@ -41,7 +41,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("MapBorder", "/ui/playOffline/mapContainer.png");
 				DoaSprites.createSprite("PlayerTypeBorder", "/ui/playOffline/playerType.png");
 				DoaSprites.createSprite("MainScroll", "/ui/playOffline/playersScroll.png");
-				DoaSprites.createSprite("DifficutyBorder", "/ui/playOffline/difficuty.png");
+				DoaSprites.createSprite("DifficultyBorder", "/ui/playOffline/difficuty.png");
 				DoaSprites.createSprite("DropDown", "/ui/playOffline/droppedComboBoxPlain.png");
 				DoaSprites.createSprite("DropDownTex", "/ui/playOffline/droppedComboBox.png");
 				DoaSprites.createSprite("DropDownType", "/ui/playOffline/droppedComboBoxPlainType.png");

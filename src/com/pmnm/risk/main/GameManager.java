@@ -1,5 +1,6 @@
 package com.pmnm.risk.main;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class GameManager extends DoaObject {
 
 	public final List<Player> players = new ArrayList<>();
 
-	public int numberOfPlayers = 2;
+	public int numberOfPlayers;
 	public boolean manualPlacement = false;
 
 	public boolean isManualPlacementDone = false;
@@ -67,15 +68,21 @@ public class GameManager extends DoaObject {
 
 	public float timer = 0;
 
-	public GameManager(String mapName) {
+	public GameManager(String mapName, List<String> playerNames, List<Color> playerColors, List<String> aiNames, List<Color> aiColors) {
 		super(0f, 0f);
 		if (INSTANCE != null) {
 			DoaHandler.remove(INSTANCE);
 		}
 		currentMapName = mapName;
+		numberOfPlayers = playerNames.size() + aiNames.size();
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		for (int i = 0; i < numberOfPlayers; i++) {
-			Player p = DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i), true);
+		for (int i = 0; i < playerNames.size(); i++) {
+			Player p = DoaHandler.instantiate(Player.class, playerNames.get(i), playerColors.get(i), true);
+			players.add(p);
+			startingTroops.put(p, startingTroopCount);
+		}
+		for (int i = 0; i < aiNames.size(); i++) {
+			Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(i), aiColors.get(i), 0);
 			players.add(p);
 			startingTroops.put(p, startingTroopCount);
 		}
