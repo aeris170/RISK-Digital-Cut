@@ -19,7 +19,7 @@ public class TypeComboButton extends DoaImageButton {
 
 	public static final String[] OPTIONS = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
 
-	private static final List<TypeComboButton> COMBO_BUTTONS = new ArrayList<>();
+	public static final List<TypeComboButton> COMBO_BUTTONS = new ArrayList<>();
 
 	int index = 0;
 
