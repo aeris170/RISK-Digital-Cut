@@ -15,12 +15,13 @@ public class NextPhaseButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		if (GameManager.currentPhase == TurnPhase.DRAFT) {
-			GameManager.nextPhase();
-		} else if (GameManager.currentPhase == TurnPhase.ATTACK) {
-			GameManager.nextPhase();
-		} else if (GameManager.currentPhase == TurnPhase.REINFORCE) {
-			GameManager.nextPhase();
+		GameManager gm = GameManager.INSTANCE;
+		if (gm.currentPhase == TurnPhase.DRAFT) {
+			gm.nextPhase();
+		} else if (gm.currentPhase == TurnPhase.ATTACK) {
+			gm.nextPhase();
+		} else if (gm.currentPhase == TurnPhase.REINFORCE) {
+			gm.nextPhase();
 			button.disable();
 		}
 	}

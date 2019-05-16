@@ -3,12 +3,12 @@ package com.pmnm.risk.asset;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.doa.engine.graphics.DoaAnimations;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 
 public final class AssetLoader {
@@ -26,6 +26,7 @@ public final class AssetLoader {
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
 			DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
+			DoaSprites.createSprite("escapeMenu", "/ui/gameScreenElements/escapeMenu.png");
 
 			{// SINGLEPLAYER MENU
 				DoaSprites.createSprite("ArrowLeftIdle", "/ui/playOffline/arrowUnpressedLeft.png");
@@ -80,6 +81,9 @@ public final class AssetLoader {
 				DoaSprites.createSprite("spring", "/ui/gameScreenElements/topInfo/spring.png");
 				DoaSprites.createSprite("fall", "/ui/gameScreenElements/topInfo/fall.png");
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
+			}
+
+			{// WEATHER EFFECTS
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
 				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
@@ -87,6 +91,10 @@ public final class AssetLoader {
 				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 150);
 				DoaAnimations.createAnimation("CherryPetals", "/ui/gameScreenElements/topInfo/cherryPetals.gif", 60);
 				DoaAnimations.createAnimation("Rain", "/ui/gameScreenElements/topInfo/rainLight.gif", 40);
+				DoaSprites.createSprite("fallTex", "/ui/gameScreenElements/waterTextures/fallWaterTexture.jpg");
+				DoaSprites.createSprite("springTex", "/ui/gameScreenElements/waterTextures/springWaterTexture.jpg");
+				DoaSprites.createSprite("summerTex", "/ui/gameScreenElements/waterTextures/summerWaterTexture.jpg");
+				DoaSprites.createSprite("winterTex", "/ui/gameScreenElements/waterTextures/winterWaterTexture.jpg");
 			}
 
 			{// BOTTOM INFO
@@ -143,18 +151,23 @@ public final class AssetLoader {
 				DoaSprites.createSprite("blitzIdle", "/ui/gameScreenElements/diceScroll/blitzNormal.png");
 				DoaSprites.createSprite("blitzHover", "/ui/gameScreenElements/diceScroll/blitzHover.png");
 			}
-			
+
 			{// CARD PANEL
 				DoaSprites.createSprite("artillery", "/ui/gameScreenElements/cardScroll/artillery.png");
 				DoaSprites.createSprite("cavalry", "/ui/gameScreenElements/cardScroll/cavalry.png");
 				DoaSprites.createSprite("infantry", "/ui/gameScreenElements/cardScroll/footman.png");
 				DoaSprites.createSprite("card", "/ui/gameScreenElements/cardScroll/card.png");
+				DoaSprites.createSprite("cardHover", "/ui/gameScreenElements/cardScroll/cardHover.png");
+				DoaSprites.createSprite("cardSelected", "/ui/gameScreenElements/cardScroll/cardSelected.png");
 				DoaSprites.createSprite("trump", "/ui/gameScreenElements/cardScroll/eyeOnBoxTrump.png");
-				DoaSprites.createSprite("cardScoll", "/ui/gameScreenElements/cardScroll/cardScroll.png");
-				DoaSprites.createSprite("scrollFrame", "/ui/gameScreenElements/cardScroll/scrollFrame.png");
+				DoaSprites.createSprite("scroll", "/ui/gameScreenElements/cardScroll/scroll.png");
+				DoaSprites.createSprite("cardButtonHover", "/ui/gameScreenElements/cardScroll/buttonHover.png");
+				DoaSprites.createSprite("cardButtonIdle", "/ui/gameScreenElements/cardScroll/buttonIdle.png");
+				DoaSprites.createSprite("cardButtonLocked", "/ui/gameScreenElements/cardScroll/buttonLocked.png");
+				DoaSprites.createSprite("cardButtonPressed", "/ui/gameScreenElements/cardScroll/buttonPressed.png");
 			}
 
-			List<DoaSprite> riskLogoKeyFrames = new ArrayList<>();
+			List<BufferedImage> riskLogoKeyFrames = new ArrayList<>();
 			for (int i = 1; i <= 11; i++) {
 				riskLogoKeyFrames.add(DoaSprites.createSprite("KEYFRAME" + i, "/ui/logoKeyframes/" + i + ".png"));
 			}

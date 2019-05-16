@@ -11,7 +11,6 @@ import javax.swing.SwingUtilities;
 
 import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaEngine;
-import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaRenderingMode;
 import com.doa.engine.DoaWindow;
 import com.doa.engine.input.DoaMouse;
@@ -31,7 +30,7 @@ public class Main {
 		Locale.setDefault(Locale.ENGLISH);
 		DoaEngine.DEBUG_ENABLED = true;
 		DoaEngine.RENDERING_MODE = DoaRenderingMode.BALANCED;
-		DoaMouse.clampWheel(0.8d, 10d);
+		DoaMouse.clampWheel(1d, 10d);
 
 		Globals.initilaizeGlobals();
 
@@ -40,11 +39,11 @@ public class Main {
 
 		DoaCamera.setTweenAmountX(1f);
 		DoaCamera.setTweenAmountY(1f);
-		DoaCamera.enableMouseZoom(null, 0.8f, 10f);
+		DoaCamera.enableMouseZoom(null, 1f, 10f);
 
 		DoaCamera.adjustCamera(Camera.getInstance(), -10000, -10000, 10000, 10000);
-		//DoaHandler.instantiate(DebugPanel.class);
 		SwingUtilities.invokeLater(() -> configureGUI());
+
 	}
 
 	private static void configureGUI() {

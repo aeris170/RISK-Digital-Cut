@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 import com.doa.engine.DoaHandler;
@@ -33,7 +34,7 @@ public class TopPanel extends DoaPanel {
 
 	@Override
 	public void tick() {
-		timerColour = GameManager.currentPlayer.getColor();
+		timerColour = GameManager.INSTANCE.currentPlayer.getColor();
 		if (threeSecondGuard.get()) {
 			threeSecondGuard.set(false);
 			DoaTasker.executeLater(() -> {
@@ -53,29 +54,33 @@ public class TopPanel extends DoaPanel {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
+		GameManager gm = GameManager.INSTANCE;
 		// timer block
 		if (timerColour != null) {
-			Rectangle2D.Float rect = new Rectangle2D.Float(0f, Main.WINDOW_HEIGHT * 0.027f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT * 0.021f);
+			float timer = GameManager.INSTANCE.timer;
+			g.setColor(Color.BLACK);
+			g.fillRect(0f, Main.WINDOW_HEIGHT * 0.027f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT * 0.021f);
 			g.setColor(timerColour);
-			g.fill(rect);
-			g.draw(rect);
+			g.fillRect(timer, Main.WINDOW_HEIGHT * 0.027f, Main.WINDOW_WIDTH - timer * 2, Main.WINDOW_HEIGHT * 0.021f);
 		}
 
 		Composite oldComposite = g.getComposite();
 		g.drawImage(DoaSprites.get("MainMenuTopRing"), 0, -6);
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
-		g.drawImage(DoaSprites.get("seasonCircle"), (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
-		g.drawImage(DoaSprites.get(Season.getCurrentSeason().toString()), (Main.WINDOW_WIDTH - DoaSprites.get(Season.getCurrentSeason().toString()).getWidth()) / 2f, 0);
+		g.drawImage(DoaSprites.get("seasonCircle"),
+				(Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
+		g.drawImage(DoaSprites.get(Season.getCurrentSeason().toString()),
+				(Main.WINDOW_WIDTH - DoaSprites.get(Season.getCurrentSeason().toString()).getWidth()) / 2f, 0);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 26f));
 		g.setColor(UIInit.FONT_COLOR);
 
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
-		String turn = "TURN: " + (GameManager.turnCount + 1);
+		String turn = "TURN: " + (int)Math.ceil((gm.turnCount + 1) / (double) gm.numberOfPlayers);
 		g.drawString(turn, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(turn)) / 2f, 110);
 
-		g.setColor(GameManager.currentPlayer.getColor());
+		g.setColor(gm.currentPlayer.getColor());
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(1 - alpha, 0)));
-		String player = GameManager.currentPlayer.getName();
+		String player = gm.currentPlayer.getName();
 		g.drawString(player, (Main.WINDOW_WIDTH - g.getFontMetrics().stringWidth(player)) / 2f, 110);
 		g.setComposite(oldComposite);
 	}

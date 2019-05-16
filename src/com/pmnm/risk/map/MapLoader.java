@@ -98,7 +98,7 @@ public final class MapLoader {
 				});
 				province.addMesh(mesh);
 			});
-			DoaHandler.instantiate(ProvinceHitArea.class, province, 0f, 0f, 0, 0);
+			DoaHandler.instantiate(ProvinceHitArea.class, province);
 		});
 	}
 

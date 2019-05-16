@@ -13,7 +13,7 @@ public class Continent implements Serializable {
 
 	private static final long serialVersionUID = 2216078176595232966L;
 
-	public static final Map<String, Continent> NAME_CONTINENT = new LinkedHashMap<>();
+	public static Map<String, Continent> NAME_CONTINENT = new LinkedHashMap<>();
 
 	private String name;
 	private Color color;

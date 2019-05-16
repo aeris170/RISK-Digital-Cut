@@ -7,6 +7,6 @@ public class BlitzButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		GameManager.blitz();
+		GameManager.INSTANCE.blitz();
 	}
 }

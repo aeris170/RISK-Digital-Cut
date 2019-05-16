@@ -4,12 +4,13 @@ import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 
+import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaAnimation;
 import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaMath;
 import com.pmnm.risk.main.Main;
@@ -24,6 +25,7 @@ public class SeasonEffect extends DoaObject {
 
 	public SeasonEffect() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, 100);
+		DoaHandler.instantiate(Water.class);
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class SeasonEffect extends DoaObject {
 				g.drawAnimation(petals, -petals.getFrames().get(0).getWidth() / 2f, -petals.getFrames().get(0).getHeight() / 2f);
 				break;
 			case SUMMER:
-				DoaSprite godray = DoaSprites.get("godray");
+				BufferedImage godray = DoaSprites.get("godray");
 				g.translate(Main.WINDOW_WIDTH / 2f, 0);
 				g.rotate(Math.toRadians(godrayAngle));
 				g.scale(1.2f, 1.2f);

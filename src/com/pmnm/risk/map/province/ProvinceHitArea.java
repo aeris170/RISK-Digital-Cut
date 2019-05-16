@@ -17,11 +17,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
@@ -35,7 +35,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
-	private static final Map<RenderingHints.Key, Object> HINTS = new HashMap<>();
+	public static final Map<RenderingHints.Key, Object> HINTS = new HashMap<>();
 	static {
 		HINTS.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		HINTS.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -48,14 +48,15 @@ public class ProvinceHitArea extends DoaObject {
 		HINTS.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	}
 
-	public static final List<ProvinceHitArea> ALL_PROVINCE_HIT_AREAS = new ArrayList<>();
+	public static List<ProvinceHitArea> ALL_PROVINCE_HIT_AREAS = new CopyOnWriteArrayList<>();
+	public static List<ProvinceSymbol> ALL_PROVINCE_SYMBOLS = new CopyOnWriteArrayList<>();
 	public static ProvinceHitArea selectedProvinceByMouse = null;
 
 	private Province province;
 	private List<GeneralPath> meshes = new ArrayList<>();
 
 	private transient BufferedImage unoccupiedMesh;
-	private Map<Color, BufferedImage> playerOwnedMeshes = new HashMap<>();
+	private transient Map<Color, BufferedImage> playerOwnedMeshes;
 	private transient BufferedImage selectedMesh;
 	private transient BufferedImage selectedBorder;
 	private transient BufferedImage emphasizedBorder;
@@ -83,8 +84,8 @@ public class ProvinceHitArea extends DoaObject {
 	private float selectedMeshAlpha = 0f;
 	private float selectedMeshAlphaDelta = 0.005f;
 
-	public ProvinceHitArea(Province province, float x, float y, int width, int height) {
-		super(x, y, width, height, 0);
+	public ProvinceHitArea(Province province) {
+		super(0f, 0f, 0, 0, 0);
 		this.province = province;
 		province.getMeshes().forEach(mesh -> {
 			GeneralPath hitArea = new GeneralPath();
@@ -119,15 +120,15 @@ public class ProvinceHitArea extends DoaObject {
 			selectedProvinceByMouse = this;
 			isSelected = true;
 		}
-		setzOrder(1);
+
 		if (isHighlighted) {
 			setzOrder(2);
-		}
-		if (isEmphasized) {
+		} else if (isEmphasized) {
 			setzOrder(3);
-		}
-		if (isAttacker || isDefender || isReinforcing || isReinforced) {
+		} else if (isAttacker || isDefender || isReinforcing || isReinforced) {
 			setzOrder(4);
+		} else if (getzOrder() != 1) {
+			setzOrder(1);
 		}
 		if (isSelected) {
 			setzOrder(5);
@@ -141,6 +142,9 @@ public class ProvinceHitArea extends DoaObject {
 			}
 		} else {
 			selectedMeshAlpha = 0f;
+			if (getzOrder() != 1) {
+				setzOrder(1);
+			}
 		}
 	}
 
@@ -183,7 +187,8 @@ public class ProvinceHitArea extends DoaObject {
 		}
 	}
 
-	private void cacheMeshAsImage() {
+	public void cacheMeshAsImage() {
+		playerOwnedMeshes = new HashMap<>();
 		for (GeneralPath mesh : meshes) {
 			double[][] vertices = getPoints(mesh);
 			for (int i = 0; i < vertices.length; i++) {
@@ -276,7 +281,12 @@ public class ProvinceHitArea extends DoaObject {
 		umr.dispose();
 		sbr.dispose();
 		ebr.dispose();
+		hbr.dispose();
 		playerMeshRenderers.forEach(renderer -> renderer.dispose());
+	}
+
+	public List<GeneralPath> getMesh() {
+		return meshes;
 	}
 
 	public Province getProvince() {
@@ -290,7 +300,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath
 	// by finnw
-	private static double[][] getPoints(Path2D path) {
+	public static double[][] getPoints(Path2D path) {
 		List<double[]> pointList = new ArrayList<>();
 		double[] coords = new double[6];
 		int numSubPaths = 0;
@@ -392,6 +402,7 @@ public class ProvinceHitArea extends DoaObject {
 
 		public ProvinceSymbol() {
 			super((float) centerX, (float) centerY, 0, 0, 9);
+			ALL_PROVINCE_SYMBOLS.add(this);
 		}
 
 		@Override
@@ -404,8 +415,8 @@ public class ProvinceHitArea extends DoaObject {
 				g.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
 				FontMetrics fm = g.getFontMetrics();
 				g.setColor(Color.BLACK);
-				DoaSprite ownerLogo = DoaSprites.get("p" + p.getOwner().getID() + "Pawn");
-				DoaSprite continentLogo = DoaSprites.get(p.getContinent().getAbbreviation());
+				BufferedImage ownerLogo = DoaSprites.get("p" + p.getOwner().getID() + "Pawn");
+				BufferedImage continentLogo = DoaSprites.get(p.getContinent().getAbbreviation());
 				g.drawImage(continentLogo, centerX - continentLogo.getWidth() * 0.33f, centerY - continentLogo.getHeight() * 0.33f, continentLogo.getWidth() * 0.66f,
 				        continentLogo.getHeight() * 0.66f);
 				g.drawImage(ownerLogo, centerX - ownerLogo.getWidth() * 0.33f, centerY - ownerLogo.getHeight() * 0.33f, ownerLogo.getWidth() * 0.66f,
@@ -425,5 +436,4 @@ public class ProvinceHitArea extends DoaObject {
 	public void setProvince(Province province) {
 		this.province = province;
 	}
-
 }

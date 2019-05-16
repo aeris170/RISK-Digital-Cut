@@ -28,10 +28,10 @@ public enum Season {
 	}
 
 	private static final Season[] seasons = { WINTER, WINTER, SPRING, SPRING, SPRING, SUMMER, SUMMER, SUMMER, FALL, FALL, FALL, WINTER };
-	private static Season currentSeason = seasons[Calendar.getInstance().get(Calendar.MONTH)];
+	public static Season currentSeason = seasons[Calendar.getInstance().get(Calendar.MONTH)];
 
 	public static void updateSeason() {
-		currentSeason = seasons[(Calendar.MONTH + GameManager.turnCount) % 12];
+		currentSeason = seasons[(Calendar.MONTH + GameManager.INSTANCE.turnCount) % 12];
 	}
 
 	public static Season getCurrentSeason() {

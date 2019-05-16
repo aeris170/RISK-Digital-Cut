@@ -2,9 +2,9 @@ package com.pmnm.roy.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.localization.Translator;
@@ -20,12 +20,13 @@ public class TextImageButton extends DoaImageButton {
 	private DoaVectorF textRect;
 	private boolean isCentered;
 
-	public TextImageButton(DoaVectorF position, int width, int height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor, Color hoverTextColor) {
+	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor,
+	        Color hoverTextColor) {
 		this(position, width, height, idleImage, hoverImage, text, textColor, hoverTextColor, false);
 	}
 
-	public TextImageButton(DoaVectorF position, int width, int height, DoaSprite idleImage, DoaSprite hoverImage, String text, Color textColor, Color hoverTextColor,
-	        boolean isCentered) {
+	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor,
+	        Color hoverTextColor, boolean isCentered) {
 		super(position, width, height, idleImage, hoverImage);
 		this.text = text;
 		this.textColor = textColor;

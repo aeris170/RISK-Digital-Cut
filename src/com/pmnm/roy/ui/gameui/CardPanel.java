@@ -1,89 +1,63 @@
 package com.pmnm.roy.ui.gameui;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
+import com.doa.maths.DoaVectorI;
 import com.doa.ui.DoaUIContainer;
-import com.doa.ui.button.DoaImageButton;
-import com.pmnm.roy.ui.gameui.actions.BlitzButtonAction;
-import com.pmnm.roy.ui.gameui.actions.DiceButtonAction;
+import com.pmnm.risk.card.Card;
+import com.pmnm.risk.main.GameManager;
 
 public class CardPanel extends DoaUIContainer {
 
-	private static final long serialVersionUID = 8009744806803376915L;
+	private static final DoaVectorI CARD_BUTTON_SIZE = new DoaVectorI(126, 244);
+	// serial version UID needed;
+	public static final BufferedImage CardBG = DoaSprites.get("card");
 
-	private static final float ACCELERATION = 0.064f;
-
-	private static final DoaVectorF MIN = new DoaVectorF(-160f, 258f);
-	private static final DoaVectorF MAX = new DoaVectorF(0f, 823f);
-
-	private DoaImageButton one = DoaHandler.instantiate(DoaImageButton.class, -111f, 367f, 54, 60, DoaSprites.get("dice1Idle"), DoaSprites.get("dice1Hover"));
-	private DoaImageButton two = DoaHandler.instantiate(DoaImageButton.class, -138f, 441f, 109, 62, DoaSprites.get("dice2Idle"), DoaSprites.get("dice2Hover"));
-	private DoaImageButton three = DoaHandler.instantiate(DoaImageButton.class, -139f, 524f, 109, 86, DoaSprites.get("dice3Idle"), DoaSprites.get("dice3Hover"));
-	private DoaImageButton blitz;
-
-	private boolean moving = false;
+	List<CardButton> buttonList = new ArrayList<>();
 
 	public CardPanel() {
-		super(MIN.clone(), (int) (MAX.x - MIN.x), (int) (MAX.y - MIN.y));
-		one.addAction(new DiceButtonAction(1));
-		two.addAction(new DiceButtonAction(2));
-		three.addAction(new DiceButtonAction(3));
-		add(one);
-		add(two);
-		add(three);
-		blitz = DoaHandler.instantiate(BlitzButton.class, -130f, 643f, 85, 60, DoaSprites.get("blitzIdle"), DoaSprites.get("blitzHover"));
-		blitz.addAction(new BlitzButtonAction());
-		add(blitz);
-		super.show();
+		super(881f, 258f, 1011, 558);
+		//super.show();
+		for (int i = 0; i < 6; i++) {
+			buttonList.add(DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f), CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, CardBG));
+		}
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		if (moving) {
-			if (velocity.x > 0) {
-				velocity.x += ACCELERATION;
-			} else if (velocity.x < 0) {
-				velocity.x -= ACCELERATION;
-			}
-			if (position.x > MAX.x) {
-				position.x = MAX.x;
-				velocity.x = 0;
-				moving = false;
-			}
-			if (position.x < MIN.x) {
-				position.x = MIN.x;
-				velocity.x = 0;
-				moving = false;
-			}
-			position.add(velocity);
-			one.getPosition().add(velocity);
-			two.getPosition().add(velocity);
-			three.getPosition().add(velocity);
-			blitz.getPosition().add(velocity);
-		}
 	}
 
 	@Override
-	public void show() {
-		if (position.x != MAX.x) {
-			moving = true;
-			velocity.x = 1;
-		}
-	}
+	public void show() {}
 
 	@Override
-	public void hide() {
-		if (position.x != MIN.x) {
-			moving = true;
-			velocity.x = -1;
-		}
-	}
+	public void hide() {}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.drawImage(DoaSprites.get("diceScroll"), position.x, position.y);
+		g.drawImage(DoaSprites.get("scroll"), 881f, 258f);
+		// button x934, y507, wh 62
+		// text x937, y450, w63, h61
+		// leftmost card x1012, y417, w126, h244
+		// coordinate difference btw two cards' origins x138
+
+	}
+
+	public void updateCards() {
+		buttonList.forEach(b -> b.hide());
+		List<Card> cardList = GameManager.INSTANCE.currentPlayer.getCards();
+		for (int i = 0; i < cardList.size(); i++) {
+			CardButton curButton = buttonList.get(i);
+			curButton.configure(cardList.get(i));
+			curButton.show();
+		}
+
 	}
 }

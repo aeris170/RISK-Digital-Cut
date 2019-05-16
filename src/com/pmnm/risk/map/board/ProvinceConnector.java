@@ -29,7 +29,7 @@ public final class ProvinceConnector extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (provinceHitAreas != null && provinceHitAreas.length > 0) {
-			g.setStroke(new BasicStroke(4, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9, 5 }, dashArray));
+			g.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 0, new float[] { 9, 5 }, dashArray));
 			Color ownerColor = provinceHitAreas[0].getProvince().getOwner().getColor();
 			ownerColor = new Color(255 - ownerColor.getRed(), 255 - ownerColor.getGreen(), 255 - ownerColor.getBlue());
 			for (int i = provinceHitAreas.length - 1; i > 0; i--) {
@@ -57,5 +57,13 @@ public final class ProvinceConnector extends DoaObject {
 
 	public static ProvinceConnector getInstance() {
 		return _this == null ? _this = DoaHandler.instantiate(ProvinceConnector.class) : _this;
+	}
+
+	public static void deserialize(ProvinceConnector pc) {
+		if (_this != null) {
+			DoaHandler.remove(_this);
+		}
+		_this = pc;
+		DoaHandler.add(_this);
 	}
 }

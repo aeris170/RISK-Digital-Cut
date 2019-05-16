@@ -13,6 +13,6 @@ public class DiceButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		GameManager.toss(diceAmount);
+		GameManager.INSTANCE.toss(diceAmount);
 	}
 }

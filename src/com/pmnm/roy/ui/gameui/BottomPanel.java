@@ -3,12 +3,12 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprite;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
@@ -27,9 +27,9 @@ public class BottomPanel extends DoaPanel {
 
 	private static final long serialVersionUID = -59674351675589726L;
 
-	private static final DoaSprite MIDDLE = DoaSprites.get("gaugeBig");
-	private static final DoaSprite LEFT = DoaSprites.get("gaugeLeft");
-	private static final DoaSprite RIGHT = DoaSprites.get("gaugeRight");
+	private static final BufferedImage MIDDLE = DoaSprites.get("gaugeBig");
+	private static final BufferedImage LEFT = DoaSprites.get("gaugeLeft");
+	private static final BufferedImage RIGHT = DoaSprites.get("gaugeRight");
 
 	public static DoaImageButton nextPhaseButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.622f, Main.WINDOW_HEIGHT * 0.898f, 70, 70,
 	        DoaSprites.get("nextPhaseButtonIdle"), DoaSprites.get("nextPhaseButtonHover"), DoaSprites.get("nextPhaseButtonPressed"),
@@ -63,28 +63,33 @@ public class BottomPanel extends DoaPanel {
 	public void tick() {
 		try {
 			centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
-		} catch (Exception e3) {// TODO wtf
+		} catch (Exception ex) {
+			// TODO have no idea why this catch block is here, if you come across an
+			// exception getting thrown, feel free to fix.
+			// and don't ask me how do i fix this, just fix it ffs.
+			ex.printStackTrace();
 		}
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		Province clickedProvince = GameManager.clickedHitArea != null ? GameManager.clickedHitArea.getProvince() : null;
+		GameManager gm = GameManager.INSTANCE;
+		Province clickedProvince = gm.clickedHitArea != null ? gm.clickedHitArea.getProvince() : null;
 
 		String garrisonText = "";
-		DoaSprite garrisonSprite = DoaSprites.get("garrisonHolder");
+		BufferedImage garrisonSprite = DoaSprites.get("garrisonHolder");
 		DoaVectorF garrisonTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.454f, Main.WINDOW_HEIGHT * 0.836f);
 
 		String ownerText = "";
-		DoaSprite ownerSprite = DoaSprites.get("ownerHolder");
+		BufferedImage ownerSprite = DoaSprites.get("ownerHolder");
 		DoaVectorF ownerTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.447f, Main.WINDOW_HEIGHT * 0.874f);
 
 		String nameText = "";
-		DoaSprite nameSprite = DoaSprites.get("provinceNameHolder");
+		BufferedImage nameSprite = DoaSprites.get("provinceNameHolder");
 		DoaVectorF nameTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.436f, Main.WINDOW_HEIGHT * 0.912f);
 
 		String continentText = "";
-		DoaSprite continentSprite = DoaSprites.get("continentHolder");
+		BufferedImage continentSprite = DoaSprites.get("continentHolder");
 		DoaVectorF continentTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.430f, Main.WINDOW_HEIGHT * 0.950f);
 
 		if (clickedProvince != null) {
@@ -100,10 +105,10 @@ public class BottomPanel extends DoaPanel {
 		g.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (double) Main.WINDOW_HEIGHT - LEFT.getHeight());
 		g.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (double) Main.WINDOW_HEIGHT - RIGHT.getHeight());
 
-		String phaseText = GameManager.currentPhase.name();
+		String phaseText = gm.currentPhase.name();
 		DoaVectorF phaseArea = new DoaVectorF(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, phaseArea, phaseText)));
-		g.drawString(GameManager.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
+		g.drawString(gm.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
 
 		g.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (double) Main.WINDOW_HEIGHT - MIDDLE.getHeight());
 
@@ -123,7 +128,7 @@ public class BottomPanel extends DoaPanel {
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 30f));
 		fm = g.getFontMetrics();
 		if (clickedProvince != null) {
-			g.setColor(GameManager.clickedHitArea.getProvince().getOwner().getColor());
+			g.setColor(gm.clickedHitArea.getProvince().getOwner().getColor());
 		}
 		g.drawString(ownerText, ownerTopLeft.x + (ownerSprite.getWidth() - fm.stringWidth(ownerText)) / 2f, ownerTopLeft.y * 1.03f);
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN,
