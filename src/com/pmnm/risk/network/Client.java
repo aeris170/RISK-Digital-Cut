@@ -145,10 +145,10 @@ public class Client extends JFrame implements Runnable {
 	private void whileChatting() throws IOException, ClassNotFoundException {
 		ableToType(true);
 		while (true) {
-			Message message = (Message) input.readObject();
-			if (message.getType() == MessageType.CHAT) {
-				showMessage(message.getSender() + ": " + message.getData());
-			} else if (message.getType() == MessageType.GAME_MOVE) {
+			String text = (String) input.readObject();
+			if (text == "a") {
+				showMessage(text);
+			} else if (text== "b") {
 				// TODO MP
 			}
 		}

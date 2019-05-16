@@ -54,8 +54,6 @@ public class SocServer implements Runnable {
 		UPnP.openPortTCP(27015);
 		try (ServerSocket sv = new ServerSocket(27015, serverCapacity)) {
 			server = sv;
-			// Auto connect to server.
-			// User specifies the name ("HOST")
 			connections.add(new Client("HOST", "localhost").getSocket());
 			// Wait for connections to be made.
 			waitForConnection();
@@ -77,7 +75,6 @@ public class SocServer implements Runnable {
 			connections.add(connection);
 			setupStreams(connection);
 		}
-
 	}
 
 	// *************************************************************************
@@ -92,7 +89,9 @@ public class SocServer implements Runnable {
 	// *************************************************************************
 	private void whileChatting() {
 		// Tell everyone they have connected successfully.
-		broadcast(new MessageBuilder().setSender("Server").setData("All connections have been established!").setType(MessageType.CHAT).build());
+		
+		broadcast("coonections are established");
+		
 		for (int i = 0; i < serverCapacity; i++) {
 			final int ii = i;
 			// Create threads that will listen for input streams.
@@ -101,13 +100,13 @@ public class SocServer implements Runnable {
 				while (!isThreadFinished.get(ii)) {
 					try {
 						// Read message.
-						Message message = (Message) input.readObject();
+						Object ob = input.readObject();
 						if (message.getType() == MessageType.DISCONNECT) {
 							// If it is a disconnect message, shut the thread down.
 							isThreadFinished.set(ii, true);
 						} else if (message.getType() == MessageType.CHAT) {
 							// Else if it is a chat message, broadcast it to all clients.
-							broadcast(message);
+							//broadcast(message);
 						} else if (message.getType() == MessageType.GAME_MOVE) {
 							// Else if it is a game move, @EGE @CAGRI you do this part!
 							// TODO IMPLEMENT MULTIPLAYER
@@ -177,11 +176,11 @@ public class SocServer implements Runnable {
 	}
 
 	// *************************************************************************
-	private void broadcast(Message message) {
+	private void broadcast(String text) {
 		// Write the message to everyone.
 		outputs.forEach(output -> {
 			try {
-				output.writeObject(message);
+				output.writeObject(text);
 				output.flush();
 			} catch (IOException ex) {
 				ex.printStackTrace();
