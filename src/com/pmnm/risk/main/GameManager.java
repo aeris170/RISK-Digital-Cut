@@ -1,5 +1,7 @@
 package com.pmnm.risk.main;
 
+import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +24,7 @@ import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.board.ProvinceConnector;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.network.Client;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.EscPopup;
 import com.pmnm.roy.ui.gameui.BottomPanel;
@@ -37,16 +40,16 @@ public class GameManager extends DoaObject {
 
 	public final List<Player> players = new ArrayList<>();
 
-	public int numberOfPlayers = 2;
+	public int numberOfPlayers;
 	public boolean manualPlacement = false;
 
 	public boolean isManualPlacementDone = false;
 	public final Map<Player, Integer> startingTroops = new HashMap<>();
 	public int placementCounter = 0;
 
-	public TurnPhase currentPhase = TurnPhase.DRAFT;
+	public static TurnPhase currentPhase = TurnPhase.DRAFT;
 	public int reinforcementForThisTurn = 0;
-	public Player currentPlayer;
+	public static Player currentPlayer;
 	public int turnCount = 0;
 
 	public ProvinceHitArea moveAfterOccupySource = null;
@@ -69,16 +72,22 @@ public class GameManager extends DoaObject {
 
 	public float timer = 0;
 
-	public GameManager(String mapName) {
+	public GameManager(String mapName, List<String> playerNames, List<Color> playerColors, List<String> aiNames, List<Color> aiColors) {
 		super(0f, 0f);
 		if (INSTANCE != null) {
 			DoaHandler.remove(INSTANCE);
 		}
 		EscPopup esc = DoaHandler.instantiate(EscPopup.class);
 		currentMapName = mapName;
+		numberOfPlayers = playerNames.size() + aiNames.size();
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		for (int i = 0; i < numberOfPlayers; i++) {
-			Player p = DoaHandler.instantiate(Player.class, "Player" + i, PlayerColorBank.get(i), true);
+		for (int i = 0; i < playerNames.size(); i++) {
+			Player p = DoaHandler.instantiate(Player.class, playerNames.get(i), playerColors.get(i), true);
+			players.add(p);
+			startingTroops.put(p, startingTroopCount);
+		}
+		for (int i = 0; i < aiNames.size(); i++) {
+			Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(i), aiColors.get(i), 0);
 			players.add(p);
 			startingTroops.put(p, startingTroopCount);
 		}
@@ -425,4 +434,14 @@ public class GameManager extends DoaObject {
 		moveAfterOccupySource = null;
 		ProvinceConnector.getInstance().setPath();
 	}
+
+
+	public static void gameDataSender() throws IOException {
+		GameInstance.gameInstanceCreation();
+		//file is written to the clientFiles
+		//Client.sendFile();
+
+	}
+
+
 }

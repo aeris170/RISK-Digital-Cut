@@ -63,10 +63,17 @@ public class Client extends JFrame implements Runnable {
 		clientText.setEditable(false);
 
 		// Add ActionListener For Text Field
-		clientText.addActionListener(e -> {
-			sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
-			clientText.setText("");
-		});
+				clientText.addActionListener(e -> {
+					String messegaWillBeSent = clientText.getText();
+					if(messegaWillBeSent.equals("send")) {
+						System.out.println("We will send file");
+						sendToServer(new MessageBuilder().setSender(clientName).setData(messegaWillBeSent).setType(MessageType.COMPRESSED).build());
+						clientText.setText("");
+					}else {
+						sendToServer(new MessageBuilder().setSender(clientName).setData(messegaWillBeSent).setType(MessageType.CHAT).build());
+						clientText.setText("");
+					}
+				});
 
 		addWindowListener(new WindowAdapter() {
 			@Override

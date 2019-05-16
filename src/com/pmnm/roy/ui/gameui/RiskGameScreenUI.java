@@ -1,6 +1,8 @@
 package com.pmnm.roy.ui.gameui;
 
+import java.awt.Color;
 import java.io.File;
+import java.util.List;
 
 import com.doa.engine.DoaHandler;
 import com.pmnm.risk.main.GameManager;
@@ -14,15 +16,14 @@ public final class RiskGameScreenUI {
 
 	private RiskGameScreenUI() {}
 
-	public static void initUI() {
+	public static void initUI(String mapName, List<String> playerNames, List<Color> playerColors, List<String> aiNames, List<Color> aiColors) {
 		// TODO make mapName a parameter and pass from UI
-		String mapName = "classic";
 		MapLoader.readMapData(new File(mapName));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
 		CardPanel = DoaHandler.instantiate(CardPanel.class);
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);
-		DoaHandler.instantiate(GameManager.class, mapName);
+		DoaHandler.instantiate(GameManager.class, mapName, playerNames, playerColors, aiNames, aiColors);
 		DoaHandler.instantiate(GameBoard.class);
 	}
 }

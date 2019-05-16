@@ -114,4 +114,23 @@
 		<key>CHEATER</key>
 		<value>cheater</value>
 	</pair>
+
+
+
+	<pair>
+		<key>NEW_GAME</key>
+		<value>new game</value>
+	</pair>
+	<pair>
+		<key>LOAD_GAME</key>
+		<value>load game</value>
+	</pair>
+	<pair>
+		<key>HOST_GAME</key>
+		<value>host game</value>
+	</pair>
+	<pair>
+		<key>JOIN_GAME</key>
+		<value>join game</value>
+	</pair>
 </en>

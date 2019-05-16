@@ -1,6 +1,5 @@
 package com.pmnm.risk.main;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -62,14 +61,13 @@ public final class GameInstance implements Serializable {
 		try (FileOutputStream file = new FileOutputStream(dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
 			try (ObjectOutputStream out = new ObjectOutputStream(file)) {
 				out.writeObject(gi);
-				
 				System.out.println("Object has been serialized");
 			}
 		}
 	}
 	
 	
-	public static void gameInstanceCreation(int userNumber) throws IOException {
+	public static void gameInstanceCreation() throws IOException {
 		GameInstance gi = new GameInstance();
 	//	String mapName = GameManager.INSTANCE.currentMapName;
 	//	String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName + "\\";
@@ -78,13 +76,13 @@ public final class GameInstance implements Serializable {
 		//try (FileOutputStream file = new FileOutputStream(dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
 		//	try (ObjectOutputStream out = new ObjectOutputStream(file)) {
 			//	out.writeObject(gi);
-				compress(gi, userNumber);
+				compress(gi);
 				System.out.println("Object has been compressed");
 			//}
 	
 	}
 	
-	public static void compress(GameInstance t, int userNumber) throws IOException {
+	public static void compress(GameInstance t) throws IOException {
 		FileOutputStream fos = null;
         GZIPOutputStream gos = null;
         ObjectOutputStream oos = null;
@@ -115,7 +113,6 @@ public final class GameInstance implements Serializable {
 	
 	
 	
-
 	public static void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
 		// TODO take input from UI
 		String mapName = GameManager.INSTANCE.currentMapName;
@@ -155,5 +152,60 @@ public final class GameInstance implements Serializable {
 			}
 		}
 	}
+	
+	
+	
+	public static void updateNewGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+		//place that we save taken game instance data
+		String dir = "C:\\Users\\AEGEAN\\Documents\\GitHub\\CS319-MP-Risk\\takenData\\unzip";
+
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> DoaHandler.remove(pha));
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
+		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.forEach(ps -> DoaHandler.remove(ps));
+		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.clear();
+		Player.NAME_PLAYER.values().forEach(p -> DoaHandler.remove(p));
+		Player.NAME_PLAYER.clear();
+		DoaHandler.remove(GameManager.INSTANCE);
+
+		try (FileInputStream file = new FileInputStream("takenData\\unzip")) {
+			try (ObjectInputStream in = new ObjectInputStream(file)) {
+				GameInstance loadedGame = (GameInstance) in.readObject();
+				GameManager.INSTANCE = loadedGame.gm;
+				GameManager.INSTANCE.dicePanel = RiskGameScreenUI.DicePanel;
+				GameManager.INSTANCE.cardPanel = RiskGameScreenUI.CardPanel;
+				DoaHandler.add(GameManager.INSTANCE);
+				Province.ALL_PROVINCES = loadedGame.provinces;
+				Continent.NAME_CONTINENT = loadedGame.continents;
+				Card.UNDISTRIBUTED_CARDS = loadedGame.UNDISTRIBUTED_CARDS;
+				Card.PROVINCE_CARDS = loadedGame.PROVINCE_CARDS;
+				Player.NAME_PLAYER = loadedGame.NAME_PLAYER;
+				Province.UNCLAIMED_PROVINCES = loadedGame.UNCLAIMED_PROVINCES;
+				ProvinceHitArea.ALL_PROVINCE_HIT_AREAS = loadedGame.ALL_PROVINCE_HIT_AREAS;
+				ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> {
+					pha.cacheMeshAsImage();
+					DoaHandler.add(pha);
+				});
+				ProvinceHitArea.ALL_PROVINCE_SYMBOLS = loadedGame.ALL_PROVINCE_SYMBOLS;
+				ProvinceHitArea.ALL_PROVINCE_SYMBOLS.forEach(ps -> DoaHandler.add(ps));
+				ProvinceConnector.deserialize(loadedGame.pc);
+				Player.NAME_PLAYER.values().forEach(p -> DoaHandler.add(p));
+				System.out.println("Object has been deserialized ");
+			}
+		}
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "GameInstance [provinces=" + provinces + ", continents=" + continents + ", gm=" + gm + ", pc=" + pc
+				+ ", UNDISTRIBUTED_CARDS=" + UNDISTRIBUTED_CARDS + ", PROVINCE_CARDS=" + PROVINCE_CARDS
+				+ ", NAME_PLAYER=" + NAME_PLAYER + ", UNCLAIMED_PROVINCES=" + UNCLAIMED_PROVINCES
+				+ ", ALL_PROVINCE_HIT_AREAS=" + ALL_PROVINCE_HIT_AREAS + ", ALL_PROVINCE_SYMBOLS="
+				+ ALL_PROVINCE_SYMBOLS + "]";
+	}
+	
+	
+	
 
 }
