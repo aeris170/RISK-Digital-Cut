@@ -72,7 +72,8 @@ public class GameManager extends DoaObject {
 
 	public float timer = 0;
 
-	public GameManager(String mapName, List<String> playerNames, List<Color> playerColors, List<String> aiNames, List<Color> aiColors) {
+	public GameManager(String mapName, List<Integer> playerTypes, List<String> playerNames, List<Color> playerColors,
+			List<String> aiNames, List<Color> aiColors, List<Integer> difficulties) {
 		super(0f, 0f);
 		if (INSTANCE != null) {
 			DoaHandler.remove(INSTANCE);
@@ -80,22 +81,22 @@ public class GameManager extends DoaObject {
 		currentMapName = mapName;
 		numberOfPlayers = playerNames.size() + aiNames.size();
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);
-		for (int i = 0; i < playerNames.size(); i++) {
-			Player p = DoaHandler.instantiate(Player.class, playerNames.get(i), playerColors.get(i), true);
-			players.add(p);
-			startingTroops.put(p, startingTroopCount);
+		int aiInt = 0;
+		int pInt = 0;
+		for (int i = 0; i < numberOfPlayers; i++) {
+			if (playerTypes.get(i) == 1) {
+				Player p = DoaHandler.instantiate(Player.class, playerNames.get(pInt), playerColors.get(pInt), true);
+				players.add(p);
+				startingTroops.put(p, startingTroopCount);
+				pInt++;
+			} else {
+				Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(aiInt), aiColors.get(aiInt), difficulties.get(aiInt));
+				players.add(p);
+				startingTroops.put(p, startingTroopCount);
+				aiInt++;
+			}
 		}
-		for (int i = 0; i < aiNames.size(); i++) {
-			Player p = DoaHandler.instantiate(AIPlayer.class, aiNames.get(i), aiColors.get(i), 0);
-			players.add(p);
-			startingTroops.put(p, startingTroopCount);
-		}
-		/*
-		 * for (int i = 0; i < numberOfPlayers; i++) { Player p =
-		 * DoaHandler.instantiate(AIPlayer.class, "AIPlayer" + i,
-		 * PlayerColorBank.get(i), i); players.add(p); startingTroops.put(p,
-		 * startingTroopCount); }
-		 */
+
 		currentPlayer = players.get(0);
 		currentPlayer.turn();
 		if (!manualPlacement) {
@@ -141,8 +142,8 @@ public class GameManager extends DoaObject {
 
 	@Override
 	public void tick() {
-		if(DoaKeyboard.ESCAPE) {
-			//esc.s
+		if (DoaKeyboard.ESCAPE) {
+			// esc.s
 		}
 		if (DoaMouse.MB1) {
 			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked())
@@ -156,7 +157,7 @@ public class GameManager extends DoaObject {
 			}
 		}
 		timer += 0.1f;
-		if(timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
+		if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
 			currentPhase = TurnPhase.DRAFT;
 			if (cardWillBeGiven) {
 				currentPlayer.addCard(Card.getRandomCard());
@@ -171,10 +172,8 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			if (currentPlayer.isLocalPlayer()) {
-				//cardPanel.updateCards();
-				//cardPanel.show();
-			}
+			if (currentPlayer.isLocalPlayer()) {							cardPanel.updateCards();
+				//cardPanel.show();			}
 			timer = 0;
 		}
 	}
@@ -434,13 +433,11 @@ public class GameManager extends DoaObject {
 		ProvinceConnector.getInstance().setPath();
 	}
 
-
 	public static void gameDataSender() throws IOException {
 		GameInstance.gameInstanceCreation();
-		//file is written to the clientFiles
-		//Client.sendFile();
+		// file is written to the clientFiles
+		// Client.sendFile();
 
 	}
-
 
 }

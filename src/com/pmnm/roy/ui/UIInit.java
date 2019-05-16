@@ -43,6 +43,8 @@ public final class UIInit {
 
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
+		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm);
+		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm);
 		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
 		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class, mm);
 		LoadMenu lm = DoaHandler.instantiate(LoadMenu.class, mm);

@@ -24,14 +24,11 @@ public class PlayOfflineMenu extends DoaPanel {
 			DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
 
 	MainMenu mm;
-	SinglePlayerMenu spm;
-
-	public PlayOfflineMenu(MainMenu mm, SinglePlayerMenu spm, LoadMenu lm, ExitPopup ep) {
+	
+	public PlayOfflineMenu(MainMenu mm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-
+		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, this);
 		this.mm = mm;
-		this.spm = spm;
-
 		newGameButton.addAction(() -> {
 			hide();
 			mm.hide();
