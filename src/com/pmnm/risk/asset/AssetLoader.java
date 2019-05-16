@@ -66,6 +66,14 @@ public final class AssetLoader {
 				DoaSprites.createSprite("Russian", "/ui/settings/rusk.png");
 				DoaSprites.createSprite("Turkish", "/ui/settings/turkis.png");
 			}
+			
+			{// RULES
+				DoaSprites.createSprite("pt1", "/ui/rules/turnpt1.png");
+				DoaSprites.createSprite("pt2", "/ui/rules/turnpt2.png");
+				DoaSprites.createSprite("pt3", "/ui/rules/turnpt3.png");
+				DoaSprites.createSprite("pt4", "/ui/rules/turnpt4.png");
+				DoaSprites.createSprite("pt5", "/ui/rules/turnpt5.png");
+			}
 
 			{// EXIT POPUP
 				DoaSprites.createSprite("ExitPopupBackground", "/ui/popupBox.png");
@@ -88,7 +96,7 @@ public final class AssetLoader {
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
 				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
 				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif", 100);
-				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 150);
+				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 100);
 				DoaAnimations.createAnimation("CherryPetals", "/ui/gameScreenElements/topInfo/cherryPetals.gif", 60);
 				DoaAnimations.createAnimation("Rain", "/ui/gameScreenElements/topInfo/rainLight.gif", 40);
 				DoaSprites.createSprite("fallTex", "/ui/gameScreenElements/waterTextures/fallWaterTexture.jpg");

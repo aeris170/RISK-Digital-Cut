@@ -73,10 +73,10 @@ public class SeasonEffect extends DoaObject {
 				g.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
 				break;
 			case FALL:
-				DoaAnimation rain = DoaAnimations.get("Rain");
+				DoaAnimation rain = DoaAnimations.get("FloatingLeaves");
 				g.translate(Main.WINDOW_WIDTH / 2f, 0);
 				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
-				g.scale(1.5f, 1.5f);
+				g.scale(1.8f, 1.8f);
 				g.rotate(22.5f);
 				g.drawAnimation(rain, -rain.getFrames().get(0).getWidth() / 2f, -rain.getFrames().get(0).getHeight() / 2f);
 				break;
