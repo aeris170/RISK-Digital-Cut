@@ -19,7 +19,12 @@ public final class AssetLoader {
 
 	public static void initializeAssets() {
 		try {
-			DoaSprites.createSprite("MainMenuBackground", "/ui/MainMenuBackground.png");
+			DoaSprites.createSprite("BG1", "/ui/Background1.png");
+			DoaSprites.createSprite("BG2", "/ui/Background2.png");
+			DoaSprites.createSprite("BG3", "/ui/Background3.png");
+			DoaSprites.createSprite("BG4", "/ui/Background4.png");
+			DoaSprites.createSprite("BG5", "/ui/Background5.png");
+			DoaSprites.createSprite("BG6", "/ui/Background6.png");
 			DoaSprites.createSprite("MainMenuTopRing", "/ui/TopRing.png");
 			DoaSprites.createSprite("MainMenuBottomRing", "/ui/BottomRing.png");
 			DoaSprites.createSprite("RiskLogo", "/ui/RiskLogo.png");
@@ -27,7 +32,6 @@ public final class AssetLoader {
 			DoaSprites.createSprite("FleurDeLisGold", "/ui/FleurDeLisGold.png");
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
-			DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
 			DoaSprites.createSprite("escapeMenu", "/ui/gameScreenElements/escapeMenu.png");
 
 			{// SINGLEPLAYER MENU
