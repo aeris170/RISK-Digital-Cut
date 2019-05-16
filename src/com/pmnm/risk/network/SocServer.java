@@ -28,10 +28,13 @@ public class SocServer implements Runnable {
 	private ServerSocket server;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public static Thread t;
 	public static int orderOfTheGame = 1;
 	public static  int playOrder[]; //declaration and instantiation  
 	public static int controlledGameUpdate = 0;
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 =======
 >>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 =======
@@ -59,6 +62,7 @@ public class SocServer implements Runnable {
 		SocServer serverProtocol = new SocServer(2);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		//t = new Thread(new SocServer(10));
 		//	t.start();
 		//
@@ -81,6 +85,9 @@ public class SocServer implements Runnable {
 =======
 		new Thread(serverProtocol).start();
 >>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+=======
+		new Thread(serverProtocol).start();
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 	}
 	
 
@@ -95,10 +102,13 @@ public class SocServer implements Runnable {
 			// User specifies the name ("HOST")
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			
 			// Wait for connections to be made.
 			if(controller == 2) {
 			System.out.println("comes */*/**/*/*/");
+=======
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 =======
 >>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 =======
@@ -246,6 +256,7 @@ public class SocServer implements Runnable {
 	}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	
 	public void broadcastFile(Object object) {
@@ -282,6 +293,9 @@ public class SocServer implements Runnable {
 	}
 	
 }*/
+=======
+}
+>>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 =======
 }
 >>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
