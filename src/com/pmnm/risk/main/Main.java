@@ -43,6 +43,7 @@ public class Main {
 
 		DoaCamera.adjustCamera(Camera.getInstance(), -10000, -10000, 10000, 10000);
 		SwingUtilities.invokeLater(() -> configureGUI());
+
 	}
 
 	private static void configureGUI() {

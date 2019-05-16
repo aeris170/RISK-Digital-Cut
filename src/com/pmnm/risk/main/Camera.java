@@ -111,12 +111,6 @@ public class Camera extends DoaObject {
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.S) {
-			try {
-				GameInstance.gameInstanceCreation(2);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			System.out.println("SAVED!");
