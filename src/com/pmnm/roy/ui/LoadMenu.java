@@ -6,7 +6,7 @@ import com.pmnm.risk.main.Main;
 
 public class LoadMenu extends DoaPanel {
 
-	private static final long serialVersionUID = -4228991106639373659L;
+	//serial version UID needed
 
 	public LoadMenu() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
