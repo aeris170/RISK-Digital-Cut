@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE provinces [
+<!ELEMENT provinces (province+)>
+<!ELEMENT province (#PCDATA)>
+]>
+<provinces>
+	<province>karhold</province>
+	<province>the dreadfort</province>
+	<province>widow's watch</province>
+	<province>winterfell</province>
+	<province>ontario</province>
+	<province>wolfwood</province>
+	<province>white harbor</province>
+	<province>barrowlands</province>
+	<province>stony shore</province>
+	<province>the neck</province>
+	<province>cape kraken</province>
+	<province>the twins</province>
+	<province>the trident</province>
+	<province>mountains of the moon</province>
+	<province>riverrun</province>
+	<province>the fingers</province>
+	<province>the crag</province>
+	<province>the eyrie</province>
+	<province>gulltown</province>
+	<province>harrenhal</province>
+	<province>stoney sept</province>
+	<province>golden tooth</province>
+	<province>casterly rock</province>
+	<province>silverhill</province>
+	<province>crakehall</province>
+	<province>searoad marches</province>
+	<province>blackwater rush</province>
+	<province>highgarden</province>
+	<province>oldtown</province>
+	<province>three towers</province>
+	<province>the mander</province>
+	<province>king's landing</province>
+	<province>king's wood</province>
+	<province>crackclaw point</province>
+	<province>storm's end</province>
+	<province>dornish marches</province>
+	<province>reainwood</province>
+	<province>red mountains</province>
+	<province>greenblood</province>
+	<province>sandstone</province>
+	<province>sunspear</province>
+	<province>braavosian coastlands</province>
+	<province>the axe</province>
+	<province>hills of norvos</province>
+	<province>the flatlands</province>
+	<province>upper rhoyne</province>
+	<province>forest of qohor</province>
+	<province>the golden fields</province>
+	<province>myr</province>
+	<province>tyrosh</province>
+	<province>the orange shore</province>
+	<province>lower rhoyne</province>
+	<province>volantis</province>
+	<province>sarnor</province>
+	<province>western dothraki sea</province>
+	<province>northern dothraki sea</province>
+	<province>eastern dothraki sea</province>
+	<province>vaes dothrak</province>
+	<province>the footprint</province>
+	<province>lhazar</province>
+	<province>mereen</province>
+	<province>yunkai</province>
+	<province>astapor</province>
+	<province>old ghis</province>
+	<province>the red waste</province>
+	<province>mantarys</province>
+	<province>the sea of sights</province>
+	<province>valyria</province>
+	<province>oros</province>
+	<province>northern grass sea</province>
+	<province>samyrian</province>
+	<province>bayasabhab</province>
+	<province>qarth</province>
+</provinces>
