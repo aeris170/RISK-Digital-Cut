@@ -172,8 +172,10 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			if (currentPlayer.isLocalPlayer()) {							cardPanel.updateCards();
-				//cardPanel.show();			}
+			if (currentPlayer.isLocalPlayer()) {							
+				cardPanel.updateCards();
+				//cardPanel.show();
+			}
 			timer = 0;
 		}
 	}

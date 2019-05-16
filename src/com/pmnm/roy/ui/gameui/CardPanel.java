@@ -10,6 +10,7 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.maths.DoaVectorI;
 import com.doa.ui.DoaUIContainer;
+import com.doa.ui.button.DoaButton;
 import com.pmnm.risk.card.Card;
 import com.pmnm.risk.main.GameManager;
 
@@ -23,10 +24,13 @@ public class CardPanel extends DoaUIContainer {
 
 	public CardPanel() {
 		super(881f, 258f, 1011, 558);
-		//super.show();
-		/*for (int i = 0; i < 6; i++) {
-			buttonList.add(DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f), CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, CardBG));
-		}*/
+		// super.show();
+		for (int i = 0; i < 6; i++) {
+			CardButton tempButton = DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f),
+					CARD_BUTTON_SIZE.x, CARD_BUTTON_SIZE.y, CardBG);
+			buttonList.add(tempButton);
+			add(tempButton);
+		}
 	}
 
 	@Override
@@ -35,10 +39,12 @@ public class CardPanel extends DoaUIContainer {
 	}
 
 	@Override
-	public void show() {}
+	public void show() {
+	}
 
 	@Override
-	public void hide() {}
+	public void hide() {
+	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {

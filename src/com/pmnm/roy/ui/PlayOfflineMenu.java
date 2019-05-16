@@ -25,7 +25,7 @@ public class PlayOfflineMenu extends DoaPanel {
 
 	MainMenu mm;
 	
-	public PlayOfflineMenu(MainMenu mm) {
+	public PlayOfflineMenu(MainMenu mm, LoadMenu lm, ExitPopup ep) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, this);
 		this.mm = mm;

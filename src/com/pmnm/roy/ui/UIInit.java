@@ -43,17 +43,13 @@ public final class UIInit {
 
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
-		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm);
-		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm);
 		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
 		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class, mm);
 		LoadMenu lm = DoaHandler.instantiate(LoadMenu.class, mm);
 		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
 		EscPopup esc = DoaHandler.instantiate(EscPopup.class);
-		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, mm);
-		MultiPlayerMenuHost mpmh = DoaHandler.instantiate(MultiPlayerMenuHost.class, mm);
-		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, spm, lm, ep);
-		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm, mpmh);
+		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, lm, ep);
+		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm);
 		
 		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY_OFFLINE", FONT_COLOR, HOVER_FONT_COLOR);
