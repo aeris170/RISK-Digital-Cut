@@ -238,7 +238,6 @@ public class Client extends JFrame implements Runnable {
 		GameInstance.updateNewGame();
 		//after implementation send I am OK to the server
 		sendToServer(new MessageBuilder().setSender(clientName).setType(MessageType.I_AM_OK).build());
-		
 	}
 	
 	
@@ -250,10 +249,10 @@ public class Client extends JFrame implements Runnable {
 	        try
 	        { 
 	            GZIPInputStream is =  
-	                    new GZIPInputStream(new FileInputStream("C:\\Users\\AEGEAN\\Documents\\GitHub\\CS319-MP-Risk\\clientFiles\\currentGame.gz")); 
+	                    new GZIPInputStream(new FileInputStream("clientFiles\\currentGame.gz")); 
 	                      
 	            FileOutputStream out = 
-	                    new FileOutputStream("C:\\Users\\AEGEAN\\Documents\\GitHub\\CS319-MP-Risk\\takenData\\unzip"); 
+	                    new FileOutputStream("takenData\\unzip"); 
 	              
 	            int totalSize; 
 	            while((totalSize = is.read(buffer)) > 0 ) 

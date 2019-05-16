@@ -29,6 +29,7 @@ public class SocServer implements Runnable {
 	public static Thread t;
 	public static int orderOfTheGame = 1;
 	public static  int playOrder[]; //declaration and instantiation  
+	public static int controlledGameUpdate = 0;
 
 	// To create more streams, we use lists.
 	// Transients are useless, I put them to make warnings disappear.
@@ -138,11 +139,13 @@ public class SocServer implements Runnable {
 							broadcast(message);
 						} else if (message.getType() == MessageType.GAME_MOVE) {
 							//send file to the all clients
-							
+							controlledGameUpdate++;
+							if(controlledGameUpdate == serverCapacity) {
+								System.out.println("Everone updated themself");
+							}
 							
 						}
-						else {
-							
+						else if(message.getType() == MessageType.I_AM_OK) {
 							
 						}
 						// Wait for 200 milliseconds before listening.

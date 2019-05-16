@@ -43,9 +43,9 @@ public class GameManager extends DoaObject {
 	public final Map<Player, Integer> startingTroops = new HashMap<>();
 	public int placementCounter = 0;
 
-	public TurnPhase currentPhase = TurnPhase.DRAFT;
+	public static TurnPhase currentPhase = TurnPhase.DRAFT;
 	public int reinforcementForThisTurn = 0;
-	public Player currentPlayer;
+	public static Player currentPlayer;
 	public int turnCount = 0;
 
 	public ProvinceHitArea moveAfterOccupySource = null;
