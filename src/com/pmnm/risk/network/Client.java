@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.zip.GZIPInputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -17,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.network.message.MessageBuilder;
 import com.pmnm.risk.network.message.MessageBuilder.Message;
 import com.pmnm.risk.network.message.MessageType;
@@ -34,6 +38,7 @@ public class Client extends JFrame implements Runnable {
 	// Text Data Entrance Part
 	private JTextField clientText;
 	private JTextArea chatWindows;
+	DataOutputStream dos;
 
 	// Data in and data out
 	// Transients are useless, I put them to make warnings disappear.
@@ -132,6 +137,7 @@ public class Client extends JFrame implements Runnable {
 	private void setupStreams() throws IOException {
 		output = new ObjectOutputStream(connection.getOutputStream());
 		input = new ObjectInputStream(connection.getInputStream());
+		dos = new DataOutputStream(connection.getOutputStream());
 		showMessage("Connected to: " + connection.getInetAddress().getHostName());
 	}
 
@@ -199,6 +205,39 @@ public class Client extends JFrame implements Runnable {
 		SwingUtilities.invokeLater(() -> clientText.setEditable(condition));
 	}
 
+	public void sendFile() throws IOException {
+		FileInputStream fis = new FileInputStream("clientFiles\\currentGame.gz");
+		byte[] buffer = new byte[4096];
+		
+		while (fis.read(buffer) > 0) {
+			dos.write(buffer);
+		}
+		
+		fis.close();
+		dos.close();	
+	}
+	
+	public void receiveFile() {
+		//receive file and decompress it
+		//then load that game instance
+		GameInstance receivedInstance;
+		try{
+		    
+			   FileInputStream fin = new FileInputStream("c:\\address.gz");
+			   GZIPInputStream gis = new GZIPInputStream(fin);
+			   ObjectInputStream ois = new ObjectInputStream(gis);
+			   receivedInstance = (GameInstance) ois.readObject();
+			   ois.close();
+			  
+			   //if we read received file then load it to the our game
+			   GameInstance.implementTheReceivedGameInstance(receivedInstance);
+			   
+		   }catch(Exception ex){
+			   ex.printStackTrace();
+			   
+		   } 
+	}
+	
 	public Socket getSocket() {
 		return connection;
 	}

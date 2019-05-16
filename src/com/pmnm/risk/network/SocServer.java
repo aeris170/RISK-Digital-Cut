@@ -24,6 +24,8 @@ public class SocServer implements Runnable {
 	public static int controller = 1;
 	private ServerSocket server;
 	public static Thread t;
+	public static int orderOfTheGame = 1;
+	public static  int playOrder[]; //declaration and instantiation  
 
 	// To create more streams, we use lists.
 	// Transients are useless, I put them to make warnings disappear.
@@ -47,9 +49,11 @@ public class SocServer implements Runnable {
 		// User will specify the server capacity.
 		SocServer serverProtocol = new SocServer(2);
 		//t = new Thread(new SocServer(10));
-	//	t.start();
+		//	t.start();
 		//
 	}
+	
+	
 	
 	public static void starterPack() {
 		t = new Thread(new SocServer(10));
@@ -57,6 +61,7 @@ public class SocServer implements Runnable {
 	}
 	
 	public static void secondaryPack(int capacityOfServer) {
+		playOrder = new int[capacityOfServer];
 		new Thread(new SocServer(capacityOfServer)).start();
 		System.out.println("***********************");
 	}
@@ -70,7 +75,7 @@ public class SocServer implements Runnable {
 			server = sv;
 			// Auto connect to server.
 			// User specifies the name ("HOST")
-			System.out.println("egegegegegeegegegegegegegegege");
+			
 			// Wait for connections to be made.
 			if(controller == 2) {
 			System.out.println("comes */*/**/*/*/");
@@ -128,8 +133,9 @@ public class SocServer implements Runnable {
 							// Else if it is a chat message, broadcast it to all clients.
 							broadcast(message);
 						} else if (message.getType() == MessageType.GAME_MOVE) {
-							// Else if it is a game move, @EGE @CAGRI you do this part!
-							// TODO IMPLEMENT MULTIPLAYER
+							//send file to the all clients
+							
+							
 						}
 						// Wait for 200 milliseconds before listening.
 						Thread.sleep(200);

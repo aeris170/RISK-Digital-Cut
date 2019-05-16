@@ -155,5 +155,44 @@ public final class GameInstance implements Serializable {
 			}
 		}
 	}
+	
+	
+	public static void implementTheReceivedGameInstance(GameInstance received) throws FileNotFoundException, IOException, ClassNotFoundException {
+		// TODO take input from UI
+		String mapName = GameManager.INSTANCE.currentMapName;
+		
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> DoaHandler.remove(pha));
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
+		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.forEach(ps -> DoaHandler.remove(ps));
+		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.clear();
+		Player.NAME_PLAYER.values().forEach(p -> DoaHandler.remove(p));
+		Player.NAME_PLAYER.clear();
+		DoaHandler.remove(GameManager.INSTANCE);
+
+		
+				GameInstance loadedGame = received;
+				GameManager.INSTANCE = loadedGame.gm;
+				GameManager.INSTANCE.dicePanel = RiskGameScreenUI.DicePanel;
+				GameManager.INSTANCE.cardPanel = RiskGameScreenUI.CardPanel;
+				DoaHandler.add(GameManager.INSTANCE);
+				Province.ALL_PROVINCES = loadedGame.provinces;
+				Continent.NAME_CONTINENT = loadedGame.continents;
+				Card.UNDISTRIBUTED_CARDS = loadedGame.UNDISTRIBUTED_CARDS;
+				Card.PROVINCE_CARDS = loadedGame.PROVINCE_CARDS;
+				Player.NAME_PLAYER = loadedGame.NAME_PLAYER;
+				Province.UNCLAIMED_PROVINCES = loadedGame.UNCLAIMED_PROVINCES;
+				ProvinceHitArea.ALL_PROVINCE_HIT_AREAS = loadedGame.ALL_PROVINCE_HIT_AREAS;
+				ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> {
+					pha.cacheMeshAsImage();
+					DoaHandler.add(pha);
+				});
+				ProvinceHitArea.ALL_PROVINCE_SYMBOLS = loadedGame.ALL_PROVINCE_SYMBOLS;
+				ProvinceHitArea.ALL_PROVINCE_SYMBOLS.forEach(ps -> DoaHandler.add(ps));
+				ProvinceConnector.deserialize(loadedGame.pc);
+				Player.NAME_PLAYER.values().forEach(p -> DoaHandler.add(p));
+				System.out.println("Object has been deserialized ");
+			
+
+	}
 
 }
