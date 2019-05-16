@@ -26,6 +26,7 @@ public final class AssetLoader {
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
 			DoaSprites.createSprite("GenericBackground", "/ui/genericBackground.png");
+			DoaSprites.createSprite("escapeMenu", "/ui/gameScreenElements/escapeMenu.png");
 
 			{// SINGLEPLAYER MENU
 				DoaSprites.createSprite("ArrowLeftIdle", "/ui/playOffline/arrowUnpressedLeft.png");
