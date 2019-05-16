@@ -41,7 +41,7 @@ public final class Globals {
 	private static void fetchMapNames() {
 		File[] maps = new File("res/maps/").listFiles();
 		MAP_NAMES = (String[]) Arrays.stream(maps).filter(map -> map.isDirectory())
-				.map(mapFolder -> mapFolder.getName().toUpperCase().replaceAll("_", " ")).toArray(String[]::new);
+				.map(mapFolder -> mapFolder.getName().toUpperCase().replaceAll("_", " ").trim()).toArray(String[]::new);
 		MAP_IMAGES = new BufferedImage[MAP_NAMES.length];
 		fetchMapImages(maps);
 	}
