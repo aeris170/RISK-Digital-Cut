@@ -77,7 +77,7 @@ public class GameManager extends DoaObject {
 		if (INSTANCE != null) {
 			DoaHandler.remove(INSTANCE);
 		}
-		EscPopup esc = DoaHandler.instantiate(EscPopup.class);
+		//EscPopup esc = DoaHandler.instantiate(EscPopup.class);
 		currentMapName = mapName;
 		numberOfPlayers = playerNames.size() + aiNames.size();
 		int startingTroopCount = Player.findStartingTroopCount(numberOfPlayers);

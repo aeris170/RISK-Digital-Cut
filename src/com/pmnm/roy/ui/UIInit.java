@@ -48,7 +48,7 @@ public final class UIInit {
 		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, spm);
 		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm, mpmh);
 		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
-		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class);
+		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class, mm);
 		LoadMenu lm = DoaHandler.instantiate(LoadMenu.class);
 		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
 		EscPopup esc = DoaHandler.instantiate(EscPopup.class);

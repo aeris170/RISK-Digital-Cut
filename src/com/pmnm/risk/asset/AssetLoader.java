@@ -68,6 +68,7 @@ public final class AssetLoader {
 			}
 			
 			{// RULES
+				DoaSprites.createSprite("pt0", "/ui/rules/turnpt0.png");
 				DoaSprites.createSprite("pt1", "/ui/rules/turnpt1.png");
 				DoaSprites.createSprite("pt2", "/ui/rules/turnpt2.png");
 				DoaSprites.createSprite("pt3", "/ui/rules/turnpt3.png");
