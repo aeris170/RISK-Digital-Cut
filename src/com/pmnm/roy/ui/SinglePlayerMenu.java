@@ -47,7 +47,7 @@ public class SinglePlayerMenu extends DoaPanel {
 
 	int numberOfPlayers = 2;
 
-	public SinglePlayerMenu(PlayOfflineMenu spm) {
+	public SinglePlayerMenu(PlayOfflineMenu pom) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		playButton.addAction(() -> {
 			hide();
@@ -74,19 +74,30 @@ public class SinglePlayerMenu extends DoaPanel {
 		});
 		backButton.addAction(() -> {
 			hide();
-			spm.show();
+			DoaHandler.remove(this);
+			TypeComboButton.COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
+			TypeComboButton.COMBO_BUTTONS.clear();
+			ColorComboButton.COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
+			ColorComboButton.COMBO_BUTTONS.clear();
+			DifficultyComboButton.DIFFICULTY_COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
+			DifficultyComboButton.DIFFICULTY_COMBO_BUTTONS.clear();
+			DoaHandler.remove(playButton);
+			DoaHandler.remove(backButton);
+			DoaHandler.remove(prevMapButton);
+			DoaHandler.remove(nextMapButton);
+			pom.show();
 		});
 		prevMapButton.addAction(() -> {
-			if(mapNumber <= 0){
+			if (mapNumber <= 0) {
 				mapNumber = 1;
-			}else {
+			} else {
 				mapNumber--;
 			}
 		});
 		nextMapButton.addAction(() -> {
-			if(mapNumber >= 1){
+			if (mapNumber >= 1) {
 				mapNumber = 0;
-			}else {
+			} else {
 				mapNumber++;
 			}
 		});
@@ -113,6 +124,7 @@ public class SinglePlayerMenu extends DoaPanel {
 		}
 		tbca[0].index = 1;
 		tbca[1].index = 2;
+		show();
 	}
 
 	@Override
@@ -152,8 +164,9 @@ public class SinglePlayerMenu extends DoaPanel {
 		g.drawImage(DoaSprites.get("MapChooserBackground"), Main.WINDOW_WIDTH * 0.71f, Main.WINDOW_HEIGHT * 0.24f);
 
 		g.drawString(s, Main.WINDOW_WIDTH * 0.8f, Main.WINDOW_HEIGHT * 0.3f);
-		
-		//g.drawImage(folder.listFiles()[mapNumber], Main.WINDOW_WIDTH * 0.71f, Main.WINDOW_HEIGHT * 0.24f);
+
+		// g.drawImage(folder.listFiles()[mapNumber], Main.WINDOW_WIDTH * 0.71f,
+		// Main.WINDOW_HEIGHT * 0.24f);
 
 		g.drawImage(DoaSprites.get("MapBorder"), Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
 

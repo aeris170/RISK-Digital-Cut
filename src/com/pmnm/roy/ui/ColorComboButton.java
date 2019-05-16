@@ -31,7 +31,7 @@ public class ColorComboButton extends DoaImageButton {
 		}
 	}
 
-	private static final List<ColorComboButton> COMBO_BUTTONS = new ArrayList<>();
+	public static final List<ColorComboButton> COMBO_BUTTONS = new ArrayList<>();
 
 	int index = 0;
 
