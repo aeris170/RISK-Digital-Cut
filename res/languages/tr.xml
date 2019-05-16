@@ -114,4 +114,22 @@
 		<key>CHEATER</key>
 		<value>hilekâr</value>
 	</pair>
+	
+	
+	<pair>
+		<key>NEW_GAME</key>
+		<value>yeni oyun</value>
+	</pair>
+	<pair>
+		<key>LOAD_GAME</key>
+		<value>oyun yükle</value>
+	</pair>
+	<pair>
+		<key>HOST_GAME</key>
+		<value>oyun aç</value>
+	</pair>
+	<pair>
+		<key>JOIN_GAME</key>
+		<value>oyuna bağlan</value>
+	</pair>
 </tr>

@@ -114,4 +114,22 @@
 		<key>CHEATER</key>
 		<value>betrüger</value>
 	</pair>
+	
+	
+	<pair>
+		<key>NEW_GAME</key>
+		<value>neues spiel</value>
+	</pair>
+	<pair>
+		<key>LOAD_GAME</key>
+		<value>spiel laden</value>
+	</pair>
+	<pair>
+		<key>HOST_GAME</key>
+		<value>ein Spiel hosten</value>
+	</pair>
+	<pair>
+		<key>JOIN_GAME</key>
+		<value>Spiel beitreten</value>
+	</pair>
 </de>
