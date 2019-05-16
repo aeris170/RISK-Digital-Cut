@@ -142,9 +142,6 @@ public class GameManager extends DoaObject {
 
 	@Override
 	public void tick() {
-		if (DoaKeyboard.ESCAPE) {
-			// esc.s
-		}
 		if (DoaMouse.MB1) {
 			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked())
 					.findFirst().orElse(null);

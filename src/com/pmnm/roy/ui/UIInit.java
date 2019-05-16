@@ -38,16 +38,21 @@ public final class UIInit {
 	public static final Font UI_FONT = new Font("Book Antiqua", Font.PLAIN, 1);
 	public static final Color FONT_COLOR = new Color(189, 164, 79);
 	public static final Color HOVER_FONT_COLOR = new Color(94, 82, 42);
+	
+	private static MainMenu mm;
+	private static SettingsMenu sm;
+	private static RulesMenu rm;
+	private static LoadMenu lm;
+	private static ExitPopup ep;
 
 	private UIInit() {}
 
 	public static void initUI() {
-		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
-		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
-		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class, mm);
-		LoadMenu lm = DoaHandler.instantiate(LoadMenu.class, mm);
-		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
-		EscPopup esc = DoaHandler.instantiate(EscPopup.class);
+		mm = DoaHandler.instantiate(MainMenu.class);
+		sm = DoaHandler.instantiate(SettingsMenu.class, mm);
+		rm = DoaHandler.instantiate(RulesMenu.class, mm);
+		lm = DoaHandler.instantiate(LoadMenu.class, mm);
+		ep = DoaHandler.instantiate(ExitPopup.class);
 		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, lm, ep);
 		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm);
 		
@@ -72,48 +77,24 @@ public final class UIInit {
 		mm.add(rulesButton);
 		mm.add(exitButton);
 		mm.show();
-		
-		
-		// pos width height
-		TextImageButton saveButton = DoaHandler.instantiate(TextImageButton.class,
-				new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.342f), (int) (Main.WINDOW_WIDTH * 0.202),
-				(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SAVE",
-				UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
-		saveButton.setzOrder(10000);
-		TextImageButton loadButtonPop = DoaHandler.instantiate(TextImageButton.class,
-				new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.407f), (int) (Main.WINDOW_WIDTH * 0.202),
-				(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "LOAD",
-				UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
-		TextImageButton rulesButtonPop = DoaHandler.instantiate(TextImageButton.class,
-				new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.472f), (int) (Main.WINDOW_WIDTH * 0.202),
-				(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "RULES",
-				UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
-		TextImageButton settingsButtonPop = DoaHandler.instantiate(TextImageButton.class,
-				new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.537f), (int) (Main.WINDOW_WIDTH * 0.202),
-				(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SETTINGS",
-				UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
-		TextImageButton exitButtonPop = DoaHandler.instantiate(TextImageButton.class,
-				new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.602f), (int) (Main.WINDOW_WIDTH * 0.202),
-				(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "QUIT",
-				UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
-		exitButtonPop.addAction(new ExitButtonAction(ep));
-		settingsButtonPop.addAction(new SettingsButtonAction(mm, sm, ep));
-		rulesButtonPop.addAction(new RulesButtonAction(mm, rm, ep));
-		loadButtonPop.addAction(new LoadButtonAction(mm, lm, ep, pom));
-		saveButton.addAction(() -> {
-			try {
-				GameInstance.saveGame();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				//I do not know what to catch here tbh
-				e.printStackTrace();
-			}
-		});
-		esc.add(exitButtonPop);
-		esc.add(settingsButtonPop);
-		esc.add(rulesButtonPop);
-		esc.add(loadButtonPop);
-		esc.add(saveButton);
-		esc.hide();
+	}
+	public static MainMenu getMM() {
+		return mm;
+	}
+	
+	public static SettingsMenu getSM() {
+		return sm;
+	}
+	
+	public static RulesMenu getRM() {
+		return rm;
+	}
+	
+	public static LoadMenu getLM() {
+		return lm;
+	}
+	
+	public static ExitPopup getEP() {
+		return ep;
 	}
 }
