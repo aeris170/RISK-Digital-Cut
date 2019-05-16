@@ -43,15 +43,15 @@ public final class UIInit {
 
 	public static void initUI() {
 		MainMenu mm = DoaHandler.instantiate(MainMenu.class);
-		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, mm);
-		MultiPlayerMenuHost mpmh = DoaHandler.instantiate(MultiPlayerMenuHost.class, mm);
-		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, spm);
-		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm, mpmh);
 		SettingsMenu sm = DoaHandler.instantiate(SettingsMenu.class, mm);
 		RulesMenu rm = DoaHandler.instantiate(RulesMenu.class, mm);
-		LoadMenu lm = DoaHandler.instantiate(LoadMenu.class);
+		LoadMenu lm = DoaHandler.instantiate(LoadMenu.class, mm);
 		ExitPopup ep = DoaHandler.instantiate(ExitPopup.class);
 		EscPopup esc = DoaHandler.instantiate(EscPopup.class);
+		SinglePlayerMenu spm = DoaHandler.instantiate(SinglePlayerMenu.class, mm);
+		MultiPlayerMenuHost mpmh = DoaHandler.instantiate(MultiPlayerMenuHost.class, mm);
+		PlayOfflineMenu pom = DoaHandler.instantiate(PlayOfflineMenu.class, mm, spm, lm, ep);
+		PlayOnlineMenu ponm = DoaHandler.instantiate(PlayOnlineMenu.class, mm, mpmh);
 		
 		TextImageButton playOfflineButton = DoaHandler.instantiate(TextImageButton.class, MM_PLAY_OFFLINE_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y,
 		        DoaSprites.get(BUTTON_IDLE_SPRITE), DoaSprites.get(BUTTON_HOVER_SPRITE), "PLAY_OFFLINE", FONT_COLOR, HOVER_FONT_COLOR);
@@ -63,7 +63,7 @@ public final class UIInit {
 		        DoaSprites.get(BUTTON_HOVER_SPRITE), "RULES", FONT_COLOR, HOVER_FONT_COLOR);
 		TextImageButton exitButton = DoaHandler.instantiate(TextImageButton.class, MM_EXIT_LOCATION, BUTTON_SIZE.x, BUTTON_SIZE.y, DoaSprites.get(BUTTON_IDLE_SPRITE),
 		        DoaSprites.get(BUTTON_HOVER_SPRITE), "EXIT", FONT_COLOR, HOVER_FONT_COLOR);
-		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, pom, ep));
+		playOfflineButton.addAction(new PlayOfflineButtonAction(mm, pom, ep, lm));
 		playOnlineButton.addAction(new PlayOnlineButtonAction(mm, ponm, ep));
 		settingsButton.addAction(new SettingsButtonAction(mm, sm, ep));
 		rulesButton.addAction(new RulesButtonAction(mm, rm, ep));
@@ -101,7 +101,7 @@ public final class UIInit {
 		exitButtonPop.addAction(new ExitButtonAction(ep));
 		settingsButtonPop.addAction(new SettingsButtonAction(mm, sm, ep));
 		rulesButtonPop.addAction(new RulesButtonAction(mm, rm, ep));
-		loadButtonPop.addAction(new LoadButtonAction(mm, lm, ep));
+		loadButtonPop.addAction(new LoadButtonAction(mm, lm, ep, pom));
 		saveButton.addAction(() -> {
 			try {
 				GameInstance.saveGame();
