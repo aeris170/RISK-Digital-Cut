@@ -45,14 +45,16 @@ public class SocServer implements Runnable {
 
 	public static void main(String[] args) {
 		// User will specify the server capacity.
-		SocServer serverProtocol = new SocServer(2);
+		t = new Thread(new SocServer(2));
+		t.start();
+		
 		//t = new Thread(new SocServer(10));
 	//	t.start();
 		//
 	}
 	
 	public static void starterPack() {
-		t = new Thread(new SocServer(10));
+		t = new Thread(new SocServer(2));
 		t.start();
 	}
 	
@@ -72,14 +74,14 @@ public class SocServer implements Runnable {
 			// User specifies the name ("HOST")
 			System.out.println("egegegegegeegegegegegegegegege");
 			// Wait for connections to be made.
-			if(controller == 2) {
-			System.out.println("comes */*/**/*/*/");
+			
 			connections.add(new Client("HOST", "localhost").getSocket());
-			}
+		
 			waitForConnection();
 			
 			// Loop forever to get chat and MP. Finish when everyone leaves.
 			whileChatting();
+			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -91,8 +93,8 @@ public class SocServer implements Runnable {
 	private void waitForConnection() throws IOException {
 		// Wait for all connections. Exactly the value of serverCapacity connections
 		// must be made.
-		//for (int i = 0; i < serverCapacity; i++) {
-		while(true) {
+		for (int i = 0; i < serverCapacity; i++) {
+
 			Socket connection = server.accept();
 			connections.add(connection);
 			setupStreams(connection);
@@ -120,20 +122,30 @@ public class SocServer implements Runnable {
 				while (!isThreadFinished.get(ii)) {
 					try {
 						// Read message.
-						Message message = (Message) input.readObject();
+						Object ob =  input.readObject();
+						if(ob instanceof Message) {
+						Message message = (Message) ob;
 						if (message.getType() == MessageType.DISCONNECT) {
 							// If it is a disconnect message, shut the thread down.
 							isThreadFinished.set(ii, true);
 						} else if (message.getType() == MessageType.CHAT) {
 							// Else if it is a chat message, broadcast it to all clients.
 							broadcast(message);
-						} else if (message.getType() == MessageType.GAME_MOVE) {
-							// Else if it is a game move, @EGE @CAGRI you do this part!
-							// TODO IMPLEMENT MULTIPLAYER
+						} else if (message.getType() == MessageType.COMPRESSED) {
+							System.out.println("We will receive new turn object");
+							//saveFile(clientSock);
+							new Thread(new FileServer(27016)).start();
+							// if fileserver is saved the game then we will send this to the all users.
 						}
 						// Wait for 200 milliseconds before listening.
+						
+					}else {
+						System.out.println("File is sent to us");
+						System.out.println("We will receive new turn object");
+						
+					}
 						Thread.sleep(200);
-					} catch (ClassNotFoundException | IOException ex) {
+					}catch (ClassNotFoundException | IOException ex) {
 						ex.printStackTrace();
 					} catch (InterruptedException ex) {
 						Thread.currentThread().interrupt();
@@ -194,6 +206,10 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
+	
+	
+	
+	
 
 	// *************************************************************************
 	private void broadcast(Message message) {
