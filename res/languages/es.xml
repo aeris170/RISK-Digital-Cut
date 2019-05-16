@@ -8,27 +8,27 @@
 <es>
   <pair>
     <key>PLAY_OFFLINE</key>
-    <value>play offline</value>
+    <value>jugar desconectando</value>
   </pair>
   <pair>
     <key>PLAY_ONLINE</key>
-    <value>play online</value>
+    <value>jugar en linea</value>
   </pair>
   <pair>
     <key>SETTINGS</key>
-    <value>settings</value>
+    <value>configuracion</value>
   </pair>
   <pair>
     <key>RULES</key>
-    <value>rules</value>
+    <value>reglas</value>
   </pair>
   <pair>
     <key>EXIT</key>
-    <value>exit</value>
+    <value>salir de la partida</value>
   </pair>
   <pair>
     <key>MASTER</key>
-    <value>master</value>
+    <value>el jefe</value>
   </pair>
   <pair>
     <key>MUSIC</key>
@@ -40,102 +40,102 @@
   </pair>
   <pair>
     <key>OK</key>
-    <value>apply</value>
+    <value>aplicar</value>
   </pair>
   <pair>
     <key>BACK</key>
-    <value>back</value>
+    <value>atras</value>
   </pair>
   <pair>
     <key>NEXT</key>
-    <value>next</value>
+    <value>siguiente</value>
   </pair>
   <pair>
     <key>PLAYER</key>
-    <value>player</value>
+    <value>jugador</value>
   </pair>
   <pair>
     <key>READY</key>
-    <value>ready</value>
+    <value>preparado</value>
   </pair>
   <pair>
     <key>PLAY</key>
-    <value>play</value>
+    <value>jugar</value>
   </pair>
   <pair>
     <key>YES</key>
-    <value>yes</value>
+    <value>si</value>
   </pair>
   <pair>
     <key>NO</key>
     <value>no</value>
   </pair>
   <pair>
-    <key>ARE_YOU_SURE_WANT_TO_EXIT</key>
+    <key>Estas seguro para salir del partido</key>
     <value>are you sure you want to exit?</value>
   </pair>
   <pair>
     <key>OPEN</key>
-    <value>open</value>
+    <value>abrir</value>
   </pair>
   <pair>
     <key>CLOSED</key>
-    <value>closed</value>
+    <value>cerrar</value>
   </pair>
   <pair>
     <key>HUMAN</key>
-    <value>human</value>
+    <value>humano</value>
   </pair>
   <pair>
     <key>COMPUTER</key>
-    <value>computer</value>
+    <value>computador</value>
   </pair>
   <pair>
     <key>PASSIVE</key>
-    <value>passive</value>
+    <value>pasivo</value>
   </pair>
   <pair>
     <key>EASY</key>
-    <value>easy</value>
+    <value>facil</value>
   </pair>
   <pair>
     <key>MEDIUM</key>
-    <value>medium</value>
+    <value>medio</value>
   </pair>
   <pair>
     <key>HARD</key>
-    <value>hard</value>
+    <value>dificil</value>
   </pair>
   <pair>
     <key>INSANE</key>
-    <value>insane</value>
+    <value>insano</value>
   </pair>
   <pair>
     <key>CHEATER</key>
-    <value>cheater</value>
+    <value>tramposo</value>
   </pair>
 
 
 
   <pair>
     <key>NEW_GAME</key>
-    <value>new game</value>
+    <value>juego nuevo</value>
   </pair>
   <pair>
     <key>LOAD_GAME</key>
-    <value>load game</value>
+    <value>carga juego</value>
   </pair>
   <pair>
     <key>SAVE_GAME</key>
-    <value>save game</value>
+    <value>guardar partida</value>
   </pair>
   <pair>
     <key>HOST_GAME</key>
-    <value>host game</value>
+    <value>crear juego</value>
   </pair>
   <pair>
     <key>JOIN_GAME</key>
-    <value>join game</value>
+    <value>entrar juego</value>
   </pair>
 
 </es>
