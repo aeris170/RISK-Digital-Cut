@@ -126,6 +126,10 @@
 		<value>загрузить игру</value>
 	</pair>
 	<pair>
+	<key>SAVE_GAME</key>
+		<value>сохранить игру</value>
+	</pair>
+	<pair>
 		<key>HOST_GAME</key>
 		<value>провести игру</value>
 	</pair>

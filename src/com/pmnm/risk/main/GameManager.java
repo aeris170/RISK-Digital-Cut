@@ -57,8 +57,8 @@ public class GameManager extends DoaObject {
 
 	public static ProvinceHitArea attackerProvinceHitArea = null;
 	public static ProvinceHitArea defenderProvinceHitArea = null;
-	public static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
-	public static CardPanel cardPanel = RiskGameScreenUI.CardPanel;
+	public transient static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
+	public transient static CardPanel cardPanel = RiskGameScreenUI.CardPanel;
 	public static boolean cardWillBeGiven = false;
 
 	public ProvinceHitArea reinforcingProvince = null;
@@ -143,9 +143,6 @@ public class GameManager extends DoaObject {
 
 	@Override
 	public void tick() {
-		if (DoaKeyboard.ESCAPE) {
-			// esc.s
-		}
 		if (DoaMouse.MB1) {
 			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked())
 					.findFirst().orElse(null);
@@ -437,12 +434,4 @@ public class GameManager extends DoaObject {
 			ProvinceConnector.getInstance().setPath();
 		}
 	}
-
-	public static void gameDataSender() throws IOException {
-		GameInstance.gameInstanceCreation();
-		// file is written to the clientFiles
-		// Client.sendFile();
-
-	}
-
 }

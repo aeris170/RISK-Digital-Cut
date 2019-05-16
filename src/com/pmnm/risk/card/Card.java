@@ -30,7 +30,7 @@ public class Card implements Serializable {
 
 	private Province province;
 	private CardType type;
-	private BufferedImage provinceTex;
+	private transient BufferedImage provinceTex;
 
 	public Card() {
 		UNDISTRIBUTED_CARDS.add(this);

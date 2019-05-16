@@ -14,7 +14,8 @@ import com.pmnm.risk.main.Main;
 
 public class RulesMenu extends DoaPanel {
 
-	private static final long serialVersionUID = -4228991106639373659L;
+	private static final long serialVersionUID = 7874225793360662873L;
+
 	private boolean one, two, three, four, five = false;
 	
 	List<BufferedImage> rulesList = new ArrayList<>();

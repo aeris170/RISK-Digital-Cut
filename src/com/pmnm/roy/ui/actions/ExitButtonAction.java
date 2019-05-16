@@ -13,6 +13,7 @@ public class ExitButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
+		ep.setzOrder(1000);
 		ep.show();
 	}
 }

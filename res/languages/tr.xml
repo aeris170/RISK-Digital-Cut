@@ -125,6 +125,10 @@
 		<value>oyun yükle</value>
 	</pair>
 	<pair>
+	<key>SAVE_GAME</key>
+		<value>oyunu kaydet</value>
+	</pair>
+	<pair>
 		<key>HOST_GAME</key>
 		<value>oyun aç</value>
 	</pair>

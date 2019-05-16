@@ -125,6 +125,10 @@
 		<value>caricare il gioco</value>
 	</pair>
 	<pair>
+	<key>SAVE_GAME</key>
+		<value>salva il gioco</value>
+	</pair>
+	<pair>
 		<key>HOST_GAME</key>
 		<value>creare un gioco</value>
 	</pair>
