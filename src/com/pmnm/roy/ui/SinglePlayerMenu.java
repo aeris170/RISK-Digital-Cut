@@ -165,9 +165,8 @@ public class SinglePlayerMenu extends DoaPanel {
 		g.drawImage(DoaSprites.get("MainScroll"), Main.WINDOW_WIDTH * 0.0125f, Main.WINDOW_HEIGHT * 0.163f);
 		g.drawImage(DoaSprites.get("MapChooserBackground"), Main.WINDOW_WIDTH * 0.71f, Main.WINDOW_HEIGHT * 0.24f);
 
-		DoaVectorF bounds = new DoaVectorF(
-				nextMapButton.getPosition().x - prevMapButton.getPosition().x + prevMapButton.getWidth() - prevMapButton.getWidth() * 2,
-				prevMapButton.getHeight());
+		DoaVectorF bounds = new DoaVectorF(nextMapButton.getPosition().x - prevMapButton.getPosition().x
+				+ prevMapButton.getWidth() - prevMapButton.getWidth() * 2, prevMapButton.getHeight());
 		g.setFont(UIInit.UI_FONT
 				.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
 		g.setColor(UIInit.FONT_COLOR);
@@ -176,13 +175,9 @@ public class SinglePlayerMenu extends DoaPanel {
 				prevMapButton.getPosition().y + bounds.y * 3 / 4);
 
 		BufferedImage mapBorder = DoaSprites.get("MapBorder");
+
+		g.drawImage(DoaSprites.get("MAP#" + mapNumber), Main.WINDOW_WIDTH * 0.734f, Main.WINDOW_HEIGHT * 0.332f,
+				mapBorder.getWidth() - Main.WINDOW_WIDTH * 0.003f, mapBorder.getHeight() - Main.WINDOW_HEIGHT * 0.003f);
 		g.drawImage(mapBorder, Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
-
-		g.drawImage(DoaSprites.get("MAP#" + mapNumber), Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f,
-				mapBorder.getWidth(), mapBorder.getHeight());
-		g.setColor(Color.RED);
-		g.drawRect(prevMapButton.getPosition().x + prevMapButton.getWidth(), prevMapButton.getPosition().y, bounds.x,
-				bounds.y);
-
 	}
 }
