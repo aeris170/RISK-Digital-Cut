@@ -1,6 +1,7 @@
 package com.pmnm.roy.ui;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import com.doa.ui.button.DoaImageButton;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Main;
+import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 public class SinglePlayerMenu extends DoaPanel {
@@ -29,9 +31,9 @@ public class SinglePlayerMenu extends DoaPanel {
 			UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE),
 			"BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
 
-	DoaImageButton prevMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.74f,
+	DoaImageButton prevMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.731f,
 			Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowLeftIdle"), DoaSprites.get("ArrowLeftClick"));
-	DoaImageButton nextMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.88f,
+	DoaImageButton nextMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.887f,
 			Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowRightIdle"), DoaSprites.get("ArrowRightClick"));
 
 	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
@@ -41,8 +43,8 @@ public class SinglePlayerMenu extends DoaPanel {
 	DifficultyComboButton[] dcba = new DifficultyComboButton[Globals.MAX_NUM_PLAYERS];
 
 	File folder = new File("res/maps/");
-	int mapNumber = 0;
-	String s;
+	private int mapNumber = 0;
+	private String s;
 	BufferedImage bf;
 
 	int numberOfPlayers = 2;
@@ -112,12 +114,12 @@ public class SinglePlayerMenu extends DoaPanel {
 			tbca[i] = tbc;
 
 			DifficultyComboButton dcb = DoaHandler.instantiate(DifficultyComboButton.class, new DoaVectorF(
-					Main.WINDOW_WIDTH * 0.312f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
+					Main.WINDOW_WIDTH * 0.289f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
 			add(dcb);
 			dcba[i] = dcb;
 
 			ColorComboButton ccb = DoaHandler.instantiate(ColorComboButton.class, new DoaVectorF(
-					Main.WINDOW_WIDTH * 0.342f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
+					Main.WINDOW_WIDTH * 0.347f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
 			add(ccb);
 			ccba[i] = ccb;
 
@@ -142,7 +144,7 @@ public class SinglePlayerMenu extends DoaPanel {
 				ccba[i].show();
 			}
 		}
-		s = folder.listFiles()[mapNumber].getName();
+		s = Globals.MAP_NAMES[mapNumber];
 	}
 
 	@Override
@@ -163,12 +165,24 @@ public class SinglePlayerMenu extends DoaPanel {
 		g.drawImage(DoaSprites.get("MainScroll"), Main.WINDOW_WIDTH * 0.0125f, Main.WINDOW_HEIGHT * 0.163f);
 		g.drawImage(DoaSprites.get("MapChooserBackground"), Main.WINDOW_WIDTH * 0.71f, Main.WINDOW_HEIGHT * 0.24f);
 
-		g.drawString(s, Main.WINDOW_WIDTH * 0.8f, Main.WINDOW_HEIGHT * 0.3f);
+		DoaVectorF bounds = new DoaVectorF(
+				nextMapButton.getPosition().x - prevMapButton.getPosition().x + prevMapButton.getWidth() - prevMapButton.getWidth() * 2,
+				prevMapButton.getHeight());
+		g.setFont(UIInit.UI_FONT
+				.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
+		g.setColor(UIInit.FONT_COLOR);
+		FontMetrics fm = g.getFontMetrics();
+		g.drawString(s, prevMapButton.getPosition().x + prevMapButton.getWidth() + (bounds.x - fm.stringWidth(s)) / 2,
+				prevMapButton.getPosition().y + bounds.y * 3 / 4);
 
-		// g.drawImage(folder.listFiles()[mapNumber], Main.WINDOW_WIDTH * 0.71f,
-		// Main.WINDOW_HEIGHT * 0.24f);
+		BufferedImage mapBorder = DoaSprites.get("MapBorder");
+		g.drawImage(mapBorder, Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
 
-		g.drawImage(DoaSprites.get("MapBorder"), Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
+		g.drawImage(DoaSprites.get("MAP#" + mapNumber), Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f,
+				mapBorder.getWidth(), mapBorder.getHeight());
+		g.setColor(Color.RED);
+		g.drawRect(prevMapButton.getPosition().x + prevMapButton.getWidth(), prevMapButton.getPosition().y, bounds.x,
+				bounds.y);
 
 	}
 }

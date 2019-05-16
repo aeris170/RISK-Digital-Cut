@@ -13,8 +13,9 @@ import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaSprites;
 
 public final class AssetLoader {
-	
-	private AssetLoader() {}
+
+	private AssetLoader() {
+	}
 
 	public static void initializeAssets() {
 		try {
@@ -49,13 +50,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("DropDownTexType", "/ui/playOffline/droppedComboBoxType.png");
 				DoaSprites.createSprite("DropDownColor", "/ui/playOffline/droppedComboBoxPlainColor.png");
 				DoaSprites.createSprite("DropDownColorType", "/ui/playOffline/droppedComboBoxColor.png");
-				
-				/*File[] f = new File("map/").listFiles();
-				List<BufferedImage> mapImages = new ArrayList<>();
-				for (int i = 1; i <= f.length; i++) {
-					mapImages.add(DoaSprites.createSprite("MAP" + i, f[i] + "/map.png"));
-				}*/
-				
+
 				{// MULTIPLAYER MENU
 					DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
 					DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");
@@ -74,7 +69,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("Russian", "/ui/settings/rusk.png");
 				DoaSprites.createSprite("Turkish", "/ui/settings/turkis.png");
 			}
-			
+
 			{// RULES
 				DoaSprites.createSprite("pt0", "/ui/rules/turnpt0.png");
 				DoaSprites.createSprite("pt1", "/ui/rules/turnpt1.png");
@@ -103,9 +98,12 @@ public final class AssetLoader {
 			{// WEATHER EFFECTS
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
-				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
-				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif", 100);
-				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 100);
+				DoaAnimations.createAnimation("BetterFallingLeaves",
+						"/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
+				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif",
+						100);
+				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif",
+						100);
 				DoaAnimations.createAnimation("CherryPetals", "/ui/gameScreenElements/topInfo/cherryPetals.gif", 60);
 				DoaAnimations.createAnimation("Rain", "/ui/gameScreenElements/topInfo/rainLight.gif", 40);
 				DoaSprites.createSprite("fallTex", "/ui/gameScreenElements/waterTextures/fallWaterTexture.jpg");
@@ -126,10 +124,14 @@ public final class AssetLoader {
 				DoaSprites.createSprite("provinceNameHolderIcon", "/ui/gameScreenElements/bottomInfo/name.png");
 				DoaSprites.createSprite("continentHolder", "/ui/gameScreenElements/bottomInfo/continentHolder.png");
 				DoaSprites.createSprite("continentHolderIcon", "/ui/gameScreenElements/bottomInfo/continent.png");
-				DoaSprites.createSprite("nextPhaseButtonIdle", "/ui/gameScreenElements/bottomInfo/nextPhaseNeutral.png");
-				DoaSprites.createSprite("nextPhaseButtonHover", "/ui/gameScreenElements/bottomInfo/nextPhaseHovered.png");
-				DoaSprites.createSprite("nextPhaseButtonPressed", "/ui/gameScreenElements/bottomInfo/nextPhasePressed.png");
-				DoaSprites.createSprite("nextPhaseButtonDisabled", "/ui/gameScreenElements/bottomInfo/nextPhaseDisabled.png");
+				DoaSprites.createSprite("nextPhaseButtonIdle",
+						"/ui/gameScreenElements/bottomInfo/nextPhaseNeutral.png");
+				DoaSprites.createSprite("nextPhaseButtonHover",
+						"/ui/gameScreenElements/bottomInfo/nextPhaseHovered.png");
+				DoaSprites.createSprite("nextPhaseButtonPressed",
+						"/ui/gameScreenElements/bottomInfo/nextPhasePressed.png");
+				DoaSprites.createSprite("nextPhaseButtonDisabled",
+						"/ui/gameScreenElements/bottomInfo/nextPhaseDisabled.png");
 				DoaSprites.createSprite("arrowUp", "/ui/gameScreenElements/bottomInfo/arrowUp.png");
 				DoaSprites.createSprite("arrowUpHover", "/ui/gameScreenElements/bottomInfo/arrowUpHovered.png");
 				DoaSprites.createSprite("arrowUpPress", "/ui/gameScreenElements/bottomInfo/arrowUpPressed.png");
@@ -191,9 +193,13 @@ public final class AssetLoader {
 			DoaAnimations.createAnimation("RiskLogoAnim", riskLogoKeyFrames, 100);
 
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			Font customFont = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf")).deriveFont(12f);
+			Font customFont = Font
+					.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf"))
+					.deriveFont(12f);
 			ge.registerFont(customFont);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/BookAntiqua.ttf")).deriveFont(12f);
+			Font customFont2 = Font
+					.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/BookAntiqua.ttf"))
+					.deriveFont(12f);
 			ge.registerFont(customFont2);
 		} catch (IOException | FontFormatException ex) {
 			ex.printStackTrace();

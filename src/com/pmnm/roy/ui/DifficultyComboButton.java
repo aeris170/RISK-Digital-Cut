@@ -2,6 +2,7 @@ package com.pmnm.roy.ui;
 
 import java.awt.AlphaComposite;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,25 +62,27 @@ public class DifficultyComboButton extends DoaImageButton {
 	public void render(DoaGraphicsContext g) {
 		if (!hidden) {
 			g.setColor(UIInit.FONT_COLOR);
-			g.drawImage(DoaSprites.get("DifficultyBorder"), position.x - Main.WINDOW_WIDTH * 0.103f,
+			g.drawImage(DoaSprites.get("DifficultyBorder"), position.x - Main.WINDOW_WIDTH * 0.077f,
 					position.y - Main.WINDOW_HEIGHT * 0.003f);
 			String s = Translator.getInstance().getTranslatedString(DIFFICULTIES[index]);
-			g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1), position.x - Main.WINDOW_WIDTH * 0.098f,
+			g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1), position.x - Main.WINDOW_WIDTH * 0.070f,
 					position.y + Main.WINDOW_HEIGHT * 0.029f);
 			super.render(g);
 			if (click) {
-				int height = DoaSprites.get("DropDown").getHeight();
-				g.drawImage(DoaSprites.get("DropDown"), position.x - Main.WINDOW_WIDTH * 0.103f,
-						position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.124f, height);
+				BufferedImage dropDown = DoaSprites.get("DropDown");
+				int width = dropDown.getWidth();
+				int height = dropDown.getHeight();
+				g.drawImage(dropDown, position.x - Main.WINDOW_WIDTH * 0.077f, position.y + Main.WINDOW_HEIGHT * 0.040f,
+						width, height);
 				g.pushComposite();
 				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-				g.drawImage(DoaSprites.get("DropDownTypeTex"), position.x - Main.WINDOW_WIDTH * 0.103f,
-						position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.124f, height);
+				g.drawImage(DoaSprites.get("DropDownTypeTex"), position.x - Main.WINDOW_WIDTH * 0.077f,
+						position.y + Main.WINDOW_HEIGHT * 0.040f, width, height);
 				g.popComposite();
 				for (int i = 0; i < DIFFICULTIES.length; i++) {
 					s = Translator.getInstance().getTranslatedString(DIFFICULTIES[i]);
 					g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1),
-							position.x - Main.WINDOW_WIDTH * 0.098f,
+							position.x - Main.WINDOW_WIDTH * 0.070f,
 							position.y + Main.WINDOW_HEIGHT * 0.070f + (Main.WINDOW_HEIGHT * 0.028f * i));
 				}
 			}
@@ -131,7 +134,8 @@ public class DifficultyComboButton extends DoaImageButton {
 	private boolean noneHit() {
 		return !passiveHitBox().contains(DoaMouse.X, DoaMouse.Y) && !easyHitBox().contains(DoaMouse.X, DoaMouse.Y)
 				&& !mediumHitBox().contains(DoaMouse.X, DoaMouse.Y) && !hardHitBox().contains(DoaMouse.X, DoaMouse.Y)
-				&& !insaneHitBox().contains(DoaMouse.X, DoaMouse.Y) && !cheaterHitBox().contains(DoaMouse.X, DoaMouse.Y);
+				&& !insaneHitBox().contains(DoaMouse.X, DoaMouse.Y)
+				&& !cheaterHitBox().contains(DoaMouse.X, DoaMouse.Y);
 	}
 
 }
