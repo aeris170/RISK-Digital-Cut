@@ -38,7 +38,7 @@ public class Client extends JFrame implements Runnable {
 	// Text Data Entrance Part
 	private JTextField clientText;
 	private JTextArea chatWindows;
-	DataOutputStream dos;
+	static DataOutputStream dos;
 
 	// Data in and data out
 	// Transients are useless, I put them to make warnings disappear.
@@ -171,6 +171,7 @@ public class Client extends JFrame implements Runnable {
 		output.close();
 		input.close();
 		connection.close();
+		dos.close();	
 	}
 
 	// *************************************************************************
@@ -205,7 +206,7 @@ public class Client extends JFrame implements Runnable {
 		SwingUtilities.invokeLater(() -> clientText.setEditable(condition));
 	}
 
-	public void sendFile() throws IOException {
+	public static void sendFile() throws IOException {
 		FileInputStream fis = new FileInputStream("clientFiles\\currentGame.gz");
 		byte[] buffer = new byte[4096];
 		
@@ -214,7 +215,7 @@ public class Client extends JFrame implements Runnable {
 		}
 		
 		fis.close();
-		dos.close();	
+		//dos.close();	
 	}
 	
 	public void receiveFile() {

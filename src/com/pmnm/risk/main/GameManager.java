@@ -1,5 +1,6 @@
 package com.pmnm.risk.main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.map.board.ProvinceConnector;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.network.Client;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 import com.pmnm.roy.ui.gameui.CardPanel;
@@ -375,5 +377,14 @@ public class GameManager extends DoaObject {
 		moveAfterOccupyDestination = null;
 		moveAfterOccupySource = null;
 		ProvinceConnector.getInstance().setPath();
+	}
+	
+	
+	public static void gameDataSender() throws IOException {
+		GameInstance.gameInstanceCreation();
+		//file is written to the clientFiles
+		Client.sendFile();
+		
+		
 	}
 }

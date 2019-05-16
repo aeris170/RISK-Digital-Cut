@@ -65,6 +65,7 @@ public class SocServer implements Runnable {
 		new Thread(new SocServer(capacityOfServer)).start();
 		System.out.println("***********************");
 	}
+	
 
 	// *************************************************************************
 	@Override
@@ -200,6 +201,8 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
+	
+	
 
 	// *************************************************************************
 	private void broadcast(Message message) {
@@ -213,7 +216,17 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
-
 	
 	
+	public void broadcastFile(Object object) {
+		// Write the message to everyone.
+		outputs.forEach(output -> {
+			try {
+				output.writeObject(object);
+				output.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});		
+	}	
 }

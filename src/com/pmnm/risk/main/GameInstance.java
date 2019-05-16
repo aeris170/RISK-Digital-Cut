@@ -69,7 +69,7 @@ public final class GameInstance implements Serializable {
 	}
 	
 	
-	public static void gameInstanceCreation(int userNumber) throws IOException {
+	public static void gameInstanceCreation() throws IOException {
 		GameInstance gi = new GameInstance();
 	//	String mapName = GameManager.INSTANCE.currentMapName;
 	//	String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName + "\\";
@@ -78,13 +78,13 @@ public final class GameInstance implements Serializable {
 		//try (FileOutputStream file = new FileOutputStream(dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
 		//	try (ObjectOutputStream out = new ObjectOutputStream(file)) {
 			//	out.writeObject(gi);
-				compress(gi, userNumber);
+				compress(gi);
 				System.out.println("Object has been compressed");
 			//}
 	
 	}
 	
-	public static void compress(GameInstance t, int userNumber) throws IOException {
+	public static void compress(GameInstance t) throws IOException {
 		FileOutputStream fos = null;
         GZIPOutputStream gos = null;
         ObjectOutputStream oos = null;
@@ -192,7 +192,6 @@ public final class GameInstance implements Serializable {
 				Player.NAME_PLAYER.values().forEach(p -> DoaHandler.add(p));
 				System.out.println("Object has been deserialized ");
 			
-
 	}
 
 }
