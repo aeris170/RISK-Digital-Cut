@@ -16,14 +16,21 @@ import com.pmnm.risk.main.GameManager;
 
 public class CardPanel extends DoaUIContainer {
 
+	private static final long serialVersionUID = 7597503286477332506L;
+
 	private static final DoaVectorI CARD_BUTTON_SIZE = new DoaVectorI(126, 244);
-	// serial version UID needed;
+	
+	public static CardPanel INSTANCE;
+	
 	public static final BufferedImage CardBG = DoaSprites.get("card");
 
 	List<CardButton> buttonList = new ArrayList<>();
 
 	public CardPanel() {
 		super(881f, 258f, 1011, 558);
+		if (INSTANCE != null) {
+			DoaHandler.remove(INSTANCE);
+		}
 		// super.show();
 		for (int i = 0; i < 6; i++) {
 			CardButton tempButton = DoaHandler.instantiate(CardButton.class, new DoaVectorF(1012f + i * 138, 417f),
@@ -31,6 +38,7 @@ public class CardPanel extends DoaUIContainer {
 			buttonList.add(tempButton);
 			add(tempButton);
 		}
+		INSTANCE = this;
 	}
 
 	@Override

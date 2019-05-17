@@ -136,4 +136,12 @@
 		<key>JOIN_GAME</key>
 		<value>oyuna bağlan</value>
 	</pair>
+		<pair>
+		<key>RANDOM_PLACEMENT</key>
+		<value>rastgele yerleştirme</value>
+	</pair>
+	<pair>
+		<key>BACK_M</key>
+		<value>ana menüye dön</value>
+	</pair>
 </tr>

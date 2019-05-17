@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
+import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
@@ -17,6 +18,8 @@ import com.pmnm.roy.ui.UIInit;
 public class CardButton extends DoaImageButton {
 
 	private static final long serialVersionUID = -3852059675270216284L;
+	
+	public static CardButton INSTANCE;
 
 	private BufferedImage idleImage;
 	private BufferedImage cardTex;
@@ -28,8 +31,12 @@ public class CardButton extends DoaImageButton {
 
 	public CardButton(DoaVectorF position, Integer width, Integer height, BufferedImage idleImage) {
 		super(position, width, height, idleImage);
+		if (INSTANCE != null) {
+			DoaHandler.remove(INSTANCE);
+		}
 		this.idleImage = idleImage;
 		setzOrder(1000);
+		INSTANCE = this;
 	}
 
 	@Override

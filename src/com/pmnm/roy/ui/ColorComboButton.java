@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaMouse;
@@ -16,6 +17,7 @@ import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.ui.gameui.BlitzButton;
 
 public class ColorComboButton extends DoaImageButton {
 
@@ -40,6 +42,7 @@ public class ColorComboButton extends DoaImageButton {
 	public ColorComboButton(DoaVectorF position) {
 		super(position, (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f),
 				DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownClick"));
+
 		index = Globals.MAX_NUM_PLAYERS - COMBO_BUTTONS.size() - 1;
 		COMBO_BUTTONS.add(this);
 	}
@@ -82,6 +85,7 @@ public class ColorComboButton extends DoaImageButton {
 		if (!hidden) {
 			g.setColor(UIInit.FONT_COLOR);
 			g.drawImage(OPTIONS[index], position.x - Main.WINDOW_WIDTH * 0.027f, position.y);
+
 			g.drawImage(DoaSprites.get("ColorBorder"), position.x - Main.WINDOW_WIDTH * 0.029f,
 					position.y - Main.WINDOW_HEIGHT * 0.003f);
 			super.render(g);

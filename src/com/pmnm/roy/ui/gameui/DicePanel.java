@@ -13,6 +13,8 @@ public class DicePanel extends DoaUIContainer {
 
 	private static final long serialVersionUID = 8009744806803376915L;
 
+	public static DicePanel INSTANCE;
+
 	private static final float ACCELERATION = 0.064f;
 
 	private static final DoaVectorF MIN = new DoaVectorF(-160f, 258f);
@@ -27,6 +29,9 @@ public class DicePanel extends DoaUIContainer {
 
 	public DicePanel() {
 		super(MIN.clone(), (int) (MAX.x - MIN.x), (int) (MAX.y - MIN.y));
+		if (INSTANCE != null) {
+			DoaHandler.remove(INSTANCE);
+		}
 		one.addAction(new DiceButtonAction(1));
 		two.addAction(new DiceButtonAction(2));
 		three.addAction(new DiceButtonAction(3));
@@ -37,6 +42,7 @@ public class DicePanel extends DoaUIContainer {
 		blitz.addAction(new BlitzButtonAction());
 		add(blitz);
 		super.show();
+		INSTANCE = this;
 	}
 
 	@Override

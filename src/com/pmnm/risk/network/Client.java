@@ -53,7 +53,7 @@ public class Client implements Runnable {
 	}
 
 	private void connectToServer() throws IOException {
-		connection = new Socket(InetAddress.getByName(serverIP), 27015);
+		connection = new Socket(InetAddress.getByName(serverIP), 9999);
 	}
 
 	private void setupStreams() throws IOException {

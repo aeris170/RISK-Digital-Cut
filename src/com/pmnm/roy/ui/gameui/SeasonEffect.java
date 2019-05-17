@@ -19,6 +19,8 @@ import com.pmnm.risk.main.Main;
 public class SeasonEffect extends DoaObject {
 
 	private static final long serialVersionUID = -784946746221681591L;
+	
+	public static SeasonEffect INSTANCE;
 
 	private float godrayAlpha = 0.7f;
 	private float godrayAlphaDelta = 0.001f;
@@ -26,7 +28,11 @@ public class SeasonEffect extends DoaObject {
 
 	public SeasonEffect() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, 100);
+		if (INSTANCE != null) {
+			DoaHandler.remove(INSTANCE);
+		}
 		DoaHandler.instantiate(Water.class);
+		INSTANCE = this;
 	}
 
 	@Override
