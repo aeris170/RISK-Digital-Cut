@@ -50,7 +50,7 @@ public class PlayOfflineMenu extends DoaPanel {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.drawImage(DoaSprites.get("MainMenuBackground"), position.x, position.y, width, height);
+		g.drawImage(DoaSprites.get("BG1"), position.x, position.y, width, height);
 		for (int i = 0; i < Main.WINDOW_WIDTH; i += UIInit.FLEUR_WIDTH) {
 			g.drawImage(DoaSprites.get(UIInit.FLEUR_DE_LIS), i, 0, UIInit.FLEUR_WIDTH, UIInit.FLEUR_HEIGHT);
 			g.drawImage(DoaSprites.get(UIInit.FLEUR_DE_LIS), i, UIInit.FLEUR_HEIGHT, UIInit.FLEUR_WIDTH,
