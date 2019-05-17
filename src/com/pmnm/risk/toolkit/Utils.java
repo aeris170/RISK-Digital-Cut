@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 import com.doa.engine.DoaCamera;
@@ -73,8 +74,10 @@ public final class Utils {
 		for (int xx = 0; xx < sp.getWidth(); xx++) {
 			for (int yy = 0; yy < sp.getHeight(); yy++) {
 				Color oldColor = new Color(sp.getRGB(xx, yy), true);
-				Color newColor = new Color((int) ((cRed * oldColor.getRed() / 255f) * 255), (int) ((cGreen * oldColor.getGreen() / 255f) * 255),
-				        (int) ((cBlue * oldColor.getBlue() / 255f) * 255), (int) ((cAlpha * oldColor.getAlpha() / 255f) * 255));
+				Color newColor = new Color((int) ((cRed * oldColor.getRed() / 255f) * 255),
+						(int) ((cGreen * oldColor.getGreen() / 255f) * 255),
+						(int) ((cBlue * oldColor.getBlue() / 255f) * 255),
+						(int) ((cAlpha * oldColor.getAlpha() / 255f) * 255));
 				sp.setRGB(xx, yy, newColor.getRGB());
 			}
 		}
@@ -119,14 +122,17 @@ public final class Utils {
 		}
 	}
 
-	public static ProvinceHitArea[] shortestPath(ProvinceHitArea reinforcingProvince, ProvinceHitArea reinforcedProvince) {
+	public static ProvinceHitArea[] shortestPath(ProvinceHitArea reinforcingProvince,
+			ProvinceHitArea reinforcedProvince) {
 		List<List<ProvinceHitArea>> paths = new ArrayList<>();
 		doStuff(reinforcingProvince, new ArrayList<>(), paths, reinforcedProvince);
-		List<ProvinceHitArea> shortestPath = paths.stream().min(Comparator.comparingInt(List::size)).orElse(new ArrayList<>());
+		List<ProvinceHitArea> shortestPath = paths.stream().min(Comparator.comparingInt(List::size))
+				.orElse(new ArrayList<>());
 		return shortestPath.toArray(new ProvinceHitArea[shortestPath.size()]);
 	}
 
-	private static void doStuff(ProvinceHitArea previous, List<ProvinceHitArea> path, List<List<ProvinceHitArea>> paths, ProvinceHitArea destination) {
+	private static void doStuff(ProvinceHitArea previous, List<ProvinceHitArea> path, List<List<ProvinceHitArea>> paths,
+			ProvinceHitArea destination) {
 		path.add(previous);
 		if (previous == destination) {
 			paths.add(path);
@@ -161,5 +167,9 @@ public final class Utils {
 
 		// Return the buffered image
 		return bimage;
+	}
+
+	public static <T> boolean listEquals(List<T> list1, List<T> list2) {
+		return new HashSet<>(list1).equals(new HashSet<>(list2));
 	}
 }

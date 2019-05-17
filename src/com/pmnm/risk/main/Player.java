@@ -201,8 +201,8 @@ public class Player extends DoaObject {
 
 	@Override
 	public boolean equals(Object o) {
-		return super.equals(o);
-		/*if (!(o instanceof Player))
+		//return super.equals(o);
+		if (!(o instanceof Player))
 			return false;
 		Player playO = (Player) o;
 		if (playO.playerColor != null && this.playerColor != null) {
@@ -230,14 +230,13 @@ public class Player extends DoaObject {
 				return false;
 			}
 		}
-		return playO.isLocalPlayer == this.isLocalPlayer && playO.isInTurn == this.isInTurn && playO.id == this.id;*/
+		return playO.isLocalPlayer == this.isLocalPlayer && playO.isInTurn == this.isInTurn && playO.id == this.id;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
-		/*int hash = 17;
-		// Suitable nullity checks etc, of course :)
+		//return super.hashCode();
+		int hash = 17;
 		if (this.playerColor != null)
 			hash = hash * 23 + playerColor.hashCode();
 		if (this.playerName != null)
@@ -251,7 +250,7 @@ public class Player extends DoaObject {
 			hash = 23 * hash + (isLocalPlayer ? 1 : 0);
 			hash = 23 * hash + (isInTurn ? 1 : 0);
 			hash = 23 * hash + id;
-		return hash;*/
+		return hash;
 	}
 
 }

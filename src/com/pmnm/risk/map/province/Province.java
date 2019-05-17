@@ -138,51 +138,17 @@ public class Province implements Serializable {
 				.findFirst().orElse(null);
 	}
 
-	/*
-	 * 
-	 * private boolean isClaimed; private int troops;
-	 */
-
 	@Override
 	public boolean equals(Object o) {
-		//return super.equals(o);
-		if (!(o instanceof Province))
-			return false;
-		Province playO = (Province) o;
-		if (playO.continent != null && this.continent != null) {
-			if (!playO.continent.equals(this.continent)) 
-				return false;
-		}
-		if (playO.name != null && this.name != null) {
-			if (!playO.name.equals(this.name)) 
-				return false;
-		}
-		if (playO.neighbours != null && this.neighbours != null) {
-			if (!playO.neighbours.equals(this.neighbours))
-				return false;
-		}
-		if (playO.owner != null && this.owner != null) {
-			if (!playO.owner.equals(this.owner)) 
-				return false;
-		}
-		return playO.troops == this.troops && playO.isClaimed == this.isClaimed;
+		System.out.println("oldu");
+		return o != null && o == this && ((Province) o).troops == this.troops && ((Province) o).owner == this.owner;
 	}
 
 	@Override
 	public int hashCode() {
-		//return super.hashCode();
 		int hash = 17;
-		// Suitable nullity checks etc, of course :)
-		if (this.continent != null)
-			hash = hash * 23 + continent.hashCode();
-		if (this.name != null)
-			hash = hash * 23 + name.hashCode();
-		if (this.neighbours != null)
-			hash = hash * 23 + neighbours.hashCode();
-		if (this.owner != null)
-			hash = hash * 23 + owner.hashCode();
+		hash = hash * 23 + (owner != null ? owner.hashCode() : 0);
 		hash = 23 * hash + troops;
-		hash = 23 * hash + (isClaimed ? 1 : 0);
 		return hash;
 	}
 }

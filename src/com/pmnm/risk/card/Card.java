@@ -135,11 +135,15 @@ public class Card implements Serializable {
 			if(!cardO.province.equals(this.province)){
 				return false;
 			}
+		}else if(cardO.province != null || this.province != null){
+			return false;
 		}
 		if(cardO.type != null && this.type != null) {
 			if(!(cardO.type == this.type)){
 				return false;
 			}
+		}else if(cardO.type != null || this.type != null){
+			return false;
 		}
 		return true;
 	}

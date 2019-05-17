@@ -32,7 +32,8 @@ public class Camera extends DoaObject {
 	static int value = 0;
 	
 	GameInstance firstGameInstance;
-
+	GameInstance secondOnee;
+	
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
 	private PrintWriter writer;
@@ -132,7 +133,7 @@ public class Camera extends DoaObject {
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.L) {
 			
-			GameInstance secondOnee = new GameInstance();
+			secondOnee = new GameInstance();
 			
 			if(secondOnee.equals(firstGameInstance)) {
 				System.out.println("They are equal");

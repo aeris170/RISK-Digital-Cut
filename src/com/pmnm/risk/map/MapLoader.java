@@ -122,7 +122,7 @@ public final class MapLoader {
 		}
 		Card.PROVINCE_CARDS.remove(null);
 		if (Card.PROVINCE_CARDS.size() != Province.ALL_PROVINCES.size()) {
-			throw new RiskException("Card.PROVINCE_CARDS.size() != Province.ALL_PROVINCES.size()! CHECK CARDS.XML AND PROVINCES.XML");
+			//throw new RiskException("Card.PROVINCE_CARDS.size() != Province.ALL_PROVINCES.size()! CHECK CARDS.XML AND PROVINCES.XML");
 		}
 	}
 }

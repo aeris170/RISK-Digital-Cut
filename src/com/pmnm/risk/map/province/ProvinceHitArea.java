@@ -449,11 +449,10 @@ public class ProvinceHitArea extends DoaObject {
 		if (!(o instanceof ProvinceHitArea))
 			return false;
 		ProvinceHitArea proHit = (ProvinceHitArea) o;
-		if (proHit.province != null && this.province != null) {
 			if (!proHit.province.equals(this.province)) {
 				return false;
 			}
-		}
+		
 		return proHit.isAttacker == this.isAttacker && proHit.isDefender == this.isDefender
 				&& proHit.isEmphasized == this.isEmphasized && proHit.isHighlighted == this.isHighlighted
 				&& proHit.isSelected == this.isSelected && proHit.isReinforcing == this.isReinforcing
@@ -465,9 +464,9 @@ public class ProvinceHitArea extends DoaObject {
 		//return super.hashCode();
 		int hash = 17;
 		// Suitable nullity checks etc, of course :)
-		if (this.province != null) {
-			hash = hash * 23 + province.hashCode();
-		}
+
+		hash = hash * 23 + province.hashCode();
+
 		hash = 23 * hash + (isAttacker ? 1 : 0);
 		hash = 23 * hash + (isDefender ? 1 : 0);
 		hash = 23 * hash + (isEmphasized ? 1 : 0);

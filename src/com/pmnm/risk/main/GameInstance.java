@@ -209,36 +209,38 @@ public final class GameInstance implements Serializable {
 	
 	  @Override 
 	  public boolean equals(Object o) {
-		  return super.equals(o);
-		  /*
+		  //return super.equals(o);
 	        if (o == this)
 	            return true;
 	        if (!(o instanceof GameInstance))
 	            return false;
 	        GameInstance sI = (GameInstance) o;	
+	        System.out.println("We will look for game instance equality");
+	        
+	        System.out.println(sI.continents.equals(this.continents)  && sI.provinces.equals(this.provinces)  && sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
+	        		&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER) && sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES));
+	       
 	        return sI.continents.equals(this.continents)  && sI.provinces.equals(this.provinces)  && sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
 	        		&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER) && sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES); 
-		   */
 	    }
 	  
 	  @Override
 		public int hashCode() {
-			return super.hashCode();
-			/*int hash = 17;
+			//return super.hashCode();
+			int hash = 17;
 			// Suitable nullity checks etc, of course :)
-			if (this.playerColor != null)
-				hash = hash * 23 + playerColor.hashCode();
-			if (this.playerName != null)
-				hash = hash * 23 + playerName.hashCode();
-			if (this.cards != null)
-				hash = hash * 23 + cards.hashCode();
-			if (this.source != null)
-				hash = hash * 23 + source.hashCode();
-			if (this.destination != null)
-				hash = hash * 23 + destination.hashCode();
-				hash = 23 * hash + (isLocalPlayer ? 1 : 0);
-				hash = 23 * hash + (isInTurn ? 1 : 0);
-				hash = 23 * hash + id;
-			return hash;*/
+			if (this.continents != null)
+				hash = hash * 23 + continents.hashCode();
+			if (this.provinces != null)
+				hash = hash * 23 + provinces.hashCode();
+			if (this.UNDISTRIBUTED_CARDS != null)
+				hash = hash * 23 + UNDISTRIBUTED_CARDS.hashCode();
+			if (this.PROVINCE_CARDS != null)
+				hash = hash * 23 + PROVINCE_CARDS.hashCode();
+			if (this.NAME_PLAYER != null)
+				hash = hash * 23 + NAME_PLAYER.hashCode();
+			if (this.UNCLAIMED_PROVINCES != null)
+				hash = hash * 23 + UNCLAIMED_PROVINCES.hashCode();
+			return hash;
 		}
 }
