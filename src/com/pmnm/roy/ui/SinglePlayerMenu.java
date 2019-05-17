@@ -115,7 +115,7 @@ public class SinglePlayerMenu extends DoaPanel {
 		add(nextMapButton);
 		for (int i = Globals.MAX_NUM_PLAYERS - 1; i >= 0; i--) {
 			TypeComboButton tbc = DoaHandler.instantiate(TypeComboButton.class, new DoaVectorF(
-					Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
+					Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)), true);
 			add(tbc);
 			tbca[i] = tbc;
 
