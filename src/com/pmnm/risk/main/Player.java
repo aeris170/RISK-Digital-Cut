@@ -52,7 +52,8 @@ public class Player extends DoaObject {
 	@Override
 	public void tick() {
 		if (isInTurn && isLocalPlayer) {
-			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
+			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream()
+					.filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 			if (clickedHitArea != null) {
 				Province clickedProvince = clickedHitArea.getProvince();
 				GameManager gm = GameManager.INSTANCE;
@@ -70,11 +71,12 @@ public class Player extends DoaObject {
 						gm.setDraftReinforceProvince(clickedProvince);
 					}
 				} else if (gm.currentPhase == TurnPhase.ATTACK) {
-					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && gm.moveAfterOccupySource == null) {
+					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1
+							&& gm.moveAfterOccupySource == null) {
 						gm.markAttackerProvince(clickedHitArea);
 						gm.markDefenderProvince(null);
 					} else if (gm.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
-					        && gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
+							&& gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
 						gm.markDefenderProvince(clickedHitArea);
 					}
 				} else if (gm.currentPhase == TurnPhase.REINFORCE) {
@@ -110,7 +112,8 @@ public class Player extends DoaObject {
 	}
 
 	@Override
-	public void render(DoaGraphicsContext g) {}
+	public void render(DoaGraphicsContext g) {
+	}
 
 	public void turn() {
 		isInTurn = true;
@@ -127,7 +130,7 @@ public class Player extends DoaObject {
 	public Color getColor() {
 		return playerColor;
 	}
-	
+
 	public void setColor(Color pColor) {
 		playerColor = pColor;
 	}
@@ -141,7 +144,8 @@ public class Player extends DoaObject {
 	}
 
 	public static int calculateReinforcementsForThisTurn(Player player) {
-		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
+		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player))
+				.collect(Collectors.toList());
 		int reinforcementsForThisTurn = Math.max(playerProvinces.size() / 3, 3);
 		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
 			Continent currentContinent = entry.getValue();
@@ -151,9 +155,10 @@ public class Player extends DoaObject {
 		}
 		return reinforcementsForThisTurn;
 	}
-	
+
 	public static boolean hasProvinces(Player player) {
-		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
+		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player))
+				.collect(Collectors.toList());
 		return !playerProvinces.isEmpty();
 	}
 
@@ -169,8 +174,8 @@ public class Player extends DoaObject {
 	public boolean isLocalPlayer() {
 		return isLocalPlayer;
 	}
-	
-	public List<Card> getCards() {//TODO find a better solution to not fuck up the encapsulation
+
+	public List<Card> getCards() {// TODO find a better solution to not fuck up the encapsulation
 		return cards;
 	}
 
@@ -181,16 +186,72 @@ public class Player extends DoaObject {
 	public void removeCard(Card c) {
 		cards.remove(c);
 	}
-	
+
 	public void removeAllCards() {
-		for(int i = 0; i < cards.size(); i++) {
+		for (int i = 0; i < cards.size(); i++) {
 			cards.remove(i);
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id=" + id + ", isLocalPlayer=" + isLocalPlayer
-		        + ", source=" + source + ", destination=" + destination + "]";
+		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id="
+				+ id + ", isLocalPlayer=" + isLocalPlayer + ", source=" + source + ", destination=" + destination + "]";
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return super.equals(o);
+		/*if (!(o instanceof Player))
+			return false;
+		Player playO = (Player) o;
+		if (playO.playerColor != null && this.playerColor != null) {
+			if (!playO.playerColor.equals(this.playerColor)) {
+				return false;
+			}
+		}
+		if (playO.playerName != null && this.playerName != null) {
+			if (!playO.playerName.equals(this.playerName)) {
+				return false;
+			}
+		}
+		if (playO.cards.equals(this.cards)) {
+			if (!playO.cards.equals(this.cards)) {
+				return false;
+			}
+		}
+		if (playO.source != null && this.source != null) {
+			if (!playO.source.equals(this.source)) {
+				return false;
+			}
+		}
+		if (playO.destination != null && this.destination != null) {
+			if (!playO.destination.equals(this.destination)) {
+				return false;
+			}
+		}
+		return playO.isLocalPlayer == this.isLocalPlayer && playO.isInTurn == this.isInTurn && playO.id == this.id;*/
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+		/*int hash = 17;
+		// Suitable nullity checks etc, of course :)
+		if (this.playerColor != null)
+			hash = hash * 23 + playerColor.hashCode();
+		if (this.playerName != null)
+			hash = hash * 23 + playerName.hashCode();
+		if (this.cards != null)
+			hash = hash * 23 + cards.hashCode();
+		if (this.source != null)
+			hash = hash * 23 + source.hashCode();
+		if (this.destination != null)
+			hash = hash * 23 + destination.hashCode();
+			hash = 23 * hash + (isLocalPlayer ? 1 : 0);
+			hash = 23 * hash + (isInTurn ? 1 : 0);
+			hash = 23 * hash + id;
+		return hash;*/
+	}
+
 }

@@ -2,6 +2,7 @@ package com.pmnm.risk.dice;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.pmnm.risk.card.Card;
 import com.pmnm.risk.dice.exceptions.DiceAccessException;
 import com.pmnm.risk.dice.exceptions.DiceInstantiationException;
 
@@ -53,4 +54,6 @@ public class Dice {
 		d.rollAll();
 		return d;
 	}
+
+	
 }

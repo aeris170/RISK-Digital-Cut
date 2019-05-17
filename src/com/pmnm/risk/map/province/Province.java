@@ -81,8 +81,9 @@ public class Province implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Province [continent=" + continent + ", name=" + name + ", neighbours=" + neighbours + ", meshes=" + meshes + ", center=" + center + ", isClaimed="
-		        + isClaimed + ", owner=" + owner + ", troops=" + troops + "]";
+		return "Province [continent=" + continent + ", name=" + name + ", neighbours=" + neighbours + ", meshes="
+				+ meshes + ", center=" + center + ", isClaimed=" + isClaimed + ", owner=" + owner + ", troops=" + troops
+				+ "]";
 	}
 
 	public static void printAllProvinces() {
@@ -133,6 +134,55 @@ public class Province implements Serializable {
 	}
 
 	public ProvinceHitArea getProvinceHitArea() {
-		return ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.getProvince().equals(this)).findFirst().orElse(null);
+		return ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.getProvince().equals(this))
+				.findFirst().orElse(null);
+	}
+
+	/*
+	 * 
+	 * private boolean isClaimed; private int troops;
+	 */
+
+	@Override
+	public boolean equals(Object o) {
+		//return super.equals(o);
+		if (!(o instanceof Province))
+			return false;
+		Province playO = (Province) o;
+		if (playO.continent != null && this.continent != null) {
+			if (!playO.continent.equals(this.continent)) 
+				return false;
+		}
+		if (playO.name != null && this.name != null) {
+			if (!playO.name.equals(this.name)) 
+				return false;
+		}
+		if (playO.neighbours != null && this.neighbours != null) {
+			if (!playO.neighbours.equals(this.neighbours))
+				return false;
+		}
+		if (playO.owner != null && this.owner != null) {
+			if (!playO.owner.equals(this.owner)) 
+				return false;
+		}
+		return playO.troops == this.troops && playO.isClaimed == this.isClaimed;
+	}
+
+	@Override
+	public int hashCode() {
+		//return super.hashCode();
+		int hash = 17;
+		// Suitable nullity checks etc, of course :)
+		if (this.continent != null)
+			hash = hash * 23 + continent.hashCode();
+		if (this.name != null)
+			hash = hash * 23 + name.hashCode();
+		if (this.neighbours != null)
+			hash = hash * 23 + neighbours.hashCode();
+		if (this.owner != null)
+			hash = hash * 23 + owner.hashCode();
+		hash = 23 * hash + troops;
+		hash = 23 * hash + (isClaimed ? 1 : 0);
+		return hash;
 	}
 }

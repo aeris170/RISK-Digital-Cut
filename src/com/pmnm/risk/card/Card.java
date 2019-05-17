@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.pmnm.risk.main.Player;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
@@ -65,6 +66,7 @@ public class Card implements Serializable {
 		int maxX = Integer.MIN_VALUE;
 		int maxY = Integer.MIN_VALUE;
 		List<GeneralPath> meshes = province.getProvinceHitArea().getMesh();
+		
 		for (GeneralPath mesh : meshes) {
 			double[][] vertices = ProvinceHitArea.getPoints(mesh);
 			for (int i = 0; i < vertices.length; i++) {
@@ -99,7 +101,8 @@ public class Card implements Serializable {
 		double scalex = (double) (bf.getWidth() * 0.9f) / provinceTex.getWidth();
 		double scaley = (double) (bf.getHeight() * 0.3f) / provinceTex.getHeight();
 		double r = Math.min(scalex, scaley);
-		provinceTex = Utils.toBufferedImage(provinceTex.getScaledInstance((int) (provinceTex.getWidth() * r), (int) (provinceTex.getHeight() * r), Image.SCALE_SMOOTH));
+		provinceTex = Utils.toBufferedImage(provinceTex.getScaledInstance((int) (provinceTex.getWidth() * r),
+				(int) (provinceTex.getHeight() * r), Image.SCALE_SMOOTH));
 	}
 
 	/**
@@ -118,5 +121,37 @@ public class Card implements Serializable {
 	@Override
 	public String toString() {
 		return "Card [province=" + province.getName() + ", type=" + type + "]";
+	}
+	
+	
+
+	@Override
+	public boolean equals(Object o) {
+		//return super.equals(o);
+		if (!(o instanceof Card))
+			return false;
+		Card cardO = (Card) o;
+		if (cardO.province != null && this.province != null) {
+			if(!cardO.province.equals(this.province)){
+				return false;
+			}
+		}
+		if(cardO.type != null && this.type != null) {
+			if(!(cardO.type == this.type)){
+				return false;
+			}
+		}
+		return true;
+	}
+	@Override
+	public int hashCode() {
+		//return super.hashCode();
+		int hash = 17;
+		// Suitable nullity checks etc, of course :)
+		if(province!= null)
+			hash = hash * 23 + province.hashCode();
+		if(type!= null)
+			hash = hash * 23 + type.hashCode();
+		return hash;
 	}
 }

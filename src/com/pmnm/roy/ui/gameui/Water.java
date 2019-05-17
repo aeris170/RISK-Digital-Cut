@@ -1,5 +1,6 @@
 package com.pmnm.roy.ui.gameui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
@@ -160,6 +161,8 @@ public class Water extends DoaObject {
 			t2.setTransform(a.getX() - c.getX(), a.getY() - c.getY(), b.getX() - c.getX(), b.getY() - c.getY(), c.getX(), c.getY());
 			t2.concatenate(t1);
 			g2d.drawImage(tex, t2, null);
+			g2d.setColor(Color.RED);
+			g2d.drawPolygon(polygon);
 		}
 	}
 }

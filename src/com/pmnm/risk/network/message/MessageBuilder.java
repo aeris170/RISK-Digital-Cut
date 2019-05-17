@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class MessageBuilder {
 
 	private String sender = "";
-	private String data = "";
+	private Object data = new Object();
 	private MessageType type = MessageType.DEFAULT;
 
 	public Message build() {
@@ -17,7 +17,7 @@ public class MessageBuilder {
 		return this;
 	}
 
-	public MessageBuilder setData(String data) {
+	public MessageBuilder setData(Object data) {
 		this.data = data;
 		return this;
 	}
@@ -32,10 +32,10 @@ public class MessageBuilder {
 		private static final long serialVersionUID = -2276330445489776124L;
 
 		private final String sender;
-		private final String data;
+		private final Object data;
 		private final MessageType type;
 
-		Message(String sender, String data, MessageType type) {
+		Message(String sender, Object data, MessageType type) {
 			this.sender = sender;
 			this.data = data;
 			this.type = type;
@@ -45,7 +45,7 @@ public class MessageBuilder {
 			return sender;
 		}
 
-		public String getData() {
+		public Object getData() {
 			return data;
 		}
 
