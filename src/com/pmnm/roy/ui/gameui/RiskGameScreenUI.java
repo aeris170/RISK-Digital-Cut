@@ -21,7 +21,7 @@ public final class RiskGameScreenUI {
 	}
 
 	public static void initUI(String mapName, List<Integer> playerTypes, List<String> playerNames,
-			List<Color> playerColors, List<String> aiNames, List<Color> aiColors, List<Integer> difficulties) {
+			List<Color> playerColors, List<String> aiNames, List<Color> aiColors, List<Integer> difficulties, boolean randomPlacement) {
 		// TODO make mapName a parameter and pass from UI
 		MapLoader.readMapData(new File(mapName));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
@@ -29,7 +29,7 @@ public final class RiskGameScreenUI {
 		esc = DoaHandler.instantiate(EscPopup.class, UIInit.getMM(), UIInit.getSM(), UIInit.getRM(), UIInit.getLM(), UIInit.getEP(), UIInit.getPOM());
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);
-		DoaHandler.instantiate(GameManager.class, mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties);
+		DoaHandler.instantiate(GameManager.class, mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties, randomPlacement);
 		DoaHandler.instantiate(GameBoard.class);
 	}
 }

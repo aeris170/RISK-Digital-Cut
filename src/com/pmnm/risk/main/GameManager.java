@@ -41,7 +41,7 @@ public class GameManager extends DoaObject {
 	public final List<Player> players = new ArrayList<>();
 
 	public int numberOfPlayers;
-	public boolean manualPlacement = false;
+	public boolean manualPlacement;
 
 	public boolean isManualPlacementDone = false;
 	public final Map<Player, Integer> startingTroops = new HashMap<>();
@@ -73,7 +73,7 @@ public class GameManager extends DoaObject {
 	public float timer = 0;
 
 	public GameManager(String mapName, List<Integer> playerTypes, List<String> playerNames, List<Color> playerColors,
-			List<String> aiNames, List<Color> aiColors, List<Integer> difficulties) {
+			List<String> aiNames, List<Color> aiColors, List<Integer> difficulties, boolean randomPlacement) {
 		super(0f, 0f);
 		if (INSTANCE != null) {
 			DoaHandler.remove(INSTANCE);
@@ -97,6 +97,7 @@ public class GameManager extends DoaObject {
 				aiInt++;
 			}
 		}
+		manualPlacement = !randomPlacement;
 
 		currentPlayer = players.get(0);
 		currentPlayer.turn();

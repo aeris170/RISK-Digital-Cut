@@ -36,6 +36,9 @@ public class SinglePlayerMenu extends DoaPanel {
 	DoaImageButton nextMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.887f,
 			Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowRightIdle"), DoaSprites.get("ArrowRightClick"));
 
+	RandomPlacementButton randomPlacementButton = DoaHandler.instantiate(RandomPlacementButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.315f,
+			Main.WINDOW_HEIGHT * 0.635f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT");
+
 	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
 	TypeComboButton[] tbca = new TypeComboButton[Globals.MAX_NUM_PLAYERS];
@@ -72,7 +75,8 @@ public class SinglePlayerMenu extends DoaPanel {
 					difficulties.add(dcba[i].index);
 				}
 			}
-			RiskGameScreenUI.initUI(s.replaceAll(" ", "/"), playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties);
+			RiskGameScreenUI.initUI(s.replaceAll(" ", "/"), playerTypes, playerNames, playerColors, aiNames, aiColors,
+					difficulties, randomPlacementButton.getClick());
 		});
 		backButton.addAction(() -> {
 			hide();
@@ -88,6 +92,9 @@ public class SinglePlayerMenu extends DoaPanel {
 			DoaHandler.remove(prevMapButton);
 			DoaHandler.remove(nextMapButton);
 			pom.show();
+		});
+		randomPlacementButton.addAction(() -> {
+
 		});
 		prevMapButton.addAction(() -> {
 			if (mapNumber <= 0) {
@@ -105,6 +112,7 @@ public class SinglePlayerMenu extends DoaPanel {
 		});
 		add(playButton);
 		add(backButton);
+		add(randomPlacementButton);
 		add(prevMapButton);
 		add(nextMapButton);
 		for (int i = Globals.MAX_NUM_PLAYERS - 1; i >= 0; i--) {
