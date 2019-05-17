@@ -38,7 +38,7 @@ public final class MapLoader {
 			groupProvinces(new File(path + "/continents.xml"));
 			connectProvinces(new File(path + "/neighbours.xml"));
 			solidifyProvinces(new File(path + "/vertices.xml"));
-			generateCards(new File(path + "/cards.xml"));
+			//generateCards(new File(path + "/cards.xml"));
 			DoaSprites.createSprite("MapBackground", path.substring(path.indexOf("/"), path.length()) + "/map.png");
 		} catch (JDOMException | IOException ex) {
 			ex.printStackTrace();
