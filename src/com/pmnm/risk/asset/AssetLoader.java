@@ -57,7 +57,9 @@ public final class AssetLoader {
 				DoaSprites.createSprite("DropDown", "/ui/playOffline/droppedComboBoxPlain.png");
 				DoaSprites.createSprite("DropDownTex", "/ui/playOffline/droppedComboBox.png");
 				DoaSprites.createSprite("DropDownType", "/ui/playOffline/droppedComboBoxPlainType.png");
+				DoaSprites.createSprite("DropDownOnlineType", "/ui/playOnline/onlineDroppedComboBoxPlainType.png");
 				DoaSprites.createSprite("DropDownTexType", "/ui/playOffline/droppedComboBoxType.png");
+				DoaSprites.createSprite("DropDownOnlineTexType", "/ui/playOnline/onlineDroppedComboBoxType.png");
 				DoaSprites.createSprite("DropDownColor", "/ui/playOffline/droppedComboBoxPlainColor.png");
 				DoaSprites.createSprite("DropDownColorType", "/ui/playOffline/droppedComboBoxColor.png");
 				DoaSprites.createSprite("RandomPlacementBorder", "/ui/playOffline/randomBox.png");

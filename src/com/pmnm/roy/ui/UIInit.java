@@ -3,12 +3,14 @@ package com.pmnm.roy.ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.sound.DoaSounds;
 import com.doa.maths.DoaVectorF;
 import com.doa.maths.DoaVectorI;
+import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.actions.ExitButtonAction;
@@ -50,6 +52,8 @@ public final class UIInit {
 	private UIInit() {}
 
 	public static void initUI() {
+		Translator.getInstance()
+				.setCurrentLanguageIndex(Preferences.userNodeForPackage(UIInit.class).getInt("language", 0));
 		mm = DoaHandler.instantiate(MainMenu.class);
 		sm = DoaHandler.instantiate(SettingsMenu.class, mm);
 		rm = DoaHandler.instantiate(RulesMenu.class, mm);

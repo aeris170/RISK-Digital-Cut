@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.zip.GZIPOutputStream;
 
 import com.dosse.upnp.UPnP;
 import com.pmnm.risk.network.message.MessageBuilder;
@@ -38,7 +37,11 @@ public class SocServer implements Runnable {
 		isThreadFinished = new ArrayList<>();
 		_this = this;
 	}
-
+	public static void main(String[] args) {
+		startServer(2);
+	}
+	
+	
 	public static void startServer(int serverCapacity) {
 		new Thread(_this = new SocServer(serverCapacity)).start();
 		System.out.println("Socket server started");
@@ -75,6 +78,7 @@ public class SocServer implements Runnable {
 	private void setupStreams(Socket socket) throws IOException {
 		outputs.add(new ObjectOutputStream(socket.getOutputStream()));
 		inputs.add(new ObjectInputStream(socket.getInputStream()));
+		System.out.println("Streams are created");
 	}
 
 	private void whileChatting() {

@@ -25,6 +25,7 @@ import com.pmnm.roy.ui.gameui.actions.NextPhaseButtonAction;
 
 public class BottomPanel extends DoaPanel {
 
+	public static BottomPanel INSTANCE;
 	private static final long serialVersionUID = -59674351675589726L;
 
 	private static final BufferedImage MIDDLE = DoaSprites.get("gaugeBig");
@@ -47,6 +48,9 @@ public class BottomPanel extends DoaPanel {
 
 	public BottomPanel() {
 		super(0f, 0f, 0, 0);
+		if (INSTANCE != null) {
+			DoaHandler.remove(INSTANCE);
+		}
 		nextPhaseButton.addAction(new NextPhaseButtonAction(nextPhaseButton));
 		decrementButton.addAction(new DecrementButtonAction(this));
 		incrementButton.addAction(new IncrementButtonAction(this));
@@ -57,6 +61,7 @@ public class BottomPanel extends DoaPanel {
 		add(incrementButton);
 		add(centerPiece);
 		show();
+		INSTANCE = this;
 	}
 
 	@Override

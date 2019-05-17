@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
@@ -23,6 +24,8 @@ import com.pmnm.risk.main.Main;
 public class Water extends DoaObject {
 
 	private static final long serialVersionUID = -3289865017771805571L;
+	
+	public static Water INSTANCE;
 
 	private static final int SEG_X = 16;
 	private static final int SEG_Y = 9;
@@ -44,6 +47,9 @@ public class Water extends DoaObject {
 
 	Water() {
 		super(0f, 0f, -2);
+		if (INSTANCE != null) {
+			DoaHandler.remove(INSTANCE);
+		}
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1), y * Main.WINDOW_HEIGHT / (SEG_Y - 1));
@@ -86,6 +92,7 @@ public class Water extends DoaObject {
 				bigFallRenderer.drawImage(fallSpr, i, j, texW, texH, null);
 			}
 		}
+		INSTANCE = this;
 	}
 
 	@Override

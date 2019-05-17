@@ -141,5 +141,9 @@
 		<key>RANDOM_PLACEMENT</key>
 		<value>random placement</value>
 	</pair>
+	<pair>
+		<key>BACK_M</key>
+		<value>back to main menu</value>
+	</pair>
 	
 </en>

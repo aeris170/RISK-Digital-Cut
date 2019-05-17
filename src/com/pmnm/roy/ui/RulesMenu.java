@@ -39,43 +39,43 @@ public class RulesMenu extends DoaPanel {
 			three = false;
 			four = false;
 			five = false;
-			mm.show();
 		});
 		add(backButton);
+		setzOrder(1000);
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
 		g.drawImage(rulesList.get(0), 0, 0);
-		if(DoaKeyboard.ONE) {
+		if(DoaKeyboard.ONE && DoaKeyboard.NUM_1) {
 			one = true;
 			two = false;
 			three = false;
 			four = false;
 			five = false;
 		}
-		if(DoaKeyboard.TWO) {
+		if(DoaKeyboard.TWO && DoaKeyboard.NUM_2) {
 			one = false;
 			two = true;
 			three = false;
 			four = false;
 			five = false;
 		}
-		if(DoaKeyboard.THREE) {
+		if(DoaKeyboard.THREE && DoaKeyboard.NUM_3) {
 			one = false;
 			two = false;
 			three = true;
 			four = false;
 			five = false;
 		}
-		if(DoaKeyboard.FOUR) {
+		if(DoaKeyboard.FOUR && DoaKeyboard.NUM_4) {
 			one = false;
 			two = false;
 			three = false;
 			four = true;
 			five = false;
 		}
-		if(DoaKeyboard.FIVE) {
+		if(DoaKeyboard.FIVE && DoaKeyboard.NUM_5) {
 			one = false;
 			two = false;
 			three = false;

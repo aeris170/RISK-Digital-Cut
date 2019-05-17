@@ -20,6 +20,8 @@ import com.pmnm.roy.ui.UIInit;
 public class TopPanel extends DoaPanel {
 
 	private static final long serialVersionUID = -1014037154232695775L;
+	
+	public static TopPanel INSTANCE;
 
 	private DoaTaskGuard threeSecondGuard = new DoaTaskGuard();
 	private float alpha;
@@ -28,8 +30,12 @@ public class TopPanel extends DoaPanel {
 
 	public TopPanel() {
 		super(0f, 0f, 0, 0);
+		if (INSTANCE != null) {
+			DoaHandler.remove(INSTANCE);
+		}
 		DoaHandler.instantiate(SeasonEffect.class);
 		show();
+		INSTANCE = this;
 	}
 
 	@Override

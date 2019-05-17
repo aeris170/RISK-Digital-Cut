@@ -85,7 +85,7 @@ public class MultiPlayerMenuHost extends DoaPanel {
 					.setType(MessageType.COMPRESSED).build());
 			
 		});
-		backButton.addAction(() -> {
+	/*	backButton.addAction(() -> {
 			hide();
 			DoaHandler.remove(this);
 			TypeComboButton.COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
@@ -99,7 +99,8 @@ public class MultiPlayerMenuHost extends DoaPanel {
 			DoaHandler.remove(prevMapButton);
 			DoaHandler.remove(nextMapButton);
 			ponm.show();
-		});
+			SocServer.stopServer();
+		});*/
 		randomPlacementButton.addAction(() -> {
 
 		});
@@ -118,7 +119,7 @@ public class MultiPlayerMenuHost extends DoaPanel {
 			}
 		});
 		add(playButton);
-		add(backButton);
+		//add(backButton);
 		add(randomPlacementButton);
 		add(prevMapButton);
 		add(nextMapButton);
