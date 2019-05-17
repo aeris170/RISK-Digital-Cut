@@ -71,6 +71,9 @@ public class GameManager extends DoaObject {
 	public String currentMapName;
 
 	public float timer = 0;
+	
+	public boolean isPaused = true;
+	public boolean isSinglePlayer = true;
 
 	public GameManager(String mapName, List<Integer> playerTypes, List<String> playerNames, List<Color> playerColors,
 			List<String> aiNames, List<Color> aiColors, List<Integer> difficulties, boolean randomPlacement) {
@@ -144,39 +147,42 @@ public class GameManager extends DoaObject {
 
 	@Override
 	public void tick() {
-		if (DoaMouse.MB1) {
-			clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked())
-					.findFirst().orElse(null);
-		}
-		if (!isManualPlacementDone) {
-			if (startingTroops.values().stream().allMatch(v -> v <= 0)) {
-				isManualPlacementDone = true;
+		if(!isPaused) {
+			if (DoaMouse.MB1) {
+				clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked())
+						.findFirst().orElse(null);
+			}
+			if (!isManualPlacementDone) {
+				if (startingTroops.values().stream().allMatch(v -> v <= 0)) {
+					isManualPlacementDone = true;
+					reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
+					BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
+				}
+			}
+			timer += 0.1f;
+			if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
+				currentPhase = TurnPhase.DRAFT;
+				if (cardWillBeGiven) {
+					// currentPlayer.addCard(Card.getRandomCard());
+					cardWillBeGiven = false;
+				}
+				currentPlayer.endTurn();
+				++turnCount;
+				currentPlayer = players.get(turnCount % players.size());
+				currentPlayer.turn();
 				reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
+				markReinforcingProvince(null);
+				markReinforcedProvince(null);
 				BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
+				BottomPanel.nextPhaseButton.disable();
+				if (currentPlayer.isLocalPlayer()) {
+					cardPanel.updateCards();
+					// cardPanel.show();
+				}
+				timer = 0;
 			}
 		}
-		timer += 0.1f;
-		if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
-			currentPhase = TurnPhase.DRAFT;
-			if (cardWillBeGiven) {
-				// currentPlayer.addCard(Card.getRandomCard());
-				cardWillBeGiven = false;
-			}
-			currentPlayer.endTurn();
-			++turnCount;
-			currentPlayer = players.get(turnCount % players.size());
-			currentPlayer.turn();
-			reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
-			markReinforcingProvince(null);
-			markReinforcedProvince(null);
-			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
-			BottomPanel.nextPhaseButton.disable();
-			if (currentPlayer.isLocalPlayer()) {
-				cardPanel.updateCards();
-				// cardPanel.show();
-			}
-			timer = 0;
-		}
+		
 	}
 
 	@Override

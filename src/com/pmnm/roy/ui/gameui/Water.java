@@ -16,6 +16,7 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.doa.utils.DoaUtils;
+import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 
 public class Water extends DoaObject {
@@ -97,12 +98,14 @@ public class Water extends DoaObject {
 
 	@Override
 	public void tick() {
-		for (int y = 0; y < points[0].length; y++) {
-			for (int x = 0; x < points.length; x++) {
-				Point2D p = points[x][y];
-				double px = x * Main.WINDOW_WIDTH / (SEG_X - 1) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000573);
-				double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000291);
-				p.setLocation(px, py);
+		if(!GameManager.INSTANCE.isPaused) {
+			for (int y = 0; y < points[0].length; y++) {
+				for (int x = 0; x < points.length; x++) {
+					Point2D p = points[x][y];
+					double px = x * Main.WINDOW_WIDTH / (SEG_X - 1) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000573);
+					double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000291);
+					p.setLocation(px, py);
+				}
 			}
 		}
 	}
