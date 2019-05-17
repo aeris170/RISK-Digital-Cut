@@ -8,11 +8,14 @@ import com.doa.engine.DoaHandler;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.map.MapLoader;
 import com.pmnm.risk.map.board.GameBoard;
+import com.pmnm.roy.ui.EscPopup;
+import com.pmnm.roy.ui.UIInit;
 
 public final class RiskGameScreenUI {
 
 	public static DicePanel DicePanel;
 	public static CardPanel CardPanel;
+	public static EscPopup esc;
 
 	private RiskGameScreenUI() {
 	}
@@ -23,6 +26,7 @@ public final class RiskGameScreenUI {
 		MapLoader.readMapData(new File(mapName));
 		DicePanel = DoaHandler.instantiate(DicePanel.class);
 		CardPanel = DoaHandler.instantiate(CardPanel.class);
+		esc = DoaHandler.instantiate(EscPopup.class, UIInit.getMM(), UIInit.getSM(), UIInit.getRM(), UIInit.getLM(), UIInit.getEP(), UIInit.getPOM());
 		DoaHandler.instantiate(TopPanel.class);
 		DoaHandler.instantiate(BottomPanel.class);
 		DoaHandler.instantiate(GameManager.class, mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties);

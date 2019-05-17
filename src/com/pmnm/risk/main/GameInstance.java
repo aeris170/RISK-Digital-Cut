@@ -52,69 +52,25 @@ public final class GameInstance implements Serializable {
 		ALL_PROVINCE_SYMBOLS = ProvinceHitArea.ALL_PROVINCE_SYMBOLS;
 	}
 
-	public static void saveGame() throws IOException {
-		GameInstance gi = new GameInstance();
-		String mapName = GameManager.INSTANCE.currentMapName;
-		String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName
-				+ "\\";
-		File f = new File(dir);
-		f.mkdirs();
-		try (FileOutputStream file = new FileOutputStream(
-				dir + "save_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
-			try (ObjectOutputStream out = new ObjectOutputStream(file)) {
-				out.writeObject(gi);
-				System.out.println("Object has been serialized");
+	public static void saveGame() {
+		new Thread(() -> {// save Task
+			GameInstance gi = new GameInstance();
+			String mapName = GameManager.INSTANCE.currentMapName;
+			String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName
+					+ "\\";
+			File f = new File(dir);
+			f.mkdirs();
+			try (FileOutputStream file = new FileOutputStream(dir + "save_"
+					+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName + ".sav")) {
+				try (ObjectOutputStream out = new ObjectOutputStream(file)) {
+					out.writeObject(gi);
+					System.out.println("Object has been serialized");
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
-		}
-	}
+		}).start();
 
-	public static void gameInstanceCreation() throws IOException {
-		GameInstance gi = new GameInstance();
-		// String mapName = GameManager.INSTANCE.currentMapName;
-		// String dir = System.getProperty("user.home") + "\\Documents\\My
-		// Games\\RiskDigitalCut\\Saves\\" + mapName + "\\";
-		// File f = new File(dir);
-		// f.mkdirs();
-		// try (FileOutputStream file = new FileOutputStream(dir + "save_" + new
-		// SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + "_" + mapName +
-		// ".sav")) {
-		// try (ObjectOutputStream out = new ObjectOutputStream(file)) {
-		// out.writeObject(gi);
-		compress(gi);
-		System.out.println("Object has been compressed");
-		// }
-
-	}
-
-	public static void compress(GameInstance t) throws IOException {
-		FileOutputStream fos = null;
-		GZIPOutputStream gos = null;
-		ObjectOutputStream oos = null;
-
-		try {
-			fos = new FileOutputStream("clientFiles\\currentGame.gz");
-			gos = new GZIPOutputStream(fos);
-			oos = new ObjectOutputStream(gos);
-			oos.writeObject(t);
-			oos.writeObject(t);
-			oos.flush();
-			System.out.println("Done... Objects are compressed and stored");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if (oos != null)
-					oos.close();
-				if (fos != null)
-					fos.close();
-			} catch (Exception ex) {
-
-			}
-		}
 	}
 
 	public static void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -196,51 +152,44 @@ public final class GameInstance implements Serializable {
 				+ ALL_PROVINCE_SYMBOLS + "]";
 	}
 
-	
-	/*
+	@Override
+	public boolean equals(Object o) {
+		// return super.equals(o);
+		if (o == this)
+			return true;
+		if (!(o instanceof GameInstance))
+			return false;
+		GameInstance sI = (GameInstance) o;
+		System.out.println("We will look for game instance equality");
 
+		System.out.println(sI.continents.equals(this.continents) && sI.provinces.equals(this.provinces)
+				&& sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
+				&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER)
+				&& sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES));
 
-	List<ProvinceHitArea> ALL_PROVINCE_HIT_AREAS;
-	List<ProvinceSymbol> ALL_PROVINCE_SYMBOLS; 
-	 */
-	
-	
-	
-	
-	  @Override 
-	  public boolean equals(Object o) {
-		  //return super.equals(o);
-	        if (o == this)
-	            return true;
-	        if (!(o instanceof GameInstance))
-	            return false;
-	        GameInstance sI = (GameInstance) o;	
-	        System.out.println("We will look for game instance equality");
-	        
-	        System.out.println(sI.continents.equals(this.continents)  && sI.provinces.equals(this.provinces)  && sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
-	        		&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER) && sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES));
-	       
-	        return sI.continents.equals(this.continents)  && sI.provinces.equals(this.provinces)  && sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
-	        		&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER) && sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES); 
-	    }
-	  
-	  @Override
-		public int hashCode() {
-			//return super.hashCode();
-			int hash = 17;
-			// Suitable nullity checks etc, of course :)
-			if (this.continents != null)
-				hash = hash * 23 + continents.hashCode();
-			if (this.provinces != null)
-				hash = hash * 23 + provinces.hashCode();
-			if (this.UNDISTRIBUTED_CARDS != null)
-				hash = hash * 23 + UNDISTRIBUTED_CARDS.hashCode();
-			if (this.PROVINCE_CARDS != null)
-				hash = hash * 23 + PROVINCE_CARDS.hashCode();
-			if (this.NAME_PLAYER != null)
-				hash = hash * 23 + NAME_PLAYER.hashCode();
-			if (this.UNCLAIMED_PROVINCES != null)
-				hash = hash * 23 + UNCLAIMED_PROVINCES.hashCode();
-			return hash;
-		}
+		return sI.continents.equals(this.continents) && sI.provinces.equals(this.provinces)
+				&& sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
+				&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER)
+				&& sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES);
+	}
+
+	@Override
+	public int hashCode() {
+		// return super.hashCode();
+		int hash = 17;
+		// Suitable nullity checks etc, of course :)
+		if (this.continents != null)
+			hash = hash * 23 + continents.hashCode();
+		if (this.provinces != null)
+			hash = hash * 23 + provinces.hashCode();
+		if (this.UNDISTRIBUTED_CARDS != null)
+			hash = hash * 23 + UNDISTRIBUTED_CARDS.hashCode();
+		if (this.PROVINCE_CARDS != null)
+			hash = hash * 23 + PROVINCE_CARDS.hashCode();
+		if (this.NAME_PLAYER != null)
+			hash = hash * 23 + NAME_PLAYER.hashCode();
+		if (this.UNCLAIMED_PROVINCES != null)
+			hash = hash * 23 + UNCLAIMED_PROVINCES.hashCode();
+		return hash;
+	}
 }

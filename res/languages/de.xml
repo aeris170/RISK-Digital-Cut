@@ -125,6 +125,10 @@
 		<value>spiel laden</value>
 	</pair>
 	<pair>
+	<key>SAVE_GAME</key>
+		<value>spiel speichern</value>
+	</pair>
+	<pair>
 		<key>HOST_GAME</key>
 		<value>ein Spiel hosten</value>
 	</pair>

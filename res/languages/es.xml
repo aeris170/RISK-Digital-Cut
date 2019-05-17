@@ -6,72 +6,136 @@
 <!ELEMENT value (#PCDATA)>
 ]>
 <es>
-	<pair>
-		<key>PLAY_OFFLINE</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>PLAY_ONLINE</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>SETTINGS</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>RULES</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>EXIT</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>MASTER</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>MUSIC</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>SFX</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>OK</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>BACK</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>NEXT</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>PLAYER</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>READY</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>PLAY</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>YES</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>NO</key>
-		<value></value>
-	</pair>
-	<pair>
-		<key>ARE_YOU_SURE_WANT_TO_EXIT</key>
-		<value></value>
-	</pair>
+  <pair>
+    <key>PLAY_OFFLINE</key>
+    <value>jugar desconectando</value>
+  </pair>
+  <pair>
+    <key>PLAY_ONLINE</key>
+    <value>jugar en linea</value>
+  </pair>
+  <pair>
+    <key>SETTINGS</key>
+    <value>configuracion</value>
+  </pair>
+  <pair>
+    <key>RULES</key>
+    <value>reglas</value>
+  </pair>
+  <pair>
+    <key>EXIT</key>
+    <value>salir de la partida</value>
+  </pair>
+  <pair>
+    <key>MASTER</key>
+    <value>el jefe</value>
+  </pair>
+  <pair>
+    <key>MUSIC</key>
+    <value>music</value>
+  </pair>
+  <pair>
+    <key>SFX</key>
+    <value>SFX</value>
+  </pair>
+  <pair>
+    <key>OK</key>
+    <value>aplicar</value>
+  </pair>
+  <pair>
+    <key>BACK</key>
+    <value>atras</value>
+  </pair>
+  <pair>
+    <key>NEXT</key>
+    <value>siguiente</value>
+  </pair>
+  <pair>
+    <key>PLAYER</key>
+    <value>jugador</value>
+  </pair>
+  <pair>
+    <key>READY</key>
+    <value>preparado</value>
+  </pair>
+  <pair>
+    <key>PLAY</key>
+    <value>jugar</value>
+  </pair>
+  <pair>
+    <key>YES</key>
+    <value>si</value>
+  </pair>
+  <pair>
+    <key>NO</key>
+    <value>no</value>
+  </pair>
+  <pair>
+    <key>Estas seguro para salir del partido</key>
+    <value>are you sure you want to exit?</value>
+  </pair>
+  <pair>
+    <key>OPEN</key>
+    <value>abrir</value>
+  </pair>
+  <pair>
+    <key>CLOSED</key>
+    <value>cerrar</value>
+  </pair>
+  <pair>
+    <key>HUMAN</key>
+    <value>humano</value>
+  </pair>
+  <pair>
+    <key>COMPUTER</key>
+    <value>computador</value>
+  </pair>
+  <pair>
+    <key>PASSIVE</key>
+    <value>pasivo</value>
+  </pair>
+  <pair>
+    <key>EASY</key>
+    <value>facil</value>
+  </pair>
+  <pair>
+    <key>MEDIUM</key>
+    <value>medio</value>
+  </pair>
+  <pair>
+    <key>HARD</key>
+    <value>dificil</value>
+  </pair>
+  <pair>
+    <key>INSANE</key>
+    <value>insano</value>
+  </pair>
+  <pair>
+    <key>CHEATER</key>
+    <value>tramposo</value>
+  </pair>
+
+
+
+  <pair>
+    <key>NEW_GAME</key>
+    <value>juego nuevo</value>
+  </pair>
+  <pair>
+    <key>LOAD_GAME</key>
+    <value>carga juego</value>
+  </pair>
+  <pair>
+    <key>SAVE_GAME</key>
+    <value>guardar partida</value>
+  </pair>
+  <pair>
+    <key>HOST_GAME</key>
+    <value>crear juego</value>
+  </pair>
+  <pair>
+    <key>JOIN_GAME</key>
+    <value>entrar juego</value>
+  </pair>
+
 </es>
