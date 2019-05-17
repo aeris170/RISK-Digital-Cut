@@ -30,10 +30,10 @@ public class Camera extends DoaObject {
 
 	private static Camera _this = null;
 	static int value = 0;
-	
+
 	GameInstance firstGameInstance;
 	GameInstance secondOnee;
-	
+
 	private DoaVectorF topLeftBound;
 	private DoaVectorF bottomRightBound;
 	private PrintWriter writer;
@@ -118,22 +118,18 @@ public class Camera extends DoaObject {
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.S) {
+			GameInstance.saveCurrentState();
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			System.out.println("SAVED!");
-			GameInstance.saveGame();
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.L) {
-			
-			secondOnee = new GameInstance();
-			
-			if(secondOnee.equals(firstGameInstance)) {
-				System.out.println("They are equal");
-			}else {
-				System.out.println("They are not equal");
+			try {
+				GameInstance.loadLastStateAndCompare();
+			} catch (ClassNotFoundException | IOException ex) {
+				ex.printStackTrace();
 			}
-			
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			System.out.println("LOADED!");

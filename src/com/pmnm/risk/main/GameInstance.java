@@ -9,7 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
@@ -26,6 +28,8 @@ import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 public final class GameInstance implements Serializable {
 
 	private static final long serialVersionUID = 3374349513952165496L;
+
+	public static GameInstance currentState;
 
 	List<Province> provinces;
 	Map<String, Continent> continents;
@@ -70,7 +74,6 @@ public final class GameInstance implements Serializable {
 				ex.printStackTrace();
 			}
 		}).start();
-
 	}
 
 	public static void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -163,14 +166,10 @@ public final class GameInstance implements Serializable {
 		System.out.println("We will look for game instance equality");
 
 		System.out.println(sI.continents.equals(this.continents) && sI.provinces.equals(this.provinces)
-				&& sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
-				&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER)
-				&& sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES));
+				&& sI.NAME_PLAYER.equals(this.NAME_PLAYER) && sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES));
 
 		return sI.continents.equals(this.continents) && sI.provinces.equals(this.provinces)
-				&& sI.UNDISTRIBUTED_CARDS.equals(this.UNDISTRIBUTED_CARDS)
-				&& sI.PROVINCE_CARDS.equals(this.PROVINCE_CARDS) && sI.NAME_PLAYER.equals(this.NAME_PLAYER)
-				&& sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES);
+				&& sI.NAME_PLAYER.equals(this.NAME_PLAYER) && sI.UNCLAIMED_PROVINCES.equals(this.UNCLAIMED_PROVINCES);
 	}
 
 	@Override
@@ -191,5 +190,38 @@ public final class GameInstance implements Serializable {
 		if (this.UNCLAIMED_PROVINCES != null)
 			hash = hash * 23 + UNCLAIMED_PROVINCES.hashCode();
 		return hash;
+	}
+
+	public static void loadLastStateAndCompare() throws FileNotFoundException, IOException, ClassNotFoundException {
+		String mapName = GameManager.INSTANCE.currentMapName;
+		String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName
+				+ "\\.__last.sav";
+		try (FileInputStream file = new FileInputStream(dir)) {
+			try (ObjectInputStream in = new ObjectInputStream(file)) {
+				GameInstance loadedGame = (GameInstance) in.readObject();
+				currentState = new GameInstance();
+				System.out.println(currentState.equals(loadedGame));
+			}
+		}
+	}
+
+	public static void saveCurrentState() {
+		new Thread(() -> {// save Task
+			GameInstance gi = new GameInstance();
+			currentState = gi;
+			String mapName = GameManager.INSTANCE.currentMapName;
+			String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName
+					+ "\\";
+			File f = new File(dir);
+			f.mkdirs();
+			try (FileOutputStream file = new FileOutputStream(dir + ".__last.sav")) {
+				try (ObjectOutputStream out = new ObjectOutputStream(file)) {
+					out.writeObject(gi);
+					System.out.println("Object has been serialized");
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}).start();
 	}
 }

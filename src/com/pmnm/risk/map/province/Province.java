@@ -140,8 +140,8 @@ public class Province implements Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		System.out.println("oldu");
-		return o != null && o == this && ((Province) o).troops == this.troops && ((Province) o).owner == this.owner;
+		return this.name.equals(((Province) o).name) && ((Province) o).troops == this.troops
+				&& ((owner != null && ((Province) o).owner != null) ? ((Province) o).owner.equals(this.owner) : true);
 	}
 
 	@Override

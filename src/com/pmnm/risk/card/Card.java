@@ -66,7 +66,7 @@ public class Card implements Serializable {
 		int maxX = Integer.MIN_VALUE;
 		int maxY = Integer.MIN_VALUE;
 		List<GeneralPath> meshes = province.getProvinceHitArea().getMesh();
-		
+
 		for (GeneralPath mesh : meshes) {
 			double[][] vertices = ProvinceHitArea.getPoints(mesh);
 			for (int i = 0; i < vertices.length; i++) {
@@ -105,11 +105,6 @@ public class Card implements Serializable {
 				(int) (provinceTex.getHeight() * r), Image.SCALE_SMOOTH));
 	}
 
-	/**
-	 * Gets a random, undistributed card.
-	 *
-	 * @return a random card
-	 */
 	public static Card getRandomCard() {
 		return UNDISTRIBUTED_CARDS.remove(ThreadLocalRandom.current().nextInt(UNDISTRIBUTED_CARDS.size() - 1));
 	}
@@ -121,41 +116,5 @@ public class Card implements Serializable {
 	@Override
 	public String toString() {
 		return "Card [province=" + province.getName() + ", type=" + type + "]";
-	}
-	
-	
-
-	@Override
-	public boolean equals(Object o) {
-		//return super.equals(o);
-		if (!(o instanceof Card))
-			return false;
-		Card cardO = (Card) o;
-		if (cardO.province != null && this.province != null) {
-			if(!cardO.province.equals(this.province)){
-				return false;
-			}
-		}else if(cardO.province != null || this.province != null){
-			return false;
-		}
-		if(cardO.type != null && this.type != null) {
-			if(!(cardO.type == this.type)){
-				return false;
-			}
-		}else if(cardO.type != null || this.type != null){
-			return false;
-		}
-		return true;
-	}
-	@Override
-	public int hashCode() {
-		//return super.hashCode();
-		int hash = 17;
-		// Suitable nullity checks etc, of course :)
-		if(province!= null)
-			hash = hash * 23 + province.hashCode();
-		if(type!= null)
-			hash = hash * 23 + type.hashCode();
-		return hash;
 	}
 }

@@ -82,41 +82,22 @@ public class Continent implements Serializable {
 		NAME_CONTINENT.forEach((s, c) -> System.out.println(c.toString()));
 	}
 
-	
 	@Override
 	public boolean equals(Object o) {
-		//return super.equals(o);
+		// return super.equals(o);
 		if (!(o instanceof Continent))
 			return false;
 		Continent contO = (Continent) o;
-		if(contO.provinces != null && this.provinces != null) {
-			if(!contO.provinces.equals(this.provinces)) {
-				return false;
-			}
-		}
-		if(contO.color != null && this.color != null) {
-			if(!contO.color.equals(this.color)) {
-				return false;
-			}
-		}
-		return contO.name.equals(this.name)  && contO.captureBonus == this.captureBonus
+		return contO.name.equals(this.name) && contO.captureBonus == this.captureBonus
 				&& contO.abbreviation.equals(this.abbreviation);
 	}
-	
-	 @Override
-		public int hashCode() {
-			//return super.hashCode();
-			int hash = 17;
-			// Suitable nullity checks etc, of course :)
-			if(this.provinces!= null)
-				hash = hash * 23 + provinces.hashCode();
-			if(this.color!= null)
-				hash = hash * 23 + color.hashCode();
-			if(this.name!= null)
-				hash = hash * 23 + name.hashCode();
-			hash = 23 * hash + captureBonus;
-			if(this.abbreviation!= null)
-				hash = hash * 23 + abbreviation.hashCode();
-			return hash; 
-		}
+
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = hash * 23 + name.hashCode();
+		hash = hash * 23 + abbreviation.hashCode();
+		hash = 23 * hash + captureBonus;
+		return hash;
+	}
 }
