@@ -110,8 +110,10 @@ public class Camera extends DoaObject {
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.V) {
 			
+			/* How to run Server */
 			String[] args =  new String[10];
 			SocServer.main(args);
+			//
 			
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);

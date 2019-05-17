@@ -45,6 +45,12 @@ public class SocServer implements Runnable {
 		new Thread(new SocServer(capacityOfServer)).start();
 		System.out.println("Socket server started");
 	}
+	
+	
+	public static void startServer(int serverCapacity) {
+		new Thread(new SocServer(serverCapacity)).start();
+		System.out.println("Socket server started");
+	}
 
 	@Override
 	public void run() {
@@ -54,7 +60,6 @@ public class SocServer implements Runnable {
 			connections.add(new Client("HOST", "localhost").getSocket());
 			waitForConnection();
 			whileChatting();
-
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

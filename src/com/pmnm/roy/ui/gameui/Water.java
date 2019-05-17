@@ -44,15 +44,6 @@ public class Water extends DoaObject {
 
 	Water() {
 		super(0f, 0f, -2);
-		
-		new Thread(()-> {
-			int i = 0;
-			while(true) {
-			DoaUtils.sleepFor(3000);
-				Season.currentSeason = Season.values()[i++ % Season.values().length];
-			}
-		});//.start();
-		
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1), y * Main.WINDOW_HEIGHT / (SEG_Y - 1));
@@ -99,7 +90,7 @@ public class Water extends DoaObject {
 
 	@Override
 	public void tick() {
-		if(!GameManager.INSTANCE.isPaused) {
+		if(!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
 			for (int y = 0; y < points[0].length; y++) {
 				for (int x = 0; x < points.length; x++) {
 					Point2D p = points[x][y];

@@ -20,6 +20,9 @@ import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.map.province.ProvinceHitArea.ProvinceSymbol;
+import com.pmnm.risk.network.Client;
+import com.pmnm.risk.network.message.MessageBuilder;
+import com.pmnm.risk.network.message.MessageType;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 public final class GameInstance implements Serializable {
@@ -197,7 +200,11 @@ public final class GameInstance implements Serializable {
 			try (ObjectInputStream in = new ObjectInputStream(file)) {
 				GameInstance loadedGame = (GameInstance) in.readObject();
 				currentState = new GameInstance();
-				System.out.println(currentState.equals(loadedGame));
+				if(currentState.equals(loadedGame)) {
+					Client.getInstance().sendToServer(new MessageBuilder().setSender("Client").setData(loadedGame)
+					.setType(MessageType.COMPRESSED).build());
+					currentState = loadedGame;
+				}
 			}
 		}
 	}

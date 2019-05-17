@@ -20,47 +20,50 @@ public class AIPlayer extends Player {
 
 	@Override
 	public void tick() {
-		GameManager gm = GameManager.INSTANCE;
-		if (isInTurn) {
-			if (!gm.isManualPlacementDone) {
-				if (!gm.areAllProvincesClaimed()) {
-					if (difficulty <= 0 || difficulty == 1) {
-						Province provinceToClaim = Province.getRandomUnclaimedProvince();
-						gm.claimProvince(provinceToClaim);
-						isInTurn = false;
-					} else if (difficulty == 2) {
-						if (getPlayerProvinces(this).isEmpty()) {
+		if (!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
+			GameManager gm = GameManager.INSTANCE;
+			if (isInTurn) {
+				if (!gm.isManualPlacementDone) {
+					if (!gm.areAllProvincesClaimed()) {
+						if (difficulty <= 0 || difficulty == 1) {
 							Province provinceToClaim = Province.getRandomUnclaimedProvince();
 							gm.claimProvince(provinceToClaim);
-							// claimedProvince = provinceToClaim;
 							isInTurn = false;
-						} else {
-							// TODO - Simge - medium ai i
+						} else if (difficulty == 2) {
+							if (getPlayerProvinces(this).isEmpty()) {
+								Province provinceToClaim = Province.getRandomUnclaimedProvince();
+								gm.claimProvince(provinceToClaim);
+								// claimedProvince = provinceToClaim;
+								isInTurn = false;
+							} else {
+								// TODO - Simge - medium ai i
+							}
+						}
+					} else {
+						if (difficulty <= 2) {
+							List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
+									.collect(Collectors.toList());
+							Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
+							gm.setDraftReinforceProvince(p);
+							gm.draftReinforce(1);
+							isInTurn = false;
 						}
 					}
-				} else {
-					if (difficulty <= 2) {
+				} else if (gm.currentPhase == TurnPhase.DRAFT) {
+					if (difficulty <= 0 || difficulty == 1) {
 						List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
 								.collect(Collectors.toList());
 						Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
 						gm.setDraftReinforceProvince(p);
 						gm.draftReinforce(1);
-						isInTurn = false;
 					}
+				} else if (gm.currentPhase == TurnPhase.ATTACK) {
+					attack();
+				} else if (gm.currentPhase == TurnPhase.REINFORCE) {
+					reinforce();
 				}
-			} else if (gm.currentPhase == TurnPhase.DRAFT) {
-				if (difficulty <= 0 || difficulty == 1) {
-					List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
-							.collect(Collectors.toList());
-					Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
-					gm.setDraftReinforceProvince(p);
-					gm.draftReinforce(1);
-				}
-			} else if (gm.currentPhase == TurnPhase.ATTACK) {
-				attack();
-			} else if (gm.currentPhase == TurnPhase.REINFORCE) {
-				reinforce();
 			}
+
 		}
 	}
 
