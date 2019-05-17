@@ -72,7 +72,7 @@ public class GameManager extends DoaObject {
 
 	public float timer = 0;
 	
-	public boolean isPaused = true;
+	public boolean isPaused = false;
 	public boolean isSinglePlayer = true;
 
 	public GameManager(String mapName, List<Integer> playerTypes, List<String> playerNames, List<Color> playerColors,

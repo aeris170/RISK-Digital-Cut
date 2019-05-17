@@ -51,7 +51,7 @@ public final class EscPopup extends DoaPanel {
 			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "EXIT",
 			UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
 
-	private boolean hidden = false;
+	private boolean hidden = true;
 	DoaTaskGuard escGuard = new DoaTaskGuard();
 
 	public EscPopup(MainMenu mm, SettingsMenu sm, RulesMenu rm, LoadMenu lm, ExitPopup ep, PlayOfflineMenu pom) {
@@ -70,7 +70,7 @@ public final class EscPopup extends DoaPanel {
 		add(rulesButtonPop);
 		add(loadButtonPop);
 		add(saveButton);
-		show();
+		//show();
 		new Thread(() -> {
 			while (true) {
 				if (DoaKeyboard.ESCAPE) {
@@ -81,8 +81,9 @@ public final class EscPopup extends DoaPanel {
 						show();
 					}
 					GameManager.INSTANCE.isPaused = !hidden;
+					DoaUtils.sleepFor(190);
 				}
-				DoaUtils.sleepFor(200);
+				DoaUtils.sleepFor(10);
 			}
 		}).start();
 	}
