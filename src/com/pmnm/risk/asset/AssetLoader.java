@@ -9,8 +9,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.sound.DoaSoundClip;
+import com.doa.engine.sound.DoaSounds;
 
 public final class AssetLoader {
 
@@ -190,6 +196,12 @@ public final class AssetLoader {
 				DoaSprites.createSprite("cardButtonLocked", "/ui/gameScreenElements/cardScroll/buttonLocked.png");
 				DoaSprites.createSprite("cardButtonPressed", "/ui/gameScreenElements/cardScroll/buttonPressed.png");
 			}
+			
+			{// MUSIC
+				DoaSounds.createSoundClip("track1", "/sounds/music/Ritual.wav");
+				DoaSounds.get("track1").loop(Clip.LOOP_CONTINUOUSLY);;
+				//DoaSounds.setGlobalVolume(1);
+			}
 
 			List<BufferedImage> riskLogoKeyFrames = new ArrayList<>();
 			for (int i = 1; i <= 11; i++) {
@@ -206,7 +218,7 @@ public final class AssetLoader {
 					.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/BookAntiqua.ttf"))
 					.deriveFont(12f);
 			ge.registerFont(customFont2);
-		} catch (IOException | FontFormatException ex) {
+		} catch (IOException | FontFormatException | UnsupportedAudioFileException | LineUnavailableException ex) {
 			ex.printStackTrace();
 		}
 	}

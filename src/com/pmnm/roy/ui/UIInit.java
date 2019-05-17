@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.sound.DoaSounds;
 import com.doa.maths.DoaVectorF;
 import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.main.GameInstance;
