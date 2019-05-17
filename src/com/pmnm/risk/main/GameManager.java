@@ -159,7 +159,9 @@ public class GameManager extends DoaObject {
 					BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 				}
 			}
-			timer += 0.1f;
+			if (isManualPlacementDone) {
+				timer += 0.1f;
+			}
 			if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
 				currentPhase = TurnPhase.DRAFT;
 				if (cardWillBeGiven) {
