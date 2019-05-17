@@ -1,6 +1,9 @@
 package com.pmnm.roy.ui.actions;
 
+import java.io.IOException;
+
 import com.doa.ui.action.DoaUIAction;
+import com.pmnm.risk.main.GameInstance;
 import com.pmnm.roy.ui.ExitPopup;
 import com.pmnm.roy.ui.LoadMenu;
 import com.pmnm.roy.ui.MainMenu;
@@ -26,6 +29,11 @@ public class LoadButtonAction implements DoaUIAction {
 		mm.hide();
 		ep.hide();
 		pom.hide();
-		lm.show();
+		//lm.show();
+		try {
+			GameInstance.loadGame();
+		} catch (ClassNotFoundException | IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 }

@@ -80,7 +80,7 @@ public final class GameInstance implements Serializable {
 		// TODO take input from UI
 		String mapName = GameManager.INSTANCE.currentMapName;
 		String dir = System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\" + mapName
-				+ "\\save_20190514_125246_classic.sav";
+				+ "\\.__last.sav";
 
 		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> DoaHandler.remove(pha));
 		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();

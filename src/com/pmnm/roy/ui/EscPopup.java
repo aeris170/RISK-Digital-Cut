@@ -63,7 +63,7 @@ public final class EscPopup extends DoaPanel {
 		rulesButtonPop.addAction(new RulesButtonAction(mm, rm, ep));
 		loadButtonPop.addAction(new LoadButtonAction(mm, lm, ep, pom));
 		saveButton.addAction(() -> {
-			GameInstance.saveGame();
+			GameInstance.saveCurrentState();
 		});
 		add(exitButtonPop);
 		add(settingsButtonPop);

@@ -46,7 +46,7 @@ public class SocServer implements Runnable {
 
 	public static void stopServer() {
 		_this.closeCrap();
-		System.out.println("Socket server started");
+		System.out.println("server ended");
 	}
 
 	@Override

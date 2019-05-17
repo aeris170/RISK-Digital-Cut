@@ -7,6 +7,7 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.main.Main;
+import com.pmnm.risk.network.Client;
 import com.pmnm.risk.network.SocServer;
 
 public class PlayOnlineMenu extends DoaPanel {
@@ -38,9 +39,14 @@ public class PlayOnlineMenu extends DoaPanel {
 			SocServer.startServer(2);
 		});
 
+		joinGameButton.addAction(() ->{
+			Client c = new Client("Host", "139.179.124.195");
+		});
+
 		backButton.addAction(() -> {
 			hide();
 			mm.show();
+			SocServer.stopServer();
 		});
 
 		add(hostGameButton);
