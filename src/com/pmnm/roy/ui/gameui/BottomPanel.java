@@ -61,6 +61,17 @@ public class BottomPanel extends DoaPanel {
 
 	@Override
 	public void tick() {
+		if(GameManager.INSTANCE.isPaused) {
+			nextPhaseButton.disable();
+			decrementButton.disable();
+			incrementButton.disable();
+			centerPiece.disable();
+		} else {
+			nextPhaseButton.enable();
+			decrementButton.enable();
+			incrementButton.enable();
+			centerPiece.enable();
+		}
 		try {
 			centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
 		} catch (Exception ex) {

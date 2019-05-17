@@ -81,9 +81,15 @@ public class DifficultyComboButton extends DoaImageButton {
 				g.popComposite();
 				for (int i = 0; i < DIFFICULTIES.length; i++) {
 					s = Translator.getInstance().getTranslatedString(DIFFICULTIES[i]);
-					g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1),
-							position.x - Main.WINDOW_WIDTH * 0.070f,
-							position.y + Main.WINDOW_HEIGHT * 0.070f + (Main.WINDOW_HEIGHT * 0.028f * i));
+					if(i < 3) {
+						g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1),
+								position.x - Main.WINDOW_WIDTH * 0.070f,
+								position.y + Main.WINDOW_HEIGHT * 0.070f + (Main.WINDOW_HEIGHT * 0.028f * i));
+					}else {
+						g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1) + " (WIP)",
+								position.x - Main.WINDOW_WIDTH * 0.070f,
+								position.y + Main.WINDOW_HEIGHT * 0.070f + (Main.WINDOW_HEIGHT * 0.028f * i));
+					}
 				}
 			}
 		}

@@ -35,7 +35,7 @@ public class TypeComboButton extends DoaImageButton {
 		if (isSinglePlayer) {
 			OPTIONS = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
 		} else {
-			OPTIONS = new String[] { "OPEN", "COMPUTER", "HUMAN" };
+			OPTIONS = new String[] { "OPEN", "HUMAN", "COMPUTER" };
 		}
 		this.isSinglePlayer = isSinglePlayer;
 		COMBO_BUTTONS.add(this);

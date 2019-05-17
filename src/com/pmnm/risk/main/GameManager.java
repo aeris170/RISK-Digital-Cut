@@ -47,19 +47,19 @@ public class GameManager extends DoaObject {
 	public final Map<Player, Integer> startingTroops = new HashMap<>();
 	public int placementCounter = 0;
 
-	public static TurnPhase currentPhase = TurnPhase.DRAFT;
+	public TurnPhase currentPhase = TurnPhase.DRAFT;
 	public int reinforcementForThisTurn = 0;
-	public static Player currentPlayer;
+	public Player currentPlayer;
 	public int turnCount = 0;
 
 	public ProvinceHitArea moveAfterOccupySource = null;
 	public ProvinceHitArea moveAfterOccupyDestination = null;
 
-	public static ProvinceHitArea attackerProvinceHitArea = null;
-	public static ProvinceHitArea defenderProvinceHitArea = null;
-	public transient static DicePanel dicePanel = RiskGameScreenUI.DicePanel;
-	public transient static CardPanel cardPanel = RiskGameScreenUI.CardPanel;
-	public static boolean cardWillBeGiven = false;
+	public ProvinceHitArea attackerProvinceHitArea = null;
+	public ProvinceHitArea defenderProvinceHitArea = null;
+	public transient DicePanel dicePanel = RiskGameScreenUI.DicePanel;
+	public transient CardPanel cardPanel = RiskGameScreenUI.CardPanel;
+	public boolean cardWillBeGiven = false;
 
 	public ProvinceHitArea reinforcingProvince = null;
 	public ProvinceHitArea reinforcedProvince = null;
