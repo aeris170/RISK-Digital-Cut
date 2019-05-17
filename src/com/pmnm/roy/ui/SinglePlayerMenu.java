@@ -45,10 +45,8 @@ public class SinglePlayerMenu extends DoaPanel {
 	ColorComboButton[] ccba = new ColorComboButton[Globals.MAX_NUM_PLAYERS];
 	DifficultyComboButton[] dcba = new DifficultyComboButton[Globals.MAX_NUM_PLAYERS];
 
-	File folder = new File("res/maps/");
 	private int mapNumber = 0;
 	private String s;
-	BufferedImage bf;
 
 	int numberOfPlayers = 2;
 
