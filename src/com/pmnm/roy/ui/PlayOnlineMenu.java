@@ -7,6 +7,7 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.main.Main;
+import com.pmnm.risk.network.SocServer;
 
 public class PlayOnlineMenu extends DoaPanel {
 
@@ -34,11 +35,11 @@ public class PlayOnlineMenu extends DoaPanel {
 			hide();
 			mm.hide();
 			mpmh = DoaHandler.instantiate(MultiPlayerMenuHost.class, this);
+			SocServer.startServer(2);
 		});
 
 		backButton.addAction(() -> {
 			hide();
-			mpmh.hide();
 			mm.show();
 		});
 

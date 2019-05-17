@@ -15,6 +15,7 @@ import com.doa.ui.button.DoaImageButton;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Main;
+import com.pmnm.risk.network.SocServer;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
