@@ -1,9 +1,6 @@
 package com.pmnm.risk.network;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -24,29 +21,16 @@ public class SocServer implements Runnable {
 
 	private int serverCapacity; // Exactly how many people will connect.
 	private AtomicInteger threadsFinished = new AtomicInteger(0); // Used for synchronisation.
-
+	public static int controller = 1;
 	private ServerSocket server;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	public static Thread t;
-	public static int orderOfTheGame = 1;
-	public static  int playOrder[]; //declaration and instantiation  
-	public static int controlledGameUpdate = 0;
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+	FileServer newS;
 
 	// To create more streams, we use lists.
 	// Transients are useless, I put them to make warnings disappear.
 	private List<Socket> connections; // Socket is basically connection between two computers.
 	private List<ObjectOutputStream> outputs;
+	
 	private List<ObjectInputStream> inputs;
 	private List<Thread> streamThreads; // Socket listeners.
 	private List<Boolean> isThreadFinished; // Used to stop threads that finished listening.
@@ -62,41 +46,25 @@ public class SocServer implements Runnable {
 
 	public static void main(String[] args) {
 		// User will specify the server capacity.
-		SocServer serverProtocol = new SocServer(2);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		//t = new Thread(new SocServer(10));
-		//	t.start();
-		//
+		int capacityOfServer = 2;
+		t = new Thread(new SocServer(capacityOfServer));
+		t.start();
+		System.out.println("***********************");
+		
 	}
 	
-	
-	
 	public static void starterPack() {
-		t = new Thread(new SocServer(10));
+		t = new Thread(new SocServer(2));
 		t.start();
 	}
 	
 	public static void secondaryPack(int capacityOfServer) {
-		playOrder = new int[capacityOfServer];
 		new Thread(new SocServer(capacityOfServer)).start();
+		FileServer newS = new FileServer(1);
 		System.out.println("***********************");
-=======
-		new Thread(serverProtocol).start();
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
-		new Thread(serverProtocol).start();
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
-		new Thread(serverProtocol).start();
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
-		new Thread(serverProtocol).start();
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
+		newS.start();
+		System.out.println("***********************");
 	}
-	
 
 	// *************************************************************************
 	@Override
@@ -105,29 +73,24 @@ public class SocServer implements Runnable {
 		UPnP.openPortTCP(27015);
 		try (ServerSocket sv = new ServerSocket(27015, serverCapacity)) {
 			server = sv;
+	
 			// Auto connect to server.
 			// User specifies the name ("HOST")
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+			System.out.println("egegegegegeegegegegegegegegege");
+			// Wait for connections to be made.
 			
-			// Wait for connections to be made.
-			if(controller == 2) {
-			System.out.println("comes */*/**/*/*/");
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
 			connections.add(new Client("HOST", "localhost").getSocket());
-			// Wait for connections to be made.
+			
+			newS = new FileServer(serverCapacity);
+			newS.start();
+			System.out.println("***********************");
+			
+			
 			waitForConnection();
+			
 			// Loop forever to get chat and MP. Finish when everyone leaves.
 			whileChatting();
+			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -144,7 +107,6 @@ public class SocServer implements Runnable {
 			connections.add(connection);
 			setupStreams(connection);
 		}
-
 	}
 
 	// *************************************************************************
@@ -168,27 +130,30 @@ public class SocServer implements Runnable {
 				while (!isThreadFinished.get(ii)) {
 					try {
 						// Read message.
-						Message message = (Message) input.readObject();
+						Object ob =  input.readObject();
+						if(ob instanceof Message) {
+						Message message = (Message) ob;
 						if (message.getType() == MessageType.DISCONNECT) {
 							// If it is a disconnect message, shut the thread down.
 							isThreadFinished.set(ii, true);
 						} else if (message.getType() == MessageType.CHAT) {
 							// Else if it is a chat message, broadcast it to all clients.
 							broadcast(message);
-						} else if (message.getType() == MessageType.GAME_MOVE) {
-							//send file to the all clients
-							controlledGameUpdate++;
-							if(controlledGameUpdate == serverCapacity) {
-								System.out.println("Everone updated themself");
-							}
-							
-						}
-						else if(message.getType() == MessageType.I_AM_OK) {
-							
+						} else if (message.getType() == MessageType.COMPRESSED) {
+							System.out.println("We will receive new turn object");
+							//saveFile(clientSock);
+							//new Thread(new FileServer(27016)).start();
+							// if fileserver is saved the game then we will send this to the all users.
 						}
 						// Wait for 200 milliseconds before listening.
+						
+					}else {
+						System.out.println("File is sent to us");
+						System.out.println("We will receive new turn object");
+						
+					}
 						Thread.sleep(200);
-					} catch (ClassNotFoundException | IOException ex) {
+					}catch (ClassNotFoundException | IOException ex) {
 						ex.printStackTrace();
 					} catch (InterruptedException ex) {
 						Thread.currentThread().interrupt();
@@ -251,6 +216,8 @@ public class SocServer implements Runnable {
 	}
 	
 	
+	
+	
 
 	// *************************************************************************
 	private void broadcast(Message message) {
@@ -264,55 +231,7 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-	
-	public void broadcastFile(Object object) {
-		// Write the message to everyone.
-		outputs.forEach(output -> {
-			try {
-				output.writeObject(object);
-				output.flush();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		});		
-	}	
-	
-}
-	
-	
-/*	public static void sendFileFromServer() throws IOException {
-		//sendToServer(new MessageBuilder().setSender(clientName).setData(clientText.getText()).setType(MessageType.CHAT).build());
-		
-		InputStream in = connection.getInputStream();
-	    bos = new BufferedOutputStream(new FileOutputStream("clientFiles\\currentGame.gz"));
 
-	    int c = 0;
-	    byte[] buff=new byte[2048];
-
-	    while((c=in.read(buff))>0){ // read something from inputstream into buffer
-	        // if something was read 
-	        bos.write(buff, 0, c);
-	    }
-
-	    in.close();
-	  //  bos.close();
-	}
 	
-}*/
-=======
+	
 }
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
-}
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
-}
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
-=======
-}
->>>>>>> parent of 42bc782... Server capacity deteremination and Development for data transfer
