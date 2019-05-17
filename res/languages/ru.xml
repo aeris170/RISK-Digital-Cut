@@ -114,4 +114,23 @@
 		<key>CHEATER</key>
 		<value>хакер</value>
 	</pair>
+	
+	
+	
+	<pair>
+		<key>NEW_GAME</key>
+		<value>новая игра</value>
+	</pair>
+	<pair>
+		<key>LOAD_GAME</key>
+		<value>загрузить игру</value>
+	</pair>
+	<pair>
+		<key>HOST_GAME</key>
+		<value>провести игру</value>
+	</pair>
+	<pair>
+		<key>JOIN_GAME</key>
+		<value>присоединиться к игре</value>
+	</pair>
 </ru>

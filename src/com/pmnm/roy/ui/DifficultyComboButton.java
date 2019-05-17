@@ -19,7 +19,7 @@ public class DifficultyComboButton extends DoaImageButton {
 	public static final String[] DIFFICULTIES = new String[] { "PASSIVE", "EASY", "MEDIUM", "HARD", "INSANE",
 			"CHEATER" };
 
-	private static final List<DifficultyComboButton> DIFFICULTY_COMBO_BUTTONS = new ArrayList<>();
+	public static final List<DifficultyComboButton> DIFFICULTY_COMBO_BUTTONS = new ArrayList<>();
 
 	int index = 0;
 

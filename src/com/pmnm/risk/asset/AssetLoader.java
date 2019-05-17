@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaSprites;
 
 public final class AssetLoader {
-
+	
 	private AssetLoader() {}
 
 	public static void initializeAssets() {
@@ -48,6 +49,13 @@ public final class AssetLoader {
 				DoaSprites.createSprite("DropDownTexType", "/ui/playOffline/droppedComboBoxType.png");
 				DoaSprites.createSprite("DropDownColor", "/ui/playOffline/droppedComboBoxPlainColor.png");
 				DoaSprites.createSprite("DropDownColorType", "/ui/playOffline/droppedComboBoxColor.png");
+				
+				/*File[] f = new File("map/").listFiles();
+				List<BufferedImage> mapImages = new ArrayList<>();
+				for (int i = 1; i <= f.length; i++) {
+					mapImages.add(DoaSprites.createSprite("MAP" + i, f[i] + "/map.png"));
+				}*/
+				
 				{// MULTIPLAYER MENU
 					DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
 					DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");
@@ -68,6 +76,7 @@ public final class AssetLoader {
 			}
 			
 			{// RULES
+				DoaSprites.createSprite("pt0", "/ui/rules/turnpt0.png");
 				DoaSprites.createSprite("pt1", "/ui/rules/turnpt1.png");
 				DoaSprites.createSprite("pt2", "/ui/rules/turnpt2.png");
 				DoaSprites.createSprite("pt3", "/ui/rules/turnpt3.png");

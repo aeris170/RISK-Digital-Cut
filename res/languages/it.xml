@@ -114,4 +114,22 @@
 		<key>CHEATER</key>
 		<value>imbroglione</value>
 	</pair>
+	
+	
+	<pair>
+		<key>NEW_GAME</key>
+		<value>nuovo giocco</value>
+	</pair>
+	<pair>
+		<key>LOAD_GAME</key>
+		<value>caricare il gioco</value>
+	</pair>
+	<pair>
+		<key>HOST_GAME</key>
+		<value>creare un gioco</value>
+	</pair>
+	<pair>
+		<key>JOIN_GAME</key>
+		<value>unisciti a un gioco</value>
+	</pair>
 </it>
