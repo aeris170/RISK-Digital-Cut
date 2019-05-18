@@ -16,6 +16,8 @@ import com.pmnm.risk.network.message.MessageBuilder.Message;
 import com.pmnm.risk.network.message.MessageType;
 
 public class SocServer implements Runnable {
+	
+	private static SocServer _this;
 
 	private int serverCapacity;
 	private AtomicInteger threadsFinished = new AtomicInteger(0);
@@ -34,6 +36,7 @@ public class SocServer implements Runnable {
 		inputs = new ArrayList<>();
 		streamThreads = new ArrayList<>();
 		isThreadFinished = new ArrayList<>();
+		_this = this;
 	}
 
 	public static void main(String[] args) {
@@ -155,5 +158,9 @@ public class SocServer implements Runnable {
 				ex.printStackTrace();
 			}
 		});
+	}
+	
+	public static SocServer getInstance() {
+		return _this;
 	}
 }

@@ -9,10 +9,12 @@ import java.util.Scanner;
 
 import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.network.message.MessageBuilder.Message;
+import com.pmnm.risk.network.message.MessageBuilder;
 import com.pmnm.risk.network.message.MessageType;
 
 public class Client implements Runnable {
 
+	private static Client _this;
 	private transient Socket connection;
 	private transient ObjectOutputStream output;
 	private transient ObjectInputStream input;
@@ -25,6 +27,7 @@ public class Client implements Runnable {
 		this.clientName = clientName;
 		this.serverIP = serverIP;
 		new Thread(this).start();
+		_this = this;
 	}
 
 	public static void main(String[] arg) {
@@ -83,8 +86,16 @@ public class Client implements Runnable {
 			ex.printStackTrace();
 		}
 	}
+	
+	
 
 	public Socket getSocket() {
 		return connection;
 	}
+	
+	
+	public static Client getInstance() {
+		return _this;
+	}
+	
 }

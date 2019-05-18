@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -17,6 +18,10 @@ import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
+import com.pmnm.risk.network.Client;
+import com.pmnm.risk.network.SocServer;
+import com.pmnm.risk.network.message.MessageBuilder;
+import com.pmnm.risk.network.message.MessageType;
 import com.pmnm.risk.toolkit.Utils;
 
 public class Camera extends DoaObject {
@@ -104,6 +109,10 @@ public class Camera extends DoaObject {
 		position.y = DoaMath.clamp(position.y, topLeftBound.y, bottomRightBound.y);
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.V) {
+			
+			String[] args =  new String[10];
+			SocServer.main(args);
+			
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
@@ -118,6 +127,9 @@ public class Camera extends DoaObject {
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.S) {
+			Client.getInstance().sendToServer(new MessageBuilder().setSender("Client").setData(new GameInstance())
+					.setType(MessageType.COMPRESSED).build());
+			
 			GameInstance.saveCurrentState();
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
