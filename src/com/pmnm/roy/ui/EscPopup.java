@@ -127,6 +127,7 @@ public final class EscPopup extends DoaPanel {
 					hidden = !hidden;
 					if (hidden) {
 						hide();
+						BottomPanel.signal();
 					} else {
 						show();
 					}
