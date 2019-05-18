@@ -73,7 +73,7 @@ public class SinglePlayerMenu extends DoaPanel {
 					difficulties.add(dcba[i].index);
 				}
 			}
-			RiskGameScreenUI.initUI(s.replaceAll(" ", "/"), playerTypes, playerNames, playerColors, aiNames, aiColors,
+			RiskGameScreenUI.initUI(s.replaceAll(" ", "_"), playerTypes, playerNames, playerColors, aiNames, aiColors,
 					difficulties, randomPlacementButton.getClick());
 		});
 		backButton.addAction(() -> {

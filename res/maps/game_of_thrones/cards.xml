@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cards [
+<!ELEMENT cards (card+)>
+<!ELEMENT card (province, type)>
+<!ELEMENT province (#PCDATA)>
+<!ELEMENT type (#PCDATA)>
+]>
+<cards>
+	<card>
+		<province>winterfell</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>widow's watch</province>
+		<type>artillery</type>
+	</card>
+	<card>
+		<province>northern grass sea</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>samyrian</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>bayasabhad</province>
+		<type>infantry</type>
+	</card>
+	<card>
+		<province>qarth</province>
+		<type>infantry</type>
+	</card>					
+</cards>
