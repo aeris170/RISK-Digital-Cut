@@ -51,9 +51,13 @@ public class Player extends DoaObject {
 
 	@Override
 	public void tick() {
+
 		if(!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
+		if (!GameManager.INSTANCE.isPaused) {
+
 			if (isInTurn && isLocalPlayer) {
-				ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
+				ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream()
+						.filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 				if (clickedHitArea != null) {
 					Province clickedProvince = clickedHitArea.getProvince();
 					GameManager gm = GameManager.INSTANCE;
@@ -71,11 +75,12 @@ public class Player extends DoaObject {
 							gm.setDraftReinforceProvince(clickedProvince);
 						}
 					} else if (gm.currentPhase == TurnPhase.ATTACK) {
-						if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && gm.moveAfterOccupySource == null) {
+						if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1
+								&& gm.moveAfterOccupySource == null) {
 							gm.markAttackerProvince(clickedHitArea);
 							gm.markDefenderProvince(null);
 						} else if (gm.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
-						        && gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
+								&& gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
 							gm.markDefenderProvince(clickedHitArea);
 						}
 					} else if (gm.currentPhase == TurnPhase.REINFORCE) {
@@ -201,7 +206,7 @@ public class Player extends DoaObject {
 
 	@Override
 	public boolean equals(Object o) {
-		//return super.equals(o);
+		// return super.equals(o);
 		if (!(o instanceof Player))
 			return false;
 		Player playO = (Player) o;
@@ -230,12 +235,12 @@ public class Player extends DoaObject {
 				return false;
 			}
 		}
-		return playO.isLocalPlayer == this.isLocalPlayer && playO.isInTurn == this.isInTurn && playO.id == this.id;
+		return playO.isLocalPlayer == this.isLocalPlayer && playO.id == this.id;
 	}
 
 	@Override
 	public int hashCode() {
-		//return super.hashCode();
+		// return super.hashCode();
 		int hash = 17;
 		if (this.playerColor != null)
 			hash = hash * 23 + playerColor.hashCode();
@@ -247,9 +252,8 @@ public class Player extends DoaObject {
 			hash = hash * 23 + source.hashCode();
 		if (this.destination != null)
 			hash = hash * 23 + destination.hashCode();
-			hash = 23 * hash + (isLocalPlayer ? 1 : 0);
-			hash = 23 * hash + (isInTurn ? 1 : 0);
-			hash = 23 * hash + id;
+		hash = 23 * hash + (isLocalPlayer ? 1 : 0);
+		hash = 23 * hash + id;
 		return hash;
 	}
 

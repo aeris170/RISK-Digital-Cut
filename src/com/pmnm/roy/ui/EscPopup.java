@@ -55,7 +55,7 @@ public final class EscPopup extends DoaPanel {
 	DoaTaskGuard escGuard = new DoaTaskGuard();
 
 	public EscPopup(MainMenu mm, SettingsMenu sm, RulesMenu rm, LoadMenu lm, ExitPopup ep, PlayOfflineMenu pom) {
-		super(Main.WINDOW_WIDTH * 0.376f, Main.WINDOW_HEIGHT * 0.291f, (int) (Main.WINDOW_WIDTH * 0.240f),
+		super(Main.WINDOW_WIDTH * 0.5f - DoaSprites.get("escapeMenu").getWidth() * 0.5f, Main.WINDOW_HEIGHT * 0.291f, (int) (Main.WINDOW_WIDTH * 0.240f),
 				(int) (Main.WINDOW_HEIGHT * 0.419f));
 
 		exitButtonPop.addAction(new ExitButtonAction(ep));
@@ -97,7 +97,7 @@ public final class EscPopup extends DoaPanel {
 			g.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 			g.setComposite(oldComposite);
 
-			g.drawImage(DoaSprites.get("escapeMenu"), position.x, position.y, width, height);
+			g.drawImage(DoaSprites.get("escapeMenu"), position.x + 10, position.y, width, height);
 
 			exitButtonPop.render(g);
 			settingsButtonPop.render(g);

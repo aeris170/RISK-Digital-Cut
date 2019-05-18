@@ -184,11 +184,36 @@ public class GameManager extends DoaObject {
 					timer = 0;
 				}
 			}
+
 		} else {
 			try {
 				GameInstance.loadLastStateAndCompare();
 			} catch (ClassNotFoundException | IOException ex) {
 				ex.printStackTrace();
+
+			if (isManualPlacementDone) {
+				timer += 0.1f;
+			}
+			if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
+				currentPhase = TurnPhase.DRAFT;
+				if (cardWillBeGiven) {
+					// currentPlayer.addCard(Card.getRandomCard());
+					cardWillBeGiven = false;
+				}
+				currentPlayer.endTurn();
+				++turnCount;
+				currentPlayer = players.get(turnCount % players.size());
+				currentPlayer.turn();
+				reinforcementForThisTurn = Player.calculateReinforcementsForThisTurn(currentPlayer);
+				markReinforcingProvince(null);
+				markReinforcedProvince(null);
+				BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
+				BottomPanel.nextPhaseButton.disable();
+				if (currentPlayer.isLocalPlayer()) {
+					cardPanel.updateCards();
+					// cardPanel.show();
+				}
+				timer = 0;
 			}
 		}
 	}

@@ -23,17 +23,17 @@ public class PlayOnlineMenu extends DoaPanel {
 			DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
 
 	MainMenu mm;
+	MultiPlayerMenuHost mpmh;
 
 	public PlayOnlineMenu(MainMenu mm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-		MultiPlayerMenuHost mpmh = DoaHandler.instantiate(MultiPlayerMenuHost.class, mm);
 
 		this.mm = mm;
 
 		hostGameButton.addAction(() -> {
 			hide();
 			mm.hide();
-			mpmh.show();
+			mpmh = DoaHandler.instantiate(MultiPlayerMenuHost.class, this);
 		});
 
 		backButton.addAction(() -> {
