@@ -51,7 +51,7 @@ public class Player extends DoaObject {
 
 	@Override
 	public void tick() {
-		if(!GameManager.INSTANCE.isPaused) {
+		if(!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
 			if (isInTurn && isLocalPlayer) {
 				ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 				if (clickedHitArea != null) {

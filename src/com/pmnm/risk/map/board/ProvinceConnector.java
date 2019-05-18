@@ -6,6 +6,7 @@ import java.awt.Color;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Player;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 
@@ -24,7 +25,9 @@ public final class ProvinceConnector extends DoaObject {
 
 	@Override
 	public void tick() {
-		dashArray += 0.05f;
+		if (!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
+			dashArray += 0.05f;
+		}
 	}
 
 	@Override
@@ -71,12 +74,12 @@ public final class ProvinceConnector extends DoaObject {
 
 	@Override
 	public boolean equals(Object o) {
-		//return super.equals(o);
+		// return super.equals(o);
 		if (!(o instanceof ProvinceConnector))
 			return false;
 		ProvinceConnector prov = (ProvinceConnector) o;
 		if (prov.provinceHitAreas != null && this.provinceHitAreas != null)
-			if(!prov.provinceHitAreas.equals(this.provinceHitAreas)) {
+			if (!prov.provinceHitAreas.equals(this.provinceHitAreas)) {
 				return false;
 			}
 		return true;
@@ -84,15 +87,12 @@ public final class ProvinceConnector extends DoaObject {
 
 	@Override
 	public int hashCode() {
-		//return super.hashCode();
+		// return super.hashCode();
 		int hash = 17;
 		// Suitable nullity checks etc, of course :)
 		if (this.provinceHitAreas != null)
 			hash = hash * 23 + provinceHitAreas.hashCode();
 		return hash;
 	}
-	
-	
-	
 
 }
