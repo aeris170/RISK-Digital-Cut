@@ -109,12 +109,7 @@ public class Camera extends DoaObject {
 		position.y = DoaMath.clamp(position.y, topLeftBound.y, bottomRightBound.y);
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.V) {
-			
-			/* How to run Server */
-			String[] args =  new String[10];
-			SocServer.main(args);
-			//
-			
+
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
 			if (!isLoggingVertices) {
@@ -129,9 +124,6 @@ public class Camera extends DoaObject {
 		}
 
 		if (vertexLogKeyGuard.get() && DoaKeyboard.S) {
-			Client.getInstance().sendToServer(new MessageBuilder().setSender("Client").setData(new GameInstance())
-					.setType(MessageType.COMPRESSED).build());
-			
 			GameInstance.saveCurrentState();
 			vertexLogKeyGuard.set(false);
 			DoaTasker.guard(vertexLogKeyGuard, 1000);
