@@ -13,17 +13,14 @@ import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.main.Main;
-import com.pmnm.risk.network.Client;
-import com.pmnm.risk.network.message.MessageBuilder;
-import com.pmnm.risk.network.message.MessageType;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
-public class MultiPlayerMenuHost extends DoaPanel {
+public class MultiPlayerMenuClient extends DoaPanel {
 
-	private static final long serialVersionUID = -5259890717501362272L;
+	private static final long serialVersionUID = 5144711918711184497L;
+
 
 	TextImageButton playButton = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.BUTTON_SIZE.x,
@@ -54,7 +51,7 @@ public class MultiPlayerMenuHost extends DoaPanel {
 
 	int numberOfPlayers = 1;
 
-	public MultiPlayerMenuHost(PlayOnlineMenu ponm) {
+	public MultiPlayerMenuClient(PlayOnlineMenu ponm) {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		playButton.addAction(() -> {
 			hide();
@@ -77,15 +74,10 @@ public class MultiPlayerMenuHost extends DoaPanel {
 					difficulties.add(dcba[i].index);
 				}
 			}
-			RiskGameScreenUI.initUI(s.replaceAll(" ", "_"), playerTypes, playerNames, playerColors, aiNames, aiColors,
+			RiskGameScreenUI.initUI(s.replaceAll(" ", "/"), playerTypes, playerNames, playerColors, aiNames, aiColors,
 					difficulties, randomPlacementButton.getClick());
-			//GameInstance newG = new GameInstance();
-			
-			Client.getInstance().sendToServer(new MessageBuilder().setSender("Client").setData(new GameInstance())
-					.setType(MessageType.COMPRESSED).build());
-			
 		});
-	/*	backButton.addAction(() -> {
+		backButton.addAction(() -> {
 			hide();
 			DoaHandler.remove(this);
 			TypeComboButton.COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
@@ -99,8 +91,7 @@ public class MultiPlayerMenuHost extends DoaPanel {
 			DoaHandler.remove(prevMapButton);
 			DoaHandler.remove(nextMapButton);
 			ponm.show();
-			SocServer.stopServer();
-		});*/
+		});
 		randomPlacementButton.addAction(() -> {
 
 		});
@@ -119,7 +110,7 @@ public class MultiPlayerMenuHost extends DoaPanel {
 			}
 		});
 		add(playButton);
-		//add(backButton);
+		add(backButton);
 		add(randomPlacementButton);
 		add(prevMapButton);
 		add(nextMapButton);
@@ -127,7 +118,7 @@ public class MultiPlayerMenuHost extends DoaPanel {
 			TypeComboButton tbc = DoaHandler.instantiate(TypeComboButton.class,
 					new DoaVectorF(Main.WINDOW_WIDTH * 0.182f,
 							Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)),
-					true);
+					false);
 			add(tbc);
 			tbc.index = 0;
 			tbca[i] = tbc;
@@ -143,8 +134,7 @@ public class MultiPlayerMenuHost extends DoaPanel {
 			ccba[i] = ccb;
 
 		}
-		tbca[0].index = 1;
-		tbca[1].index = 1;
+		tbca[0].index = 2;
 		show();
 	}
 
@@ -156,10 +146,10 @@ public class MultiPlayerMenuHost extends DoaPanel {
 				dcba[i].hide();
 				ccba[i].hide();
 			} else if (tbca[i].index == 2) {
-				dcba[i].show();
+				dcba[i].hide();
 				ccba[i].show();
 			} else {
-				dcba[i].hide();
+				dcba[i].show();
 				ccba[i].show();
 			}
 		}
@@ -200,4 +190,5 @@ public class MultiPlayerMenuHost extends DoaPanel {
 		g.drawImage(mapBorder, Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
 
 	}
+
 }
