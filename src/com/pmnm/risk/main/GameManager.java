@@ -162,7 +162,7 @@ public class GameManager extends DoaObject {
 					}
 				}
 				if (isManualPlacementDone) {
-					timer += 0.1f;
+					timer += 0.025f ;
 				}
 				if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
 					currentPhase = TurnPhase.DRAFT;
