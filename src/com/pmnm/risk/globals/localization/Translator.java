@@ -2,6 +2,8 @@ package com.pmnm.risk.globals.localization;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,9 +40,17 @@ public class Translator {
 	public Language getCurrentLanguage() {
 		return currentLanguage;
 	}
+	
+	public int getCurrentLanguageIndex() {
+		return Arrays.asList(Language.values()).indexOf(currentLanguage);
+	}
 
 	public void setCurrentLanguage(Language newLanguage) {
 		currentLanguage = newLanguage;
+	}
+
+	public void setCurrentLanguageIndex(int newLanguage) {
+		currentLanguage = Language.values()[newLanguage];
 	}
 
 	public String getTranslatedString(String key) {
