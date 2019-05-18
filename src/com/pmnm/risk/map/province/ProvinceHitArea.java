@@ -29,6 +29,7 @@ import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.main.Player;
+import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIInit;
 
@@ -108,43 +109,45 @@ public class ProvinceHitArea extends DoaObject {
 
 	@Override
 	public void tick() {
-		DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
-		if (meshes.stream().anyMatch(mesh -> mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y))) {
-			isHighlighted = true;
-		} else {
-			isHighlighted = false;
-		}
-		if (isMouseClicked()) {
-			if (selectedProvinceByMouse != null) {
-				selectedProvinceByMouse.isSelected = false;
+		if(!GameManager.INSTANCE.isPaused) {
+			DoaVectorF mappedMouseCoords = Utils.mapMouseCoordinatesByZoom();
+			if (meshes.stream().anyMatch(mesh -> mesh.contains((int) mappedMouseCoords.x, (int) mappedMouseCoords.y))) {
+				isHighlighted = true;
+			} else {
+				isHighlighted = false;
 			}
-			selectedProvinceByMouse = this;
-			isSelected = true;
-		}
+			if (isMouseClicked()) {
+				if (selectedProvinceByMouse != null) {
+					selectedProvinceByMouse.isSelected = false;
+				}
+				selectedProvinceByMouse = this;
+				isSelected = true;
+			}
 
-		if (isHighlighted) {
-			setzOrder(2);
-		} else if (isEmphasized) {
-			setzOrder(3);
-		} else if (isAttacker || isDefender || isReinforcing || isReinforced) {
-			setzOrder(4);
-		} else if (getzOrder() != 1) {
-			setzOrder(1);
-		}
-		if (isSelected) {
-			setzOrder(5);
-			selectedMeshAlpha += selectedMeshAlphaDelta;
-			if (selectedMeshAlpha >= 0.6f) {
-				selectedMeshAlpha = 0.6f;
-				selectedMeshAlphaDelta *= -1;
-			} else if (selectedMeshAlpha <= 0f) {
-				selectedMeshAlpha = 0f;
-				selectedMeshAlphaDelta *= -1;
-			}
-		} else {
-			selectedMeshAlpha = 0f;
-			if (getzOrder() != 1) {
+			if (isHighlighted) {
+				setzOrder(2);
+			} else if (isEmphasized) {
+				setzOrder(3);
+			} else if (isAttacker || isDefender || isReinforcing || isReinforced) {
+				setzOrder(4);
+			} else if (getzOrder() != 1) {
 				setzOrder(1);
+			}
+			if (isSelected) {
+				setzOrder(5);
+				selectedMeshAlpha += selectedMeshAlphaDelta;
+				if (selectedMeshAlpha >= 0.6f) {
+					selectedMeshAlpha = 0.6f;
+					selectedMeshAlphaDelta *= -1;
+				} else if (selectedMeshAlpha <= 0f) {
+					selectedMeshAlpha = 0f;
+					selectedMeshAlphaDelta *= -1;
+				}
+			} else {
+				selectedMeshAlpha = 0f;
+				if (getzOrder() != 1) {
+					setzOrder(1);
+				}
 			}
 		}
 	}

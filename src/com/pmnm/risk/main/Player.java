@@ -51,63 +51,63 @@ public class Player extends DoaObject {
 
 	@Override
 	public void tick() {
-		if (isInTurn && isLocalPlayer) {
-			ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream()
-					.filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
-			if (clickedHitArea != null) {
-				Province clickedProvince = clickedHitArea.getProvince();
-				GameManager gm = GameManager.INSTANCE;
-				if (!gm.isManualPlacementDone) {
-					if (!clickedProvince.isClaimed()) {
-						gm.claimProvince(clickedProvince);
-						isInTurn = false;
-					} else if (clickedProvince.isOwnedBy(this) && gm.areAllProvincesClaimed()) {
-						gm.setDraftReinforceProvince(clickedProvince);
-						gm.draftReinforce(1);
-						isInTurn = false;
-					}
-				} else if (gm.currentPhase == TurnPhase.DRAFT) {
-					if (gm.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
-						gm.setDraftReinforceProvince(clickedProvince);
-					}
-				} else if (gm.currentPhase == TurnPhase.ATTACK) {
-					if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1
-							&& gm.moveAfterOccupySource == null) {
-						gm.markAttackerProvince(clickedHitArea);
-						gm.markDefenderProvince(null);
-					} else if (gm.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
-							&& gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
-						gm.markDefenderProvince(clickedHitArea);
-					}
-				} else if (gm.currentPhase == TurnPhase.REINFORCE) {
-					if (clickedProvince.isOwnedBy(this)) {
-						if (clickedProvince.getTroops() > 1 && gm.getReinforcingProvince() == null) {
-							gm.markReinforcingProvince(clickedHitArea);
-						} else if (gm.getReinforcingProvince() != null && destination == null) {
-							gm.markReinforcedProvince(clickedHitArea);
+		if(!GameManager.INSTANCE.isPaused) {
+			if (isInTurn && isLocalPlayer) {
+				ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
+				if (clickedHitArea != null) {
+					Province clickedProvince = clickedHitArea.getProvince();
+					GameManager gm = GameManager.INSTANCE;
+					if (!gm.isManualPlacementDone) {
+						if (!clickedProvince.isClaimed()) {
+							gm.claimProvince(clickedProvince);
+							isInTurn = false;
+						} else if (clickedProvince.isOwnedBy(this) && gm.areAllProvincesClaimed()) {
+							gm.setDraftReinforceProvince(clickedProvince);
+							gm.draftReinforce(1);
+							isInTurn = false;
+						}
+					} else if (gm.currentPhase == TurnPhase.DRAFT) {
+						if (gm.numberOfReinforcementsForThisTurn() > 0 && clickedProvince.isOwnedBy(this)) {
+							gm.setDraftReinforceProvince(clickedProvince);
+						}
+					} else if (gm.currentPhase == TurnPhase.ATTACK) {
+						if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && gm.moveAfterOccupySource == null) {
+							gm.markAttackerProvince(clickedHitArea);
+							gm.markDefenderProvince(null);
+						} else if (gm.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
+						        && gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
+							gm.markDefenderProvince(clickedHitArea);
+						}
+					} else if (gm.currentPhase == TurnPhase.REINFORCE) {
+						if (clickedProvince.isOwnedBy(this)) {
+							if (clickedProvince.getTroops() > 1 && gm.getReinforcingProvince() == null) {
+								gm.markReinforcingProvince(clickedHitArea);
+							} else if (gm.getReinforcingProvince() != null && destination == null) {
+								gm.markReinforcedProvince(clickedHitArea);
+							}
 						}
 					}
-				}
-			} else if (DoaMouse.MB1) {
-				GameManager gm = GameManager.INSTANCE;
-				gm.clickedHitArea = null;
-				if (gm.currentPhase == TurnPhase.DRAFT) {
-					gm.setDraftReinforceProvince(null);
-				} else if (gm.currentPhase == TurnPhase.ATTACK) {
-					gm.markAttackerProvince(null);
-					gm.markDefenderProvince(null);
-				} else if (gm.currentPhase == TurnPhase.REINFORCE) {
-					gm.markReinforcingProvince(null);
-					gm.markReinforcedProvince(null);
-				}
-				if (ProvinceHitArea.selectedProvinceByMouse != null) {
-					ProvinceHitArea.selectedProvinceByMouse.isSelected = false;
-					ProvinceHitArea.selectedProvinceByMouse = null;
+				} else if (DoaMouse.MB1) {
+					GameManager gm = GameManager.INSTANCE;
+					gm.clickedHitArea = null;
+					if (gm.currentPhase == TurnPhase.DRAFT) {
+						gm.setDraftReinforceProvince(null);
+					} else if (gm.currentPhase == TurnPhase.ATTACK) {
+						gm.markAttackerProvince(null);
+						gm.markDefenderProvince(null);
+					} else if (gm.currentPhase == TurnPhase.REINFORCE) {
+						gm.markReinforcingProvince(null);
+						gm.markReinforcedProvince(null);
+					}
+					if (ProvinceHitArea.selectedProvinceByMouse != null) {
+						ProvinceHitArea.selectedProvinceByMouse.isSelected = false;
+						ProvinceHitArea.selectedProvinceByMouse = null;
+					}
 				}
 			}
-		}
-		if (DoaMouse.MB3) {
-			cards.forEach(c -> System.out.println(c.toString()));
+			if (DoaMouse.MB3) {
+				cards.forEach(c -> System.out.println(c.toString()));
+			}
 		}
 	}
 

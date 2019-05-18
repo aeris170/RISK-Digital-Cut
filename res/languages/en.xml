@@ -137,5 +137,9 @@
 		<key>JOIN_GAME</key>
 		<value>join game</value>
 	</pair>
+	<pair>
+		<key>RANDOM_PLACEMENT</key>
+		<value>random placement</value>
+	</pair>
 	
 </en>

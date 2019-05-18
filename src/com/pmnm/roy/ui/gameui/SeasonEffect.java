@@ -13,6 +13,7 @@ import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaMath;
+import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 
 public class SeasonEffect extends DoaObject {
@@ -30,11 +31,13 @@ public class SeasonEffect extends DoaObject {
 
 	@Override
 	public void tick() {
-		godrayAngle += 0.05f;
-		godrayAlpha += godrayAlphaDelta;
-		if (godrayAlpha >= 1f || godrayAlpha <= 0.5f) {
-			godrayAlphaDelta *= -1;
-			godrayAlpha = DoaMath.clamp(godrayAlpha, 0.5f, 1f);
+		if(!GameManager.INSTANCE.isPaused) {
+			godrayAngle += 0.05f;
+			godrayAlpha += godrayAlphaDelta;
+			if (godrayAlpha >= 1f || godrayAlpha <= 0.5f) {
+				godrayAlphaDelta *= -1;
+				godrayAlpha = DoaMath.clamp(godrayAlpha, 0.5f, 1f);
+			}
 		}
 	}
 

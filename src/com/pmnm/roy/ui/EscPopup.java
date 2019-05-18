@@ -13,8 +13,10 @@ import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
+import com.doa.utils.DoaUtils;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.GameInstance;
+import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.actions.ExitButtonAction;
 import com.pmnm.roy.ui.actions.RulesButtonAction;
@@ -30,12 +32,12 @@ public final class EscPopup extends DoaPanel {
 	// pos width height
 	TextImageButton saveButton = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.342f), (int) (Main.WINDOW_WIDTH * 0.202),
-			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SAVE_GAME",
-			UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
+			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"),
+			"SAVE_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
 	TextImageButton loadButtonPop = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.407f), (int) (Main.WINDOW_WIDTH * 0.202),
-			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "LOAD_GAME",
-			UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
+			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"),
+			"LOAD_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
 	TextImageButton rulesButtonPop = DoaHandler.instantiate(TextImageButton.class,
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.472f), (int) (Main.WINDOW_WIDTH * 0.202),
 			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "RULES",
@@ -48,10 +50,10 @@ public final class EscPopup extends DoaPanel {
 			new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.602f), (int) (Main.WINDOW_WIDTH * 0.202),
 			(int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "EXIT",
 			UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true);
-	
-	private boolean hidden = false;	
+
+	private boolean hidden = true;
 	DoaTaskGuard escGuard = new DoaTaskGuard();
-	
+
 	public EscPopup(MainMenu mm, SettingsMenu sm, RulesMenu rm, LoadMenu lm, ExitPopup ep, PlayOfflineMenu pom) {
 		super(Main.WINDOW_WIDTH * 0.376f, Main.WINDOW_HEIGHT * 0.291f, (int) (Main.WINDOW_WIDTH * 0.240f),
 				(int) (Main.WINDOW_HEIGHT * 0.419f));
@@ -63,30 +65,32 @@ public final class EscPopup extends DoaPanel {
 		saveButton.addAction(() -> {
 			GameInstance.saveGame();
 		});
-		show();
+		add(exitButtonPop);
+		add(settingsButtonPop);
+		add(rulesButtonPop);
+		add(loadButtonPop);
+		add(saveButton);
+		//show();
+		new Thread(() -> {
+			while (true) {
+				if (DoaKeyboard.ESCAPE) {
+					hidden = !hidden;
+					if (hidden) {
+						hide();
+					} else {
+						show();
+					}
+					GameManager.INSTANCE.isPaused = !hidden;
+					DoaUtils.sleepFor(190);
+				}
+				DoaUtils.sleepFor(10);
+			}
+		}).start();
 	}
 
 	@Override
-	public void tick() {
-		//TODO it fucking sucks
-		super.tick();
-		DoaTasker.guardExecution(()->{
-			if (DoaKeyboard.ESCAPE) {
-				hidden = !hidden;			
-			}
-		}, escGuard, 200);
-		if(!hidden) {
-			exitButtonPop.tick();
-			settingsButtonPop.tick();
-			rulesButtonPop.tick();
-			loadButtonPop.tick();
-			saveButton.tick();
-		}
-	}
-	
-	@Override
 	public void render(DoaGraphicsContext g) {
-		if(!hidden) {
+		if (!hidden) {
 			Composite oldComposite = g.getComposite();
 			g.setColor(Color.darkGray);
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
@@ -94,7 +98,7 @@ public final class EscPopup extends DoaPanel {
 			g.setComposite(oldComposite);
 
 			g.drawImage(DoaSprites.get("escapeMenu"), position.x, position.y, width, height);
-			
+
 			exitButtonPop.render(g);
 			settingsButtonPop.render(g);
 			rulesButtonPop.render(g);
@@ -102,15 +106,15 @@ public final class EscPopup extends DoaPanel {
 			saveButton.render(g);
 		}
 	}
-	
+
 	@Override
-	public void show(){
+	public void show() {
 		super.show();
 		hidden = false;
 	}
-	
+
 	@Override
-	public void hide(){
+	public void hide() {
 		super.hide();
 		hidden = true;
 	}
