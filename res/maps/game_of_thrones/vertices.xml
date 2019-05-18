@@ -4577,7 +4577,7 @@
 	<province>
 		<name>mountains of the moon</name>
 		<center>
-			<vertex><x>585</x><y>357</y></vertex>
+			<vertex><x>485</x><y>357</y></vertex>
 		</center>
 		<mesh>
 			<vertex><x>416</x><y>296</y></vertex>
@@ -6432,7 +6432,7 @@
 	<province>
 		<name>riverrun</name>
 		<center>
-			<vertex><x>389</x><y>460</y></vertex>			
+			<vertex><x>389</x><y>406</y></vertex>			
 		</center>
 		<mesh>
 			<vertex><x>356</x><y>386</y></vertex>

@@ -44,13 +44,16 @@ public class AIPlayer extends Player {
 									// TODO - Simge - medium ai i
 								}
 							}
-						} /*
-							 * else { if (difficulty <= 2) { List<Province> provinces =
-							 * Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
-							 * .collect(Collectors.toList()); Province p =
-							 * provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
-							 * gm.setDraftReinforceProvince(p); gm.draftReinforce(1); isInTurn = false; } }
-							 */
+						} else {
+							if (difficulty <= 2) {
+								List<Province> provinces = Province.ALL_PROVINCES.stream()
+										.filter(p -> p.getOwner() == this).collect(Collectors.toList());
+								Province p = provinces.get(ThreadLocalRandom.current().nextInt(provinces.size()));
+								gm.setDraftReinforceProvince(p);
+								gm.draftReinforce(1);
+								isInTurn = false;
+							}
+						}
 					} else if (gm.currentPhase == TurnPhase.DRAFT) {
 						if (difficulty <= 2) {
 							List<Province> provinces = Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == this)
