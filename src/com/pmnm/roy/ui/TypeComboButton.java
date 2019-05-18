@@ -21,35 +21,44 @@ public class TypeComboButton extends DoaImageButton {
 
 	private static DoaVectorF bounds;
 
-	public static final String[] OPTIONS = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
+	public static String[] OPTIONS = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
 
 	public static final List<TypeComboButton> COMBO_BUTTONS = new ArrayList<>();
 
 	int index = 0;
+	boolean isSinglePlayer;
 
-	public TypeComboButton(DoaVectorF position) {
+	public TypeComboButton(DoaVectorF position, boolean isSinglePlayer) {
 		super(position, (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f),
 				DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownClick"));
 		bounds = new DoaVectorF(Main.WINDOW_WIDTH * 0.10f, height);
+		if (isSinglePlayer) {
+			OPTIONS = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
+		} else {
+			OPTIONS = new String[] { "OPEN", "COMPUTER", "HUMAN" };
+		}
+		this.isSinglePlayer = isSinglePlayer;
 		COMBO_BUTTONS.add(this);
 	}
 
 	@Override
 	public void tick() {
 		recalibrateBounds();
-		if (isEnabled && DoaMouse.MB1) {
-			if (click) {
-				if (closedHitBox().contains(DoaMouse.X, DoaMouse.Y)) {
-					index = 0;
-				} else if (humanHitBox().contains(DoaMouse.X, DoaMouse.Y)) {
-					index = 1;
-				} else if (computerHitBox().contains(DoaMouse.X, DoaMouse.Y)) {
-					index = 2;
+		if (isSinglePlayer || COMBO_BUTTONS.get(COMBO_BUTTONS.size() - 1) != this) {
+			if (isEnabled && DoaMouse.MB1) {
+				if (click) {
+					if (closedHitBox().contains(DoaMouse.X, DoaMouse.Y)) {
+						index = 0;
+					} else if (humanHitBox().contains(DoaMouse.X, DoaMouse.Y)) {
+						index = 1;
+					} else if (computerHitBox().contains(DoaMouse.X, DoaMouse.Y) && isSinglePlayer) {
+						index = 2;
+					}
+					click = false;
+				} else if (getBounds().contains(DoaMouse.X, DoaMouse.Y)
+						&& COMBO_BUTTONS.stream().allMatch(cb -> (!cb.click || (cb.click && cb.noneHit())))) {
+					click = !click;
 				}
-				click = false;
-			} else if (getBounds().contains(DoaMouse.X, DoaMouse.Y)
-					&& COMBO_BUTTONS.stream().allMatch(cb -> (!cb.click || (cb.click && cb.noneHit())))) {
-				click = !click;
 			}
 		}
 	}
@@ -64,7 +73,9 @@ public class TypeComboButton extends DoaImageButton {
 				position.y - Main.WINDOW_HEIGHT * 0.003f);
 		g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1), position.x - Main.WINDOW_WIDTH * 0.098f,
 				position.y + Main.WINDOW_HEIGHT * 0.029f);
-		super.render(g);
+		if (isSinglePlayer || COMBO_BUTTONS.get(COMBO_BUTTONS.size() - 1) != this) {
+			super.render(g);
+		}
 		if (click) {
 			int height = DoaSprites.get("DropDownType").getHeight();
 			g.drawImage(DoaSprites.get("DropDownType"), position.x - Main.WINDOW_WIDTH * 0.103f,
@@ -74,7 +85,7 @@ public class TypeComboButton extends DoaImageButton {
 			g.drawImage(DoaSprites.get("DropDownTypeTex"), position.x - Main.WINDOW_WIDTH * 0.103f,
 					position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.124f, height);
 			g.popComposite();
-			for (int i = 0; i < OPTIONS.length; i++) {
+			for (int i = 0; i < OPTIONS.length - (isSinglePlayer ? 0 : 1); i++) {
 				s = Translator.getInstance().getTranslatedString(OPTIONS[i]);
 				g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1), position.x - Main.WINDOW_WIDTH * 0.098f,
 						position.y + Main.WINDOW_HEIGHT * 0.070f + (Main.WINDOW_HEIGHT * 0.028f * i));

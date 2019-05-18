@@ -36,8 +36,9 @@ public class MultiPlayerMenuHost extends DoaPanel {
 	DoaImageButton nextMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.887f,
 			Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowRightIdle"), DoaSprites.get("ArrowRightClick"));
 
-	RandomPlacementButton randomPlacementButton = DoaHandler.instantiate(RandomPlacementButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.315f,
-			Main.WINDOW_HEIGHT * 0.635f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT");
+	RandomPlacementButton randomPlacementButton = DoaHandler.instantiate(RandomPlacementButton.class,
+			new DoaVectorF(Main.WINDOW_WIDTH * 0.315f, Main.WINDOW_HEIGHT * 0.635f), 22, 22,
+			DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT");
 
 	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
@@ -114,9 +115,12 @@ public class MultiPlayerMenuHost extends DoaPanel {
 		add(prevMapButton);
 		add(nextMapButton);
 		for (int i = Globals.MAX_NUM_PLAYERS - 1; i >= 0; i--) {
-			TypeComboButton tbc = DoaHandler.instantiate(TypeComboButton.class, new DoaVectorF(
-					Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
+			TypeComboButton tbc = DoaHandler.instantiate(TypeComboButton.class,
+					new DoaVectorF(Main.WINDOW_WIDTH * 0.182f,
+							Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)),
+					false);
 			add(tbc);
+			tbc.index = 0;
 			tbca[i] = tbc;
 
 			DifficultyComboButton dcb = DoaHandler.instantiate(DifficultyComboButton.class, new DoaVectorF(
@@ -130,8 +134,26 @@ public class MultiPlayerMenuHost extends DoaPanel {
 			ccba[i] = ccb;
 
 		}
-		tbca[0].index = 1;
+		tbca[0].index = 2;
 		show();
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		for (int i = 0; i < Globals.MAX_NUM_PLAYERS; i++) {
+			if (tbca[i].index == 0) {
+				dcba[i].hide();
+				ccba[i].hide();
+			} else if (tbca[i].index == 2) {
+				dcba[i].hide();
+				ccba[i].show();
+			} else {
+				dcba[i].show();
+				ccba[i].show();
+			}
+		}
+		s = Globals.MAP_NAMES[mapNumber];
 	}
 
 	@Override
@@ -166,6 +188,6 @@ public class MultiPlayerMenuHost extends DoaPanel {
 		g.drawImage(DoaSprites.get("MAP#" + mapNumber), Main.WINDOW_WIDTH * 0.734f, Main.WINDOW_HEIGHT * 0.332f,
 				mapBorder.getWidth() - Main.WINDOW_WIDTH * 0.003f, mapBorder.getHeight() - Main.WINDOW_HEIGHT * 0.003f);
 		g.drawImage(mapBorder, Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
-		
+
 	}
 }
