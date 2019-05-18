@@ -16,7 +16,7 @@ import com.pmnm.risk.network.message.MessageBuilder.Message;
 import com.pmnm.risk.network.message.MessageType;
 
 public class SocServer implements Runnable {
-	
+
 	private static SocServer _this;
 
 	private int serverCapacity;
@@ -39,16 +39,13 @@ public class SocServer implements Runnable {
 		_this = this;
 	}
 
-	public static void main(String[] args) {
-		// User will specify the server capacity.
-		int capacityOfServer = 2;
-		new Thread(new SocServer(capacityOfServer)).start();
+	public static void startServer(int serverCapacity) {
+		new Thread(_this = new SocServer(serverCapacity)).start();
 		System.out.println("Socket server started");
 	}
-	
-	
-	public static void startServer(int serverCapacity) {
-		new Thread(new SocServer(serverCapacity)).start();
+
+	public static void stopServer() {
+		_this.closeCrap();
 		System.out.println("Socket server started");
 	}
 
@@ -164,7 +161,7 @@ public class SocServer implements Runnable {
 			}
 		});
 	}
-	
+
 	public static SocServer getInstance() {
 		return _this;
 	}
