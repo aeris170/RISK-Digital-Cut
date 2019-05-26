@@ -1,9 +1,9 @@
 package com.pmnm.roy.ui.actions;
 
 import com.doa.ui.action.DoaUIAction;
-import com.pmnm.roy.ui.ExitPopup;
-import com.pmnm.roy.ui.MainMenu;
-import com.pmnm.roy.ui.SettingsMenu;
+import com.pmnm.roy.ui.menu.ExitPopup;
+import com.pmnm.roy.ui.menu.MainMenu;
+import com.pmnm.roy.ui.menu.SettingsMenu;
 
 public class SettingsButtonAction implements DoaUIAction {
 

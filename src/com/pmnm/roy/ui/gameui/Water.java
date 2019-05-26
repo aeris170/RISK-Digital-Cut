@@ -1,6 +1,5 @@
 package com.pmnm.roy.ui.gameui;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
@@ -17,14 +16,13 @@ import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
-import com.doa.utils.DoaUtils;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 
 public class Water extends DoaObject {
 
 	private static final long serialVersionUID = -3289865017771805571L;
-	
+
 	public static Water INSTANCE;
 
 	private static final int SEG_X = 16;
@@ -97,7 +95,7 @@ public class Water extends DoaObject {
 
 	@Override
 	public void tick() {
-		if(!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
+		if (!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
 			for (int y = 0; y < points[0].length; y++) {
 				for (int x = 0; x < points.length; x++) {
 					Point2D p = points[x][y];
@@ -162,8 +160,6 @@ public class Water extends DoaObject {
 			t2.setTransform(a.getX() - c.getX(), a.getY() - c.getY(), b.getX() - c.getX(), b.getY() - c.getY(), c.getX(), c.getY());
 			t2.concatenate(t1);
 			g2d.drawImage(tex, t2, null);
-			g2d.setColor(Color.RED);
-			g2d.draw(polygon);
 		}
 	}
 }

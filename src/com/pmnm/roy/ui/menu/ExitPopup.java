@@ -1,4 +1,4 @@
-package com.pmnm.roy.ui;
+package com.pmnm.roy.ui.menu;
 
 import java.awt.Font;
 
@@ -10,6 +10,8 @@ import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.ui.TextImageButton;
+import com.pmnm.roy.ui.UIInit;
 
 public final class ExitPopup extends DoaPanel {
 
@@ -24,18 +26,26 @@ public final class ExitPopup extends DoaPanel {
 
 	private DoaVectorF bounds = new DoaVectorF(Main.WINDOW_WIDTH * 0.300f, Main.WINDOW_HEIGHT * 0.036f);
 
+	private String s;
+	private Font f;
+
 	public ExitPopup() {
 		super(Main.WINDOW_WIDTH * 0.314f, Main.WINDOW_HEIGHT * 0.388f, (int) (Main.WINDOW_WIDTH * 0.371f), (int) (Main.WINDOW_HEIGHT * 0.222f));
 		yesButton.addAction(() -> System.exit(0));
 		noButton.addAction(() -> hide());
 		add(yesButton);
 		add(noButton);
+		hide();
+	}
+
+	@Override
+	public void tick() {
+		s = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT").toUpperCase();
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
 		g.drawImage(DoaSprites.get("ExitPopupBackground"), position.x, position.y, width, height);
-		String s = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT").toUpperCase();
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(Font.BOLD, 1), bounds, s)));
 		g.setColor(UIInit.FONT_COLOR);
 		g.drawString(s, Main.WINDOW_WIDTH * 0.350f + (bounds.x - g.getFontMetrics().stringWidth(s)) / 2d, Main.WINDOW_WIDTH * 0.262f);

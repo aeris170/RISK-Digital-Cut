@@ -47,7 +47,6 @@ public class DicePanel extends DoaUIContainer {
 
 	@Override
 	public void tick() {
-		super.tick();
 		if (moving) {
 			if (velocity.x > 0) {
 				velocity.x += ACCELERATION;

@@ -4,33 +4,29 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.sound.DoaSoundClip;
 import com.doa.engine.sound.DoaSounds;
 
 public final class AssetLoader {
 
-	private AssetLoader() {
-	}
+	private AssetLoader() {}
 
 	public static void initializeAssets() {
 		try {
-			DoaSprites.createSprite("BG1", "/ui/Background1.png");
-			DoaSprites.createSprite("BG2", "/ui/Background2.png");
-			DoaSprites.createSprite("BG3", "/ui/Background3.png");
-			DoaSprites.createSprite("BG4", "/ui/Background4.png");
-			DoaSprites.createSprite("BG5", "/ui/Background5.png");
-			DoaSprites.createSprite("BG6", "/ui/Background6.png");
+			DoaSprites.createSprite("BG0", "/ui/Background1.png");
+			DoaSprites.createSprite("BG1", "/ui/Background2.png");
+			DoaSprites.createSprite("BG2", "/ui/Background3.png");
+			DoaSprites.createSprite("BG3", "/ui/Background4.png");
+			DoaSprites.createSprite("BG4", "/ui/Background5.png");
+			DoaSprites.createSprite("BG5", "/ui/Background6.png");
 			DoaSprites.createSprite("MainMenuTopRing", "/ui/TopRing.png");
 			DoaSprites.createSprite("MainMenuBottomRing", "/ui/BottomRing.png");
 			DoaSprites.createSprite("RiskLogo", "/ui/RiskLogo.png");
@@ -111,12 +107,9 @@ public final class AssetLoader {
 			{// WEATHER EFFECTS
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
 				DoaAnimations.createAnimation("Snowfall", "/ui/gameScreenElements/topInfo/snowfall.gif", 50);
-				DoaAnimations.createAnimation("BetterFallingLeaves",
-						"/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
-				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif",
-						100);
-				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif",
-						100);
+				DoaAnimations.createAnimation("BetterFallingLeaves", "/ui/gameScreenElements/topInfo/betterFallingLeaves.gif", 50);
+				DoaAnimations.createAnimation("FallingLeaves", "/ui/gameScreenElements/topInfo/fallingLeavesFixed.gif", 100);
+				DoaAnimations.createAnimation("FloatingLeaves", "/ui/gameScreenElements/topInfo/floatingLeaves.gif", 100);
 				DoaAnimations.createAnimation("CherryPetals", "/ui/gameScreenElements/topInfo/cherryPetals.gif", 60);
 				DoaAnimations.createAnimation("Rain", "/ui/gameScreenElements/topInfo/rainLight.gif", 40);
 				DoaSprites.createSprite("fallTex", "/ui/gameScreenElements/waterTextures/fallWaterTexture.jpg");
@@ -137,14 +130,10 @@ public final class AssetLoader {
 				DoaSprites.createSprite("provinceNameHolderIcon", "/ui/gameScreenElements/bottomInfo/name.png");
 				DoaSprites.createSprite("continentHolder", "/ui/gameScreenElements/bottomInfo/continentHolder.png");
 				DoaSprites.createSprite("continentHolderIcon", "/ui/gameScreenElements/bottomInfo/continent.png");
-				DoaSprites.createSprite("nextPhaseButtonIdle",
-						"/ui/gameScreenElements/bottomInfo/nextPhaseNeutral.png");
-				DoaSprites.createSprite("nextPhaseButtonHover",
-						"/ui/gameScreenElements/bottomInfo/nextPhaseHovered.png");
-				DoaSprites.createSprite("nextPhaseButtonPressed",
-						"/ui/gameScreenElements/bottomInfo/nextPhasePressed.png");
-				DoaSprites.createSprite("nextPhaseButtonDisabled",
-						"/ui/gameScreenElements/bottomInfo/nextPhaseDisabled.png");
+				DoaSprites.createSprite("nextPhaseButtonIdle", "/ui/gameScreenElements/bottomInfo/nextPhaseNeutral.png");
+				DoaSprites.createSprite("nextPhaseButtonHover", "/ui/gameScreenElements/bottomInfo/nextPhaseHovered.png");
+				DoaSprites.createSprite("nextPhaseButtonPressed", "/ui/gameScreenElements/bottomInfo/nextPhasePressed.png");
+				DoaSprites.createSprite("nextPhaseButtonDisabled", "/ui/gameScreenElements/bottomInfo/nextPhaseDisabled.png");
 				DoaSprites.createSprite("arrowUp", "/ui/gameScreenElements/bottomInfo/arrowUp.png");
 				DoaSprites.createSprite("arrowUpHover", "/ui/gameScreenElements/bottomInfo/arrowUpHovered.png");
 				DoaSprites.createSprite("arrowUpPress", "/ui/gameScreenElements/bottomInfo/arrowUpPressed.png");
@@ -198,11 +187,11 @@ public final class AssetLoader {
 				DoaSprites.createSprite("cardButtonLocked", "/ui/gameScreenElements/cardScroll/buttonLocked.png");
 				DoaSprites.createSprite("cardButtonPressed", "/ui/gameScreenElements/cardScroll/buttonPressed.png");
 			}
-			
+
 			{// MUSIC
 				DoaSounds.createSoundClip("track1", "/sounds/music/Ritual.wav");
-				DoaSounds.get("track1").loop(Clip.LOOP_CONTINUOUSLY);;
-				//DoaSounds.setGlobalVolume(1);
+				// DoaSounds.get("track1").loop(Clip.LOOP_CONTINUOUSLY);
+				// DoaSounds.setGlobalVolume(1);
 			}
 
 			List<BufferedImage> riskLogoKeyFrames = new ArrayList<>();
@@ -212,13 +201,9 @@ public final class AssetLoader {
 			DoaAnimations.createAnimation("RiskLogoAnim", riskLogoKeyFrames, 100);
 
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			Font customFont = Font
-					.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf"))
-					.deriveFont(12f);
+			Font customFont = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf")).deriveFont(12f);
 			ge.registerFont(customFont);
-			Font customFont2 = Font
-					.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/BookAntiqua.ttf"))
-					.deriveFont(12f);
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/BookAntiqua.ttf")).deriveFont(12f);
 			ge.registerFont(customFont2);
 		} catch (IOException | FontFormatException | UnsupportedAudioFileException | LineUnavailableException ex) {
 			ex.printStackTrace();

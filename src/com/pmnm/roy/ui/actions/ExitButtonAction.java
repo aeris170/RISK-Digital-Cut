@@ -1,7 +1,7 @@
 package com.pmnm.roy.ui.actions;
 
 import com.doa.ui.action.DoaUIAction;
-import com.pmnm.roy.ui.ExitPopup;
+import com.pmnm.roy.ui.menu.ExitPopup;
 
 public class ExitButtonAction implements DoaUIAction {
 

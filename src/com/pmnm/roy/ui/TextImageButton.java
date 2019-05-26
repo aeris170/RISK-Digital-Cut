@@ -23,13 +23,13 @@ public class TextImageButton extends DoaImageButton {
 	private int ascent;
 	private boolean isCentered;
 
-	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage,
-			BufferedImage hoverImage, String text, Color textColor, Color hoverTextColor) {
+	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor,
+	        Color hoverTextColor) {
 		this(position, width, height, idleImage, hoverImage, text, textColor, hoverTextColor, false);
 	}
 
-	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage,
-			BufferedImage hoverImage, String text, Color textColor, Color hoverTextColor, boolean isCentered) {
+	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor,
+	        Color hoverTextColor, boolean isCentered) {
 		super(position, width, height, idleImage, hoverImage);
 		this.text = text;
 		this.textColor = textColor;
@@ -46,8 +46,7 @@ public class TextImageButton extends DoaImageButton {
 	public void render(DoaGraphicsContext g) {
 		super.render(g);
 		String s = Translator.getInstance().getTranslatedString(text).toUpperCase();
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN,
-				Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, s)));
+		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, s)));
 		fm = g.getFontMetrics();
 		g.setColor(textColor);
 		if (hover) {

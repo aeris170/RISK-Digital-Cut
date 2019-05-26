@@ -81,9 +81,8 @@ public class Province implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Province [continent=" + continent + ", name=" + name + ", neighbours=" + neighbours + ", meshes="
-				+ meshes + ", center=" + center + ", isClaimed=" + isClaimed + ", owner=" + owner + ", troops=" + troops
-				+ "]";
+		return "Province [continent=" + continent + ", name=" + name + ", neighbours=" + neighbours + ", meshes=" + meshes + ", center=" + center + ", isClaimed="
+		        + isClaimed + ", owner=" + owner + ", troops=" + troops + "]";
 	}
 
 	public static void printAllProvinces() {
@@ -134,21 +133,6 @@ public class Province implements Serializable {
 	}
 
 	public ProvinceHitArea getProvinceHitArea() {
-		return ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.getProvince().equals(this))
-				.findFirst().orElse(null);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		return this.name.equals(((Province) o).name) && ((Province) o).troops == this.troops
-				&& ((owner != null && ((Province) o).owner != null) ? ((Province) o).owner.equals(this.owner) : true);
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 17;
-		hash = hash * 23 + (owner != null ? owner.hashCode() : 0);
-		hash = 23 * hash + troops;
-		return hash;
+		return ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.getProvince().equals(this)).findFirst().orElse(null);
 	}
 }

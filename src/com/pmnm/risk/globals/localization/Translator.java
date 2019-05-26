@@ -3,15 +3,17 @@ package com.pmnm.risk.globals.localization;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
+import com.pmnm.roy.ui.UIInit;
 
 public class Translator {
 
@@ -21,7 +23,7 @@ public class Translator {
 
 	private static Translator _this;
 
-	private Language currentLanguage = Language.EN;
+	private Language currentLanguage;
 
 	private Translator() {
 		for (Language l : Language.values()) {
@@ -35,12 +37,13 @@ public class Translator {
 				System.err.println("Exception while reading language data for Language: " + l.name() + " " + ex.getMessage());
 			}
 		}
+		setCurrentLanguageIndex(Preferences.userNodeForPackage(UIInit.class).getInt("language", 0));
 	}
 
 	public Language getCurrentLanguage() {
 		return currentLanguage;
 	}
-	
+
 	public int getCurrentLanguageIndex() {
 		return Arrays.asList(Language.values()).indexOf(currentLanguage);
 	}
@@ -55,7 +58,7 @@ public class Translator {
 
 	public String getTranslatedString(String key) {
 		String rv = languages.get(currentLanguage).get(key);
-		return (rv != null && rv.length() != 0) ? rv : "RISKUI::UNMAPPED_STRING";
+		return (rv != null && rv.length() != 0) ? rv : "ROY::UNMAPPED_STR";
 	}
 
 	public static Translator getInstance() {

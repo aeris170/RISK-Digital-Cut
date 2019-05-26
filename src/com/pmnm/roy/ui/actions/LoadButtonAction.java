@@ -4,20 +4,20 @@ import java.io.IOException;
 
 import com.doa.ui.action.DoaUIAction;
 import com.pmnm.risk.main.GameInstance;
-import com.pmnm.roy.ui.ExitPopup;
-import com.pmnm.roy.ui.LoadMenu;
-import com.pmnm.roy.ui.MainMenu;
-import com.pmnm.roy.ui.PlayOfflineMenu;
-import com.pmnm.roy.ui.RulesMenu;
+import com.pmnm.roy.ui.menu.ExitPopup;
+import com.pmnm.roy.ui.menu.LoadGameMenu;
+import com.pmnm.roy.ui.menu.MainMenu;
+import com.pmnm.roy.ui.menu.PlayOfflineMenu;
+import com.pmnm.roy.ui.menu.RulesMenu;
 
 public class LoadButtonAction implements DoaUIAction {
 
 	MainMenu mm;
-	LoadMenu lm;
+	LoadGameMenu lm;
 	ExitPopup ep;
 	PlayOfflineMenu pom;
 
-	public LoadButtonAction(MainMenu mm, LoadMenu lm, ExitPopup ep, PlayOfflineMenu pom) {
+	public LoadButtonAction(MainMenu mm, LoadGameMenu lm, ExitPopup ep, PlayOfflineMenu pom) {
 		this.mm = mm;
 		this.lm = lm;
 		this.ep = ep;

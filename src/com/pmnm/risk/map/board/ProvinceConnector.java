@@ -7,7 +7,6 @@ import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.pmnm.risk.main.GameManager;
-import com.pmnm.risk.main.Player;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 
 public final class ProvinceConnector extends DoaObject {
@@ -33,8 +32,7 @@ public final class ProvinceConnector extends DoaObject {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (provinceHitAreas != null && provinceHitAreas.length > 0) {
-			g.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 0, new float[] { 9, 5 },
-					dashArray));
+			g.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 0, new float[] { 9, 5 }, dashArray));
 			Color ownerColor = provinceHitAreas[0].getProvince().getOwner().getColor();
 			ownerColor = new Color(255 - ownerColor.getRed(), 255 - ownerColor.getGreen(), 255 - ownerColor.getBlue());
 			for (int i = provinceHitAreas.length - 1; i > 0; i--) {
@@ -71,28 +69,4 @@ public final class ProvinceConnector extends DoaObject {
 		_this = pc;
 		DoaHandler.add(_this);
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		// return super.equals(o);
-		if (!(o instanceof ProvinceConnector))
-			return false;
-		ProvinceConnector prov = (ProvinceConnector) o;
-		if (prov.provinceHitAreas != null && this.provinceHitAreas != null)
-			if (!prov.provinceHitAreas.equals(this.provinceHitAreas)) {
-				return false;
-			}
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		// return super.hashCode();
-		int hash = 17;
-		// Suitable nullity checks etc, of course :)
-		if (this.provinceHitAreas != null)
-			hash = hash * 23 + provinceHitAreas.hashCode();
-		return hash;
-	}
-
 }

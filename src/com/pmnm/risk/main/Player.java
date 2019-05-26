@@ -1,7 +1,6 @@
 package com.pmnm.risk.main;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.stream.Collectors;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
-import com.pmnm.risk.card.Card;
 import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
@@ -30,7 +28,6 @@ public class Player extends DoaObject {
 	protected boolean isInTurn;
 	private int id;
 	private boolean isLocalPlayer;
-	private List<Card> cards = new ArrayList<>();
 
 	private Province source = null;
 	private Province destination = null;
@@ -56,8 +53,7 @@ public class Player extends DoaObject {
 			if (!GameManager.INSTANCE.isPaused) {
 
 				if (isInTurn && isLocalPlayer) {
-					ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream()
-							.filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
+					ProvinceHitArea clickedHitArea = ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.stream().filter(hitArea -> hitArea.isMouseClicked()).findFirst().orElse(null);
 					if (clickedHitArea != null) {
 						Province clickedProvince = clickedHitArea.getProvince();
 						GameManager gm = GameManager.INSTANCE;
@@ -75,12 +71,11 @@ public class Player extends DoaObject {
 								gm.setDraftReinforceProvince(clickedProvince);
 							}
 						} else if (gm.currentPhase == TurnPhase.ATTACK) {
-							if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1
-									&& gm.moveAfterOccupySource == null) {
+							if (clickedProvince.isOwnedBy(this) && clickedProvince.getTroops() > 1 && gm.moveAfterOccupySource == null) {
 								gm.markAttackerProvince(clickedHitArea);
 								gm.markDefenderProvince(null);
-							} else if (gm.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this) && gm
-									.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
+							} else if (gm.getAttackerProvince() != null && !clickedProvince.isOwnedBy(this)
+							        && gm.getAttackerProvince().getProvince().getNeighbours().contains(clickedProvince)) {
 								gm.markDefenderProvince(clickedHitArea);
 							}
 						} else if (gm.currentPhase == TurnPhase.REINFORCE) {
@@ -110,16 +105,12 @@ public class Player extends DoaObject {
 						}
 					}
 				}
-				if (DoaMouse.MB3) {
-					cards.forEach(c -> System.out.println(c.toString()));
-				}
 			}
 		}
 	}
 
 	@Override
-	public void render(DoaGraphicsContext g) {
-	}
+	public void render(DoaGraphicsContext g) {}
 
 	public void turn() {
 		isInTurn = true;
@@ -150,8 +141,7 @@ public class Player extends DoaObject {
 	}
 
 	public static int calculateReinforcementsForThisTurn(Player player) {
-		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player))
-				.collect(Collectors.toList());
+		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
 		int reinforcementsForThisTurn = Math.max(playerProvinces.size() / 3, 3);
 		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
 			Continent currentContinent = entry.getValue();
@@ -163,8 +153,7 @@ public class Player extends DoaObject {
 	}
 
 	public static boolean hasProvinces(Player player) {
-		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player))
-				.collect(Collectors.toList());
+		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
 		return !playerProvinces.isEmpty();
 	}
 
@@ -181,81 +170,9 @@ public class Player extends DoaObject {
 		return isLocalPlayer;
 	}
 
-	public List<Card> getCards() {// TODO find a better solution to not fuck up the encapsulation
-		return cards;
-	}
-
-	public void addCard(Card c) {
-		cards.add(c);
-	}
-
-	public void removeCard(Card c) {
-		cards.remove(c);
-	}
-
-	public void removeAllCards() {
-		for (int i = 0; i < cards.size(); i++) {
-			cards.remove(i);
-		}
-	}
-
 	@Override
 	public String toString() {
-		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id="
-				+ id + ", isLocalPlayer=" + isLocalPlayer + ", source=" + source + ", destination=" + destination + "]";
+		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id=" + id + ", isLocalPlayer=" + isLocalPlayer
+		        + ", source=" + source + ", destination=" + destination + "]";
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		// return super.equals(o);
-		if (!(o instanceof Player))
-			return false;
-		Player playO = (Player) o;
-		if (playO.playerColor != null && this.playerColor != null) {
-			if (!playO.playerColor.equals(this.playerColor)) {
-				return false;
-			}
-		}
-		if (playO.playerName != null && this.playerName != null) {
-			if (!playO.playerName.equals(this.playerName)) {
-				return false;
-			}
-		}
-		if (playO.cards.equals(this.cards)) {
-			if (!playO.cards.equals(this.cards)) {
-				return false;
-			}
-		}
-		if (playO.source != null && this.source != null) {
-			if (!playO.source.equals(this.source)) {
-				return false;
-			}
-		}
-		if (playO.destination != null && this.destination != null) {
-			if (!playO.destination.equals(this.destination)) {
-				return false;
-			}
-		}
-		return playO.isLocalPlayer == this.isLocalPlayer && playO.id == this.id;
-	}
-
-	@Override
-	public int hashCode() {
-		// return super.hashCode();
-		int hash = 17;
-		if (this.playerColor != null)
-			hash = hash * 23 + playerColor.hashCode();
-		if (this.playerName != null)
-			hash = hash * 23 + playerName.hashCode();
-		if (this.cards != null)
-			hash = hash * 23 + cards.hashCode();
-		if (this.source != null)
-			hash = hash * 23 + source.hashCode();
-		if (this.destination != null)
-			hash = hash * 23 + destination.hashCode();
-		hash = 23 * hash + (isLocalPlayer ? 1 : 0);
-		hash = 23 * hash + id;
-		return hash;
-	}
-
 }

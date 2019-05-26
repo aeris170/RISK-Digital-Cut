@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.pmnm.risk.main.Player;
 import com.pmnm.risk.map.province.Province;
 
 public class Continent implements Serializable {
@@ -74,30 +73,10 @@ public class Continent implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Continent] Name: " + name + "\n" + Arrays.toString(provinces.toArray(new Province[provinces.size()]))
-				+ "\n";
+		return "[Continent] Name: " + name + "\n" + Arrays.toString(provinces.toArray(new Province[provinces.size()])) + "\n";
 	}
 
 	public static void printAllContinents() {
 		NAME_CONTINENT.forEach((s, c) -> System.out.println(c.toString()));
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		// return super.equals(o);
-		if (!(o instanceof Continent))
-			return false;
-		Continent contO = (Continent) o;
-		return contO.name.equals(this.name) && contO.captureBonus == this.captureBonus
-				&& contO.abbreviation.equals(this.abbreviation);
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 17;
-		hash = hash * 23 + name.hashCode();
-		hash = hash * 23 + abbreviation.hashCode();
-		hash = 23 * hash + captureBonus;
-		return hash;
 	}
 }
