@@ -27,7 +27,6 @@ public final class ExitPopup extends DoaPanel {
 	private DoaVectorF bounds = new DoaVectorF(Main.WINDOW_WIDTH * 0.300f, Main.WINDOW_HEIGHT * 0.036f);
 
 	private String s;
-	private Font f;
 
 	public ExitPopup() {
 		super(Main.WINDOW_WIDTH * 0.314f, Main.WINDOW_HEIGHT * 0.388f, (int) (Main.WINDOW_WIDTH * 0.371f), (int) (Main.WINDOW_HEIGHT * 0.222f));
