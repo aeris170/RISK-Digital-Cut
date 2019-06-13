@@ -20,24 +20,11 @@ AI(?) opponents and new maps to the game. Depending on time left after these. Mo
 
 Shortly said, this will be an extended version of the traditional Risk game, designed so that it can be played alone or with people from far away locations (unlike the original version, which requires a certain number of people to be strictly around the game board), and will have more gameplay content than the original Risk, such as new maps, and depending on time left after the key features are implemented, even more.
 
-## Group 1.I Members
-
 ### Private Moon Inc.
 
   * [Doğa Oruç - 21602022](https://github.com/aeris170)
   * [Fazilet Simge Er - 21602358](https://github.com/simge98)
   * [Kaan Ünlü - 21602622](https://github.com/Paledomain)
-  * [Ege Turan - 21502441](https://github.com/egeturan)
-  * [Çağrı Orhan - 21503102](https://github.com/cagriorhan)
-
-
-## Grade
-  90
-
-## Meeting Hours
-
-* Monday 13.40 - 15.40
-* Friday 13.40 - 15.40
 
 [1]: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
 [2]: https://www.hasbro.com/common/instruct/Risk1963.PDF
