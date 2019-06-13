@@ -31,30 +31,8 @@ Shortly said, this will be an extended version of the traditional Risk game, des
   * [Çağrı Orhan - 21503102](https://github.com/cagriorhan)
 
 
-## Links to Project Reports
-The first iteration is not graded, whereas the second is.
-
-### Iteration 1
-
-* [Analysis Report][3]
-  - **PASSED**
-* [Design Report][4]
-  - **PASSED**
-* [Final Report][5]
-  - **PASSED**
-* [Presentation][6] and [Demo][7]
-  - **PASSED**		
-
-### Iteration 2
-
-* [Analysis Report][8]
-  - ? / 100
-* [Design Report][9]
-  - ? / 100
-* [Final Report][10]
-  - ? / 100
-* [Presentation][11] and [Demo][12]
-  - ? / 100
+## Grade
+  90
 
 ## Meeting Hours
 
