@@ -6,6 +6,7 @@ import java.awt.Font;
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorI;
+import com.pmnm.roy.ui.menu.ExitFadeToBlack;
 import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.FadingBackground;
 import com.pmnm.roy.ui.menu.HostGameMenu;
@@ -47,6 +48,7 @@ public final class UIInit {
 	public static JoinGameMenu jgm;
 
 	public static ExitPopup ep;
+	public static ExitFadeToBlack ef;
 
 	private UIInit() {}
 
@@ -62,5 +64,6 @@ public final class UIInit {
 		hgm = DoaHandler.instantiate(HostGameMenu.class);
 		jgm = DoaHandler.instantiate(JoinGameMenu.class);
 		ep = DoaHandler.instantiate(ExitPopup.class);
+		ef = DoaHandler.instantiate(ExitFadeToBlack.class);
 	}
 }
