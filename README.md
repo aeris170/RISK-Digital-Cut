@@ -14,9 +14,8 @@
 * Gordon, David. "Risk vs Diplomacy". TotalDiplomacy: [link][1]
 * "Risk! Rules of Play" (PDF). Parker Brothers. 1963. Retrieved 2015-05-24: [link][2]
 
-## Features to be Implemented (Rough)
-The entirety of the board game will be implemented, cards are out. Beyond that, the primary objectives of this project is adding **_online multiplayer_**,
-AI(?) opponents and new maps and maybe a map making tool.
+## What we will do:
+As Private Moon Nobleman, we will implement the entirety of the board game, cards are out due to balancing. Beyond that, the primary objectives of this project are adding **_online multiplayer_**, AI opponents and new maps and maybe even a map making tool.
 
 Shortly said, this will be an extended version of the traditional Risk game, designed so that it can be played alone or with people from far away locations (unlike the original version, which requires a certain number of people to be strictly around the game board), and will have more gameplay content than the original Risk.
 
