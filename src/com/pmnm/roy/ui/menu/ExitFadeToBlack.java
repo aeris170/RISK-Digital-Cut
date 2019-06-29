@@ -14,6 +14,7 @@ public class ExitFadeToBlack extends DoaPanel {
 	private boolean exiting;
 	private float exitingFadeAlpha = 0;
 	private float exitingFadeAlphaDelta = 0.0015f;
+	private float exitingFadeAlphaDeltaJerk = 0.00005f;
 
 	public ExitFadeToBlack() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
@@ -23,6 +24,7 @@ public class ExitFadeToBlack extends DoaPanel {
 	public void tick() {
 		if (exiting) {
 			exitingFadeAlpha += exitingFadeAlphaDelta;
+			exitingFadeAlphaDelta += exitingFadeAlphaDeltaJerk;
 		}
 		if (exitingFadeAlpha > 1) {
 			System.exit(0);
