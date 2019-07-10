@@ -18,6 +18,7 @@ public class ExitFadeToBlack extends DoaPanel {
 
 	public ExitFadeToBlack() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		setzOrder(1001);
 	}
 
 	@Override

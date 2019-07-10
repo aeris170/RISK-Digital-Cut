@@ -32,15 +32,20 @@ public final class ExitPopup extends DoaPanel {
 		super(Main.WINDOW_WIDTH * 0.314f, Main.WINDOW_HEIGHT * 0.388f, (int) (Main.WINDOW_WIDTH * 0.371f), (int) (Main.WINDOW_HEIGHT * 0.222f));
 		yesButton.addAction(() -> UIInit.ef.beginFade());
 		noButton.addAction(() -> hide());
+		setzOrder(1000);
 		add(yesButton);
 		add(noButton);
 		hide();
 	}
 
 	@Override
-	public void tick() {
+	public void show() {
+		super.show();
 		s = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT").toUpperCase();
 	}
+
+	@Override
+	public void tick() {}
 
 	@Override
 	public void render(DoaGraphicsContext g) {

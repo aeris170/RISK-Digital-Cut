@@ -17,7 +17,6 @@ import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
-import com.pmnm.roy.ui.actions.ExitButtonAction;
 import com.pmnm.roy.ui.actions.LoadButtonAction;
 import com.pmnm.roy.ui.actions.RulesButtonAction;
 import com.pmnm.roy.ui.gameui.BottomPanel;
@@ -53,7 +52,7 @@ public final class PauseMenu extends DoaPanel {
 		super(Main.WINDOW_WIDTH * 0.5f - DoaSprites.get("escapeMenu").getWidth() * 0.5f, Main.WINDOW_HEIGHT * 0.291f, (int) (Main.WINDOW_WIDTH * 0.240f),
 		        (int) (Main.WINDOW_HEIGHT * 0.419f));
 
-		exitButtonPop.addAction(new ExitButtonAction(ep));
+		exitButtonPop.addAction(() -> UIInit.ep.show());
 		backButtonPop.addAction(() -> {
 			hide();
 			mm.show();
