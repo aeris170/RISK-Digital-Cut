@@ -19,8 +19,6 @@ public class TextImageButton extends DoaImageButton {
 	protected Color textColor;
 	protected Color hoverTextColor;
 	private DoaVectorF textRect;
-	private FontMetrics fm;
-	private int ascent;
 	private boolean isCentered;
 
 	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor,
@@ -34,7 +32,7 @@ public class TextImageButton extends DoaImageButton {
 		this.text = text;
 		this.textColor = textColor;
 		this.hoverTextColor = hoverTextColor;
-		textRect = new DoaVectorF(width - 20, height - 20);
+		textRect = new DoaVectorF(width - 20f, height - 20f);
 		this.isCentered = isCentered;
 	}
 
@@ -47,7 +45,7 @@ public class TextImageButton extends DoaImageButton {
 		super.render(g);
 		String s = Translator.getInstance().getTranslatedString(text).toUpperCase();
 		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, s)));
-		fm = g.getFontMetrics();
+		FontMetrics fm = g.getFontMetrics();
 		g.setColor(textColor);
 		if (hover) {
 			g.setColor(hoverTextColor);
