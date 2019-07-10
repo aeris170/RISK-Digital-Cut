@@ -3,8 +3,6 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Color;
 import java.util.Calendar;
 
-import com.pmnm.risk.main.GameManager;
-
 public enum Season {
 
 	WINTER("winter", new Color(218, 255, 255)), SPRING("spring", new Color(123, 215, 109)), SUMMER("summer", new Color(211, 242, 150)),

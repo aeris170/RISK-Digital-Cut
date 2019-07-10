@@ -13,7 +13,6 @@ import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaMath;
-import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 
 public class SeasonEffect extends DoaObject {

@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.network.message.MessageBuilder.Message;
-import com.pmnm.risk.network.message.MessageBuilder;
 import com.pmnm.risk.network.message.MessageType;
 
 public class Client implements Runnable {

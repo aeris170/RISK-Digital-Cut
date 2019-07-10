@@ -8,7 +8,6 @@ import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.LoadGameMenu;
 import com.pmnm.roy.ui.menu.MainMenu;
 import com.pmnm.roy.ui.menu.PlayOfflineMenu;
-import com.pmnm.roy.ui.menu.RulesMenu;
 
 public class LoadButtonAction implements DoaUIAction {
 
