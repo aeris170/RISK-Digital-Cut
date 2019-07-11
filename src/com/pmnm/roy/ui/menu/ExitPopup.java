@@ -31,7 +31,7 @@ public final class ExitPopup extends DoaPanel {
 	public ExitPopup() {
 		super(Main.WINDOW_WIDTH * 0.314f, Main.WINDOW_HEIGHT * 0.388f, (int) (Main.WINDOW_WIDTH * 0.371f), (int) (Main.WINDOW_HEIGHT * 0.222f));
 		yesButton.addAction(() -> UIInit.ef.beginFade());
-		noButton.addAction(() -> hide());
+		noButton.addAction(this::hide);
 		setzOrder(1000);
 		add(yesButton);
 		add(noButton);
