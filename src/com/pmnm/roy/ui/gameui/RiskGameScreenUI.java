@@ -8,13 +8,10 @@ import com.doa.engine.DoaHandler;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.map.MapLoader;
 import com.pmnm.risk.map.board.GameBoard;
-import com.pmnm.roy.ui.UIInit;
-import com.pmnm.roy.ui.menu.PauseMenu;
 
 public final class RiskGameScreenUI {
 
 	public static DicePanel DicePanel;
-	public static PauseMenu esc;
 
 	private RiskGameScreenUI() {}
 
@@ -27,6 +24,5 @@ public final class RiskGameScreenUI {
 		DoaHandler.instantiate(BottomPanel.class);
 		DoaHandler.instantiate(GameManager.class, mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties, randomPlacement);
 		DoaHandler.instantiate(GameBoard.class);
-		esc = DoaHandler.instantiate(PauseMenu.class, UIInit.mm, UIInit.sm, UIInit.rm, UIInit.lgm, UIInit.ep, UIInit.pofm);
 	}
 }

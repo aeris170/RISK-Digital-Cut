@@ -14,6 +14,7 @@ import com.pmnm.roy.ui.menu.JoinGameMenu;
 import com.pmnm.roy.ui.menu.LoadGameMenu;
 import com.pmnm.roy.ui.menu.MainMenu;
 import com.pmnm.roy.ui.menu.NewGameMenu;
+import com.pmnm.roy.ui.menu.PauseMenu;
 import com.pmnm.roy.ui.menu.PlayOfflineMenu;
 import com.pmnm.roy.ui.menu.PlayOnlineMenu;
 import com.pmnm.roy.ui.menu.RulesMenu;
@@ -50,6 +51,8 @@ public final class UIInit {
 	public static ExitPopup ep;
 	public static ExitFadeToBlack ef;
 
+	public static PauseMenu pm;
+
 	private UIInit() {}
 
 	public static void initUI() {
@@ -65,5 +68,6 @@ public final class UIInit {
 		jgm = DoaHandler.instantiate(JoinGameMenu.class);
 		ep = DoaHandler.instantiate(ExitPopup.class);
 		ef = DoaHandler.instantiate(ExitFadeToBlack.class);
+		pm = DoaHandler.instantiate(PauseMenu.class);
 	}
 }
