@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
+import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 
@@ -23,34 +23,29 @@ public class Water extends DoaObject {
 
 	private static final long serialVersionUID = -3289865017771805571L;
 
-	public static Water INSTANCE;
-
 	private static final int SEG_X = 16;
 	private static final int SEG_Y = 9;
 
-	BufferedImage tex = null;
-	BufferedImage bigWinter = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage bigSpring = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage bigSummer = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage bigFall = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage currentWaterTexCache = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage tex = null;
+	private BufferedImage bigWinter = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage bigSpring = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage bigSummer = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage bigFall = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage currentWaterTexCache = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 
-	DoaTaskGuard renderGuard = new DoaTaskGuard();
+	private DoaTaskGuard renderGuard = new DoaTaskGuard();
 
-	Point2D[][] points = new Point2D.Double[SEG_X][SEG_Y];
-	long[][] startTime = new long[SEG_X][SEG_Y];
-	double[][] intensity = new double[SEG_X][SEG_Y];
+	private transient Point2D[][] points = new Point2D.Double[SEG_X][SEG_Y];
+	private long[][] startTime = new long[SEG_X][SEG_Y];
+	private double[][] intensity = new double[SEG_X][SEG_Y];
 
-	List<TriangularSurface> mesh = new ArrayList<>();
+	private transient List<TriangularSurface> mesh = new ArrayList<>();
 
-	Water() {
+	public Water() {
 		super(0f, 0f, -2);
-		if (INSTANCE != null) {
-			DoaHandler.remove(INSTANCE);
-		}
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
-				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1), y * Main.WINDOW_HEIGHT / (SEG_Y - 1));
+				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1f), y * Main.WINDOW_HEIGHT / (SEG_Y - 1f));
 				startTime[x][y] = ThreadLocalRandom.current().nextLong();
 				intensity[x][y] = ThreadLocalRandom.current().nextInt(1, 10);
 			}
@@ -90,7 +85,6 @@ public class Water extends DoaObject {
 				bigFallRenderer.drawImage(fallSpr, i, j, texW, texH, null);
 			}
 		}
-		INSTANCE = this;
 	}
 
 	@Override
@@ -99,8 +93,8 @@ public class Water extends DoaObject {
 			for (int y = 0; y < points[0].length; y++) {
 				for (int x = 0; x < points.length; x++) {
 					Point2D p = points[x][y];
-					double px = x * Main.WINDOW_WIDTH / (SEG_X - 1) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000573);
-					double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000291);
+					double px = x * Main.WINDOW_WIDTH / (SEG_X - 1f) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000173);
+					double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1f) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000091);
 					p.setLocation(px, py);
 				}
 			}
@@ -123,21 +117,23 @@ public class Water extends DoaObject {
 				case FALL:
 					tex = bigFall;
 					break;
+				default:
+					throw new RiskException("Should not reach here!");
 			}
-			mesh.parallelStream().forEach(surface -> surface.render());
+			mesh.parallelStream().forEach(TriangularSurface::render);
 		}, renderGuard, 75);
 		g.drawImage(currentWaterTexCache, 0, 0);
 	}
 
 	private class TriangularSurface {
 
-		Point2D[] points;
-		Polygon polygon = new Polygon();
-		AffineTransform t1 = new AffineTransform();
-		AffineTransform t2 = new AffineTransform();
+		private Point2D[] trianglePoints;
+		private Polygon polygon = new Polygon();
+		private AffineTransform t1 = new AffineTransform();
+		private AffineTransform t2 = new AffineTransform();
 
-		TriangularSurface(Point2D first, Point2D second, Point2D third) {
-			this.points = new Point2D[] { first, second, third };
+		private TriangularSurface(Point2D first, Point2D second, Point2D third) {
+			trianglePoints = new Point2D[] { first, second, third };
 			t1.setTransform(first.getX() - third.getX(), first.getY() - third.getY(), second.getX() - third.getX(), second.getY() - third.getY(), third.getX(),
 			        third.getY());
 			try {
@@ -150,13 +146,13 @@ public class Water extends DoaObject {
 		public void render() {
 			Graphics2D g2d = currentWaterTexCache.createGraphics();
 			polygon.reset();
-			for (Point2D p : points) {
+			for (Point2D p : trianglePoints) {
 				polygon.addPoint((int) p.getX(), (int) p.getY());
 			}
 			g2d.setClip(polygon);
-			Point2D a = points[0];
-			Point2D b = points[1];
-			Point2D c = points[2];
+			Point2D a = trianglePoints[0];
+			Point2D b = trianglePoints[1];
+			Point2D c = trianglePoints[2];
 			t2.setTransform(a.getX() - c.getX(), a.getY() - c.getY(), b.getX() - c.getX(), b.getY() - c.getY(), c.getX(), c.getY());
 			t2.concatenate(t1);
 			g2d.drawImage(tex, t2, null);
