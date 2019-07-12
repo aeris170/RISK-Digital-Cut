@@ -13,36 +13,31 @@
 		<neighbour>vaes dothrak</neighbour>
 		<neighbour>cape kraken</neighbour>
 	</province>
-	
 	<province>
 		<name>samyrian</name>
 		<neighbour>northern grass sea</neighbour>
 		<neighbour>vaes dothrak</neighbour>
 		<neighbour>eastern dothraki sea</neighbour>
 		<neighbour>the red waste</neighbour>
-		<neighbour>bayasabhad</neighbour>>
+		<neighbour>bayasabhad</neighbour>
 	</province>
-	
 	<province>
 		<name>bayasabhad</name>
 		<neighbour>samyrian</neighbour>
 		<neighbour>qarth</neighbour>
 		<neighbour>the red waste</neighbour>
 	</province>
-	
 	<province>
 		<name>qarth</name>
 		<neighbour>bayasabhad</neighbour>
 		<neighbour>the red waste</neighbour>
 	</province>
-	
 	<province>
 		<name>the red waste</name>
 		<neighbour>samyrian</neighbour>
 		<neighbour>bayasabhad</neighbour>
 		<neighbour>qarth</neighbour>
 	</province>
-	
 	<province>
 		<name>mereen</name>
 		<neighbour>mantarys</neighbour>
@@ -52,7 +47,6 @@
 		<neighbour>the red waste</neighbour>
 		<neighbour>yunkai</neighbour>
 	</province>
-	
 	<province>
 		<name>yunkai</name>
 		<neighbour>mereen</neighbour>
@@ -60,7 +54,6 @@
 		<neighbour>the red waste</neighbour>
 		<neighbour>astapor</neighbour>
 	</province>
-	
 	<province>
 		<name>astapor</name>
 		<neighbour>yunkai</neighbour>
@@ -68,13 +61,11 @@
 		<neighbour>old ghis</neighbour>
 		<neighbour>oros</neighbour>
 	</province>
-	
 	<province>
 		<name>old ghis</name>
 		<neighbour>astapor</neighbour>
 		<neighbour>the red waste</neighbour>
 	</province>
-	
 	<province>
 		<name>the flatlands</name>
 		<neighbour>braavosian coastlands</neighbour>
@@ -83,7 +74,6 @@
 		<neighbour>myr</neighbour>
 		<neighbour>crackclaw point</neighbour>
 	</province>
-	
 	<province>
 		<name>braavosian coastlands</name>
 		<neighbour>the flatlands</neighbour>
@@ -91,14 +81,12 @@
 		<neighbour>the axe</neighbour>
 		<neighbour>upper rhoyne</neighbour>
 	</province>
-	
 	<province>
 		<name>the axe</name>
 		<neighbour>braavosian coastlands</neighbour>
 		<neighbour>hills of norvos</neighbour>
 		<neighbour>forest of qohor</neighbour>
 	</province>
-	
 	<province>
 		<name>hills of norvos</name>
 		<neighbour>braavosian coastlands</neighbour>
@@ -106,7 +94,6 @@
 		<neighbour>forest of qohor</neighbour>
 		<neighbour>upper rhoyne</neighbour>
 	</province>
-	
 	<province>
 		<name>forest of qohor</name>
 		<neighbour>hills of norvos</neighbour>
@@ -116,7 +103,6 @@
 		<neighbour>western dothraki sea</neighbour>
 		<neighbour>sarnor</neighbour>
 	</province>
-	
 	<province>
 		<name>upper rhoyne</name>
 		<neighbour>the golden fields</neighbour>
@@ -126,7 +112,6 @@
 		<neighbour>forest of qohor</neighbour>
 		<neighbour>lower rhoyne</neighbour>
 	</province>
-	
 	<province>
 		<name>the golden fields</name>
 		<neighbour>the flatlands</neighbour>
@@ -134,7 +119,6 @@
 		<neighbour>lower rhoyne</neighbour>
 		<neighbour>myr</neighbour>
 	</province>
-	
 	<province>
 		<name>mantarys</name>
 		<neighbour>volantis</neighbour>
@@ -143,19 +127,16 @@
 		<neighbour>mereen</neighbour>
 		<neighbour>the sea of sights</neighbour>
 	</province>
-	
 	<province>
 		<name>the sea of sights</name>
 		<neighbour>mantarys</neighbour>
 		<neighbour>oros</neighbour>
 	</province>
-	
 	<province>
 		<name>oros</name>
 		<neighbour>the sea of sights</neighbour>
 		<neighbour>astapor</neighbour>
 	</province>
-	
 	<province>
 		<name>myr</name>
 		<neighbour>the golden fields</neighbour>
@@ -165,14 +146,12 @@
 		<neighbour>tyrosh</neighbour>
 		<neighbour>the flatlands</neighbour>
 	</province>
-	
 	<province>
 		<name>tyrosh</name>
 		<neighbour>myr</neighbour>
 		<neighbour>the orange shore</neighbour>
 		<neighbour>sunspear</neighbour>
 	</province>
-	
 	<province>
 		<name>the orange shore</name>
 		<neighbour>tyrosh</neighbour>
@@ -180,7 +159,6 @@
 		<neighbour>lower rhoyne</neighbour>
 		<neighbour>volantis</neighbour>
 	</province>
-	
 	<province>
 		<name>lower rhoyne</name>
 		<neighbour>the golden fields</neighbour>
@@ -191,7 +169,6 @@
 		<neighbour>the orange shore</neighbour>
 		<neighbour>myr</neighbour>
 	</province>
-	
 	<province>
 		<name>volantis</name>
 		<neighbour>mantarys</neighbour>
@@ -199,14 +176,12 @@
 		<neighbour>myr</neighbour>
 		<neighbour>the orange shore</neighbour>
 	</province>
-	
 	<province>
 		<name>sarnor</name>
 		<neighbour>forest of qohor</neighbour>
 		<neighbour>western dothraki sea</neighbour>
 		<neighbour>northern dothraki sea</neighbour>
 	</province>
-	
 	<province>
 		<name>western dothraki sea</name>
 		<neighbour>forest of qohor</neighbour>
@@ -217,7 +192,6 @@
 		<neighbour>mantarys</neighbour>
 		<neighbour>lower rhoyne</neighbour>
 	</province>
-	
 	<province>
 		<name>northern dothraki sea</name>
 		<neighbour>sarnor</neighbour>
@@ -226,7 +200,6 @@
 		<neighbour>vaes dothrak</neighbour>
 		<neighbour>the footprint</neighbour>
 	</province>
-	
 	<province>
 		<name>eastern dothraki sea</name>
 		<neighbour>northern dothraki sea</neighbour>
@@ -237,7 +210,6 @@
 		<neighbour>samyrian</neighbour>
 		<neighbour>vaes dothrak</neighbour>
 	</province>
-	
 	<province>
 		<name>vaes dothrak</name>
 		<neighbour>northern dothraki sea</neighbour>
@@ -246,14 +218,12 @@
 		<neighbour>northern grass sea</neighbour>
 		<neighbour>the footprint</neighbour>
 	</province>
-	
 	<province>
 		<name>the footprint</name>
 		<neighbour>northern dothraki sea</neighbour>
 		<neighbour>vaes dothrak</neighbour>
 		<neighbour>northern grass sea</neighbour>
 	</province>
-	
 	<province>
 		<name>lhazar</name>
 		<neighbour>eastern dothraki sea</neighbour>
@@ -261,7 +231,6 @@
 		<neighbour>yunkai</neighbour>
 		<neighbour>the red waste</neighbour>
 	</province>
-	
 	<province>
 		<name>the neck</name>
 		<neighbour>white harbor</neighbour>
@@ -269,12 +238,10 @@
 		<neighbour>the twins</neighbour>
 		<neighbour>mountains of the moon</neighbour>
 	</province>
-	
 	<province>
 		<name>cape kraken</name>
 		<neighbour>the neck</neighbour>
 	</province>
-	
 	<province>
 		<name>king's landing</name>
 		<neighbour>crackclaw point</neighbour>
@@ -283,7 +250,6 @@
 		<neighbour>crackclaw point</neighbour>
 		<neighbour>king's wood</neighbour>
 	</province>
-	
 	<province>
 		<name>crackclaw point</name>
 		<neighbour>king's landing</neighbour>
@@ -291,7 +257,6 @@
 		<neighbour>gulltown</neighbour>
 		<neighbour>the flatlands</neighbour>
 	</province>
-	
 	<province>
 		<name>king's wood</name>
 		<neighbour>the mander</neighbour>
@@ -299,7 +264,6 @@
 		<neighbour>king's landing</neighbour>
 		<neighbour>storm's end</neighbour>
 	</province>
-	
 	<province>
 		<name>storm's end</name>
 		<neighbour>king's wood</neighbour>
@@ -307,20 +271,17 @@
 		<neighbour>rainwood</neighbour>
 		<neighbour>the mander</neighbour>
 	</province>
-	
 	<province>
 		<name>dornish marches</name>
 		<neighbour>king's wood</neighbour>
 		<neighbour>storm's end</neighbour>
 		<neighbour>rainwood</neighbour>
 	</province>
-	
 	<province>
 		<name>rainwood</name>
 		<neighbour>storm's end</neighbour>
 		<neighbour>dornish marches</neighbour>
 	</province>
-	
 	<province>
 		<name>mountains of the moon</name>
 		<neighbour>the fingers</neighbour>
@@ -328,13 +289,11 @@
 		<neighbour>kings landings</neighbour>
 		<neighbour>the neck</neighbour>
 	</province>
-	
 	<province>
 		<name>the fingers</name>
 		<neighbour>mountains of the moon</neighbour>
 		<neighbour>the eyrie</neighbour>
 	</province>
-	
 	<province>
 		<name>the eyrie</name>
 		<neighbour>gulltown</neighbour>
@@ -343,39 +302,33 @@
 		<neighbour>crackclaw point</neighbour>
 		<neighbour>king's landing</neighbour>
 	</province>
-	
 	<province>
 		<name>gulltown</name>
 		<neighbour>crackclaw point</neighbour>
 		<neighbour>the eyrie</neighbour>
 	</province>
-	
 	<province>
 		<name>red mountains</name>
 		<neighbour>dornish marches</neighbour>
 		<neighbour>greenblood</neighbour>
 		<neighbour>sandstone</neighbour>
 	</province>
-	
 	<province>
 		<name>greenblood</name>
 		<neighbour>red mountains</neighbour>
 		<neighbour>sandstone</neighbour>
 		<neighbour>sunspear</neighbour>
 	</province>
-	
 	<province>
 		<name>sandstone</name>
 		<neighbour>red mountains</neighbour>
 		<neighbour>greenblood</neighbour>
 	</province>
-	
 	<province>
 		<name>sunspear</name>
 		<neighbour>greenblood</neighbour>
 		<neighbour>tyrosh</neighbour>
 	</province>
-	
 	<province>
 		<name>blackwater rush</name>
 		<neighbour>king's landing</neighbour>
@@ -384,9 +337,6 @@
 		<neighbour>king's wood</neighbour>
 		<neighbour>storm's end</neighbour>
 	</province>
-	
-
-	
 	<province>
 		<name>the mander</name>
 		<neighbour>highgarden</neighbour>
@@ -395,7 +345,6 @@
 		<neighbour>storm's end</neighbour>
 		<neighbour>dornish marches</neighbour>
 	</province>
-	
 	<province>
 		<name>highgarden</name>
 		<neighbour>blackwater rush</neighbour>
@@ -405,72 +354,60 @@
 		<neighbour>three tower</neighbour>
 		<neighbour>oldtown</neighbour>
 	</province>
-	
 	<province>
 		<name>oldtown</name>
 		<neighbour>highgarden</neighbour>
 		<neighbour>three tower</neighbour>
 	</province>
-	
 	<province>
 		<name>three tower</name>
 		<neighbour>red mountains</neighbour>
 		<neighbour>highgarden</neighbour>
 		<neighbour>oldtown</neighbour>
 	</province>
-	
 	<province>
 		<name>the twins</name>
 		<neighbour>mountains of the moon</neighbour>
 		<neighbour>the trident</neighbour>
 		<neighbour>the neck</neighbour>
 	</province>
-	
 	<province>
 		<name>the trident</name>
 		<neighbour>the twins</neighbour>
 		<neighbour>mountains of the moon</neighbour>
 		<neighbour>riverrun</neighbour>
 	</province>
-	
 	<province>
 		<name>riverrun</name>
 		<neighbour>the trident</neighbour>
 		<neighbour>stoney sept</neighbour>
 	</province>
-	
 	<province>
 		<name>stoney sept</name>
 		<neighbour>blackwater rush</neighbour>
 		<neighbour>riverrun</neighbour>
 		<neighbour>the trident</neighbour>
 	</province>
-	
 	<province>
 		<name>the crag</name>
 		<neighbour>casterly rock</neighbour>
 	</province>
-	
 	<province>
 		<name>casterly rock</name>
 		<neighbour>the crag</neighbour>
 	</province>
-	
 	<province>
 		<name>crakehall</name>
 		<neighbour>casterly rock</neighbour>
 	</province>
-	
 	<province>
 		<name>golden tooth</name>
 		<neighbour>the crag</neighbour>
 	</province>
-	
 	<province>
 		<name>silverhill</name>
 		<neighbour>the crag</neighbour>
 	</province>
-	
 	<province>
 		<name>searoad marches</name>
 		<neighbour>crakehall</neighbour>
@@ -478,14 +415,12 @@
 		<neighbour>blackwater rush</neighbour>
 		<neighbour>highgarden</neighbour>
 	</province>
-	
 	<province>
 		<name>the iron island</name>
 		<neighbour>cape kraken</neighbour>
 		<neighbour>the twins</neighbour>
 		<neighbour>the crag</neighbour>
 	</province>
-	
 	<province>
 		<name>harrenhal</name>
 		<neighbour>riverrun</neighbour>
@@ -494,8 +429,4 @@
 		<neighbour>blackwater rush</neighbour>
 		<neighbour>king's landing</neighbour>
 	</province>
-	
-
-	
-	
 </neighbours>

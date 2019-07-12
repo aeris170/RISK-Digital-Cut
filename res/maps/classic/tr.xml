@@ -4,7 +4,7 @@
 <!ELEMENT pair (key, value)>
 <!ELEMENT key (#PCDATA)>
 <!ELEMENT value (#PCDATA)>
-]
+]>
 <map_tr>
 	<!-- CONTINENTS -->
 	<pair>
