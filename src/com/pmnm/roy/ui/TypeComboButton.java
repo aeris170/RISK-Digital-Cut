@@ -42,7 +42,6 @@ public class TypeComboButton extends DoaImageButton {
 
 	@Override
 	public void tick() {
-		recalibrateBounds();
 		if (isSinglePlayer || COMBO_BUTTONS.get(COMBO_BUTTONS.size() - 1) != this) {
 			if (isEnabled && DoaMouse.MB1) {
 				if (click) {
