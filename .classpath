@@ -19,9 +19,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/DoaEngine/DoaEngine 2.5.jar" sourcepath="lib/DoaEngine/DoaEngine 2.5.jar">
+	<classpathentry kind="lib" path="lib/DoaEngine/DoaEngine 2.5.1.jar" sourcepath="lib/DoaEngine/DoaEngine 2.5.1.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/DoaEngine/DoaEngine%202.5.jar!/doc"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/DoaEngine/DoaEngine%202.5.1.jar!/doc"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
