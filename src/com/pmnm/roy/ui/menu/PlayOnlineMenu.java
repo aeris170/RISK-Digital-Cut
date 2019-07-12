@@ -13,12 +13,15 @@ public class PlayOnlineMenu extends DoaPanel {
 
 	private static final long serialVersionUID = 1834343492692029824L;
 
-	TextImageButton hostGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 511f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "HOST_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
-	TextImageButton joinGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 584f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "JOIN_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
-	TextImageButton backButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 803f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
+	private static final TextImageButton hostGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 511f), UIInit.BUTTON_SIZE.x,
+	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "HOST_GAME", UIInit.FONT_COLOR,
+	        UIInit.HOVER_FONT_COLOR);
+	private static final TextImageButton joinGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 584f), UIInit.BUTTON_SIZE.x,
+	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "JOIN_GAME", UIInit.FONT_COLOR,
+	        UIInit.HOVER_FONT_COLOR);
+	private static final TextImageButton backButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 803f), UIInit.BUTTON_SIZE.x,
+	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR,
+	        UIInit.HOVER_FONT_COLOR);
 
 	public PlayOnlineMenu() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);

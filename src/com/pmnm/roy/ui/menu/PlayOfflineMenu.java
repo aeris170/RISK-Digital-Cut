@@ -13,12 +13,15 @@ public class PlayOfflineMenu extends DoaPanel {
 
 	private static final long serialVersionUID = -8533259801260650400L;
 
-	TextImageButton newGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 511f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "NEW_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
-	TextImageButton loadGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 584f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "LOAD_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
-	TextImageButton backButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 803f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR);
+	private static final TextImageButton newGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 511f), UIInit.BUTTON_SIZE.x,
+	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "NEW_GAME", UIInit.FONT_COLOR,
+	        UIInit.HOVER_FONT_COLOR);
+	private static final TextImageButton loadGameButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 584f), UIInit.BUTTON_SIZE.x,
+	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "LOAD_GAME", UIInit.FONT_COLOR,
+	        UIInit.HOVER_FONT_COLOR);
+	private static final TextImageButton backButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(1377f, 803f), UIInit.BUTTON_SIZE.x,
+	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR,
+	        UIInit.HOVER_FONT_COLOR);
 
 	public PlayOfflineMenu() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
