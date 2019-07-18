@@ -14,6 +14,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaMath;
 import com.pmnm.risk.main.Main;
+import com.pmnm.roy.ui.ZOrders;
 
 public class SeasonEffect extends DoaObject {
 
@@ -26,7 +27,7 @@ public class SeasonEffect extends DoaObject {
 	private double godrayAngle = 0;
 
 	public SeasonEffect() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, 100);
+		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, ZOrders.SEASON_Z);
 		if (INSTANCE != null) {
 			DoaHandler.remove(INSTANCE);
 		}

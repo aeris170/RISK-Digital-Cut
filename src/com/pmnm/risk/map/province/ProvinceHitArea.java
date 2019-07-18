@@ -29,6 +29,7 @@ import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.ZOrders;
 
 public class ProvinceHitArea extends DoaObject {
 
@@ -121,16 +122,16 @@ public class ProvinceHitArea extends DoaObject {
 			}
 
 			if (isHighlighted) {
-				setzOrder(2);
+				setzOrder(ZOrders.HIGHLIGHTED_PROVINCE_Z);
 			} else if (isEmphasized) {
-				setzOrder(3);
+				setzOrder(ZOrders.EMPHASIZED_PROVINCE_Z);
 			} else if (isAttacker || isDefender || isReinforcing || isReinforced) {
-				setzOrder(4);
+				setzOrder(ZOrders.MUTATING_PROVINCE_Z);
 			} else if (getzOrder() != 1) {
-				setzOrder(1);
+				setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
 			}
 			if (isSelected) {
-				setzOrder(5);
+				setzOrder(ZOrders.SELECTED_PROVINCE_Z);
 				selectedMeshAlpha += selectedMeshAlphaDelta;
 				if (selectedMeshAlpha >= 0.6f) {
 					selectedMeshAlpha = 0.6f;
@@ -142,7 +143,7 @@ public class ProvinceHitArea extends DoaObject {
 			} else {
 				selectedMeshAlpha = 0f;
 				if (getzOrder() != 1) {
-					setzOrder(1);
+					setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
 				}
 			}
 		}
@@ -326,52 +327,52 @@ public class ProvinceHitArea extends DoaObject {
 
 	public void selectAsAttacker() {
 		isAttacker = true;
-		setzOrder(4);
+		setzOrder(ZOrders.MUTATING_PROVINCE_Z);
 	}
 
 	public void selectAsDefender() {
 		isDefender = true;
-		setzOrder(4);
+		setzOrder(ZOrders.MUTATING_PROVINCE_Z);
 	}
 
 	public void deselectAsAttacker() {
 		isAttacker = false;
-		setzOrder(0);
+		setzOrder(ZOrders.DESELECTED_PROVINCE_Z);
 	}
 
 	public void deselectAsDefender() {
 		isDefender = false;
-		setzOrder(0);
+		setzOrder(ZOrders.DESELECTED_PROVINCE_Z);
 	}
 
 	public void emphasizeForAttack() {
 		isEmphasized = true;
-		setzOrder(3);
+		setzOrder(ZOrders.EMPHASIZED_PROVINCE_Z);
 	}
 
 	public void deemphasizeForAttack() {
 		isEmphasized = false;
-		setzOrder(0);
+		setzOrder(ZOrders.DESELECTED_PROVINCE_Z);
 	}
 
 	public void selectAsReinforcing() {
 		isReinforcing = true;
-		setzOrder(4);
+		setzOrder(ZOrders.MUTATING_PROVINCE_Z);
 	}
 
 	public void selectAsReinforced() {
 		isReinforced = true;
-		setzOrder(4);
+		setzOrder(ZOrders.MUTATING_PROVINCE_Z);
 	}
 
 	public void deselectAsReinforcing() {
 		isReinforcing = false;
-		setzOrder(0);
+		setzOrder(ZOrders.DESELECTED_PROVINCE_Z);
 	}
 
 	public void deselectAsReinforced() {
 		isReinforced = false;
-		setzOrder(0);
+		setzOrder(ZOrders.DESELECTED_PROVINCE_Z);
 	}
 
 	public void emphasizeForReinforcement() {

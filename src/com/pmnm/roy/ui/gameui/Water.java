@@ -18,6 +18,7 @@ import com.doa.engine.task.DoaTasker;
 import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
+import com.pmnm.roy.ui.ZOrders;
 
 public class Water extends DoaObject {
 
@@ -42,7 +43,7 @@ public class Water extends DoaObject {
 	private transient List<TriangularSurface> mesh = new ArrayList<>();
 
 	public Water() {
-		super(0f, 0f, -2);
+		super(0f, 0f, ZOrders.WATER_Z);
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1f), y * Main.WINDOW_HEIGHT / (SEG_Y - 1f));
