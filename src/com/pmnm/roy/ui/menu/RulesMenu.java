@@ -13,6 +13,7 @@ import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.ZOrders;
 
 public class RulesMenu extends DoaPanel {
 
@@ -34,10 +35,10 @@ public class RulesMenu extends DoaPanel {
 		pages.put(DoaSprites.get("pt5"), false);
 		backButton.addAction(() -> {
 			hide();
-			UIInit.mm.show();
 			pages.replaceAll((k, v) -> false);
 		});
 		add(backButton);
+		setzOrder(ZOrders.RULES_Z);
 		hide();
 	}
 

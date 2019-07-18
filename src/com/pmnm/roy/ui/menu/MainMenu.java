@@ -45,7 +45,6 @@ public class MainMenu extends DoaPanel {
 			UIInit.sm.show();
 		});
 		rulesButton.addAction(() -> {
-			hide();
 			UIInit.rm.show();
 		});
 		exitButton.addAction(() -> UIInit.ep.show());

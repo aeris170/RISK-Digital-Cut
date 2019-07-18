@@ -17,7 +17,6 @@ import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
-import com.pmnm.roy.ui.actions.RulesButtonAction;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 
 public final class PauseMenu extends DoaPanel {
@@ -34,7 +33,9 @@ public final class PauseMenu extends DoaPanel {
 		loadButton.addAction(() -> {
 
 		});
-		rulesButton.addAction(new RulesButtonAction(UIInit.mm, UIInit.rm, UIInit.ep));
+		rulesButton.addAction(() -> {
+			UIInit.rm.show();
+		});
 		backButton.addAction(() -> {
 			hide();
 			UIInit.mm.show();

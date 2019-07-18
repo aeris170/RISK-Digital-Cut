@@ -12,6 +12,7 @@ import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.ZOrders;
 
 public final class ExitPopup extends DoaPanel {
 
@@ -32,7 +33,7 @@ public final class ExitPopup extends DoaPanel {
 		super(Main.WINDOW_WIDTH * 0.314f, Main.WINDOW_HEIGHT * 0.388f, (int) (Main.WINDOW_WIDTH * 0.371f), (int) (Main.WINDOW_HEIGHT * 0.222f));
 		yesButton.addAction(() -> UIInit.ef.show());
 		noButton.addAction(this::hide);
-		setzOrder(1000);
+		setzOrder(ZOrders.EXIT_MENU_Z);
 		add(yesButton);
 		add(noButton);
 		hide();
