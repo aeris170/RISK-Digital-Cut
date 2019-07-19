@@ -3,6 +3,7 @@ package com.pmnm.roy.ui.menu;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
+import java.io.IOException;
 
 import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
@@ -12,6 +13,7 @@ import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.doa.utils.DoaUtils;
+import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
@@ -28,10 +30,19 @@ public final class PauseMenu extends DoaPanel {
 		        (int) (Main.WINDOW_HEIGHT * 0.419f));
 
 		saveButton.addAction(() -> {
-			GameInstance.saveCurrentState();
+			//todo add to languages
+			saveButton.setText(Translator.getInstance().getTranslatedString("SAVING") + "SAVING...");
+			new Thread(() -> {
+				GameInstance.saveGame();
+				saveButton.setText(Translator.getInstance().getTranslatedString("SAVED") + "SAVED!");
+			}).start();
 		});
 		loadButton.addAction(() -> {
-
+			try {
+				GameInstance.loadGame();
+			} catch (ClassNotFoundException | IOException ex) {
+				ex.printStackTrace();
+			}
 		});
 		rulesButton.addAction(() -> {
 			UIInit.rm.show();
