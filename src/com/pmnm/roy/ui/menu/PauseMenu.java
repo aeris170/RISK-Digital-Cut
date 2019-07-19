@@ -30,11 +30,11 @@ public final class PauseMenu extends DoaPanel {
 		        (int) (Main.WINDOW_HEIGHT * 0.419f));
 
 		saveButton.addAction(() -> {
-			//todo add to languages
-			saveButton.setText(Translator.getInstance().getTranslatedString("SAVING") + "SAVING...");
+			//TODO add to languages
+			saveButton.setText(Translator.getInstance().getTranslatedString("SAVING"));
 			new Thread(() -> {
 				GameInstance.saveGame();
-				saveButton.setText(Translator.getInstance().getTranslatedString("SAVED") + "SAVED!");
+				saveButton.setText(Translator.getInstance().getTranslatedString("SAVED"));
 			}).start();
 		});
 		loadButton.addAction(() -> {
@@ -44,9 +44,7 @@ public final class PauseMenu extends DoaPanel {
 				ex.printStackTrace();
 			}
 		});
-		rulesButton.addAction(() -> {
-			UIInit.rm.show();
-		});
+		rulesButton.addAction(() -> UIInit.rm.show());
 		backButton.addAction(() -> {
 			hide();
 			UIInit.mm.show();
