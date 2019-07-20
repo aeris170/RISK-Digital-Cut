@@ -34,7 +34,7 @@ public class Main {
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
 
-		SwingUtilities.invokeLater(() -> configureGUI());
+		SwingUtilities.invokeLater(Main::configureGUI);
 	}
 
 	private static void configureGUI() {

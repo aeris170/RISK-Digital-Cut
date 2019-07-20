@@ -35,7 +35,7 @@ public final class MapLoader {
 			groupProvinces(new File(path + "/continents.xml"));
 			connectProvinces(new File(path + "/neighbours.xml"));
 			solidifyProvinces(new File(path + "/vertices.xml"));
-			DoaSprites.createSprite("MapBackground", path.substring(path.indexOf("/"), path.length()) + "/map.png");
+			DoaSprites.createSprite("MapBackground", path.substring(path.indexOf('/'), path.length()) + "/map.png");
 		} catch (JDOMException | IOException ex) {
 			ex.printStackTrace();
 		}
@@ -44,7 +44,7 @@ public final class MapLoader {
 	private static void clearExistingMapData() {
 		Province.ALL_PROVINCES.clear();
 		Continent.NAME_CONTINENT.clear();
-		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(pha -> DoaHandler.remove(pha));
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(DoaHandler::remove);
 	}
 
 	private static void createProvinces(File provincesFile) throws JDOMException, IOException {
