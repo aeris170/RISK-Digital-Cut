@@ -4,6 +4,11 @@
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="src" path="doc"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/JDOM/jdom-2.0.6.jar" sourcepath="lib/JDOM/jdom-2.0.6-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/JDOM/jdom-2.0.6-javadoc.jar!/"/>
@@ -14,14 +19,9 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/WaifUPnP/WaifUPnP-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry kind="lib" path="lib/DoaEngine/DoaEngine 2.6.jar" sourcepath="lib/DoaEngine/DoaEngine 2.6.jar">
 		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/DoaEngine/DoaEngine 2.5.1.jar" sourcepath="lib/DoaEngine/DoaEngine 2.5.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/CS319-MP-Risk/lib/DoaEngine/DoaEngine%202.5.1.jar!/doc"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/RISK-Digital-Cut/lib/DoaEngine/DoaEngine%202.6.jar!/doc"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
