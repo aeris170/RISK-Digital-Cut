@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import com.doa.engine.DoaEngine;
 import com.doa.engine.DoaRenderingMode;
 import com.doa.engine.DoaWindow;
+import com.doa.engine.log.LogLevel;
 import com.pmnm.risk.globals.Globals;
 
 public class Main {
@@ -26,7 +27,7 @@ public class Main {
 	public static void main(final String[] args) {
 		DoaEngine.TICK_RATE = 240;
 		Locale.setDefault(Locale.ENGLISH);
-		DoaEngine.DEBUG_ENABLED = true;
+		DoaEngine.INTERNAL_LOG_LEVEL = LogLevel.FINE;
 		DoaEngine.RENDERING_MODE = DoaRenderingMode.BALANCED;
 
 		Globals.initilaizeGlobals();
