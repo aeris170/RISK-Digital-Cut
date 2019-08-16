@@ -1,4 +1,5 @@
 ﻿# Project: Risk Tabletop Game Implementation for Desktop Machines
+![social](https://repository-images.githubusercontent.com/169880359/d106c280-9780-11e9-983c-0b51e49af958)
 
 ## Description
 
