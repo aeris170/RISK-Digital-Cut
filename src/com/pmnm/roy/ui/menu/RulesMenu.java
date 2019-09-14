@@ -4,12 +4,12 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
+import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
@@ -21,12 +21,11 @@ public class RulesMenu extends DoaPanel {
 
 	private Map<BufferedImage, Boolean> pages = new HashMap<>();
 
-	TextImageButton backButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.016f, Main.WINDOW_HEIGHT * 0.902f),
-	        UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR,
-	        UIInit.HOVER_FONT_COLOR);
+	TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.016f, Main.WINDOW_HEIGHT * 0.902f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
+	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
 
 	public RulesMenu() {
-		super(0f, (float) -Main.WINDOW_HEIGHT, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		super(0f, -Main.WINDOW_HEIGHT, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		pages.put(DoaSprites.get("pt0"), true);
 		pages.put(DoaSprites.get("pt1"), false);
 		pages.put(DoaSprites.get("pt2"), false);
@@ -72,7 +71,7 @@ public class RulesMenu extends DoaPanel {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.drawImage(pages.entrySet().stream().filter(entry -> entry.getValue()).map(Map.Entry::getKey).findFirst().orElse(DoaSprites.get("pt0")), 0f, 0f,
-		        Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		g.drawImage(pages.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).findFirst().orElse(DoaSprites.get("pt0")), 0f, 0f, Main.WINDOW_WIDTH,
+		        Main.WINDOW_HEIGHT);
 	}
 }

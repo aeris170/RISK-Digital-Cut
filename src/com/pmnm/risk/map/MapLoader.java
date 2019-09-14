@@ -15,8 +15,10 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
+import com.pmnm.risk.globals.Builders;
+import com.pmnm.risk.globals.Scenes;
+import com.pmnm.risk.main.Player;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
@@ -44,7 +46,10 @@ public final class MapLoader {
 	private static void clearExistingMapData() {
 		Province.ALL_PROVINCES.clear();
 		Continent.NAME_CONTINENT.clear();
-		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.forEach(DoaHandler::remove);
+		ProvinceHitArea.ALL_PROVINCE_SYMBOLS.clear();
+		ProvinceHitArea.ALL_PROVINCE_HIT_AREAS.clear();
+		Player.NAME_PLAYER.clear();
+		Player.resetIDs();
 	}
 
 	private static void createProvinces(File provincesFile) throws JDOMException, IOException {
@@ -94,7 +99,7 @@ public final class MapLoader {
 				});
 				province.addMesh(mesh);
 			});
-			DoaHandler.instantiate(ProvinceHitArea.class, province);
+			Builders.PHAB.args(province).scene(Scenes.GAME_SCENE).instantiate();
 		});
 	}
 }

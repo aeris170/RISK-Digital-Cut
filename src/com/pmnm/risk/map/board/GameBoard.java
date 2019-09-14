@@ -1,8 +1,8 @@
 package com.pmnm.risk.map.board;
 
-import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.scene.DoaObject;
 import com.pmnm.risk.main.Main;
 
 public final class GameBoard extends DoaObject {

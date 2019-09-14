@@ -7,12 +7,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.doa.ui.panel.DoaPanel;
+import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.map.province.Province;
@@ -32,25 +32,24 @@ public class BottomPanel extends DoaPanel {
 	private static final BufferedImage LEFT = DoaSprites.get("gaugeLeft");
 	private static final BufferedImage RIGHT = DoaSprites.get("gaugeRight");
 
-	public static DoaImageButton nextPhaseButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.622f, Main.WINDOW_HEIGHT * 0.898f, 70, 70,
-	        DoaSprites.get("nextPhaseButtonIdle"), DoaSprites.get("nextPhaseButtonHover"), DoaSprites.get("nextPhaseButtonPressed"),
-	        DoaSprites.get("nextPhaseButtonDisabled"));
-	public static DoaImageButton decrementButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.958f, 41, 36,
-	        DoaSprites.get("arrowDown"), DoaSprites.get("arrowDownHover"), DoaSprites.get("arrowDownPress"));
-	public static DoaImageButton incrementButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.912f, 41, 36,
-	        DoaSprites.get("arrowUp"), DoaSprites.get("arrowUpHover"), DoaSprites.get("arrowUpPress"));
-	public static SpinnerCenterPiece centerPiece = DoaHandler.instantiate(SpinnerCenterPiece.class,
-	        new DoaVectorF(Main.WINDOW_WIDTH * 0.320f, Main.WINDOW_HEIGHT * 0.925f), DoaSprites.get("centerPiece").getWidth(), DoaSprites.get("centerPiece").getHeight(),
-	        DoaSprites.get("centerPiece"), DoaSprites.get("centerPiece"), "", Color.BLACK, Color.RED);
+	public static DoaImageButton nextPhaseButton = Builders.DIBB.args(Main.WINDOW_WIDTH * 0.622f, Main.WINDOW_HEIGHT * 0.898f, 70, 70, DoaSprites.get("nextPhaseButtonIdle"),
+	        DoaSprites.get("nextPhaseButtonHover"), DoaSprites.get("nextPhaseButtonPressed"), DoaSprites.get("nextPhaseButtonDisabled")).instantiate();
+	public static DoaImageButton decrementButton = Builders.DIBB
+	        .args(Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.958f, 41, 36, DoaSprites.get("arrowDown"), DoaSprites.get("arrowDownHover"), DoaSprites.get("arrowDownPress"))
+	        .instantiate();
+	public static DoaImageButton incrementButton = Builders.DIBB
+	        .args(Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.912f, 41, 36, DoaSprites.get("arrowUp"), DoaSprites.get("arrowUpHover"), DoaSprites.get("arrowUpPress"))
+	        .instantiate();
+	public static SpinnerCenterPiece centerPiece = Builders.SCPB
+	        .args(new DoaVectorF(Main.WINDOW_WIDTH * 0.320f, Main.WINDOW_HEIGHT * 0.925f), DoaSprites.get("centerPiece").getWidth(), DoaSprites.get("centerPiece").getHeight(),
+	                DoaSprites.get("centerPiece"), DoaSprites.get("centerPiece"), "", Color.BLACK, Color.RED)
+	        .instantiate();
 
 	public static List<Integer> spinnerValues;
 	public static int index = 0;
 
 	public BottomPanel() {
 		super(0f, 0f, 0, 0);
-		if (INSTANCE != null) {
-			DoaHandler.remove(INSTANCE);
-		}
 		nextPhaseButton.addAction(new NextPhaseButtonAction(nextPhaseButton));
 		decrementButton.addAction(new DecrementButtonAction(this));
 		incrementButton.addAction(new IncrementButtonAction(this));

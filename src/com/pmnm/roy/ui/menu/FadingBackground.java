@@ -2,9 +2,9 @@ package com.pmnm.roy.ui.menu;
 
 import java.awt.AlphaComposite;
 
-import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.scene.DoaObject;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.doa.maths.DoaMath;

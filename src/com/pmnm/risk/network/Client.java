@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-import com.pmnm.risk.main.GameInstance;
 import com.pmnm.risk.network.message.MessageBuilder.Message;
 import com.pmnm.risk.network.message.MessageType;
 
@@ -66,7 +65,7 @@ public class Client implements Runnable {
 			if (message.getType() == MessageType.CHAT) {
 				System.out.println(message.getData());
 			} else if (message.getType() == MessageType.COMPRESSED) {
-				GameInstance.deserializeGame((GameInstance) message.getData());
+				// GameInstance.deserializeGame((GameInstance) message.getData());
 			}
 		}
 	}
@@ -85,16 +84,13 @@ public class Client implements Runnable {
 			ex.printStackTrace();
 		}
 	}
-	
-	
 
 	public Socket getSocket() {
 		return connection;
 	}
-	
-	
+
 	public static Client getInstance() {
 		return _this;
 	}
-	
+
 }

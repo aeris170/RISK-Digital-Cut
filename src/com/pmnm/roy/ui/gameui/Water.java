@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.scene.DoaObject;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
 import com.pmnm.risk.exceptions.RiskException;
@@ -135,8 +135,7 @@ public class Water extends DoaObject {
 
 		private TriangularSurface(Point2D first, Point2D second, Point2D third) {
 			trianglePoints = new Point2D[] { first, second, third };
-			t1.setTransform(first.getX() - third.getX(), first.getY() - third.getY(), second.getX() - third.getX(), second.getY() - third.getY(), third.getX(),
-			        third.getY());
+			t1.setTransform(first.getX() - third.getX(), first.getY() - third.getY(), second.getX() - third.getX(), second.getY() - third.getY(), third.getX(), third.getY());
 			try {
 				t1.invert();
 			} catch (NoninvertibleTransformException ex) {

@@ -1,5 +1,6 @@
 package com.pmnm.roy.ui;
 
+import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
@@ -20,8 +21,7 @@ public class RandomPlacementButton extends DoaImageButton {
 	BufferedImage clicked;
 	String s;
 
-	public RandomPlacementButton(DoaVectorF position, Integer width, Integer height, BufferedImage idle,
-			BufferedImage clicked, String s) {
+	public RandomPlacementButton(DoaVectorF position, Integer width, Integer height, BufferedImage idle, BufferedImage clicked, String s) {
 		super(position, width, height, idle, idle, clicked);
 		this.idle = idle;
 		this.clicked = clicked;
@@ -31,6 +31,10 @@ public class RandomPlacementButton extends DoaImageButton {
 	@Override
 	public void tick() {
 		recalibrateBounds();
+		System.out.println("A");
+		System.out.println(isEnabled);
+		System.out.println(DoaMouse.MB1);
+		System.out.println(getBounds().contains(DoaMouse.X, DoaMouse.Y));
 		if (isEnabled && DoaMouse.MB1 && getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
 			click = !click;
 		}
@@ -44,15 +48,15 @@ public class RandomPlacementButton extends DoaImageButton {
 		g.drawImage(randomPlacementBG, Main.WINDOW_WIDTH * 0.115f, Main.WINDOW_HEIGHT * 0.62f);
 		g.drawImage(idle, position.x, position.y);
 		if (click) {
-			g.drawImage(clicked, position.x + (idle.getWidth() - clicked.getWidth()) / 2,
-					position.y + (idle.getHeight() - clicked.getHeight()) / 2);
+			g.drawImage(clicked, position.x + (idle.getWidth() - clicked.getWidth()) / 2, position.y + (idle.getHeight() - clicked.getHeight()) / 2);
 		}
 		DoaVectorF bounds = new DoaVectorF(randomPlacementBG.getWidth() * 0.9f, randomPlacementBG.getHeight());
-		g.setFont(UIInit.UI_FONT
-				.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
+		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
 		g.setColor(UIInit.FONT_COLOR);
 		FontMetrics fm = g.getFontMetrics();
 		g.drawString(s, textX + (randomPlacementBG.getWidth() * 0.9f - fm.stringWidth(s)) / 2, textY + fm.getHeight());
+		g.setColor(Color.RED);
+		g.draw(getBounds());
 	}
 
 	public boolean getClick() {

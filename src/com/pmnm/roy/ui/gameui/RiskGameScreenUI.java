@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.io.File;
 import java.util.List;
 
-import com.doa.engine.DoaHandler;
-import com.pmnm.risk.main.GameManager;
+import com.doa.engine.scene.DoaScene;
+import com.doa.engine.scene.DoaSceneHandler;
+import com.pmnm.risk.globals.Builders;
+import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.map.MapLoader;
-import com.pmnm.risk.map.board.GameBoard;
+import com.pmnm.roy.ui.UIInit;
 
 public final class RiskGameScreenUI {
 
@@ -18,11 +20,14 @@ public final class RiskGameScreenUI {
 	public static void initUI(String mapName, List<Integer> playerTypes, List<String> playerNames, List<Color> playerColors, List<String> aiNames, List<Color> aiColors,
 	        List<Integer> difficulties, boolean randomPlacement)
 	{
+		DoaScene gameScene = Scenes.GAME_SCENE;
 		MapLoader.readMapData(new File(mapName));
-		DicePanel = DoaHandler.instantiate(DicePanel.class);
-		DoaHandler.instantiate(TopPanel.class);
-		DoaHandler.instantiate(BottomPanel.class);
-		DoaHandler.instantiate(GameManager.class, mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties, randomPlacement);
-		DoaHandler.instantiate(GameBoard.class);
+		DicePanel = Builders.DPB.scene(gameScene).instantiate();
+		Builders.TPB.scene(gameScene).instantiate();
+		Builders.BPB.scene(gameScene).instantiate();
+		Builders.GMB.args(mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties, randomPlacement).scene(gameScene).instantiate();
+		Builders.GBB.scene(gameScene).instantiate();
+		UIInit.pm = Builders.PMB.scene(gameScene).instantiate();
+		DoaSceneHandler.loadScene(gameScene);
 	}
 }

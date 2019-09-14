@@ -6,13 +6,14 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.doa.ui.panel.DoaPanel;
+import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.ColorComboButton;
@@ -27,20 +28,19 @@ public class JoinGameMenu extends DoaPanel {
 
 	private static final long serialVersionUID = 5144711918711184497L;
 
-	TextImageButton playButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f),
-	        UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "PLAY", UIInit.FONT_COLOR,
-	        UIInit.HOVER_FONT_COLOR);
-	TextImageButton backButton = DoaHandler.instantiate(TextImageButton.class, new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f),
-	        UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR,
-	        UIInit.HOVER_FONT_COLOR);
+	TextImageButton playButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
+	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "PLAY", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
+	TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
+	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
 
-	DoaImageButton prevMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.731f, Main.WINDOW_HEIGHT * 0.27f, 38, 38,
-	        DoaSprites.get("ArrowLeftIdle"), DoaSprites.get("ArrowLeftClick"));
-	DoaImageButton nextMapButton = DoaHandler.instantiate(DoaImageButton.class, Main.WINDOW_WIDTH * 0.887f, Main.WINDOW_HEIGHT * 0.27f, 38, 38,
-	        DoaSprites.get("ArrowRightIdle"), DoaSprites.get("ArrowRightClick"));
+	DoaImageButton prevMapButton = Builders.DIBB
+	        .args(Main.WINDOW_WIDTH * 0.731f, Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowLeftIdle"), DoaSprites.get("ArrowLeftClick")).instantiate();
+	DoaImageButton nextMapButton = Builders.DIBB
+	        .args(Main.WINDOW_WIDTH * 0.887f, Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowRightIdle"), DoaSprites.get("ArrowRightClick")).instantiate();
 
-	RandomPlacementButton randomPlacementButton = DoaHandler.instantiate(RandomPlacementButton.class,
-	        new DoaVectorF(Main.WINDOW_WIDTH * 0.315f, Main.WINDOW_HEIGHT * 0.635f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT");
+	RandomPlacementButton randomPlacementButton = Builders.RPBB
+	        .args(new DoaVectorF(Main.WINDOW_WIDTH * 0.315f, Main.WINDOW_HEIGHT * 0.635f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
+	        .instantiate();
 
 	DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
@@ -80,17 +80,17 @@ public class JoinGameMenu extends DoaPanel {
 		});
 		backButton.addAction(() -> {
 			hide();
-			DoaHandler.remove(this);
-			TypeComboButton.COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
+			Scenes.MENU_SCENE.remove(this);
+			TypeComboButton.COMBO_BUTTONS.forEach(Scenes.MENU_SCENE::remove);
 			TypeComboButton.COMBO_BUTTONS.clear();
-			ColorComboButton.COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
+			ColorComboButton.COMBO_BUTTONS.forEach(Scenes.MENU_SCENE::remove);
 			ColorComboButton.COMBO_BUTTONS.clear();
-			DifficultyComboButton.DIFFICULTY_COMBO_BUTTONS.forEach(b -> DoaHandler.remove(b));
+			DifficultyComboButton.DIFFICULTY_COMBO_BUTTONS.forEach(Scenes.MENU_SCENE::remove);
 			DifficultyComboButton.DIFFICULTY_COMBO_BUTTONS.clear();
-			DoaHandler.remove(playButton);
-			DoaHandler.remove(backButton);
-			DoaHandler.remove(prevMapButton);
-			DoaHandler.remove(nextMapButton);
+			Scenes.MENU_SCENE.remove(playButton);
+			Scenes.MENU_SCENE.remove(backButton);
+			Scenes.MENU_SCENE.remove(prevMapButton);
+			Scenes.MENU_SCENE.remove(nextMapButton);
 		});
 		randomPlacementButton.addAction(() -> {
 
@@ -115,22 +115,20 @@ public class JoinGameMenu extends DoaPanel {
 		add(prevMapButton);
 		add(nextMapButton);
 		for (int i = Globals.MAX_NUM_PLAYERS - 1; i >= 0; i--) {
-			TypeComboButton tbc = DoaHandler.instantiate(TypeComboButton.class,
-			        new DoaVectorF(Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)), false);
+			TypeComboButton tbc = Builders.TCBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)), false)
+			        .instantiate();
 			add(tbc);
 			tbc.index = 0;
 			tbca[i] = tbc;
 
-			DifficultyComboButton dcb = DoaHandler.instantiate(DifficultyComboButton.class,
-			        new DoaVectorF(Main.WINDOW_WIDTH * 0.289f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
+			DifficultyComboButton dcb = Builders.DCBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.289f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)))
+			        .instantiate();
 			add(dcb);
 			dcba[i] = dcb;
 
-			ColorComboButton ccb = DoaHandler.instantiate(ColorComboButton.class,
-			        new DoaVectorF(Main.WINDOW_WIDTH * 0.347f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)));
+			ColorComboButton ccb = Builders.CCBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.347f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i))).instantiate();
 			add(ccb);
 			ccba[i] = ccb;
-
 		}
 		tbca[0].index = 2;
 		s = Globals.MAP_NAMES[mapNumber];
@@ -171,7 +169,5 @@ public class JoinGameMenu extends DoaPanel {
 		g.drawImage(DoaSprites.get("MAP#" + mapNumber), Main.WINDOW_WIDTH * 0.734f, Main.WINDOW_HEIGHT * 0.332f, mapBorder.getWidth() - Main.WINDOW_WIDTH * 0.003f,
 		        mapBorder.getHeight() - Main.WINDOW_HEIGHT * 0.003f);
 		g.drawImage(mapBorder, Main.WINDOW_WIDTH * 0.732f, Main.WINDOW_HEIGHT * 0.33f);
-
 	}
-
 }

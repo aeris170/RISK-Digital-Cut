@@ -2,26 +2,21 @@ package com.pmnm.roy.ui.gameui;
 
 import java.awt.image.BufferedImage;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.ui.button.DoaImageButton;
 
 public class BlitzButton extends DoaImageButton {
 
 	private static final long serialVersionUID = -4633067220666124307L;
-	
+
 	public static BlitzButton INSTANCE;
 
 	private transient BufferedImage idleImage;
 	private transient BufferedImage hoverImage;
 	private transient BufferedImage clickImage;
-	
 
 	public BlitzButton(float x, float y, int width, int height, BufferedImage idleImage, BufferedImage hoverImage) {
 		super(x, y, width, height, idleImage, hoverImage);
-		if (INSTANCE != null) {
-			DoaHandler.remove(INSTANCE);
-		}
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;
 		this.clickImage = hoverImage;

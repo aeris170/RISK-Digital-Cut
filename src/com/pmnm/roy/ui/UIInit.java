@@ -3,9 +3,13 @@ package com.pmnm.roy.ui;
 import java.awt.Color;
 import java.awt.Font;
 
-import com.doa.engine.DoaHandler;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.scene.DoaScene;
+import com.doa.engine.scene.DoaSceneHandler;
 import com.doa.maths.DoaVectorI;
+import com.pmnm.risk.globals.Builders;
+import com.pmnm.risk.globals.Scenes;
+import com.pmnm.roy.ui.gameui.PauseMenu;
 import com.pmnm.roy.ui.menu.ExitFadeToBlack;
 import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.FadingBackground;
@@ -14,7 +18,6 @@ import com.pmnm.roy.ui.menu.JoinGameMenu;
 import com.pmnm.roy.ui.menu.LoadGameMenu;
 import com.pmnm.roy.ui.menu.MainMenu;
 import com.pmnm.roy.ui.menu.NewGameMenu;
-import com.pmnm.roy.ui.menu.PauseMenu;
 import com.pmnm.roy.ui.menu.PlayOfflineMenu;
 import com.pmnm.roy.ui.menu.PlayOnlineMenu;
 import com.pmnm.roy.ui.menu.RulesMenu;
@@ -56,18 +59,19 @@ public final class UIInit {
 	private UIInit() {}
 
 	public static void initUI() {
-		fb = DoaHandler.instantiate(FadingBackground.class);
-		mm = DoaHandler.instantiate(MainMenu.class);
-		pofm = DoaHandler.instantiate(PlayOfflineMenu.class);
-		ponm = DoaHandler.instantiate(PlayOnlineMenu.class);
-		sm = DoaHandler.instantiate(SettingsMenu.class);
-		rm = DoaHandler.instantiate(RulesMenu.class);
-		ngm = DoaHandler.instantiate(NewGameMenu.class);
-		lgm = DoaHandler.instantiate(LoadGameMenu.class);
-		hgm = DoaHandler.instantiate(HostGameMenu.class);
-		jgm = DoaHandler.instantiate(JoinGameMenu.class);
-		ep = DoaHandler.instantiate(ExitPopup.class);
-		ef = DoaHandler.instantiate(ExitFadeToBlack.class);
-		pm = DoaHandler.instantiate(PauseMenu.class);
+		DoaScene menuScene = Scenes.MENU_SCENE;
+		fb = Builders.FBB.scene(menuScene).instantiate();
+		mm = Builders.MMB.scene(menuScene).instantiate();
+		pofm = Builders.POFMB.scene(menuScene).instantiate();
+		ponm = Builders.PONMB.scene(menuScene).instantiate();
+		sm = Builders.SMB.scene(menuScene).instantiate();
+		rm = Builders.RMB.scene(menuScene).instantiate();
+		ngm = Builders.NGMB.scene(menuScene).instantiate();
+		lgm = Builders.LGMB.scene(menuScene).instantiate();
+		hgm = Builders.HGMB.scene(menuScene).instantiate();
+		jgm = Builders.JGMB.scene(menuScene).instantiate();
+		ep = Builders.EPB.scene(menuScene).instantiate();
+		ef = Builders.EFTBB.scene(menuScene).instantiate();
+		DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 	}
 }

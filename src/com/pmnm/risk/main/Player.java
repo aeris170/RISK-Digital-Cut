@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.scene.DoaObject;
 import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
@@ -160,6 +160,10 @@ public class Player extends DoaObject {
 		return Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == player).collect(Collectors.toList());
 	}
 
+	public static void resetIDs() {
+		number = 1;
+	}
+
 	public void endTurn() {
 		isInTurn = false;
 	}
@@ -170,7 +174,7 @@ public class Player extends DoaObject {
 
 	@Override
 	public String toString() {
-		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id=" + id + ", isLocalPlayer=" + isLocalPlayer
-		        + ", source=" + source + ", destination=" + destination + "]";
+		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id=" + id + ", isLocalPlayer=" + isLocalPlayer + ", source="
+		        + source + ", destination=" + destination + "]";
 	}
 }

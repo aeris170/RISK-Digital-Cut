@@ -3,9 +3,10 @@ package com.pmnm.risk.map.board;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
-import com.doa.engine.DoaHandler;
-import com.doa.engine.DoaObject;
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.scene.DoaObject;
+import com.pmnm.risk.globals.Builders;
+import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 
@@ -60,14 +61,14 @@ public final class ProvinceConnector extends DoaObject {
 	}
 
 	public static ProvinceConnector getInstance() {
-		return _this == null ? _this = DoaHandler.instantiate(ProvinceConnector.class) : _this;
+		return _this == null ? _this = Builders.PCB.scene(Scenes.GAME_SCENE).instantiate() : _this;
 	}
 
 	public static void deserialize(ProvinceConnector pc) {
 		if (_this != null) {
-			DoaHandler.remove(_this);
+			Scenes.GAME_SCENE.remove(_this);
 		}
 		_this = pc;
-		DoaHandler.add(_this);
+		Scenes.GAME_SCENE.add(_this);
 	}
 }
