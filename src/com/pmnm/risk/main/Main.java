@@ -36,19 +36,22 @@ public class Main {
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
 
-		SwingUtilities.invokeLater(Main::configureGUI);
+		SwingUtilities.invokeLater(() -> configureGUI(true));
 	}
 
-	private static void configureGUI() {
+	private static void configureGUI(boolean isFullscreen) {
 		w.setTitle("CS319 RISK!");
-		w.setExtendedState(Frame.MAXIMIZED_BOTH);
-		// w.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		// w.setLocation(0, 0);
 		w.setUndecorated(true);
 		w.setResizable(false);
 		w.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(), new Point(0, 0), "Kaan's Cursor"));
 		w.setVisible(true);
-		gd.setFullScreenWindow(w);
+		if (isFullscreen) {
+			w.setExtendedState(Frame.MAXIMIZED_BOTH);
+			gd.setFullScreenWindow(w);
+		} else {
+			w.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+			w.setLocation(0, 0);
+		}
 		w.add(e);
 	}
 }
