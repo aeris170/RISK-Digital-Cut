@@ -1,5 +1,6 @@
 package com.pmnm.risk.main;
 
+import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -40,13 +41,14 @@ public class Main {
 
 	private static void configureGUI() {
 		w.setTitle("CS319 RISK!");
-		w.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		w.setLocation(0, 0);
+		w.setExtendedState(Frame.MAXIMIZED_BOTH);
+		// w.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		// w.setLocation(0, 0);
 		w.setUndecorated(true);
 		w.setResizable(false);
-		w.setCursor(
-		        Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(), new Point(0, 0), "Kaan's Cursor"));
+		w.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(), new Point(0, 0), "Kaan's Cursor"));
 		w.setVisible(true);
+		gd.setFullScreenWindow(w);
 		w.add(e);
 	}
 }

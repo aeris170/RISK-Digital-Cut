@@ -18,6 +18,8 @@ import com.pmnm.roy.ui.TypeComboButton;
 import com.pmnm.roy.ui.gameui.BlitzButton;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 import com.pmnm.roy.ui.gameui.DicePanel;
+import com.pmnm.roy.ui.gameui.GameScreenExitFadeToBlack;
+import com.pmnm.roy.ui.gameui.GameScreenExitPopup;
 import com.pmnm.roy.ui.gameui.PauseMenu;
 import com.pmnm.roy.ui.gameui.SeasonEffect;
 import com.pmnm.roy.ui.gameui.SpinnerCenterPiece;
@@ -74,6 +76,8 @@ public final class Builders {
 	public static final DoaObjectBuilder<ProvinceConnector> PCB = new DoaObjectBuilder<>(ProvinceConnector.class);
 	public static final DoaObjectBuilder<Player> PB = new DoaObjectBuilder<>(Player.class);
 	public static final DoaObjectBuilder<AIPlayer> AIPB = new DoaObjectBuilder<>(AIPlayer.class);
+	public static final DoaObjectBuilder<GameScreenExitPopup> GSEPB = new DoaObjectBuilder<>(GameScreenExitPopup.class);
+	public static final DoaObjectBuilder<GameScreenExitFadeToBlack> GSEFTBB = new DoaObjectBuilder<>(GameScreenExitFadeToBlack.class);
 
 	private Builders() {}
 }

@@ -39,7 +39,7 @@ public final class PauseMenu extends DoaPanel {
 			DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 			Scenes.GAME_SCENE.clear();
 		});
-		exitButton.addAction(() -> UIInit.ep.show());
+		exitButton.addAction(RiskGameScreenUI.ExitPopup::show);
 		add(exitButton);
 		add(backButton);
 		add(rulesButton);
@@ -51,6 +51,7 @@ public final class PauseMenu extends DoaPanel {
 					if (isVisible) {
 						hide();
 						BottomPanel.signal();
+						RiskGameScreenUI.ExitPopup.hide();
 					} else {
 						show();
 					}

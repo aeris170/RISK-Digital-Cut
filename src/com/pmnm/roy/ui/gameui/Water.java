@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.scene.DoaObject;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
@@ -32,7 +33,7 @@ public class Water extends DoaObject {
 	private BufferedImage bigSpring = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private BufferedImage bigSummer = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private BufferedImage bigFall = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-	private BufferedImage currentWaterTexCache = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage currentWaterTexCache = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 
 	private DoaTaskGuard renderGuard = new DoaTaskGuard();
 
@@ -63,10 +64,10 @@ public class Water extends DoaObject {
 				mesh.add(new TriangularSurface(pb1, pb2, pb3));
 			}
 		}
-		BufferedImage winterSpr = DoaSprites.get("summerTex");
-		BufferedImage springSpr = DoaSprites.get("summerTex");
+		BufferedImage winterSpr = DoaSprites.get("winterTex");
+		BufferedImage springSpr = DoaSprites.get("springTex");
 		BufferedImage summerSpr = DoaSprites.get("summerTex");
-		BufferedImage fallSpr = DoaSprites.get("summerTex");
+		BufferedImage fallSpr = DoaSprites.get("springTex");
 		winterSpr.setAccelerationPriority(1);
 		springSpr.setAccelerationPriority(1);
 		summerSpr.setAccelerationPriority(1);
@@ -123,6 +124,18 @@ public class Water extends DoaObject {
 			}
 			mesh.parallelStream().forEach(TriangularSurface::render);
 		}, renderGuard, 75);
+		if (DoaKeyboard.NUM_1) {
+			Season.currentSeason = Season.FALL;
+		}
+		if (DoaKeyboard.NUM_2) {
+			Season.currentSeason = Season.WINTER;
+		}
+		if (DoaKeyboard.NUM_3) {
+			Season.currentSeason = Season.SPRING;
+		}
+		if (DoaKeyboard.NUM_4) {
+			Season.currentSeason = Season.SUMMER;
+		}
 		g.drawImage(currentWaterTexCache, 0, 0);
 	}
 
@@ -133,7 +146,7 @@ public class Water extends DoaObject {
 		private AffineTransform t1 = new AffineTransform();
 		private AffineTransform t2 = new AffineTransform();
 
-		private TriangularSurface(Point2D first, Point2D second, Point2D third) {
+		TriangularSurface(Point2D first, Point2D second, Point2D third) {
 			trianglePoints = new Point2D[] { first, second, third };
 			t1.setTransform(first.getX() - third.getX(), first.getY() - third.getY(), second.getX() - third.getX(), second.getY() - third.getY(), third.getX(), third.getY());
 			try {

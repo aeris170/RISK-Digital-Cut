@@ -1,4 +1,4 @@
-package com.pmnm.roy.ui.menu;
+package com.pmnm.roy.ui.gameui;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -9,7 +9,7 @@ import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.ZOrders;
 
-public class ExitFadeToBlack extends DoaPanel {
+public class GameScreenExitFadeToBlack extends DoaPanel {
 
 	private static final long serialVersionUID = -4303158801177879099L;
 
@@ -17,7 +17,7 @@ public class ExitFadeToBlack extends DoaPanel {
 	private float exitingFadeAlphaDelta = 0.0015f;
 	private float exitingFadeAlphaDeltaJerk = 0.00005f;
 
-	public ExitFadeToBlack() {
+	public GameScreenExitFadeToBlack() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		setzOrder(ZOrders.EXIT_FADE_TO_BLACK_Z);
 		hide();

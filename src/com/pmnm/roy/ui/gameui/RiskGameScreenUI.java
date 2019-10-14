@@ -14,6 +14,8 @@ import com.pmnm.roy.ui.UIInit;
 public final class RiskGameScreenUI {
 
 	public static DicePanel DicePanel;
+	public static GameScreenExitPopup ExitPopup;
+	public static GameScreenExitFadeToBlack ExitFadeToBlack;
 
 	private RiskGameScreenUI() {}
 
@@ -23,6 +25,8 @@ public final class RiskGameScreenUI {
 		DoaScene gameScene = Scenes.GAME_SCENE;
 		MapLoader.readMapData(new File(mapName));
 		DicePanel = Builders.DPB.scene(gameScene).instantiate();
+		ExitFadeToBlack = Builders.GSEFTBB.scene(gameScene).instantiate();
+		ExitPopup = Builders.GSEPB.scene(gameScene).instantiate();
 		Builders.TPB.scene(gameScene).instantiate();
 		Builders.BPB.scene(gameScene).instantiate();
 		Builders.GMB.args(mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties, randomPlacement).scene(gameScene).instantiate();

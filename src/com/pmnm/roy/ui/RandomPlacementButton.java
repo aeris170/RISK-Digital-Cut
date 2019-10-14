@@ -1,6 +1,5 @@
 package com.pmnm.roy.ui;
 
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
@@ -31,10 +30,6 @@ public class RandomPlacementButton extends DoaImageButton {
 	@Override
 	public void tick() {
 		recalibrateBounds();
-		System.out.println("A");
-		System.out.println(isEnabled);
-		System.out.println(DoaMouse.MB1);
-		System.out.println(getBounds().contains(DoaMouse.X, DoaMouse.Y));
 		if (isEnabled && DoaMouse.MB1 && getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
 			click = !click;
 		}
@@ -55,8 +50,6 @@ public class RandomPlacementButton extends DoaImageButton {
 		g.setColor(UIInit.FONT_COLOR);
 		FontMetrics fm = g.getFontMetrics();
 		g.drawString(s, textX + (randomPlacementBG.getWidth() * 0.9f - fm.stringWidth(s)) / 2, textY + fm.getHeight());
-		g.setColor(Color.RED);
-		g.draw(getBounds());
 	}
 
 	public boolean getClick() {

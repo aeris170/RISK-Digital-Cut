@@ -1,11 +1,14 @@
 package com.pmnm.roy.ui.menu;
 
+import com.doa.engine.graphics.DoaAnimation;
 import com.doa.engine.graphics.DoaAnimations;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
+import com.doa.engine.scene.DoaScene;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Builders;
+import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
@@ -22,6 +25,8 @@ public class MainMenu extends DoaPanel {
 
 	public MainMenu() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		DoaScene f = Scenes.MENU_SCENE;
+		System.out.print(f);
 		TextImageButton playOfflineButton = Builders.TIBB.args(PLAY_OFFLINE_LOCATION, UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE),
 		        DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "PLAY_OFFLINE", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
 		TextImageButton playOnlineButton = Builders.TIBB.args(PLAY_ONLINE_LOCATION, UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE),
@@ -60,6 +65,8 @@ public class MainMenu extends DoaPanel {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.drawAnimation(DoaAnimations.get("RiskLogoAnim"), 1286, 220);
+		DoaAnimation riskLogoAnim = DoaAnimations.get("RiskLogoAnim");
+		g.drawAnimation(riskLogoAnim, Main.WINDOW_WIDTH * 0.66979f, Main.WINDOW_HEIGHT * 0.20370f, riskLogoAnim.current().getWidth() * Main.WINDOW_WIDTH / 1920f,
+		        riskLogoAnim.current().getHeight() * Main.WINDOW_HEIGHT / 1080f);
 	}
 }

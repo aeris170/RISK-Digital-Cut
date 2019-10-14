@@ -12,8 +12,6 @@ import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.scene.DoaObject;
 import com.doa.maths.DoaMath;
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.ZOrders;
 
@@ -29,7 +27,7 @@ public class SeasonEffect extends DoaObject {
 
 	public SeasonEffect() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, ZOrders.SEASON_Z);
-		Builders.WB.scene(Scenes.GAME_SCENE).instantiate();
+		// Builders.WB.scene(Scenes.GAME_SCENE).instantiate();
 		INSTANCE = this;
 	}
 

@@ -21,15 +21,21 @@ public class TextImageButton extends DoaImageButton {
 	private DoaVectorF textRect;
 	private boolean isCentered;
 
-	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor,
-	        Color hoverTextColor) {
+	private boolean fontNeedsRecalculation;
+	private Font textFont;
+	private String displayedText;
+	private int stringWidth;
+	private int stringHeight;
+
+	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor, Color hoverTextColor) {
 		this(position, width, height, idleImage, hoverImage, text, textColor, hoverTextColor, false);
 	}
 
-	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor,
-	        Color hoverTextColor, boolean isCentered) {
+	public TextImageButton(DoaVectorF position, int width, int height, BufferedImage idleImage, BufferedImage hoverImage, String text, Color textColor, Color hoverTextColor,
+	        boolean isCentered) {
 		super(position, width, height, idleImage, hoverImage);
 		this.text = text;
+		displayedText = Translator.getInstance().getTranslatedString(text).toUpperCase();
 		this.textColor = textColor;
 		this.hoverTextColor = hoverTextColor;
 		textRect = new DoaVectorF(width - 20f, height - 20f);
@@ -38,22 +44,35 @@ public class TextImageButton extends DoaImageButton {
 
 	public void setText(String s) {
 		text = s;
+		displayedText = Translator.getInstance().getTranslatedString(text).toUpperCase();
+	}
+
+	@Override
+	public void recalibrateBounds() {
+		super.recalibrateBounds();
+		fontNeedsRecalculation = true;
 	}
 
 	@Override
 	public void render(DoaGraphicsContext g) {
 		super.render(g);
-		String s = Translator.getInstance().getTranslatedString(text).toUpperCase();
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, s)));
-		FontMetrics fm = g.getFontMetrics();
+		if (fontNeedsRecalculation) {
+			textFont = UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, displayedText));
+			g.setFont(textFont);
+			FontMetrics fm = g.getFontMetrics();
+			stringWidth = fm.stringWidth(displayedText);
+			stringHeight = fm.getHeight();
+			fontNeedsRecalculation = false;
+		}
+		g.setFont(textFont);
 		g.setColor(textColor);
 		if (hover) {
 			g.setColor(hoverTextColor);
 		}
 		if (isCentered) {
-			g.drawString(s, position.x + (width - fm.stringWidth(s)) / 2d, height + position.y - fm.getHeight() / 2d);
+			g.drawString(displayedText, position.x + (width - stringWidth) / 2d, height + position.y - stringHeight / 2d);
 		} else {
-			g.drawString(s, position.x + 20, position.y + height - 17);
+			g.drawString(displayedText, position.x + 20, position.y + height - 17);
 		}
 	}
 }
