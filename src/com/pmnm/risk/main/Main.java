@@ -36,7 +36,7 @@ public class Main {
 		w = DoaWindow.createWindow();
 		e = new DoaEngine();
 
-		SwingUtilities.invokeLater(() -> configureGUI(true));
+		SwingUtilities.invokeLater(() -> configureGUI(false));
 	}
 
 	private static void configureGUI(boolean isFullscreen) {

@@ -21,7 +21,13 @@ As Private Moon Nobleman, we will implement the entirety of the board game, card
 Shortly said, this will be an extended version of the traditional Risk game, designed so that it can be played alone or with people from far away locations (unlike the original version, which requires a certain number of people to be strictly around the game board), and will have more gameplay content than the original Risk.
 
 ## Screenshots of the implementation so far:
-* **To be added asap**.
+![1](https://user-images.githubusercontent.com/33057057/69083840-ff4cad80-0a53-11ea-8d30-e813ab71032f.PNG)
+![2](https://user-images.githubusercontent.com/33057057/69083841-ff4cad80-0a53-11ea-93f3-151746348481.PNG)
+![3](https://user-images.githubusercontent.com/33057057/69083843-ffe54400-0a53-11ea-96fe-8dead4364658.PNG)
+![4](https://user-images.githubusercontent.com/33057057/69083844-ffe54400-0a53-11ea-8876-3f50984eec2e.PNG)
+![5](https://user-images.githubusercontent.com/33057057/69083845-ffe54400-0a53-11ea-80ac-ed0b496013a0.PNG)
+![6](https://user-images.githubusercontent.com/33057057/69083846-007dda80-0a54-11ea-915a-8d315d32902e.png)
+![7](https://user-images.githubusercontent.com/33057057/69083847-007dda80-0a54-11ea-8fca-4412279d8ef5.PNG)
 
 ## Private Moon Nobleman is:
 
