@@ -40,7 +40,7 @@ public class NewGameMenu extends DoaPanel {
 	        .args(Main.WINDOW_WIDTH * 0.887f, Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowRightIdle"), DoaSprites.get("ArrowRightClick")).instantiate();
 
 	private static final RandomPlacementButton randomPlacementButton = Builders.RPBB
-	        .args(new DoaVectorF(Main.WINDOW_WIDTH * 0.315f, Main.WINDOW_HEIGHT * 0.635f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
+	        .args(new DoaVectorF(Main.WINDOW_WIDTH * 0.318f, Main.WINDOW_HEIGHT * 0.636f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
 	        .instantiate();
 
 	private static final DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);

@@ -38,7 +38,7 @@ public class RandomPlacementButton extends DoaImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		BufferedImage randomPlacementBG = DoaSprites.get("RandomPlacementBorder");
-		float textX = Main.WINDOW_WIDTH * 0.115f;
+		float textX = Main.WINDOW_WIDTH * 0.12f;
 		float textY = Main.WINDOW_HEIGHT * 0.62f;
 		g.drawImage(randomPlacementBG, Main.WINDOW_WIDTH * 0.115f, Main.WINDOW_HEIGHT * 0.62f);
 		g.drawImage(idle, position.x, position.y);
