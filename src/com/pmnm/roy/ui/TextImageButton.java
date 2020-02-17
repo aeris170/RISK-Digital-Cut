@@ -42,11 +42,6 @@ public class TextImageButton extends DoaImageButton {
 		this.isCentered = isCentered;
 	}
 
-	public void setText(String s) {
-		text = s;
-		displayedText = Translator.getInstance().getTranslatedString(text).toUpperCase();
-	}
-
 	@Override
 	public void recalibrateBounds() {
 		super.recalibrateBounds();
@@ -56,6 +51,7 @@ public class TextImageButton extends DoaImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		super.render(g);
+		displayedText = Translator.getInstance().getTranslatedString(text).toUpperCase();
 		if (fontNeedsRecalculation) {
 			textFont = UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, displayedText));
 			g.setFont(textFont);
