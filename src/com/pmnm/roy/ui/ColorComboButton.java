@@ -158,5 +158,9 @@ public class ColorComboButton extends DoaImageButton {
 		BufferedImage tmp = OPTIONS[i1];
 		OPTIONS[i1] = OPTIONS[i2];
 		OPTIONS[i2] = tmp;
+
+		Color c = PlayerColorBank.colors[i1];
+		PlayerColorBank.colors[i1] = PlayerColorBank.colors[i2];
+		PlayerColorBank.colors[i2] = c;
 	}
 }
