@@ -137,7 +137,7 @@ public class ProvinceHitArea extends DoaObject {
 				}
 			} else {
 				selectedMeshAlpha = 0f;
-				if (getzOrder() != 1) {
+				if (getzOrder() == ZOrders.SELECTED_PROVINCE_Z) {
 					setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
 				}
 			}
@@ -208,7 +208,7 @@ public class ProvinceHitArea extends DoaObject {
 		selectedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		emphasizedBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 		highlightBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
-		for (int i = 0; i < PlayerColorBank.size(); i++) {
+		for (int i = 0; i < PlayerColorBank.colors.length; i++) {
 			BufferedImage meshTexture = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
 			meshTexture.setAccelerationPriority(1);
 			Graphics2D meshRenderer = meshTexture.createGraphics();
@@ -216,7 +216,7 @@ public class ProvinceHitArea extends DoaObject {
 			meshRenderer.setRenderingHints(HINTS);
 			meshRenderer.setStroke(new BasicStroke(2));
 			playerMeshRenderers.add(meshRenderer);
-			playerOwnedMeshes.put(PlayerColorBank.get(i), meshTexture);
+			playerOwnedMeshes.put(PlayerColorBank.colors[i], meshTexture);
 		}
 		unoccupiedMesh.setAccelerationPriority(1);
 		selectedBorder.setAccelerationPriority(1);
@@ -267,7 +267,7 @@ public class ProvinceHitArea extends DoaObject {
 				Graphics2D renderer = playerMeshRenderers.get(i);
 				Composite oldComposite = renderer.getComposite();
 				renderer.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
-				renderer.setColor(PlayerColorBank.get(i));
+				renderer.setColor(PlayerColorBank.colors[i]);
 				renderer.fill(gp);
 				renderer.setComposite(oldComposite);
 				renderer.setColor(Globals.PROVINCE_UNOCCUPIED_BORDER);

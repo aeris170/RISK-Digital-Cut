@@ -12,7 +12,6 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
-import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
@@ -21,12 +20,12 @@ public class ColorComboButton extends DoaImageButton {
 
 	private static final long serialVersionUID = 2677754096284998205L;
 
-	private static final BufferedImage[] OPTIONS = new BufferedImage[PlayerColorBank.size()];
+	private static final BufferedImage[] OPTIONS = new BufferedImage[PlayerColorBank.colors.length];
 
 	static {
-		for (int i = 0; i < PlayerColorBank.size(); i++) {
+		for (int i = 0; i < PlayerColorBank.colors.length; i++) {
 			BufferedImage w = DoaSprites.deepCopyDoaSprite(DoaSprites.get("White"));
-			Utils.paintImage(w, PlayerColorBank.get(i));
+			Utils.paintImage(w, PlayerColorBank.colors[i]);
 			OPTIONS[i] = w;
 		}
 	}
@@ -41,7 +40,7 @@ public class ColorComboButton extends DoaImageButton {
 		super(position, (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f), DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownIdle"),
 		        DoaSprites.get("ArrowDownClick"));
 
-		index = Globals.MAX_NUM_PLAYERS - COMBO_BUTTONS.size() - 1;
+		index = COMBO_BUTTONS.size();
 		COMBO_BUTTONS.add(this);
 	}
 
@@ -50,24 +49,18 @@ public class ColorComboButton extends DoaImageButton {
 		recalibrateBounds();
 		if (isEnabled && DoaMouse.MB1) {
 			if (click) {
-				if (firstColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-				        && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 0)) {
-					index = 0;
-				} else if (secondColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-				        && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 1)) {
-					index = 1;
-				} else if (thirdColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-				        && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 2)) {
-					index = 2;
-				} else if (fourthColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-				        && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 3)) {
-					index = 3;
-				} else if (fifthColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-				        && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 4)) {
-					index = 4;
-				} else if (sixthColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-				        && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 5)) {
-					index = 5;
+				if (firstColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 0)) {
+					swapIndex(index, 0);
+				} else if (secondColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 1)) {
+					swapIndex(index, 1);
+				} else if (thirdColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 2)) {
+					swapIndex(index, 2);
+				} else if (fourthColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 3)) {
+					swapIndex(index, 3);
+				} else if (fifthColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 4)) {
+					swapIndex(index, 4);
+				} else if (sixthColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && COMBO_BUTTONS.stream().filter(cb -> cb != this && cb.isVisible).allMatch(cb -> cb.index != 5)) {
+					swapIndex(index, 5);
 				}
 				click = false;
 			} else if (getBounds().contains(DoaMouse.X, DoaMouse.Y) && COMBO_BUTTONS.stream().allMatch(cb -> (!cb.click || (cb.click && cb.noneHit())))) {
@@ -86,12 +79,11 @@ public class ColorComboButton extends DoaImageButton {
 			super.render(g);
 			if (click) {
 				int height = DoaSprites.get("DropDownColor").getHeight();
-				g.drawImage(DoaSprites.get("DropDownColor"), position.x - Main.WINDOW_WIDTH * 0.029f, position.y + Main.WINDOW_HEIGHT * 0.040f,
-				        Main.WINDOW_WIDTH * 0.050f, height);
+				g.drawImage(DoaSprites.get("DropDownColor"), position.x - Main.WINDOW_WIDTH * 0.029f, position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.050f, height);
 				g.pushComposite();
 				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-				g.drawImage(DoaSprites.get("DropDownColorTex"), position.x - Main.WINDOW_WIDTH * 0.029f, position.y + Main.WINDOW_HEIGHT * 0.040f,
-				        Main.WINDOW_WIDTH * 0.050f, height);
+				g.drawImage(DoaSprites.get("DropDownColorTex"), position.x - Main.WINDOW_WIDTH * 0.029f, position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.050f,
+				        height);
 				g.popComposite();
 				for (int i = 0; i < OPTIONS.length; i++) {
 					g.drawImage(OPTIONS[i], position.x - Main.WINDOW_WIDTH * 0.027f, position.y + Main.WINDOW_HEIGHT * 0.045f + (Main.WINDOW_HEIGHT * 0.040f * i),
@@ -108,7 +100,7 @@ public class ColorComboButton extends DoaImageButton {
 	}
 
 	public Color getColor() {
-		return PlayerColorBank.get(index);
+		return PlayerColorBank.colors[index];
 	}
 
 	@Override
@@ -157,8 +149,14 @@ public class ColorComboButton extends DoaImageButton {
 	}
 
 	private boolean noneHit() {
-		return !firstColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && !secondColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-		        && !thirdColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && !fourthColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
-		        && !fifthColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && !sixthColorHitBox().contains(DoaMouse.X, DoaMouse.Y);
+		return !firstColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && !secondColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && !thirdColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
+		        && !fourthColorHitBox().contains(DoaMouse.X, DoaMouse.Y) && !fifthColorHitBox().contains(DoaMouse.X, DoaMouse.Y)
+		        && !sixthColorHitBox().contains(DoaMouse.X, DoaMouse.Y);
+	}
+
+	private static void swapIndex(int i1, int i2) {
+		BufferedImage tmp = OPTIONS[i1];
+		OPTIONS[i1] = OPTIONS[i2];
+		OPTIONS[i2] = tmp;
 	}
 }

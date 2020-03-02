@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.scene.DoaObject;
-import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
@@ -40,7 +39,7 @@ public class Player extends DoaObject {
 		if (NAME_PLAYER.get(playerName) == null) {
 			NAME_PLAYER.put(playerName, this);
 		} else {
-			throw new RiskException("Player names must be unique!");
+			throw new RuntimeException("Player names must be unique!");
 		}
 		number++;
 		this.isLocalPlayer = isLocalPlayer;

@@ -24,7 +24,7 @@ public class RandomPlacementButton extends DoaImageButton {
 		super(position, width, height, idle, idle, clicked);
 		this.idle = idle;
 		this.clicked = clicked;
-		this.s = Translator.getInstance().getTranslatedString(s).toUpperCase();
+		this.s = s;
 	}
 
 	@Override
@@ -46,10 +46,11 @@ public class RandomPlacementButton extends DoaImageButton {
 			g.drawImage(clicked, position.x + (idle.getWidth() - clicked.getWidth()) / 2, position.y + (idle.getHeight() - clicked.getHeight()) / 2);
 		}
 		DoaVectorF bounds = new DoaVectorF(randomPlacementBG.getWidth() * 0.9f, randomPlacementBG.getHeight());
-		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
+		String ss = Translator.getInstance().getTranslatedString(s).toUpperCase();
+		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, ss)));
 		g.setColor(UIInit.FONT_COLOR);
 		FontMetrics fm = g.getFontMetrics();
-		g.drawString(s, textX + (randomPlacementBG.getWidth() * 0.9f - fm.stringWidth(s)) / 2, textY + fm.getHeight());
+		g.drawString(ss, textX + (randomPlacementBG.getWidth() * 0.9f - fm.stringWidth(ss)) / 2, textY + fm.getHeight());
 	}
 
 	public boolean getClick() {

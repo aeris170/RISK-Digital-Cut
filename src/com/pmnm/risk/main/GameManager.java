@@ -15,7 +15,6 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.scene.DoaObject;
 import com.pmnm.risk.dice.Dice;
-import com.pmnm.risk.dice.exceptions.DiceException;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.map.board.ProvinceConnector;
@@ -110,10 +109,6 @@ public class GameManager extends DoaObject {
 			markDefenderProvince(null);
 		} else if (currentPhase == TurnPhase.REINFORCE) {
 			currentPhase = TurnPhase.DRAFT;
-			if (cardWillBeGiven) {
-				// currentPlayer.addCard(Card.getRandomCard());
-				cardWillBeGiven = false;
-			}
 			currentPlayer.endTurn();
 			turnCount++;
 			currentPlayer = players.get(turnCount % players.size());
@@ -123,10 +118,6 @@ public class GameManager extends DoaObject {
 			markReinforcedProvince(null);
 			BottomPanel.updateSpinnerValues(1, reinforcementForThisTurn);
 			BottomPanel.nextPhaseButton.disable();
-			if (currentPlayer.isLocalPlayer()) {
-				//cardPanel.updateCards(); cardPanel.show();
-				BottomPanel.nextPhaseButton.enable();
-			}
 			timer = 0;
 		}
 	}
@@ -150,10 +141,6 @@ public class GameManager extends DoaObject {
 				}
 				if (timer > (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2) {
 					currentPhase = TurnPhase.DRAFT;
-					if (cardWillBeGiven) {
-						// currentPlayer.addCard(Card.getRandomCard());
-						cardWillBeGiven = false;
-					}
 					currentPlayer.endTurn();
 					++turnCount;
 					currentPlayer = players.get(turnCount % players.size());
@@ -278,7 +265,7 @@ public class GameManager extends DoaObject {
 				}
 				break;
 			default:
-				throw new DiceException("diceAmount not in the set (1, 2, 3)");
+				break;
 		}
 		if (attackerDiceValues != null) {
 			Arrays.sort(attackerDiceValues, Collections.reverseOrder());

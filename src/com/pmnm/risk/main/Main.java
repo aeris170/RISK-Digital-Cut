@@ -28,7 +28,7 @@ public class Main {
 	public static void main(final String[] args) {
 		DoaEngine.TICK_RATE = 240;
 		Locale.setDefault(Locale.ENGLISH);
-		DoaEngine.INTERNAL_LOG_LEVEL = LogLevel.FINE;
+		DoaEngine.INTERNAL_LOG_LEVEL = LogLevel.OFF;
 		DoaEngine.RENDERING_MODE = DoaRenderingMode.BALANCED;
 
 		Globals.initilaizeGlobals();

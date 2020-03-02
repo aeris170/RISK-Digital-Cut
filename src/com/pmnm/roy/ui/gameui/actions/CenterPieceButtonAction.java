@@ -14,6 +14,7 @@ public class CenterPieceButtonAction implements DoaUIAction {
 		GameManager gm = GameManager.INSTANCE;
 		if (gm.currentPhase == TurnPhase.DRAFT) {
 			gm.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+			BottomPanel.nextPhaseButton.enable();
 		} else if (gm.currentPhase == TurnPhase.ATTACK) {
 			if (BottomPanel.spinnerValues != null) {
 				gm.moveTroopsAfterOccupying(BottomPanel.spinnerValues.get(BottomPanel.index));

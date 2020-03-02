@@ -14,16 +14,13 @@ import java.util.List;
 import com.doa.engine.DoaCamera;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
-import com.pmnm.risk.exceptions.RiskStaticInstantiationException;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
 
 public final class Utils {
 
-	private Utils() {
-		throw new RiskStaticInstantiationException(getClass());
-	}
+	private Utils() {}
 
 	public static float mapXCoordinateByZoom(final float x) {
 		return mapCoordinatesByZoom(x, 0).x;

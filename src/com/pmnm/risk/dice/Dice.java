@@ -2,9 +2,6 @@ package com.pmnm.risk.dice;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.pmnm.risk.dice.exceptions.DiceAccessException;
-import com.pmnm.risk.dice.exceptions.DiceInstantiationException;
-
 public class Dice {
 
 	public static final Dice ATTACK_DICE_3 = new Dice(3);
@@ -16,9 +13,6 @@ public class Dice {
 	private int[] values;
 
 	private Dice(int numberOfDice) {
-		if (numberOfDice <= 0) {
-			throw new DiceInstantiationException();
-		}
 		values = new int[numberOfDice];
 	}
 
@@ -33,7 +27,7 @@ public class Dice {
 
 	public int getValueAt(int index) {
 		if (index < 0 || index >= values.length) {
-			throw new DiceAccessException(index, values.length);
+			return -1;
 		}
 		return values[index];
 	}

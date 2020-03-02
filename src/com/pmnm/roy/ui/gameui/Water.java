@@ -16,7 +16,6 @@ import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.scene.DoaObject;
 import com.doa.engine.task.DoaTaskGuard;
 import com.doa.engine.task.DoaTasker;
-import com.pmnm.risk.exceptions.RiskException;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.ZOrders;
@@ -120,7 +119,7 @@ public class Water extends DoaObject {
 					tex = bigFall;
 					break;
 				default:
-					throw new RiskException("Should not reach here!");
+					throw new RuntimeException("Should not reach here!");
 			}
 			mesh.parallelStream().forEach(TriangularSurface::render);
 		}, renderGuard, 75);

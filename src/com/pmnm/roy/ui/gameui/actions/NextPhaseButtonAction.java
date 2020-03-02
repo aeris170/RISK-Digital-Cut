@@ -22,7 +22,7 @@ public class NextPhaseButtonAction implements DoaUIAction {
 			gm.nextPhase();
 		} else if (gm.currentPhase == TurnPhase.REINFORCE) {
 			gm.nextPhase();
-			//button.disable();
+			button.disable();
 		}
 	}
 }

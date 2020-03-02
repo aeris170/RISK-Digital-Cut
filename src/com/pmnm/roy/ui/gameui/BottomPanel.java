@@ -15,6 +15,7 @@ import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
+import com.pmnm.risk.main.TurnPhase;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIInit;
@@ -54,11 +55,11 @@ public class BottomPanel extends DoaPanel {
 		decrementButton.addAction(new DecrementButtonAction(this));
 		incrementButton.addAction(new IncrementButtonAction(this));
 		centerPiece.addAction(new CenterPieceButtonAction());
-		nextPhaseButton.disable();
 		add(nextPhaseButton);
 		add(decrementButton);
 		add(incrementButton);
 		add(centerPiece);
+		nextPhaseButton.disable();
 		show();
 		INSTANCE = this;
 	}
@@ -70,6 +71,19 @@ public class BottomPanel extends DoaPanel {
 			decrementButton.disable();
 			incrementButton.disable();
 			centerPiece.disable();
+		}
+		if (GameManager.INSTANCE.currentPhase == TurnPhase.REINFORCE) {
+			if (GameManager.INSTANCE.getReinforcedProvince() != null) {
+				decrementButton.enable();
+				incrementButton.enable();
+				centerPiece.enable();
+				nextPhaseButton.disable();
+			} else {
+				decrementButton.disable();
+				incrementButton.disable();
+				centerPiece.disable();
+				nextPhaseButton.enable();
+			}
 		}
 		try {
 			centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
