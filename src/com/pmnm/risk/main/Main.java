@@ -44,6 +44,7 @@ public class Main {
 		w.setUndecorated(true);
 		w.setResizable(false);
 		w.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(), new Point(0, 0), "Kaan's Cursor"));
+		w.setIconImage(new ImageIcon(Main.class.getResource("/ui/icon.png")).getImage());
 		w.setVisible(true);
 		if (isFullscreen) {
 			w.setExtendedState(Frame.MAXIMIZED_BOTH);
