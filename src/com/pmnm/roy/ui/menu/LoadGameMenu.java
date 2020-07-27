@@ -35,5 +35,20 @@ public class LoadGameMenu extends DoaPanel {
 	public void tick() {}
 
 	@Override
-	public void render(DoaGraphicsContext g) {}
+	public void render(DoaGraphicsContext g) {
+		g.drawImage(DoaSprites.get("SaveScroll"), 15, 148);
+		g.drawImage(DoaSprites.get("SaveMapContainter"), 127, 242);
+
+		g.drawImage(DoaSprites.get("SaveScroll"), 655, 148);
+		g.drawImage(DoaSprites.get("SaveMapContainter"), 767, 242);
+
+		g.drawImage(DoaSprites.get("SaveScroll"), 1295, 148);
+		g.drawImage(DoaSprites.get("SaveMapContainter"), 1407, 242);
+
+		g.drawImage(DoaSprites.get("SaveScroll"), 15, 540);
+		g.drawImage(DoaSprites.get("SaveMapContainter"), 127, 634);
+
+		g.drawImage(DoaSprites.get("SaveScroll"), 655, 540);
+		g.drawImage(DoaSprites.get("SaveMapContainter"), 767, 634);
+	}
 }

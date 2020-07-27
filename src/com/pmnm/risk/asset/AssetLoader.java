@@ -60,10 +60,15 @@ public final class AssetLoader {
 				DoaSprites.createSprite("DropDownColorType", "/ui/playOffline/droppedComboBoxColor.png");
 				DoaSprites.createSprite("RandomPlacementBorder", "/ui/playOffline/randomBox.png");
 
-				{// MULTIPLAYER MENU
-					DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
-					DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");
+				{ // SAVE/LOAD MENU
+					DoaSprites.createSprite("SaveScroll", "/ui/saveLoad/savedGameScroll.png");
+					DoaSprites.createSprite("SaveMapContainter", "/ui/saveLoad/savedMapContainer.png");
 				}
+			}
+
+			{// MULTIPLAYER MENU
+				DoaSprites.createSprite("Ready", "/ui/playOnline/readyBlip.png");
+				DoaSprites.createSprite("ReadyCircle", "/ui/playOnline/readyHolder.png");
 			}
 
 			{// SETTINGS MENU
