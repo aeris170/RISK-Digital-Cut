@@ -36,39 +36,29 @@ import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 
 public class ProvinceHitArea extends DoaObject {
+	
+	public static ProvinceHitArea of(Province province) {
+		return new ProvinceHitArea(province);
+	}
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
-	public static final Map<RenderingHints.Key, Object> HINTS = Map.of(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
-	        RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON, RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-	        RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE, RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON,
-	        RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC, RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY,
-	        RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE, RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-	public static List<ProvinceHitArea> ALL_PROVINCE_HIT_AREAS = new CopyOnWriteArrayList<>();
-	public static List<ProvinceSymbol> ALL_PROVINCE_SYMBOLS = new CopyOnWriteArrayList<>();
 	public static ProvinceHitArea selectedProvinceByMouse = null;
 
-	private List<GeneralPath> meshes = new ArrayList<>();
-	private Province province;
+	List<GeneralPath> meshes = new ArrayList<>();
+	Province province;
 
-	private transient BufferedImage unoccupiedMesh;
-	private transient Map<Color, BufferedImage> playerOwnedMeshes;
-	private transient BufferedImage selectedMesh;
-	private transient BufferedImage selectedBorder;
-	private transient BufferedImage emphasizedBorder;
-	private transient BufferedImage highlightBorder;
+	transient BufferedImage unoccupiedMesh;
+	transient Map<Color, BufferedImage> playerOwnedMeshes;
+	transient BufferedImage selectedMesh;
+	transient BufferedImage selectedBorder;
+	transient BufferedImage emphasizedBorder;
+	transient BufferedImage highlightBorder;
 
 	private boolean isPathVisible = true;
 	private boolean isPointsVisible = false;
 
-	private int minX = Integer.MAX_VALUE;
-	private int minY = Integer.MAX_VALUE;
-	private int maxX = Integer.MIN_VALUE;
-	private int maxY = Integer.MIN_VALUE;
-
-	double centerX;
-	double centerY;
+	ProvinceHitAreaBounds bounds;
 
 	private boolean isAttacker = false;
 	private boolean isDefender = false;
@@ -81,209 +71,134 @@ public class ProvinceHitArea extends DoaObject {
 	private float selectedMeshAlpha = 0f;
 	private float selectedMeshAlphaDelta = 0.005f;
 
-	public ProvinceHitArea(Province province) {
-		super(0f, 0f, 0, 0, 0);
+	private ProvinceHitArea(Province province) {
 		this.province = province;
+		addComponent(new Script());
+		addComponent(new Renderer());
+		
+		constructMeshes();
+		ProvinceHitAreaBounds.Calculate(this);
+		ProvinceHitAreaCacher.Cache(this);
+		
+		ProvinceSymbol symbol = new ProvinceSymbol(this);
+		Scenes.GAME_SCENE.add(symbol);
+	}
+
+	public class Script extends DoaScript {
+		
+		private static final long serialVersionUID = -7463836870534187697L;
+
+		@Override
+		public synchronized void tick() {
+			if (!GameManager.INSTANCE.isPaused) {
+				if (meshes.stream().anyMatch(mesh -> mesh.contains((int) DoaMouse.X, (int) DoaMouse.Y))) {
+					isHighlighted = true;
+				} else {
+					isHighlighted = false;
+				}
+				if (isMouseClicked()) {
+					if (selectedProvinceByMouse != null) {
+						selectedProvinceByMouse.isSelected = false;
+					}
+					selectedProvinceByMouse = ProvinceHitArea.this;
+					isSelected = true;
+				}
+	
+				if (isHighlighted) {
+					setzOrder(ZOrders.HIGHLIGHTED_PROVINCE_Z);
+				} else if (isEmphasized) {
+					setzOrder(ZOrders.EMPHASIZED_PROVINCE_Z);
+				} else if (isAttacker || isDefender || isReinforcing || isReinforced) {
+					setzOrder(ZOrders.MUTATING_PROVINCE_Z);
+				} else if (getzOrder() != 1) {
+					setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
+				}
+				if (isSelected) {
+					setzOrder(ZOrders.SELECTED_PROVINCE_Z);
+					selectedMeshAlpha += selectedMeshAlphaDelta;
+					if (selectedMeshAlpha >= 0.6f) {
+						selectedMeshAlpha = 0.6f;
+						selectedMeshAlphaDelta *= -1;
+					} else if (selectedMeshAlpha <= 0f) {
+						selectedMeshAlpha = 0f;
+						selectedMeshAlphaDelta *= -1;
+					}
+				} else {
+					selectedMeshAlpha = 0f;
+					if (getzOrder() == ZOrders.SELECTED_PROVINCE_Z) {
+						setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
+					}
+				}
+			}
+		}
+		
+		private boolean isMouseClicked() {
+			return meshes.stream().anyMatch(mesh -> mesh.contains((int) DoaMouse.X, (int) DoaMouse.Y) && DoaMouse.MB1);
+		}
+	}
+	
+	public class Renderer extends DoaRenderer {
+		
+		private static final long serialVersionUID = 3390229334254057350L;
+
+		@Override
+		public void render() {
+			if (isPathVisible) {
+				if (province.isClaimed()) {
+					DoaGraphicsFunctions.drawImage(playerOwnedMeshes.get(province.getOwner().getColor()), bounds.minX - 4f, bounds.minY - 4f);
+					if (isEmphasized) {
+						DoaGraphicsFunctions.drawImage(emphasizedBorder, bounds.minX - 4f, bounds.minY - 4f);
+					}
+					if (isHighlighted) {
+						DoaGraphicsFunctions.drawImage(highlightBorder, bounds.minX - 4f, bounds.minY - 4f);
+					}
+					if (isAttacker) {
+						DoaGraphicsFunctions.drawImage(selectedBorder, bounds.minX - 4f, bounds.minY - 4f);
+					}
+					if (isDefender) {
+						DoaGraphicsFunctions.drawImage(selectedBorder, bounds.minX - 4f, bounds.minY - 4f);
+					}
+					if (isSelected) {
+						DoaGraphicsFunctions.pushComposite();
+						DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, selectedMeshAlpha));
+						DoaGraphicsFunctions.drawImage(selectedMesh, bounds.minX - 4f, bounds.minY - 4f);
+						DoaGraphicsFunctions.popComposite();
+						DoaGraphicsFunctions.drawImage(highlightBorder, bounds.minX - 4f, bounds.minY - 4f);
+					}
+				} else {
+					DoaGraphicsFunctions.drawImage(unoccupiedMesh, bounds.minX - 4f, bounds.minY - 4f);
+				}
+			}
+			if (isPointsVisible) {
+				DoaGraphicsFunctions.setColor(Color.MAGENTA);
+				for (GeneralPath gp : meshes) {
+					double[][] points = getPoints(gp);
+					for (int i = 0; i < points.length; i++) {
+						DoaGraphicsFunctions.fillRect((float) points[i][0] - 1, (float) points[i][1] - 1, 1, 1);
+					}
+				}
+			}
+		}
+	}
+	
+	private void constructMeshes() {
 		province.getMeshes().forEach(mesh -> {
 			GeneralPath hitArea = new GeneralPath();
-			DoaVectorI startPoint = mesh.get(0);
+			Vertex2D startPoint = mesh.get(0);
 			hitArea.moveTo(startPoint.x, startPoint.y);
 			for (int i = 1; i < mesh.size(); i++) {
-				DoaVectorI nextPoint = mesh.get(i);
+				DoaVector nextPoint = mesh.get(i);
 				hitArea.lineTo(nextPoint.x, nextPoint.y);
 			}
 			hitArea.closePath();
 			meshes.add(hitArea);
 		});
-		centerX = province.getCenter().x;
-		centerY = province.getCenter().y;
-		cacheMeshAsImage();
-		ALL_PROVINCE_HIT_AREAS.add(this);
-		// DoaHandler.instantiate(ProvinceSymbol.class, this);
-		Builders.PSB.args(this).scene(Scenes.GAME_SCENE).instantiate();
 	}
-
-	@Override
-	public void tick() {
-		if (!GameManager.INSTANCE.isPaused) {
-			if (meshes.stream().anyMatch(mesh -> mesh.contains((int) DoaMouse.X, (int) DoaMouse.Y))) {
-				isHighlighted = true;
-			} else {
-				isHighlighted = false;
-			}
-			if (isMouseClicked()) {
-				if (selectedProvinceByMouse != null) {
-					selectedProvinceByMouse.isSelected = false;
-				}
-				selectedProvinceByMouse = this;
-				isSelected = true;
-			}
-
-			if (isHighlighted) {
-				setzOrder(ZOrders.HIGHLIGHTED_PROVINCE_Z);
-			} else if (isEmphasized) {
-				setzOrder(ZOrders.EMPHASIZED_PROVINCE_Z);
-			} else if (isAttacker || isDefender || isReinforcing || isReinforced) {
-				setzOrder(ZOrders.MUTATING_PROVINCE_Z);
-			} else if (getzOrder() != 1) {
-				setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
-			}
-			if (isSelected) {
-				setzOrder(ZOrders.SELECTED_PROVINCE_Z);
-				selectedMeshAlpha += selectedMeshAlphaDelta;
-				if (selectedMeshAlpha >= 0.6f) {
-					selectedMeshAlpha = 0.6f;
-					selectedMeshAlphaDelta *= -1;
-				} else if (selectedMeshAlpha <= 0f) {
-					selectedMeshAlpha = 0f;
-					selectedMeshAlphaDelta *= -1;
-				}
-			} else {
-				selectedMeshAlpha = 0f;
-				if (getzOrder() == ZOrders.SELECTED_PROVINCE_Z) {
-					setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
-				}
-			}
-		}
+	
+	public ProvinceHitAreaBounds getBounds() {
+		return bounds;
 	}
-
-	@Override
-	public void render(DoaGraphicsContext g) {
-		if (isPathVisible) {
-			if (province.isClaimed()) {
-				g.drawImage(playerOwnedMeshes.get(province.getOwner().getColor()), minX - 4d, minY - 4d);
-				if (isEmphasized) {
-					g.drawImage(emphasizedBorder, minX - 4d, minY - 4d);
-				}
-				if (isHighlighted) {
-					g.drawImage(highlightBorder, minX - 4d, minY - 4d);
-				}
-				if (isAttacker) {
-					g.drawImage(selectedBorder, minX - 4d, minY - 4d);
-				}
-				if (isDefender) {
-					g.drawImage(selectedBorder, minX - 4d, minY - 4d);
-				}
-				if (isSelected) {
-					g.pushComposite();
-					g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, selectedMeshAlpha));
-					g.drawImage(selectedMesh, minX - 4d, minY - 4d);
-					g.popComposite();
-					g.drawImage(highlightBorder, minX - 4d, minY - 4d);
-				}
-			} else {
-				g.drawImage(unoccupiedMesh, minX - 4d, minY - 4d);
-			}
-		}
-		if (isPointsVisible) {
-			g.setColor(Color.MAGENTA);
-			for (GeneralPath gp : meshes) {
-				double[][] points = getPoints(gp);
-				for (int i = 0; i < points.length; i++) {
-					g.fillRect(points[i][0] - 1, points[i][1] - 1, 1, 1);
-				}
-			}
-		}
-	}
-
-	public void cacheMeshAsImage() {
-		playerOwnedMeshes = new HashMap<>();
-		for (GeneralPath mesh : meshes) {
-			double[][] vertices = getPoints(mesh);
-			for (int i = 0; i < vertices.length; i++) {
-				if (vertices[i][0] < minX) {
-					minX = (int) vertices[i][0];
-				}
-				if (vertices[i][0] > maxX) {
-					maxX = (int) vertices[i][0];
-				}
-				if (vertices[i][1] < minY) {
-					minY = (int) vertices[i][1];
-				}
-				if (vertices[i][1] > maxY) {
-					maxY = (int) vertices[i][1];
-				}
-			}
-		}
-		List<Graphics2D> playerMeshRenderers = new ArrayList<>();
-		unoccupiedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
-		selectedBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
-		selectedMesh = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
-		emphasizedBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
-		highlightBorder = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
-		for (int i = 0; i < PlayerColorBank.colors.length; i++) {
-			BufferedImage meshTexture = new BufferedImage(maxX - minX + 8, maxY - minY + 8, BufferedImage.TYPE_INT_ARGB);
-			meshTexture.setAccelerationPriority(1);
-			Graphics2D meshRenderer = meshTexture.createGraphics();
-			meshRenderer.translate(-minX + 4, -minY + 4);
-			meshRenderer.setRenderingHints(HINTS);
-			meshRenderer.setStroke(new BasicStroke(2));
-			playerMeshRenderers.add(meshRenderer);
-			playerOwnedMeshes.put(PlayerColorBank.colors[i], meshTexture);
-		}
-		unoccupiedMesh.setAccelerationPriority(1);
-		selectedBorder.setAccelerationPriority(1);
-		selectedMesh.setAccelerationPriority(1);
-		emphasizedBorder.setAccelerationPriority(1);
-		highlightBorder.setAccelerationPriority(1);
-		Graphics2D umr = unoccupiedMesh.createGraphics();
-		Graphics2D sbr = selectedBorder.createGraphics();
-		Graphics2D smr = selectedMesh.createGraphics();
-		Graphics2D ebr = emphasizedBorder.createGraphics();
-		Graphics2D hbr = highlightBorder.createGraphics();
-		umr.translate(-minX + 4, -minY + 4);
-		umr.setRenderingHints(HINTS);
-		umr.setStroke(new BasicStroke(2));
-		sbr.translate(-minX + 4, -minY + 4);
-		sbr.setRenderingHints(HINTS);
-		sbr.setStroke(new BasicStroke(2));
-		smr.translate(-minX + 4, -minY + 4);
-		smr.setRenderingHints(HINTS);
-		smr.setStroke(new BasicStroke(2));
-		ebr.translate(-minX + 4, -minY + 4);
-		ebr.setRenderingHints(HINTS);
-		ebr.setStroke(new BasicStroke(2));
-		hbr.translate(-minX + 4, -minY + 4);
-		hbr.setRenderingHints(HINTS);
-		hbr.setStroke(new BasicStroke(2));
-		for (GeneralPath gp : meshes) {
-			Composite umrOldComposite = umr.getComposite();
-			umr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
-			umr.setColor(Globals.PROVINCE_UNOCCUPIED);
-			umr.fill(gp);
-			umr.setComposite(umrOldComposite);
-			umr.setColor(Globals.PROVINCE_UNOCCUPIED_BORDER);
-			umr.draw(gp);
-
-			sbr.setColor(Globals.PROVINCE_SELECTED_BORDER);
-			sbr.draw(gp);
-
-			smr.setColor(Color.WHITE);
-			smr.fill(gp);
-
-			ebr.setColor(Globals.PROVINCE_EMPHASIZE);
-			ebr.draw(gp);
-
-			ebr.setColor(Globals.PROVINCE_HIGHLIGHT);
-			hbr.draw(gp);
-			for (int i = 0; i < playerMeshRenderers.size(); i++) {
-				Graphics2D renderer = playerMeshRenderers.get(i);
-				Composite oldComposite = renderer.getComposite();
-				renderer.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
-				renderer.setColor(PlayerColorBank.colors[i]);
-				renderer.fill(gp);
-				renderer.setComposite(oldComposite);
-				renderer.setColor(Globals.PROVINCE_UNOCCUPIED_BORDER);
-				renderer.draw(gp);
-			}
-		}
-		umr.dispose();
-		sbr.dispose();
-		ebr.dispose();
-		hbr.dispose();
-		playerMeshRenderers.forEach(renderer -> renderer.dispose());
-	}
-
+	
 	public List<GeneralPath> getMesh() {
 		return meshes;
 	}
@@ -292,8 +207,8 @@ public class ProvinceHitArea extends DoaObject {
 		return province;
 	}
 
-	public boolean isMouseClicked() {
-		return meshes.stream().anyMatch(mesh -> mesh.contains((int) DoaMouse.X, (int) DoaMouse.Y) && DoaMouse.MB1);
+	public void setProvince(Province province) {
+		this.province = province;
 	}
 
 	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath
@@ -381,57 +296,8 @@ public class ProvinceHitArea extends DoaObject {
 		isEmphasized = false;
 	}
 
-	public double centerX() {
-		return centerX;
-	}
-
-	public double centerY() {
-		return centerY;
-	}
-
 	@Override
 	public String toString() {
 		return "PHA:" + province.toString();
-	}
-
-	public class ProvinceSymbol extends DoaObject {
-
-		private static final long serialVersionUID = -5094307362006544586L;
-
-		public ProvinceSymbol() {
-			super((float) centerX, (float) centerY, 0, 0, 9);
-			ALL_PROVINCE_SYMBOLS.add(this);
-		}
-
-		@Override
-		public void tick() {}
-
-		@Override
-		public void render(DoaGraphicsContext g) {
-			Province p = getProvince();
-			if (p.isClaimed()) {
-				g.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
-				FontMetrics fm = g.getFontMetrics();
-				g.setColor(Color.BLACK);
-				BufferedImage ownerLogo = DoaSprites.get("p" + p.getOwner().getID() + "Pawn");
-				BufferedImage continentLogo = DoaSprites.get(p.getContinent().getAbbreviation());
-				g.drawImage(continentLogo, centerX - continentLogo.getWidth() * 0.33f, centerY - continentLogo.getHeight() * 0.33f, continentLogo.getWidth() * 0.66f,
-				        continentLogo.getHeight() * 0.66f);
-				g.drawImage(ownerLogo, centerX - ownerLogo.getWidth() * 0.33f, centerY - ownerLogo.getHeight() * 0.33f, ownerLogo.getWidth() * 0.66f,
-				        ownerLogo.getHeight() * 0.66f);
-				int troopCount = p.getTroops();
-				String troops = "";
-				if (troopCount == -1) {
-					troops = "???";
-				} else {
-					troops = "" + troopCount;
-				}
-				g.drawString(troops, centerX - fm.stringWidth(troops) / 2f, centerY + (fm.getHeight() - fm.getAscent()) / 2f);
-			}
-		}
-	}
-
-	public void setProvince(Province province) {
-		this.province = province;
 	}
 }
