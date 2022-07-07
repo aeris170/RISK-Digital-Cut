@@ -31,17 +31,17 @@ public final class Utils {
 		return mapCoordinatesByZoom(0, y).y;
 	}
 
-	public static DoaVectorF mapCoordinatesByZoom(final float x, final float y) {
-		return mapCoordinatesByZoom(new DoaVectorF(x, y));
+	public static DoaVector mapCoordinatesByZoom(final float x, final float y) {
+		return mapCoordinatesByZoom(new DoaVector(x, y));
 	}
 
-	public static DoaVectorF mapCoordinatesByZoom(final DoaVectorF coordinateToBeMapped) {
+	public static DoaVector mapCoordinatesByZoom(final DoaVector coordinateToBeMapped) {
 		final float cx = Main.WINDOW_WIDTH / 2f;
 		final float cy = Main.WINDOW_HEIGHT / 2f;
 		final float z = DoaCamera.getZ();
 		final float mx = coordinateToBeMapped.x - cx;
 		final float my = coordinateToBeMapped.y - cy;
-		return new DoaVectorF(mx * z + cx, my * z + cy);
+		return new DoaVector(mx * z + cx, my * z + cy);
 	}
 
 	public static double computeRectangleArea(Rectangle2D rect) {
@@ -67,17 +67,17 @@ public final class Utils {
 		return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
 	}
 
-	public static float euclideanDistance(DoaVectorF first, DoaVectorF second) {
+	public static float euclideanDistance(DoaVector first, DoaVector second) {
 		return (float) Math.sqrt(Math.pow((second.x - first.x), 2) + Math.pow((second.y - first.y), 2));
 	}
 
-	public static float findMaxFontSizeToFitInArea(DoaGraphicsContext g, Font f, DoaVectorF r, String s) {
+	public static float findMaxFontSizeToFitInArea(Font f, DoaVector r, String s) {
 		float fontSize = 0;
 		FontMetrics fm;
 		do {
 			f = new Font(f.getFontName(), Font.PLAIN, f.getSize() + 1);
 			fontSize++;
-			fm = g.getFontMetrics(f);
+			fm = DoaGraphicsFunctions.getFontMetrics(f);
 		} while (fm.stringWidth(s) < r.x && fm.getHeight() < r.y);
 		return fontSize;
 	}
