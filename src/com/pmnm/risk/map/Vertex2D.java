@@ -2,11 +2,20 @@ package com.pmnm.risk.map;
 
 import java.io.Serializable;
 
-public class Vertex2D extends DoaVectorI {
+import doa.engine.maths.DoaVector;
+import lombok.Getter;
+import lombok.Value;
+
+@Value
+public final class Vertex2D implements Serializable {
 
 	private static final long serialVersionUID = 1123855301381378720L;
 
-	public Vertex2D(int x, int y) {
-		super(x, y);
+	@Getter private final int x;
+	@Getter private final int y;
+	
+	public Vertex2D(final int x, final int y) {
+		this.x = x;
+		this.y = y;
 	}
 }
