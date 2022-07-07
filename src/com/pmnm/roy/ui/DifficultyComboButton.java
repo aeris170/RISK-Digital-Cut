@@ -6,15 +6,16 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaMouse;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 
-public class DifficultyComboButton extends DoaImageButton {
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaMouse;
+import doa.engine.maths.DoaVector;
+import doa.engine.ui.button.DoaUIImageButton;
+
+public class DifficultyComboButton extends DoaUIImageButton {
 	private static final long serialVersionUID = -6269009134113146366L;
 
 	public static final String[] DIFFICULTIES = new String[] { "PASSIVE", "EASY", "MEDIUM", "HARD", "INSANE", "CHEATER" };

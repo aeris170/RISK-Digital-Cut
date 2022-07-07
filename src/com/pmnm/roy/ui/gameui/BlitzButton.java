@@ -2,10 +2,10 @@ package com.pmnm.roy.ui.gameui;
 
 import java.awt.image.BufferedImage;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.ui.button.DoaImageButton;
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.ui.button.DoaUIImageButton;
 
-public class BlitzButton extends DoaImageButton {
+public class BlitzButton extends DoaUIImageButton {
 
 	private static final long serialVersionUID = -4633067220666124307L;
 

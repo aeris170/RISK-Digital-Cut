@@ -1,7 +1,7 @@
 package com.pmnm.risk.globals;
 
-import com.doa.engine.scene.DoaScene;
-import com.doa.engine.scene.DoaSceneHandler;
+import doa.engine.scene.DoaScene;
+import doa.engine.scene.DoaSceneHandler;
 
 public final class Scenes {
 

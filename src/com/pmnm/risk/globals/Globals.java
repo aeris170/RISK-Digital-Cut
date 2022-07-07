@@ -6,11 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.doa.engine.graphics.DoaSprites;
 import com.pmnm.risk.asset.AssetLoader;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.roy.ui.UIInit;
 
+import doa.engine.graphics.DoaSprites;
 public final class Globals {
 
 	public static final Color PROVINCE_UNOCCUPIED = Color.WHITE;

@@ -3,12 +3,15 @@ package com.pmnm.risk.map.board;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.scene.DoaObject;
-import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+import com.pmnm.risk.map.province.ProvinceHitAreaBounds;
+
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
 
 public final class ProvinceConnector extends DoaObject {
 

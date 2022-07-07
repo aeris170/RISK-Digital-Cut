@@ -3,12 +3,12 @@ package com.pmnm.roy.ui;
 import java.awt.AlphaComposite;
 import java.awt.image.BufferedImage;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.button.DoaImageButton;
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.maths.DoaVector;
+import doa.engine.ui.button.DoaUIImageButton;
 
-public class LanguageButton extends DoaImageButton {
+public class LanguageButton extends DoaUIImageButton {
 
 	private static final long serialVersionUID = -3852059675270216284L;
 

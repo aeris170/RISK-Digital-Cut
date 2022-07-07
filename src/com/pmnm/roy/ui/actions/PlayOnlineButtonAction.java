@@ -1,9 +1,10 @@
 package com.pmnm.roy.ui.actions;
 
-import com.doa.ui.action.DoaUIAction;
 import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.MainMenu;
 import com.pmnm.roy.ui.menu.PlayOnlineMenu;
+
+import doa.engine.ui.action.DoaUIAction;
 
 public class PlayOnlineButtonAction implements DoaUIAction {
 

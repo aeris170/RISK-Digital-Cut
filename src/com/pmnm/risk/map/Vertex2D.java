@@ -1,6 +1,6 @@
 package com.pmnm.risk.map;
 
-import com.doa.maths.DoaVectorI;
+import java.io.Serializable;
 
 public class Vertex2D extends DoaVectorI {
 

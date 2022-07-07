@@ -1,15 +1,15 @@
 package com.pmnm.roy.ui.menu;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
 
-public class PlayOfflineMenu extends DoaPanel {
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.ui.panel.DoaUIPanel;
+
+public class PlayOfflineMenu extends DoaUIPanel {
 
 	private static final long serialVersionUID = -8533259801260650400L;
 

@@ -10,10 +10,6 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaMouse;
-import com.doa.engine.scene.DoaObject;
 import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
@@ -24,6 +20,11 @@ import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 import com.pmnm.roy.ui.gameui.DicePanel;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
+
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaMouse;
+import doa.engine.scene.DoaObject;
 
 public class GameManager extends DoaObject {
 

@@ -3,10 +3,6 @@ package com.pmnm.roy.ui;
 import java.awt.Color;
 import java.awt.Font;
 
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.scene.DoaScene;
-import com.doa.engine.scene.DoaSceneHandler;
-import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.roy.ui.gameui.PauseMenu;
@@ -23,6 +19,11 @@ import com.pmnm.roy.ui.menu.PlayOnlineMenu;
 import com.pmnm.roy.ui.menu.RulesMenu;
 import com.pmnm.roy.ui.menu.SettingsMenu;
 
+import doa.engine.graphics.DoaSprites;
+import doa.engine.maths.DoaVector;
+import doa.engine.scene.DoaScene;
+import doa.engine.scene.DoaSceneHandler;
+
 public final class UIInit {
 
 	public static final String FLEUR_DE_LIS = "FleurDeLis";
@@ -33,7 +34,7 @@ public final class UIInit {
 	public static final String BUTTON_IDLE_SPRITE = "ButtonIdle";
 	public static final String BUTTON_HOVER_SPRITE = "ButtonHover";
 
-	public static final DoaVectorI BUTTON_SIZE = new DoaVectorI(387, 60);
+	public static final DoaVector BUTTON_SIZE = new DoaVector(387, 60);
 
 	public static final Font UI_FONT = new Font("Book Antiqua", Font.PLAIN, 1);
 	public static final Color FONT_COLOR = new Color(189, 164, 79);

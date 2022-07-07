@@ -3,16 +3,17 @@ package com.pmnm.roy.ui;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaMouse;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 
-public class RandomPlacementButton extends DoaImageButton {
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaMouse;
+import doa.engine.maths.DoaVector;
+import doa.engine.ui.button.DoaUIImageButton;
+
+public class RandomPlacementButton extends DoaUIImageButton {
 
 	private static final long serialVersionUID = 1106009971325314959L;
 
@@ -20,7 +21,7 @@ public class RandomPlacementButton extends DoaImageButton {
 	BufferedImage clicked;
 	String s;
 
-	public RandomPlacementButton(DoaVectorF position, Integer width, Integer height, BufferedImage idle, BufferedImage clicked, String s) {
+	public RandomPlacementButton(DoaVector position, Integer width, Integer height, BufferedImage idle, BufferedImage clicked, String s) {
 		super(position, width, height, idle, idle, clicked);
 		this.idle = idle;
 		this.clicked = clicked;
@@ -45,7 +46,7 @@ public class RandomPlacementButton extends DoaImageButton {
 		if (click) {
 			g.drawImage(clicked, position.x + (idle.getWidth() - clicked.getWidth()) / 2, position.y + (idle.getHeight() - clicked.getHeight()) / 2);
 		}
-		DoaVectorF bounds = new DoaVectorF(randomPlacementBG.getWidth() * 0.9f, randomPlacementBG.getHeight());
+		DoaVector bounds = new DoaVector(randomPlacementBG.getWidth() * 0.9f, randomPlacementBG.getHeight());
 		String ss = Translator.getInstance().getTranslatedString(s).toUpperCase();
 		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, ss)));
 		g.setColor(UIInit.FONT_COLOR);

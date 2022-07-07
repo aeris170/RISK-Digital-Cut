@@ -4,24 +4,25 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaKeyboard;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIInit;
 import com.pmnm.roy.ui.ZOrders;
 
-public class RulesMenu extends DoaPanel {
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaKeyboard;
+import doa.engine.maths.DoaVector;
+import doa.engine.ui.panel.DoaUIPanel;
+
+public class RulesMenu extends DoaUIPanel {
 
 	private static final long serialVersionUID = 7874225793360662873L;
 
 	private Map<BufferedImage, Boolean> pages = new HashMap<>();
 
-	TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.016f, Main.WINDOW_HEIGHT * 0.902f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
+	TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.016f, Main.WINDOW_HEIGHT * 0.902f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
 	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
 
 	public RulesMenu() {

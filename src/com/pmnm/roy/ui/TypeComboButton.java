@@ -5,20 +5,21 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaMouse;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 
-public class TypeComboButton extends DoaImageButton {
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaMouse;
+import doa.engine.maths.DoaVector;
+import doa.engine.ui.button.DoaUIImageButton;
+
+public class TypeComboButton extends DoaUIImageButton {
 
 	private static final long serialVersionUID = -566390496060314364L;
 
-	private static DoaVectorF bounds;
+	private static DoaVector bounds;
 
 	public static String[] OPTIONS = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
 
@@ -27,10 +28,10 @@ public class TypeComboButton extends DoaImageButton {
 	public int index = 0;
 	boolean isSinglePlayer;
 
-	public TypeComboButton(DoaVectorF position, boolean isSinglePlayer) {
+	public TypeComboButton(DoaVector position, boolean isSinglePlayer) {
 		super(position, (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f), DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownIdle"),
 		        DoaSprites.get("ArrowDownClick"));
-		bounds = new DoaVectorF(Main.WINDOW_WIDTH * 0.10f, height);
+		bounds = new DoaVector(Main.WINDOW_WIDTH * 0.10f, dimensions.y);
 		if (isSinglePlayer) {
 			OPTIONS = new String[] { "CLOSED", "HUMAN", "COMPUTER" };
 		} else {
@@ -72,12 +73,10 @@ public class TypeComboButton extends DoaImageButton {
 		}
 		if (click) {
 			int height = DoaSprites.get("DropDownType").getHeight();
-			g.drawImage(DoaSprites.get("DropDownType"), position.x - Main.WINDOW_WIDTH * 0.103f, position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.124f,
-			        height);
+			g.drawImage(DoaSprites.get("DropDownType"), position.x - Main.WINDOW_WIDTH * 0.103f, position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.124f, height);
 			g.pushComposite();
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-			g.drawImage(DoaSprites.get("DropDownTypeTex"), position.x - Main.WINDOW_WIDTH * 0.103f, position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.124f,
-			        height);
+			g.drawImage(DoaSprites.get("DropDownTypeTex"), position.x - Main.WINDOW_WIDTH * 0.103f, position.y + Main.WINDOW_HEIGHT * 0.040f, Main.WINDOW_WIDTH * 0.124f, height);
 			g.popComposite();
 			for (int i = 0; i < OPTIONS.length - (isSinglePlayer ? 0 : 1); i++) {
 				s = Translator.getInstance().getTranslatedString(OPTIONS[i]);
@@ -88,15 +87,15 @@ public class TypeComboButton extends DoaImageButton {
 	}
 
 	private Rectangle2D closedHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.046f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.046f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private Rectangle2D humanHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.074f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.074f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private Rectangle2D computerHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.102f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.102f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private boolean noneHit() {

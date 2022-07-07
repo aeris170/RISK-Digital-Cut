@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-import com.doa.engine.task.DoaTaskGuard;
-import com.doa.engine.task.DoaTasker;
 import com.pmnm.risk.map.province.Province;
+
+import doa.engine.task.DoaTaskGuard;
+import doa.engine.task.DoaTasker;
 
 public class AIPlayer extends Player {
 

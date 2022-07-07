@@ -11,9 +11,9 @@ import java.util.List;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import com.doa.engine.graphics.DoaAnimations;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.sound.DoaSounds;
+import doa.engine.graphics.DoaAnimations;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.sound.DoaSounds;
 
 public final class AssetLoader {
 

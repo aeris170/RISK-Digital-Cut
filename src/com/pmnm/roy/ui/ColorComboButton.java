@@ -7,16 +7,17 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaMouse;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 
-public class ColorComboButton extends DoaImageButton {
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaMouse;
+import doa.engine.maths.DoaVector;
+import doa.engine.ui.button.DoaUIImageButton;
+
+public class ColorComboButton extends DoaUIImageButton {
 
 	private static final long serialVersionUID = 2677754096284998205L;
 

@@ -6,11 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.button.DoaImageButton;
-import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Main;
@@ -23,7 +18,13 @@ import com.pmnm.roy.ui.TypeComboButton;
 import com.pmnm.roy.ui.UIInit;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
-public class NewGameMenu extends DoaPanel {
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.maths.DoaVector;
+import doa.engine.ui.button.DoaUIImageButton;
+import doa.engine.ui.panel.DoaUIPanel;
+
+public class NewGameMenu extends DoaUIPanel {
 
 	private static final long serialVersionUID = -7552086909580890620L;
 

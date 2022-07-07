@@ -1,10 +1,11 @@
 package com.pmnm.roy.ui.actions;
 
-import com.doa.ui.action.DoaUIAction;
 import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.LoadGameMenu;
 import com.pmnm.roy.ui.menu.MainMenu;
 import com.pmnm.roy.ui.menu.PlayOfflineMenu;
+
+import doa.engine.ui.action.DoaUIAction;
 
 public class LoadButtonAction implements DoaUIAction {
 

@@ -7,12 +7,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.input.DoaMouse;
-import com.doa.engine.scene.DoaObject;
 import com.pmnm.risk.map.continent.Continent;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+
+import doa.engine.graphics.DoaGraphicsContext;
+import doa.engine.input.DoaMouse;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.elements.scripts.DoaScript;
 
 public class Player extends DoaObject {
 

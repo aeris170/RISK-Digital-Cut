@@ -19,11 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaMouse;
-import com.doa.engine.scene.DoaObject;
-import com.doa.maths.DoaVectorI;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
@@ -31,6 +26,14 @@ import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.roy.ui.UIInit;
 import com.pmnm.roy.ui.ZOrders;
+
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaMouse;
+import doa.engine.maths.DoaVector;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
 
 public class ProvinceHitArea extends DoaObject {
 

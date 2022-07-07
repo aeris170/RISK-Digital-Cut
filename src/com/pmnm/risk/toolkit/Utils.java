@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.doa.engine.DoaCamera;
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.maths.DoaVectorF;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.map.province.ProvinceHitArea;
+
+import doa.engine.core.DoaCamera;
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.maths.DoaVector;
 
 public final class Utils {
 
