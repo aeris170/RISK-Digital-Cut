@@ -26,7 +26,7 @@ public class DifficultyComboButton extends DoaUIImageButton {
 
 	public boolean hidden = false;
 
-	public DifficultyComboButton(DoaVectorF position) {
+	public DifficultyComboButton(DoaVector position) {
 		super(position, (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f), DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownIdle"),
 		        DoaSprites.get("ArrowDownClick"));
 		DIFFICULTY_COMBO_BUTTONS.add(this);
@@ -101,33 +101,32 @@ public class DifficultyComboButton extends DoaUIImageButton {
 	}
 
 	private Rectangle2D passiveHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.046f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.046f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private Rectangle2D easyHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.074f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.074f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private Rectangle2D mediumHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.102f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.102f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private Rectangle2D hardHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.130f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.130f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private Rectangle2D insaneHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.158f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.158f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private Rectangle2D cheaterHitBox() {
-		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.186f, Main.WINDOW_WIDTH * 0.115f, height * 0.8f);
+		return new Rectangle2D.Float(position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.186f, Main.WINDOW_WIDTH * 0.115f, dimensions.y * 0.8f);
 	}
 
 	private boolean noneHit() {
 		return !passiveHitBox().contains(DoaMouse.X, DoaMouse.Y) && !easyHitBox().contains(DoaMouse.X, DoaMouse.Y) && !mediumHitBox().contains(DoaMouse.X, DoaMouse.Y)
-		        && !hardHitBox().contains(DoaMouse.X, DoaMouse.Y) && !insaneHitBox().contains(DoaMouse.X, DoaMouse.Y)
-		        && !cheaterHitBox().contains(DoaMouse.X, DoaMouse.Y);
+		        && !hardHitBox().contains(DoaMouse.X, DoaMouse.Y) && !insaneHitBox().contains(DoaMouse.X, DoaMouse.Y) && !cheaterHitBox().contains(DoaMouse.X, DoaMouse.Y);
 	}
 
 }

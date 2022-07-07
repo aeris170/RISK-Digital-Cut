@@ -28,23 +28,23 @@ public class NewGameMenu extends DoaUIPanel {
 
 	private static final long serialVersionUID = -7552086909580890620L;
 
-	private static final TextImageButton playButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.BUTTON_SIZE.x,
+	private static final TextImageButton playButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.BUTTON_SIZE.x,
 	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "PLAY", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR)
 	        .instantiate();
-	private static final TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f), UIInit.BUTTON_SIZE.x,
+	private static final TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f), UIInit.BUTTON_SIZE.x,
 	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR)
 	        .instantiate();
 
-	private static final DoaImageButton prevMapButton = Builders.DIBB
+	private static final DoaUIImageButton prevMapButton = Builders.DIBB
 	        .args(Main.WINDOW_WIDTH * 0.731f, Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowLeftIdle"), DoaSprites.get("ArrowLeftClick")).instantiate();
-	private static final DoaImageButton nextMapButton = Builders.DIBB
+	private static final DoaUIImageButton nextMapButton = Builders.DIBB
 	        .args(Main.WINDOW_WIDTH * 0.887f, Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowRightIdle"), DoaSprites.get("ArrowRightClick")).instantiate();
 
 	private static final RandomPlacementButton randomPlacementButton = Builders.RPBB
-	        .args(new DoaVectorF(Main.WINDOW_WIDTH * 0.318f, Main.WINDOW_HEIGHT * 0.636f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
+	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.318f, Main.WINDOW_HEIGHT * 0.636f), 22, 22, DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
 	        .instantiate();
 
-	private static final DoaVectorF textRect = new DoaVectorF(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
+	private static final DoaVector textRect = new DoaVector(Main.WINDOW_WIDTH * 0.092f, Main.WINDOW_HEIGHT * 0.040f);
 
 	private static final TypeComboButton[] tbca = new TypeComboButton[Globals.MAX_NUM_PLAYERS];
 	private static final ColorComboButton[] ccba = new ColorComboButton[Globals.MAX_NUM_PLAYERS];
@@ -101,19 +101,19 @@ public class NewGameMenu extends DoaUIPanel {
 		add(nextMapButton);
 		for (int i = 0; i < Globals.MAX_NUM_PLAYERS; i++) {
 			System.out.println(i + ": " + (getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1));
-			TypeComboButton tbc = Builders.TCBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)), true)
+			TypeComboButton tbc = Builders.TCBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)), true)
 			        .instantiate();
 			tbc.setzOrder(getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1);
 			add(tbc);
 			tbca[i] = tbc;
 
-			DifficultyComboButton dcb = Builders.DCBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.289f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)))
+			DifficultyComboButton dcb = Builders.DCBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.289f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)))
 			        .instantiate();
 			dcb.setzOrder(getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1);
 			add(dcb);
 			dcba[i] = dcb;
 
-			ColorComboButton ccb = Builders.CCBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.347f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i))).instantiate();
+			ColorComboButton ccb = Builders.CCBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.347f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i))).instantiate();
 			ccb.setzOrder(getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1);
 			add(ccb);
 			ccba[i] = ccb;
@@ -146,7 +146,7 @@ public class NewGameMenu extends DoaUIPanel {
 		g.drawImage(DoaSprites.get("MainScroll"), Main.WINDOW_WIDTH * 0.0125f, Main.WINDOW_HEIGHT * 0.163f);
 		g.drawImage(DoaSprites.get("MapChooserBackground"), Main.WINDOW_WIDTH * 0.71f, Main.WINDOW_HEIGHT * 0.24f);
 
-		DoaVectorF bounds = new DoaVectorF(nextMapButton.getPosition().x - prevMapButton.getPosition().x + prevMapButton.getWidth() - prevMapButton.getWidth() * 2,
+		DoaVector bounds = new DoaVector(nextMapButton.getPosition().x - prevMapButton.getPosition().x + prevMapButton.getWidth() - prevMapButton.getWidth() * 2,
 		        prevMapButton.getHeight());
 		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
 		g.setColor(UIInit.FONT_COLOR);

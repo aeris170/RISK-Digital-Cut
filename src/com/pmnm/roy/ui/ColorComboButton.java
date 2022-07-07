@@ -37,7 +37,7 @@ public class ColorComboButton extends DoaUIImageButton {
 
 	public boolean hidden = false;
 
-	public ColorComboButton(DoaVectorF position) {
+	public ColorComboButton(DoaVector position) {
 		super(position, (int) (Main.WINDOW_WIDTH * 0.019f), (int) (Main.WINDOW_HEIGHT * 0.035f), DoaSprites.get("ArrowDownIdle"), DoaSprites.get("ArrowDownIdle"),
 		        DoaSprites.get("ArrowDownClick"));
 

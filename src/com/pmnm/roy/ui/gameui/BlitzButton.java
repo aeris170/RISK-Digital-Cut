@@ -26,11 +26,11 @@ public class BlitzButton extends DoaUIImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (click) {
-			g.drawImage(clickImage, position.x, position.y - 84d, width, height + 99d);
+			g.drawImage(clickImage, position.x, position.y - 84, getDimensions().x, getDimensions().y + 99);
 		} else if (hover) {
-			g.drawImage(hoverImage, position.x, position.y - 84d, width, height + 99d);
+			g.drawImage(hoverImage, position.x, position.y - 84, getDimensions().x, getDimensions().y + 99);
 		} else {
-			g.drawImage(idleImage, position.x, position.y - 84d, width, height + 99d);
+			g.drawImage(idleImage, position.x, position.y - 84, getDimensions().x, getDimensions().y + 99);
 		}
 	}
 }

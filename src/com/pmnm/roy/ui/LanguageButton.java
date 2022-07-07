@@ -16,7 +16,7 @@ public class LanguageButton extends DoaUIImageButton {
 
 	private boolean selected = false;
 
-	public LanguageButton(DoaVectorF position, Integer width, Integer height, BufferedImage idleImage) {
+	public LanguageButton(DoaVector position, Integer width, Integer height, BufferedImage idleImage) {
 		super(position, width, height, idleImage);
 		this.idleImage = idleImage;
 	}
@@ -24,16 +24,16 @@ public class LanguageButton extends DoaUIImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (isEnabled) {
-			g.drawImage(idleImage, position.x, position.y, width, height);
+			g.drawImage(idleImage, position.x, position.y, dimensions.x, dimensions.y);
 			g.pushComposite();
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-			g.drawImage(DoaSprites.get("Lens"), position.x, position.y, width, height);
+			g.drawImage(DoaSprites.get("Lens"), position.x, position.y, dimensions.x, dimensions.y);
 			if (selected) {
 				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-				g.drawImage(DoaSprites.get("LensSelect"), position.x, position.y, width, height);
+				g.drawImage(DoaSprites.get("LensSelect"), position.x, position.y, dimensions.x, dimensions.y);
 			} else if (hover) {
 				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-				g.drawImage(DoaSprites.get("LensHover"), position.x, position.y, width, height);
+				g.drawImage(DoaSprites.get("LensHover"), position.x, position.y, dimensions.x, dimensions.y);
 			}
 			g.popComposite();
 		}
