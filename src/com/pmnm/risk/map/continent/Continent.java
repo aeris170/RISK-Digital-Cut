@@ -8,74 +8,41 @@ import com.pmnm.risk.map.board.IContinent;
 import com.pmnm.risk.map.board.IProvince;
 import com.pmnm.risk.map.board.RiskGameContext;
 
-public class Continent implements Serializable {
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
 
-	private static final long serialVersionUID = 2216078176595232966L;
+public final class Continent implements IContinent  {
 
-	public static Map<String, Continent> NAME_CONTINENT = new LinkedHashMap<>();
+	private static final long serialVersionUID = 4714708201174941610L;
 
-	private String name;
-	private Color color;
-	private int captureBonus;
-	private String abbreviation;
-	private Set<Province> provinces;
+	private final RiskGameContext context;
+	
+	@NonNull
+	@Getter(value = AccessLevel.PACKAGE)
+	private final ContinentData data;
 
-	public String getName() {
-		return name;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public int getCaptureBonus() {
-		return captureBonus;
-	}
-
-	public String getAbbreviation() {
-		return abbreviation;
-	}
-
-	public Set<Province> getProvinces() {
-		return provinces;
-	}
-
-	public Continent setName(String name) {
-		NAME_CONTINENT.remove(this.name);
-		this.name = name;
-		NAME_CONTINENT.put(name, this);
-		return this;
-	}
-
-	public Continent setColor(Color color) {
-		this.color = color;
-		return this;
-	}
-
-	public Continent setCaptureBonus(int captureBonus) {
-		this.captureBonus = captureBonus;
-		return this;
-	}
-
-	public Continent setAbbreviation(String abbreviation) {
-		this.abbreviation = abbreviation;
-		return this;
-	}
-
-	public Continent setProvinces(Set<Province> provinces) {
-		this.provinces = provinces;
-		for (Province p : provinces) {
-			p.setContinent(this);
-		}
-		return this;
+	public Continent(@NonNull final RiskGameContext context, @NonNull final ContinentData data) {
+		this.context = context;
+		this.data = data;
 	}
 
 	@Override
-	public String toString() {
-		return "[Continent] Name: " + name + "\n" + Arrays.toString(provinces.toArray(new Province[provinces.size()])) + "\n";
-	}
+	public String getName() { return data.getName(); }
 
-	public static void printAllContinents() {
-		NAME_CONTINENT.forEach((s, c) -> System.out.println(c.toString()));
-	}
+	@Override
+	public String getAbbreviation() { return data.getAbbreviation(); }
+
+	@Override
+	public int getCaptureBonus() { return data.getCaptureBonus(); }
+
+	@Override
+	public Color getColor() { return data.getColor(); }
+
+	@Override
+	public boolean containsProvince(@NonNull IProvince province) { return equals(context.continentOf(province)); }
+
+	@Override
+	public UnmodifiableIterator<@NonNull IProvince> getProvinces() { return context.provincesOf(this); }
+
 }

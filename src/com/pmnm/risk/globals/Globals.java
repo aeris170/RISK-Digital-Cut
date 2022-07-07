@@ -11,7 +11,10 @@ import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.roy.ui.UIInit;
 
 import doa.engine.graphics.DoaSprites;
+
 public final class Globals {
+	
+	public static final int UNKNOWN_TROOP_COUNT = -38145124;
 
 	public static final Color PROVINCE_UNOCCUPIED = Color.WHITE;
 	public static final Color PROVINCE_UNOCCUPIED_BORDER = Color.BLACK;
@@ -33,8 +36,7 @@ public final class Globals {
 
 	private static void fetchMapNamesAndImages() {
 		File[] maps = new File("res/maps/").listFiles();
-		MAP_NAMES = Arrays.stream(maps).filter(map -> map.isDirectory()).map(mapFolder -> mapFolder.getName().toUpperCase().replaceAll("_", " ").trim())
-		        .toArray(String[]::new);
+		MAP_NAMES = Arrays.stream(maps).filter(map -> map.isDirectory()).map(mapFolder -> mapFolder.getName().toUpperCase().replaceAll("_", " ").trim()).toArray(String[]::new);
 		MAP_IMAGES = new BufferedImage[MAP_NAMES.length];
 		int i = 0;
 		for (File f : maps) {
