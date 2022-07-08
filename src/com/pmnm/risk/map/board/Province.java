@@ -50,13 +50,7 @@ public final class Province implements IProvince {
 	public Vertex2D getCenterPoint() { return data.getMeshes().getCenter(); }
 
 	@Override
-	public boolean encasesPoint(@NonNull Vertex2D point) { 
-		UnmodifiableIterator<@NonNull Mesh2D> meshes = data.getMeshes().getMeshes();
-		while (meshes.hasNext()) {
-			Mesh2D mesh = meshes.next();
-			mesh.
-		}
-	}
+	public boolean encasesPoint(@NonNull Vertex2D point) { return data.getMeshes().encasesPoint(point); }
 
 	@Override
 	public boolean encasesPoint(@NonNull DoaVector point) { return encasesPoint(new Vertex2D((int)point.x, (int)point.y)); }

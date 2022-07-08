@@ -1,5 +1,6 @@
 package com.pmnm.risk.map;
 
+import java.awt.Point;
 import java.awt.geom.GeneralPath;
 import java.io.Serializable;
 
@@ -7,7 +8,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Singular;
@@ -34,6 +34,10 @@ public final class Mesh2D implements Serializable {
 	Mesh2D(@NonNull final ImmutableList<@NonNull Vertex2D> vertices) {
 		this.vertices = vertices;
 		calculateBoundary();
+	}
+
+	public boolean encasesPoint(@NonNull Vertex2D point) {
+		return boundary.contains(new Point(point.getX(), point.getY()));
 	}
 	
 	private void calculateBoundary() {

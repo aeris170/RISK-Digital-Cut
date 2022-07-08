@@ -29,5 +29,13 @@ public final class MeshCollection implements Serializable {
 	public UnmodifiableIterator<@NonNull Mesh2D> getMeshes() {
 		return meshes.iterator();
 	}
-
+	
+	public boolean encasesPoint(@NonNull Vertex2D point) {
+		for(@NonNull Mesh2D mesh : meshes) {
+			if (mesh.encasesPoint(point)) {
+				return true;
+			}	
+		}
+		return false;
+	}
 }
