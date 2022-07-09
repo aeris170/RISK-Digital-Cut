@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
-import com.pmnm.risk.map.board.ProvinceConnector;
-import com.pmnm.risk.map.province.ProvinceHitArea;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 import com.pmnm.roy.ui.gameui.DicePanel;
@@ -24,6 +22,8 @@ import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;
 import pmnm.risk.game.Dice;
+import pmnm.risk.map.board.ProvinceConnector;
+import pmnm.risk.map.board.ProvinceHitArea;
 import pmnm.risk.map.province.Province;
 
 public class GameManager extends DoaObject {

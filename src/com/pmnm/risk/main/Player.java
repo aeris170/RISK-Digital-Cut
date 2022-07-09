@@ -8,12 +8,12 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import com.pmnm.risk.map.continent.Continent;
-import com.pmnm.risk.map.province.ProvinceHitArea;
 
 import doa.engine.graphics.DoaGraphicsContext;
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.scripts.DoaScript;
+import pmnm.risk.map.board.ProvinceHitArea;
 import pmnm.risk.map.province.Province;
 
 public class Player extends DoaObject {

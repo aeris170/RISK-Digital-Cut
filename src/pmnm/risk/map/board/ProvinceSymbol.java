@@ -1,4 +1,4 @@
-package com.pmnm.risk.map.province;
+package pmnm.risk.map.board;
 
 import java.awt.Color;
 import java.awt.Font;

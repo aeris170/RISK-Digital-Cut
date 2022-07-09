@@ -1,12 +1,10 @@
-package com.pmnm.risk.map.board;
+package pmnm.risk.map.board;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.GameManager;
-import com.pmnm.risk.map.province.ProvinceHitArea;
-import com.pmnm.risk.map.province.ProvinceHitAreaBounds;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.scene.DoaObject;

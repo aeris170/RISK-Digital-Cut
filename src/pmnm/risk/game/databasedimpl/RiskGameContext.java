@@ -8,7 +8,6 @@ import java.util.Map;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.map.board.Province;
 import com.pmnm.risk.map.continent.Continent;
 
 import lombok.NonNull;

@@ -1,4 +1,4 @@
-package com.pmnm.risk.map.board;
+package pmnm.risk.game.databasedimpl;
 
 import com.google.common.collect.UnmodifiableIterator;
 
@@ -9,7 +9,6 @@ import lombok.NonNull;
 import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IPlayer;
 import pmnm.risk.game.IProvince;
-import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.map.Mesh2D;
 import pmnm.risk.map.ProvinceData;
 import pmnm.risk.map.Vertex2D;

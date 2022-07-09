@@ -1,4 +1,4 @@
-package com.pmnm.risk.map.board;
+package pmnm.risk.map.board;
 
 import com.pmnm.risk.main.Main;
 
