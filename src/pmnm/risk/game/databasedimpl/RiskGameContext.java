@@ -8,12 +8,12 @@ import java.util.Map;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.main.Conflict;
-import com.pmnm.risk.main.Deploy;
 import com.pmnm.risk.map.board.Province;
 import com.pmnm.risk.map.continent.Continent;
 
 import lombok.NonNull;
+import pmnm.risk.game.Conflict;
+import pmnm.risk.game.Deploy;
 import pmnm.risk.game.Dice;
 import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IPlayer;

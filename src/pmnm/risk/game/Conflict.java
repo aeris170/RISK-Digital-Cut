@@ -1,4 +1,4 @@
-package com.pmnm.risk.main;
+package pmnm.risk.game;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
-import pmnm.risk.game.Dice;
-import pmnm.risk.game.IProvince;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @Data

@@ -3,8 +3,6 @@ package pmnm.risk.game;
 import java.io.Serializable;
 
 import com.google.common.collect.UnmodifiableIterator;
-import com.pmnm.risk.main.Conflict;
-import com.pmnm.risk.main.Deploy;
 
 import lombok.NonNull;
 
