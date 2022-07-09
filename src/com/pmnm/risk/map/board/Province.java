@@ -1,15 +1,18 @@
 package com.pmnm.risk.map.board;
 
 import com.google.common.collect.UnmodifiableIterator;
-import com.pmnm.risk.main.IPlayer;
 import com.pmnm.risk.map.Mesh2D;
-import com.pmnm.risk.map.ProvinceData;
 import com.pmnm.risk.map.Vertex2D;
 
 import doa.engine.maths.DoaVector;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
+import pmnm.risk.game.IContinent;
+import pmnm.risk.game.IPlayer;
+import pmnm.risk.game.IProvince;
+import pmnm.risk.game.databasedimpl.ProvinceData;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 public final class Province implements IProvince {
 	
@@ -31,7 +34,7 @@ public final class Province implements IProvince {
 
 	@Override
 	public boolean isNeighborOf(@NonNull IProvince province) {
-		UnmodifiableIterator<@NonNull IProvince> neighbors = getNeighbors();
+		UnmodifiableIterator<pmnm.risk.game.IProvince> neighbors = getNeighbors();
 		while (neighbors.hasNext()) {
 			IProvince neighbor = neighbors.next();
 			if (neighbor == province) {
@@ -42,7 +45,7 @@ public final class Province implements IProvince {
 	}
 
 	@Override
-	public UnmodifiableIterator<@NonNull IProvince> getNeighbors() {
+	public UnmodifiableIterator<pmnm.risk.game.IProvince> getNeighbors() {
 		return context.neighborsOf(this);
 	}
 

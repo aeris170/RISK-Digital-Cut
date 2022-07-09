@@ -1,9 +1,8 @@
-package com.pmnm.risk.map;
+package pmnm.risk.game.databasedimpl;
 
 import java.io.Serializable;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.UnmodifiableIterator;
 
 import java.awt.Color;
 
@@ -34,8 +33,8 @@ public final class ContinentData implements Serializable {
 	private final Color color;
 	
 	@NonNull
-	private final ImmutableList<@NonNull ProvinceData> provinces;
-	public Iterable<@NonNull ProvinceData> getProvinces() {
+	private final ImmutableList<pmnm.risk.game.databasedimpl.ProvinceData> provinces;
+	public Iterable<pmnm.risk.game.databasedimpl.ProvinceData> getProvinces() {
 		return provinces;
 	}
 }

@@ -16,14 +16,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.map.board.IRiskGameContext;
 import com.pmnm.risk.map.board.ProvinceConnector; 
 import com.pmnm.risk.map.continent.Continent; 
 import com.pmnm.risk.map.province.ProvinceHitArea; 
 import com.pmnm.risk.network.Client;
 import com.pmnm.risk.network.message.MessageBuilder; 
 import com.pmnm.risk.network.message.MessageType; 
-import com.pmnm.roy.ui.gameui.RiskGameScreenUI; 
+import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
+
+import pmnm.risk.game.IRiskGameContext; 
  
 public final class GameInstance implements Serializable { 
 	 

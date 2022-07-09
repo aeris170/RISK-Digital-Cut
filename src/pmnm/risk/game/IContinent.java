@@ -1,4 +1,4 @@
-package com.pmnm.risk.map.board;
+package pmnm.risk.game;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -18,5 +18,5 @@ public interface IContinent extends Serializable {
 	Color getColor();
 	
 	boolean containsProvince(@NonNull final IProvince province);
-	UnmodifiableIterator<@NonNull IProvince> getProvinces();
+	UnmodifiableIterator<IProvince> getProvinces();
 }

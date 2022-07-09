@@ -1,16 +1,13 @@
-package com.pmnm.risk.main;
-import com.google.common.collect.UnmodifiableIterator;
-import com.pmnm.risk.dice.Dice;
-import com.pmnm.risk.map.board.IProvince;
+package pmnm.risk.game;
 
-import lombok.NonNull;
+import com.google.common.collect.UnmodifiableIterator;
 
 public interface IPlayer {
 	
 	String getName();
 
 	void occupyProvince(final IProvince province);
-	UnmodifiableIterator<@NonNull IProvince> getOccupiedProvinces();
+	UnmodifiableIterator<IProvince> getOccupiedProvinces();
 	
 	void deployToProvince(final IProvince province, final int amount);
 	void attackToProvince(final IProvince source, final IProvince destination, final Dice method);

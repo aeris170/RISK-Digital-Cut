@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.pmnm.risk.asset.AssetLoader;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.map.MapConfig;
 import com.pmnm.roy.ui.UIInit;

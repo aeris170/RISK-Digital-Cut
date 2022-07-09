@@ -3,14 +3,14 @@ package com.pmnm.risk.map.continent;
 import java.awt.Color;
 
 import com.google.common.collect.UnmodifiableIterator;
-import com.pmnm.risk.map.ContinentData;
-import com.pmnm.risk.map.board.IContinent;
-import com.pmnm.risk.map.board.IProvince;
-import com.pmnm.risk.map.board.RiskGameContext;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
+import pmnm.risk.game.IContinent;
+import pmnm.risk.game.IProvince;
+import pmnm.risk.game.databasedimpl.ContinentData;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 public final class Continent implements IContinent  {
 
@@ -43,6 +43,6 @@ public final class Continent implements IContinent  {
 	public boolean containsProvince(@NonNull IProvince province) { return equals(context.continentOf(province)); }
 
 	@Override
-	public UnmodifiableIterator<@NonNull IProvince> getProvinces() { return context.provincesOf(this); }
+	public UnmodifiableIterator<pmnm.risk.game.IProvince> getProvinces() { return context.provincesOf(this); }
 
 }

@@ -2,6 +2,7 @@
 <!DOCTYPE vertices [
 <!ELEMENT vertices (province+)>
 <!ELEMENT province (name, center, mesh+)>
+<!ELEMENT name (#PCDATA)>
 <!ELEMENT center (vertex)>
 <!ELEMENT mesh (vertex+)>
 <!ELEMENT vertex (x, y)>

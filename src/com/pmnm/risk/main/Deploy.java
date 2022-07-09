@@ -1,14 +1,14 @@
 package com.pmnm.risk.main;
 
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.map.board.IProvince;
-import com.pmnm.risk.map.board.RiskGameContext;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
+import pmnm.risk.game.IProvince;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @Data
 @ToString(includeFieldNames = true)

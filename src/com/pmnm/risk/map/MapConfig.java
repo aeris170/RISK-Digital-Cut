@@ -91,7 +91,7 @@ public final class MapConfig implements Serializable {
 	
 	private void check(File f) throws MapValidationException {
 		if (!f.exists()) {
-			throw new MapValidationException(f.getName() + " not found");
+			throw new MapValidationException(f.getParentFile().getName() + " " + f.getName() + " not found");
 		}
 	}
 	

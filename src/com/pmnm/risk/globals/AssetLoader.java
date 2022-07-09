@@ -1,4 +1,4 @@
-package com.pmnm.risk.asset;
+package com.pmnm.risk.globals;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -14,10 +14,10 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import doa.engine.graphics.DoaAnimations;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.sound.DoaSounds;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public final class AssetLoader {
-
-	private AssetLoader() {}
 
 	public static void initializeAssets() {
 		try {

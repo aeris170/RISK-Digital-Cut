@@ -1,4 +1,4 @@
-package com.pmnm.risk.dice;
+package pmnm.risk.game;
 
 import java.util.concurrent.ThreadLocalRandom;
 

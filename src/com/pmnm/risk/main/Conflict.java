@@ -4,15 +4,14 @@ import java.util.Optional;
 
 import org.javatuples.Pair;
 
-import com.pmnm.risk.dice.Dice;
-import com.pmnm.risk.map.board.IProvince;
-import com.pmnm.risk.map.board.RiskGameContext;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
+import pmnm.risk.game.Dice;
+import pmnm.risk.game.IProvince;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @Data
 @ToString(includeFieldNames = true)

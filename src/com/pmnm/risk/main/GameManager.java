@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.map.board.ProvinceConnector;
@@ -25,6 +24,7 @@ import doa.engine.graphics.DoaGraphicsContext;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;
+import pmnm.risk.game.Dice;
 
 public class GameManager extends DoaObject {
 

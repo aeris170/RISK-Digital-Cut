@@ -24,6 +24,9 @@ import com.pmnm.risk.map.MeshCollection.MeshCollectionBuilder;
 import doa.engine.core.DoaGame;
 import doa.engine.graphics.DoaSprites;
 import lombok.experimental.UtilityClass;
+import pmnm.risk.game.databasedimpl.ContinentData;
+import pmnm.risk.game.databasedimpl.MapData;
+import pmnm.risk.game.databasedimpl.ProvinceData;
 
 @UtilityClass
 public final class MapLoader {

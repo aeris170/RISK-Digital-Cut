@@ -1,12 +1,12 @@
 package com.pmnm.risk.map.board;
 
 import com.pmnm.risk.main.Main;
-import com.pmnm.risk.map.MapData;
 
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaSpriteRenderer;
 import lombok.NonNull;
+import pmnm.risk.game.databasedimpl.MapData;
 
 public final class GameBoard extends DoaObject {
 
@@ -15,8 +15,8 @@ public final class GameBoard extends DoaObject {
 	public GameBoard(@NonNull MapData data) {
 		DoaSpriteRenderer r = new DoaSpriteRenderer();
 		r.setSprite(data.getBackgroundImage(), false);
-		r.setOffset(new DoaVector(0,0));
-		r.setDimensions(new DoaVector(Main.WINDOW_WIDTH - 1, Main.WINDOW_HEIGHT - 1));
+		r.setOffset(new DoaVector(0, 0));
+		r.setDimensions(new DoaVector(Main.WINDOW_WIDTH - 1f, Main.WINDOW_HEIGHT - 1f));
 		addComponent(r);
 	}
 }

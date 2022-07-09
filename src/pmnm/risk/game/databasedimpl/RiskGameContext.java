@@ -1,24 +1,24 @@
-package com.pmnm.risk.map.board;
+package pmnm.risk.game.databasedimpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
-import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Conflict;
-import com.pmnm.risk.main.IPlayer;
 import com.pmnm.risk.main.Deploy;
-import com.pmnm.risk.map.ContinentData;
-import com.pmnm.risk.map.MapData;
-import com.pmnm.risk.map.ProvinceData;
+import com.pmnm.risk.map.board.Province;
 import com.pmnm.risk.map.continent.Continent;
 
 import lombok.NonNull;
+import pmnm.risk.game.Dice;
+import pmnm.risk.game.IContinent;
+import pmnm.risk.game.IPlayer;
+import pmnm.risk.game.IProvince;
+import pmnm.risk.game.IRiskGameContext;
 
 public class RiskGameContext implements IRiskGameContext {
 
@@ -33,25 +33,26 @@ public class RiskGameContext implements IRiskGameContext {
 	private IPlayer[] players;
 
 	/* Data <-> Implementation Association */
-	private Map<@NonNull IContinent, @NonNull ContinentData> continentData;
-	private Map<@NonNull ContinentData, @NonNull IContinent> dataContinent;
-	private Map<@NonNull IProvince, @NonNull ProvinceData> provinceData;
-	private Map<@NonNull ProvinceData, @NonNull IProvince> dataProvince;
+	private Map<IContinent, ContinentData> continentData;
+	private Map<ContinentData, IContinent> dataContinent;
+	private Map<IProvince, ProvinceData> provinceData;
+	private Map<ProvinceData, IProvince> dataProvince;
 	
 	/* Continent <-> Province Association */
-	private Map<@NonNull IContinent, @NonNull ImmutableList<@NonNull IProvince>> continentProvinces;
-	private Map<@NonNull IProvince, @NonNull IContinent> provinceContinents;
+	private Map<IContinent, @NonNull ImmutableList<IProvince>> continentProvinces;
+	private Map<IProvince, IContinent> provinceContinents;
 	
 	/* Player <-> Province Association */
-	private Map<@NonNull IPlayer, @NonNull ArrayList<@NonNull IProvince>> playerProvinces;
-	private Map<@NonNull IProvince, @NonNull IPlayer> provincePlayers;
+	private Map<IPlayer, @NonNull ArrayList<IProvince>> playerProvinces;
+	private Map<IProvince, IPlayer> provincePlayers;
 	
 	/* Province Runtime info */
-	private Map<@NonNull IProvince, @NonNull ImmutableList<@NonNull IProvince>> neighbors;
-	private Map<@NonNull IProvince, @NonNull Integer> numberOfTroops;
+	private Map<IProvince, @NonNull ImmutableList<IProvince>> neighbors;
+	private Map<IProvince, @NonNull Integer> numberOfTroops;
 	
-	/* Province Runtime info */
+	/* Game Runtime info */
 	private IPlayer currentPlayingPlayer;
+	private TurnPhase currentTurnPhase;
 	
 	private RiskGameContext(@NonNull final MapData data) {
 		map = data;
@@ -59,7 +60,7 @@ public class RiskGameContext implements IRiskGameContext {
 		/* --- Step 1, create IContinents and associate them with their data --- */
 		continentData = new HashMap<>();
 		dataContinent = new HashMap<>();
-		Iterable<@NonNull ContinentData> continentDatas = map.getContinents();
+		Iterable<ContinentData> continentDatas = map.getContinents();
 		for (@NonNull ContinentData cData : continentDatas) {
 			IContinent continent = new Continent(this, cData);
 			continentData.put(continent, cData);
@@ -72,7 +73,7 @@ public class RiskGameContext implements IRiskGameContext {
 		dataProvince = new HashMap<>();
 		continentDatas = map.getContinents();
 		for (@NonNull ContinentData cData : continentDatas) {
-			Iterable<@NonNull ProvinceData> provinceDatas = cData.getProvinces();
+			Iterable<ProvinceData> provinceDatas = cData.getProvinces();
 			
 			for (@NonNull ProvinceData pData : provinceDatas) {
 				IProvince province = new Province(this, pData);
@@ -86,9 +87,9 @@ public class RiskGameContext implements IRiskGameContext {
 		continentProvinces = new HashMap<>();
 		provinceContinents = new HashMap<>();
 		dataContinent.keySet().forEach(cData -> {
-			List<@NonNull IProvince> provinces = new ArrayList<>();
+			List<IProvince> provinces = new ArrayList<>();
 
-			Iterable<@NonNull ProvinceData> provinceDatas = cData.getProvinces();
+			Iterable<ProvinceData> provinceDatas = cData.getProvinces();
 			for (@NonNull ProvinceData pData : provinceDatas) {
 				provinces.add(objectOf(pData));
 				provinceContinents.put(objectOf(pData), objectOf(cData));
@@ -107,9 +108,9 @@ public class RiskGameContext implements IRiskGameContext {
 		/* ----------------- Step 5, set neigbors of provinces ----------------- */
 		neighbors = new HashMap<>();
 		dataProvince.keySet().forEach(pData -> {
-			List<@NonNull IProvince> provinces = new ArrayList<>();
+			List<IProvince> provinces = new ArrayList<>();
 			
-			Iterable<@NonNull ProvinceData> neighborDatas = pData.getNeighbors();
+			Iterable<ProvinceData> neighborDatas = pData.getNeighbors();
 			for (@NonNull ProvinceData nData : neighborDatas) {
 				provinces.add(objectOf(nData));
 			}
@@ -127,6 +128,9 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	
 	/* Game API */
+	@Override
+	public IPlayer getCurrentPlayer() { return currentPlayingPlayer; }
+	public TurnPhase getCurrentPhase() { return currentTurnPhase; }
 	@Override
 	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice attackerDice) {
 		return new Conflict(this, attacker, defender, attackerDice);
@@ -180,7 +184,7 @@ public class RiskGameContext implements IRiskGameContext {
 		return provincePlayers.get(province);
 	}
 	@Override
-	public UnmodifiableIterator<@NonNull IProvince> neighborsOf(@NonNull final IProvince province) {
+	public UnmodifiableIterator<IProvince> neighborsOf(@NonNull final IProvince province) {
 		return neighbors.get(province).iterator();
 	}
 	@Override
@@ -190,7 +194,7 @@ public class RiskGameContext implements IRiskGameContext {
 	
 	/* Continent API */
 	@Override
-	public UnmodifiableIterator<@NonNull IProvince> provincesOf(@NonNull final IContinent continent) {
+	public UnmodifiableIterator<IProvince> provincesOf(@NonNull final IContinent continent) {
 		return continentProvinces.get(continent).iterator();
 	}
 	
