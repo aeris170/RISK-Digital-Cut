@@ -1,4 +1,4 @@
-package pmnm.risk.game.databasedimpl;
+package pmnm.risk.map;
 
 import java.io.Serializable;
 
@@ -33,8 +33,8 @@ public final class ContinentData implements Serializable {
 	private final Color color;
 	
 	@NonNull
-	private final ImmutableList<pmnm.risk.game.databasedimpl.ProvinceData> provinces;
-	public Iterable<pmnm.risk.game.databasedimpl.ProvinceData> getProvinces() {
+	private final ImmutableList<pmnm.risk.map.ProvinceData> provinces;
+	public Iterable<pmnm.risk.map.ProvinceData> getProvinces() {
 		return provinces;
 	}
 }

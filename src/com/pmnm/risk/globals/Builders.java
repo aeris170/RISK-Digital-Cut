@@ -8,7 +8,6 @@ import com.pmnm.risk.main.Player;
 import com.pmnm.risk.map.board.GameBoard;
 import com.pmnm.risk.map.board.ProvinceConnector;
 import com.pmnm.risk.map.province.ProvinceHitArea;
-import com.pmnm.risk.map.province.ProvinceHitArea.ProvinceSymbol;
 import com.pmnm.roy.ui.ColorComboButton;
 import com.pmnm.roy.ui.DifficultyComboButton;
 import com.pmnm.roy.ui.LanguageButton;
@@ -37,6 +36,8 @@ import com.pmnm.roy.ui.menu.PlayOfflineMenu;
 import com.pmnm.roy.ui.menu.PlayOnlineMenu;
 import com.pmnm.roy.ui.menu.RulesMenu;
 import com.pmnm.roy.ui.menu.SettingsMenu;
+
+import pmnm.risk.map.province.ProvinceHitArea.ProvinceSymbol;
 
 public final class Builders {
 

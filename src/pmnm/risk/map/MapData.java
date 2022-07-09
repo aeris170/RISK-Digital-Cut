@@ -1,4 +1,4 @@
-package pmnm.risk.game.databasedimpl;
+package pmnm.risk.map;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.lang.reflect.Field;
 import javax.imageio.ImageIO;
 
 import com.google.common.collect.ImmutableList;
-import com.pmnm.risk.map.MapConfig;
 
 import lombok.Data;
 import lombok.Getter;
@@ -32,8 +31,8 @@ public final class MapData implements Serializable {
 	private final transient BufferedImage backgroundImage;
 	
 	@NonNull
-	private final ImmutableList<pmnm.risk.game.databasedimpl.ContinentData> continents;
-	public Iterable<pmnm.risk.game.databasedimpl.ContinentData> getContinents() {
+	private final ImmutableList<pmnm.risk.map.ContinentData> continents;
+	public Iterable<pmnm.risk.map.ContinentData> getContinents() {
 		return continents;
 	}
 

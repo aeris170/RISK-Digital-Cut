@@ -6,7 +6,7 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaSpriteRenderer;
 import lombok.NonNull;
-import pmnm.risk.game.databasedimpl.MapData;
+import pmnm.risk.map.MapData;
 
 public final class GameBoard extends DoaObject {
 

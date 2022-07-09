@@ -1,4 +1,4 @@
-package com.pmnm.risk.map;
+package pmnm.risk.map;
 
 import java.awt.Point;
 import java.awt.geom.GeneralPath;

@@ -9,8 +9,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IProvince;
-import pmnm.risk.game.databasedimpl.ContinentData;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
+import pmnm.risk.map.ContinentData;
 
 public final class Continent implements IContinent  {
 

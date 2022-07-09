@@ -1,4 +1,4 @@
-package com.pmnm.risk.map;
+package pmnm.risk.map;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -18,15 +18,12 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import com.google.common.collect.ImmutableList;
-import com.pmnm.risk.map.Mesh2D.Mesh2DBuilder;
-import com.pmnm.risk.map.MeshCollection.MeshCollectionBuilder;
 
 import doa.engine.core.DoaGame;
 import doa.engine.graphics.DoaSprites;
 import lombok.experimental.UtilityClass;
-import pmnm.risk.game.databasedimpl.ContinentData;
-import pmnm.risk.game.databasedimpl.MapData;
-import pmnm.risk.game.databasedimpl.ProvinceData;
+import pmnm.risk.map.Mesh2D.Mesh2DBuilder;
+import pmnm.risk.map.MeshCollection.MeshCollectionBuilder;
 
 @UtilityClass
 public final class MapLoader {

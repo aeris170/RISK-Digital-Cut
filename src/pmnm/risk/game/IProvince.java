@@ -3,10 +3,10 @@ package pmnm.risk.game;
 import java.io.Serializable;
 
 import com.google.common.collect.UnmodifiableIterator;
-import com.pmnm.risk.map.Vertex2D;
 
 import doa.engine.maths.DoaVector;
 import lombok.NonNull;
+import pmnm.risk.map.Vertex2D;
 
 public interface IProvince extends Serializable {
 	

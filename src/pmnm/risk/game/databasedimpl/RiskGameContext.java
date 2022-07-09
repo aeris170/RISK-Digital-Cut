@@ -19,6 +19,9 @@ import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IPlayer;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.map.ContinentData;
+import pmnm.risk.map.MapData;
+import pmnm.risk.map.ProvinceData;
 
 public class RiskGameContext implements IRiskGameContext {
 

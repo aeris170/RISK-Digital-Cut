@@ -1,8 +1,6 @@
 package com.pmnm.risk.map.board;
 
 import com.google.common.collect.UnmodifiableIterator;
-import com.pmnm.risk.map.Mesh2D;
-import com.pmnm.risk.map.Vertex2D;
 
 import doa.engine.maths.DoaVector;
 import lombok.AccessLevel;
@@ -11,8 +9,10 @@ import lombok.NonNull;
 import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IPlayer;
 import pmnm.risk.game.IProvince;
-import pmnm.risk.game.databasedimpl.ProvinceData;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
+import pmnm.risk.map.Mesh2D;
+import pmnm.risk.map.ProvinceData;
+import pmnm.risk.map.Vertex2D;
 
 public final class Province implements IProvince {
 	

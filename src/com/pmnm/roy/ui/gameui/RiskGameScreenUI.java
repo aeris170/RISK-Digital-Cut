@@ -8,8 +8,9 @@ import com.doa.engine.scene.DoaScene;
 import com.doa.engine.scene.DoaSceneHandler;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
-import com.pmnm.risk.map.MapLoader;
 import com.pmnm.roy.ui.UIInit;
+
+import pmnm.risk.map.MapLoader;
 
 public final class RiskGameScreenUI {
 

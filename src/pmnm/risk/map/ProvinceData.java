@@ -1,9 +1,8 @@
-package pmnm.risk.game.databasedimpl;
+package pmnm.risk.map;
 
 import java.io.Serializable;
 
 import com.google.common.collect.ImmutableList;
-import com.pmnm.risk.map.MeshCollection;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -24,8 +23,8 @@ public final class ProvinceData implements Serializable {
 	private String name;
 
 	@Setter(value = AccessLevel.PACKAGE)
-	private ImmutableList<pmnm.risk.game.databasedimpl.ProvinceData> neighbors;
-	public Iterable<pmnm.risk.game.databasedimpl.ProvinceData> getNeighbors() {
+	private ImmutableList<pmnm.risk.map.ProvinceData> neighbors;
+	public Iterable<pmnm.risk.map.ProvinceData> getNeighbors() {
 		return neighbors;
 	}
 	

@@ -16,13 +16,14 @@ import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.main.TurnPhase;
-import com.pmnm.risk.map.province.Province;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIInit;
 import com.pmnm.roy.ui.gameui.actions.CenterPieceButtonAction;
 import com.pmnm.roy.ui.gameui.actions.DecrementButtonAction;
 import com.pmnm.roy.ui.gameui.actions.IncrementButtonAction;
 import com.pmnm.roy.ui.gameui.actions.NextPhaseButtonAction;
+
+import pmnm.risk.map.province.Province;
 
 public class BottomPanel extends DoaPanel {
 

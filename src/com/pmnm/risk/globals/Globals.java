@@ -1,10 +1,10 @@
 package com.pmnm.risk.globals;
 
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.map.MapConfig;
 import com.pmnm.roy.ui.UIInit;
 
 import lombok.experimental.UtilityClass;
+import pmnm.risk.map.MapConfig;
 
 @UtilityClass
 public final class Globals {
