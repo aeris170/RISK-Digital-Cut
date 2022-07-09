@@ -1,14 +1,55 @@
 package com.pmnm.risk.map;
 import java.io.File;
+import java.io.Serializable;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
+import lombok.Value;
+import lombok.experimental.StandardException;
 
-@Data
+@Value
 @ToString(includeFieldNames = true)
-public final class MapConfig {
+public final class MapConfig implements Serializable {
+	
+	private static final long serialVersionUID = -6178254628641453859L;
+	
+	private static boolean INITIALIZED = false;
+	private static ImmutableList<@NonNull MapConfig> CONFIGS = null;
+
+	public static void readMapConfigs() {
+		List<MapConfig> configs = new ArrayList<>();
+		
+		File[] maps = new File("res/maps/").listFiles(File::isDirectory);
+		for (int i = 0; i < maps.length; i++) {
+			MapConfig config = null;
+			
+			try {
+				config = new MapConfig(maps[i].getName());
+			} catch(MapValidationException ex) {
+				ex.printStackTrace();
+				/* swallow the exception? */
+			}
+
+			if(config != null) {
+				configs.add(config);
+			}
+		}
+
+		CONFIGS = ImmutableList.copyOf(CONFIGS);
+		INITIALIZED = true;
+	}
+	
+	public static Iterable<@NonNull MapConfig> getConfigs() { 
+		if(!INITIALIZED) { readMapConfigs(); }
+		return CONFIGS;
+	}
 
 	@Getter	private final String name;
 	@Getter private final Path path;
@@ -18,7 +59,7 @@ public final class MapConfig {
 	@Getter private final File verticesFile;
 	@Getter private final File backgroundImageFile;
 	
-	public MapConfig(String mapName) {
+	public MapConfig(String mapName) throws MapValidationException {
 		name = mapName;
 		path = Path.of("res/maps", mapName);
 		check(path.toFile());
@@ -39,7 +80,7 @@ public final class MapConfig {
 		check(backgroundImageFile);
 	}
 	
-	public void validate() {
+	public void validate() throws MapValidationException {
 		check(path.toFile());
 		check(provincesFile);
 		check(continentsFile);
@@ -48,9 +89,13 @@ public final class MapConfig {
 		check(backgroundImageFile);
 	}
 	
-	private void check(File f) {
+	private void check(File f) throws MapValidationException {
 		if (!f.exists()) {
-			throw new RuntimeException(f.getName() + " not found");
+			throw new MapValidationException(f.getName() + " not found");
 		}
 	}
+	
+	@StandardException
+	@SuppressWarnings("serial")
+	public class MapValidationException extends Exception {}
 }

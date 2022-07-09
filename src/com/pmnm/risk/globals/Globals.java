@@ -8,11 +8,16 @@ import java.util.Arrays;
 
 import com.pmnm.risk.asset.AssetLoader;
 import com.pmnm.risk.globals.localization.Translator;
+import com.pmnm.risk.map.MapConfig;
 import com.pmnm.roy.ui.UIInit;
 
 import doa.engine.graphics.DoaSprites;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public final class Globals {
+	
+	public static final String GAME_VERSION = "ALPHA1";
 	
 	public static final int UNKNOWN_TROOP_COUNT = -38145124;
 
@@ -22,34 +27,12 @@ public final class Globals {
 	public static final Color PROVINCE_EMPHASIZE = Color.GREEN;
 	public static final Color PROVINCE_HIGHLIGHT = Color.GRAY.darker().darker().darker().darker();
 	public static final int MAX_NUM_PLAYERS = 6;
-	public static String[] MAP_NAMES;
-	public static BufferedImage[] MAP_IMAGES;
-
-	private Globals() {}
 
 	public static void initilaizeGlobals() {
 		AssetLoader.initializeAssets();
-		fetchMapNamesAndImages();
+		MapConfig.readMapConfigs();
 		Translator.getInstance();
 		UIInit.initUI();
 	}
 
-	private static void fetchMapNamesAndImages() {
-		File[] maps = new File("res/maps/").listFiles();
-		MAP_NAMES = Arrays.stream(maps).filter(map -> map.isDirectory()).map(mapFolder -> mapFolder.getName().toUpperCase().replaceAll("_", " ").trim()).toArray(String[]::new);
-		MAP_IMAGES = new BufferedImage[MAP_NAMES.length];
-		int i = 0;
-		for (File f : maps) {
-			if (f.isDirectory()) {
-				try {
-					System.out.println(f.getPath());
-					String path = f.getPath().replaceAll("\\\\", "/");
-					DoaSprites.createSprite("MAP#" + i, path.substring(path.indexOf("/"), path.length()) + "/map.png");
-					i++;
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		}
-	}
 }

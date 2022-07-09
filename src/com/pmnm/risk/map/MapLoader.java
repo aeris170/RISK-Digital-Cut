@@ -1,6 +1,7 @@
 package com.pmnm.risk.map;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.xml.XMLConstants;
 
 import org.jdom2.Document;
@@ -19,6 +21,8 @@ import com.google.common.collect.ImmutableList;
 import com.pmnm.risk.map.Mesh2D.Mesh2DBuilder;
 import com.pmnm.risk.map.MeshCollection.MeshCollectionBuilder;
 
+import doa.engine.core.DoaGame;
+import doa.engine.graphics.DoaSprites;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -30,18 +34,25 @@ public final class MapLoader {
 	public static MapData loadMap(MapConfig map) {
 		NAME_PROVINCE.clear();
 		CONTINENTS.clear();
+		BufferedImage bgImg = null;
 		
 		try {
 			createProvinces(map.getProvincesFile()); /* fetch all province names*/
 			connectProvinces(map.getNeighborsFile()); /* set up adjacencies */
 			solidifyProvinces(map.getVerticesFile()); /* set up meshes */
 			groupProvinces(map.getContinentsFile()); /* create continents */
-			//DoaSprites.createSprite("MapBackground", path.substring(path.indexOf('/'), path.length()) + "/map.png");
+			bgImg = DoaSprites.createSprite(map.getName() + "MapBackground", map.getBackgroundImageFile().getAbsolutePath());
+			return new MapData(map, bgImg, ImmutableList.copyOf(CONTINENTS));
 		} catch (JDOMException | IOException ex) {
-			ex.printStackTrace();
+			DoaGame.getInstance().exit();
+			JOptionPane.showConfirmDialog(null,
+			    ex.getMessage(),
+			    "Map loader error",
+			    JOptionPane.OK_OPTION,
+			    JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
 		}
-		
-		return new MapData(ImmutableList.copyOf(CONTINENTS));
+		return null;
 	}
 
 	private static void createProvinces(File provincesFile) throws JDOMException, IOException {

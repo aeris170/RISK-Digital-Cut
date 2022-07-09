@@ -25,8 +25,8 @@ public final class ProvinceData implements Serializable {
 
 	@Setter(value = AccessLevel.PACKAGE)
 	private ImmutableList<@NonNull ProvinceData> neighbors;
-	public UnmodifiableIterator<@NonNull ProvinceData> getNeighbors() {
-		return neighbors.iterator();
+	public Iterable<@NonNull ProvinceData> getNeighbors() {
+		return neighbors;
 	}
 	
 	@Getter

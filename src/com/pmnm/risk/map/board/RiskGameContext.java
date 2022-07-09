@@ -2,6 +2,7 @@ package com.pmnm.risk.map.board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -58,9 +59,8 @@ public class RiskGameContext implements IRiskGameContext {
 		/* --- Step 1, create IContinents and associate them with their data --- */
 		continentData = new HashMap<>();
 		dataContinent = new HashMap<>();
-		UnmodifiableIterator<@NonNull ContinentData> continentDatas = map.getContinents();
-		while (continentDatas.hasNext()) {
-			ContinentData cData = continentDatas.next();
+		Iterable<@NonNull ContinentData> continentDatas = map.getContinents();
+		for (@NonNull ContinentData cData : continentDatas) {
 			IContinent continent = new Continent(this, cData);
 			continentData.put(continent, cData);
 			dataContinent.put(cData, continent);
@@ -71,12 +71,10 @@ public class RiskGameContext implements IRiskGameContext {
 		provinceData = new HashMap<>();
 		dataProvince = new HashMap<>();
 		continentDatas = map.getContinents();
-		while (continentDatas.hasNext()) {
-			ContinentData cData = continentDatas.next();
-			UnmodifiableIterator<@NonNull ProvinceData> provinceDatas = cData.getProvinces();
+		for (@NonNull ContinentData cData : continentDatas) {
+			Iterable<@NonNull ProvinceData> provinceDatas = cData.getProvinces();
 			
-			while (provinceDatas.hasNext()) {
-				ProvinceData pData = provinceDatas.next();
+			for (@NonNull ProvinceData pData : provinceDatas) {
 				IProvince province = new Province(this, pData);
 				provinceData.put(province, pData);
 				dataProvince.put(pData, province);
@@ -89,10 +87,9 @@ public class RiskGameContext implements IRiskGameContext {
 		provinceContinents = new HashMap<>();
 		dataContinent.keySet().forEach(cData -> {
 			List<@NonNull IProvince> provinces = new ArrayList<>();
-			
-			UnmodifiableIterator<@NonNull ProvinceData> provinceDatas = cData.getProvinces();
-			while (provinceDatas.hasNext()) {
-				ProvinceData pData = provinceDatas.next();
+
+			Iterable<@NonNull ProvinceData> provinceDatas = cData.getProvinces();
+			for (@NonNull ProvinceData pData : provinceDatas) {
 				provinces.add(objectOf(pData));
 				provinceContinents.put(objectOf(pData), objectOf(cData));
 			}
@@ -112,9 +109,8 @@ public class RiskGameContext implements IRiskGameContext {
 		dataProvince.keySet().forEach(pData -> {
 			List<@NonNull IProvince> provinces = new ArrayList<>();
 			
-			UnmodifiableIterator<@NonNull ProvinceData> neighborDatas = pData.getNeighbors();
-			while (neighborDatas.hasNext()) {
-				ProvinceData nData = neighborDatas.next();
+			Iterable<@NonNull ProvinceData> neighborDatas = pData.getNeighbors();
+			for (@NonNull ProvinceData nData : neighborDatas) {
 				provinces.add(objectOf(nData));
 			}
 			

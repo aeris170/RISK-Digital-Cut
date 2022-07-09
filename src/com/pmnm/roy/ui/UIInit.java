@@ -28,8 +28,8 @@ public final class UIInit {
 
 	public static final String FLEUR_DE_LIS = "FleurDeLis";
 
-	public static final int FLEUR_WIDTH = DoaSprites.get(FLEUR_DE_LIS).getWidth() / 6;
-	public static final int FLEUR_HEIGHT = DoaSprites.get(FLEUR_DE_LIS).getHeight() / 6;
+	public static final int FLEUR_WIDTH = DoaSprites.getSprite(FLEUR_DE_LIS).getWidth() / 6;
+	public static final int FLEUR_HEIGHT = DoaSprites.getSprite(FLEUR_DE_LIS).getHeight() / 6;
 
 	public static final String BUTTON_IDLE_SPRITE = "ButtonIdle";
 	public static final String BUTTON_HOVER_SPRITE = "ButtonHover";

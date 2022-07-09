@@ -1,5 +1,6 @@
 package com.pmnm.risk.map;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 import com.google.common.collect.ImmutableList;
@@ -16,9 +17,15 @@ public final class MapData implements Serializable {
 	private static final long serialVersionUID = 3162242848938299845L;
 	
 	@NonNull
+	private final MapConfig config;
+	
+	@NonNull
+	private final BufferedImage backgroundImage;
+	
+	@NonNull
 	private final ImmutableList<@NonNull ContinentData> continents;
-	public UnmodifiableIterator<@NonNull ContinentData> getContinents() {
-		return continents.iterator();
+	public Iterable<@NonNull ContinentData> getContinents() {
+		return continents;
 	}
 
 }

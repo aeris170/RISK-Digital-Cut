@@ -35,7 +35,7 @@ public final class ContinentData implements Serializable {
 	
 	@NonNull
 	private final ImmutableList<@NonNull ProvinceData> provinces;
-	public UnmodifiableIterator<@NonNull ProvinceData> getProvinces() {
-		return provinces.iterator();
+	public Iterable<@NonNull ProvinceData> getProvinces() {
+		return provinces;
 	}
 }

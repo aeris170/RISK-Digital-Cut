@@ -30,8 +30,11 @@ public class Main extends DoaGame {
 		eSettings.RENDERING_MODE = DoaRenderingMode.BALANCED;
 
 		wSettings.TITLE = "RISK Digital Cut!";
-		wSettings.DEFAULT_CURSOR = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(), new Point(0, 0),
-		        "Kaan's Cursor");
+		wSettings.DEFAULT_CURSOR = Toolkit.getDefaultToolkit().createCustomCursor(
+			new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(),
+			new Point(0, 0),
+	        "Kaan's Cursor"
+		);
 		wSettings.ICON = new ImageIcon(Main.class.getResource("/ui/icon.png")).getImage();
 
 		Globals.initilaizeGlobals();
