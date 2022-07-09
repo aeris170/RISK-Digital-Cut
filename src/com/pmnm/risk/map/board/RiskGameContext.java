@@ -1,13 +1,9 @@
 package com.pmnm.risk.map.board;
 
-import java.io.Serializable;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
@@ -15,17 +11,15 @@ import com.pmnm.risk.dice.Dice;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Conflict;
 import com.pmnm.risk.main.IPlayer;
-import com.pmnm.risk.main.Conflict.Result;
 import com.pmnm.risk.main.Deploy;
 import com.pmnm.risk.map.ContinentData;
-import com.pmnm.risk.map.MapConfig;
 import com.pmnm.risk.map.MapData;
 import com.pmnm.risk.map.ProvinceData;
 import com.pmnm.risk.map.continent.Continent;
 
 import lombok.NonNull;
 
-public class RiskGameContext implements Serializable {
+public class RiskGameContext implements IRiskGameContext {
 
 	private static final long serialVersionUID = -7180240760865875029L;
 
@@ -137,9 +131,11 @@ public class RiskGameContext implements Serializable {
 	}
 	
 	/* Game API */
+	@Override
 	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice attackerDice) {
 		return new Conflict(this, attacker, defender, attackerDice);
 	}
+	@Override
 	public void applyConflictResult(@NonNull final Conflict.Result result) {
 		Conflict conflict = result.getConflict();
 		
@@ -159,9 +155,11 @@ public class RiskGameContext implements Serializable {
 			numberOfTroops.put(defender, Globals.UNKNOWN_TROOP_COUNT);
 		}
 	}
+	@Override
 	public Deploy setUpDeploy(@NonNull final IProvince source, @NonNull final IProvince defender, int amount) {
 		return new Deploy(this, source, defender, amount);
 	}
+	@Override
 	public void applyDeployResult(@NonNull final Deploy.Result result) {
 		Deploy deploy = result.getDeploy();
 		
@@ -173,23 +171,29 @@ public class RiskGameContext implements Serializable {
 	}
 	
 	/* Province API */
+	@Override
 	public IContinent continentOf(@NonNull final IProvince province) {
 		return provinceContinents.get(province);
 	}
+	@Override
 	public boolean hasOccupier(@NonNull final IProvince province) {
 		return occupierOf(province) != null;
 	}
+	@Override
 	public IPlayer occupierOf(@NonNull final IProvince province) {
 		return provincePlayers.get(province);
 	}
+	@Override
 	public UnmodifiableIterator<@NonNull IProvince> neighborsOf(@NonNull final IProvince province) {
 		return neighbors.get(province).iterator();
 	}
+	@Override
 	public int numberOfTroopsOn(@NonNull final IProvince province) {
 		return numberOfTroops.get(province);
 	}
 	
 	/* Continent API */
+	@Override
 	public UnmodifiableIterator<@NonNull IProvince> provincesOf(@NonNull final IContinent continent) {
 		return continentProvinces.get(continent).iterator();
 	}
