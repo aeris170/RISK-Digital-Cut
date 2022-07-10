@@ -5,7 +5,6 @@ import java.awt.geom.GeneralPath;
 import java.io.Serializable;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.UnmodifiableIterator;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -24,8 +23,8 @@ public final class Mesh2D implements Serializable {
 	@NonNull
 	@Singular
 	private final ImmutableList<@NonNull Vertex2D> vertices;
-	public UnmodifiableIterator<@NonNull Vertex2D> getVertices() {
-		return vertices.iterator();
+	public Iterable<@NonNull Vertex2D> getVertices() {
+		return vertices;
 	}
 	
 	@Getter

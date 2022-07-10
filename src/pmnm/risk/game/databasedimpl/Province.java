@@ -1,5 +1,11 @@
 package pmnm.risk.game.databasedimpl;
 
+import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 
 import doa.engine.maths.DoaVector;
@@ -33,9 +39,8 @@ public final class Province implements IProvince {
 
 	@Override
 	public boolean isNeighborOf(@NonNull IProvince province) {
-		UnmodifiableIterator<pmnm.risk.game.IProvince> neighbors = getNeighbors();
-		while (neighbors.hasNext()) {
-			IProvince neighbor = neighbors.next();
+		Iterable<IProvince> neighbors = getNeighbors();
+		for (IProvince neighbor : neighbors) {
 			if (neighbor == province) {
 				return true;
 			}
@@ -44,9 +49,7 @@ public final class Province implements IProvince {
 	}
 
 	@Override
-	public UnmodifiableIterator<pmnm.risk.game.IProvince> getNeighbors() {
-		return context.neighborsOf(this);
-	}
+	public Iterable<IProvince> getNeighbors() { return context.neighborsOf(this); }
 
 	@Override
 	public Vertex2D getCenterPoint() { return data.getMeshes().getCenter(); }
@@ -56,6 +59,13 @@ public final class Province implements IProvince {
 
 	@Override
 	public boolean encasesPoint(@NonNull DoaVector point) { return encasesPoint(new Vertex2D((int)point.x, (int)point.y)); }
+	
+	@Override
+	public Iterable<@NonNull Mesh2D> getMeshes() {
+		List<@NonNull Mesh2D> paths = new ArrayList<>();
+		data.getMeshes().getMeshes().forEachRemaining(paths::add);
+		return ImmutableList.copyOf(paths);
+	}
 
 	@Override
 	public IContinent getContinent() { return context.continentOf(this); }

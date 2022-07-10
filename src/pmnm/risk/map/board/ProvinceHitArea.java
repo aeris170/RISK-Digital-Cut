@@ -34,19 +34,17 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
+import pmnm.risk.game.IProvince;
 
 public class ProvinceHitArea extends DoaObject {
 	
-	public static ProvinceHitArea of(Province province) {
+	public static ProvinceHitArea of(IProvince province) {
 		return new ProvinceHitArea(province);
 	}
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
-	public static ProvinceHitArea selectedProvinceByMouse = null;
-
-	List<GeneralPath> meshes = new ArrayList<>();
-	Province province;
+	IProvince province;
 
 	transient BufferedImage unoccupiedMesh;
 	transient Map<Color, BufferedImage> playerOwnedMeshes;
@@ -58,7 +56,7 @@ public class ProvinceHitArea extends DoaObject {
 	private boolean isPathVisible = true;
 	private boolean isPointsVisible = false;
 
-	ProvinceHitAreaBounds bounds;
+	private ProvinceHitAreaBounds bounds;
 
 	private boolean isAttacker = false;
 	private boolean isDefender = false;
@@ -71,13 +69,12 @@ public class ProvinceHitArea extends DoaObject {
 	private float selectedMeshAlpha = 0f;
 	private float selectedMeshAlphaDelta = 0.005f;
 
-	private ProvinceHitArea(Province province) {
+	private ProvinceHitArea(IProvince province) {
 		this.province = province;
 		addComponent(new Script());
 		addComponent(new Renderer());
 		
-		constructMeshes();
-		ProvinceHitAreaBounds.Calculate(this);
+		bounds = ProvinceHitAreaBounds.of(this);
 		ProvinceHitAreaCacher.Cache(this);
 		
 		ProvinceSymbol symbol = new ProvinceSymbol(this);
@@ -144,8 +141,8 @@ public class ProvinceHitArea extends DoaObject {
 		@Override
 		public void render() {
 			if (isPathVisible) {
-				if (province.isClaimed()) {
-					DoaGraphicsFunctions.drawImage(playerOwnedMeshes.get(province.getOwner().getColor()), bounds.minX - 4f, bounds.minY - 4f);
+				if (province.isOccupied()) {
+					DoaGraphicsFunctions.drawImage(playerOwnedMeshes.get(province.getOccupier().getColor()), bounds.minX - 4f, bounds.minY - 4f);
 					if (isEmphasized) {
 						DoaGraphicsFunctions.drawImage(emphasizedBorder, bounds.minX - 4f, bounds.minY - 4f);
 					}
@@ -181,20 +178,6 @@ public class ProvinceHitArea extends DoaObject {
 		}
 	}
 	
-	private void constructMeshes() {
-		province.getMeshes().forEach(mesh -> {
-			GeneralPath hitArea = new GeneralPath();
-			Vertex2D startPoint = mesh.get(0);
-			hitArea.moveTo(startPoint.x, startPoint.y);
-			for (int i = 1; i < mesh.size(); i++) {
-				DoaVector nextPoint = mesh.get(i);
-				hitArea.lineTo(nextPoint.x, nextPoint.y);
-			}
-			hitArea.closePath();
-			meshes.add(hitArea);
-		});
-	}
-	
 	public ProvinceHitAreaBounds getBounds() {
 		return bounds;
 	}
@@ -203,14 +186,10 @@ public class ProvinceHitArea extends DoaObject {
 		return meshes;
 	}
 
-	public Province getProvince() {
+	public IProvince getProvince() {
 		return province;
 	}
-
-	public void setProvince(Province province) {
-		this.province = province;
-	}
-
+	
 	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath
 	// by finnw
 	public static double[][] getPoints(Path2D path) {

@@ -17,7 +17,6 @@ import doa.engine.scene.elements.renderers.DoaRenderer;
 
 public final class ProvinceSymbol extends DoaObject {
 
-	public static final List<ProvinceSymbol> ALL_PROVINCE_SYMBOLS = new CopyOnWriteArrayList<>();
 	private static final long serialVersionUID = -5094307362006544586L;
 	
 	private ProvinceHitArea province;
@@ -27,7 +26,6 @@ public final class ProvinceSymbol extends DoaObject {
 		setzOrder(9);
 		transform.position = new DoaVector(province.bounds.centerX, province.bounds.centerY);
 		addComponent(new Renderer());
-		ALL_PROVINCE_SYMBOLS.add(this);
 	}
 	
 	private class Renderer extends DoaRenderer {

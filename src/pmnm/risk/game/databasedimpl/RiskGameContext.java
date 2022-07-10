@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.UnmodifiableIterator;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.map.continent.Continent;
 
@@ -186,8 +185,8 @@ public class RiskGameContext implements IRiskGameContext {
 		return provincePlayers.get(province);
 	}
 	@Override
-	public UnmodifiableIterator<IProvince> neighborsOf(@NonNull final IProvince province) {
-		return neighbors.get(province).iterator();
+	public Iterable<IProvince> neighborsOf(@NonNull final IProvince province) {
+		return neighbors.get(province);
 	}
 	@Override
 	public int numberOfTroopsOn(@NonNull final IProvince province) {
@@ -196,8 +195,8 @@ public class RiskGameContext implements IRiskGameContext {
 	
 	/* Continent API */
 	@Override
-	public UnmodifiableIterator<IProvince> provincesOf(@NonNull final IContinent continent) {
-		return continentProvinces.get(continent).iterator();
+	public Iterable<IProvince> provincesOf(@NonNull final IContinent continent) {
+		return continentProvinces.get(continent);
 	}
 	
 	/* Private Getters */

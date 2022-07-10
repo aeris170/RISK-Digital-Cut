@@ -2,8 +2,6 @@ package pmnm.risk.game;
 
 import java.io.Serializable;
 
-import com.google.common.collect.UnmodifiableIterator;
-
 import lombok.NonNull;
 
 public interface IRiskGameContext extends Serializable {
@@ -20,11 +18,11 @@ public interface IRiskGameContext extends Serializable {
 	IContinent continentOf(@NonNull final IProvince province);
 	boolean hasOccupier(@NonNull final IProvince province);
 	IPlayer occupierOf(@NonNull final IProvince province);
-	UnmodifiableIterator<IProvince> neighborsOf(@NonNull final IProvince province);
+	Iterable<IProvince> neighborsOf(@NonNull final IProvince province);
 	int numberOfTroopsOn(@NonNull final IProvince province);
 	
 	/* Continent API */
-	UnmodifiableIterator<IProvince> provincesOf(@NonNull final IContinent continent);
+	Iterable<IProvince> provincesOf(@NonNull final IContinent continent);
 	
 	public enum TurnPhase { DRAFT, ATTACK, REINFORCE; }
 }
