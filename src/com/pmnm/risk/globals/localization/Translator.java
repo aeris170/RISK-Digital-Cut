@@ -17,13 +17,15 @@ import com.pmnm.roy.ui.UIInit;
 
 public class Translator {
 
+	public enum Language { EN, DE, IT, RU, TR, FR, ES; }
+
 	private static final String LANGUAGE_DATA_PATH = "res/languages/";
-
-	private Map<Language, Map<String, String>> languages = new EnumMap<>(Language.class);
-
+	
 	private static Translator _this;
+	public static Translator getInstance() { return _this == null ? _this = new Translator() : _this; }	
 
 	private Language currentLanguage;
+	private Map<Language, Map<String, String>> languages = new EnumMap<>(Language.class);
 
 	private Translator() {
 		for (Language l : Language.values()) {
@@ -40,28 +42,14 @@ public class Translator {
 		setCurrentLanguageIndex(Preferences.userNodeForPackage(UIInit.class).getInt("language", 0));
 	}
 
-	public Language getCurrentLanguage() {
-		return currentLanguage;
-	}
+	public Language getCurrentLanguage() { return currentLanguage; }
+	public int getCurrentLanguageIndex() { return Arrays.asList(Language.values()).indexOf(currentLanguage); }
 
-	public int getCurrentLanguageIndex() {
-		return Arrays.asList(Language.values()).indexOf(currentLanguage);
-	}
-
-	public void setCurrentLanguage(Language newLanguage) {
-		currentLanguage = newLanguage;
-	}
-
-	public void setCurrentLanguageIndex(int newLanguage) {
-		currentLanguage = Language.values()[newLanguage];
-	}
+	public void setCurrentLanguage(Language newLanguage) { currentLanguage = newLanguage; }
+	public void setCurrentLanguageIndex(int newLanguage) { currentLanguage = Language.values()[newLanguage]; }
 
 	public String getTranslatedString(String key) {
 		String rv = languages.get(currentLanguage).get(key);
 		return (rv != null && rv.length() != 0) ? rv : "ROY::UNMAPPED_STR";
-	}
-
-	public static Translator getInstance() {
-		return _this == null ? _this = new Translator() : _this;
 	}
 }
