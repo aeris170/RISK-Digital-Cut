@@ -18,5 +18,5 @@ public interface IContinent extends Serializable {
 	Color getColor();
 	
 	boolean containsProvince(@NonNull final IProvince province);
-	UnmodifiableIterator<IProvince> getProvinces();
+	Iterable<IProvince> getProvinces();
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.map.continent.Continent;
 
 import lombok.NonNull;
 import pmnm.risk.game.Conflict;

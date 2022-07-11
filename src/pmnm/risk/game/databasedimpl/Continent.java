@@ -1,4 +1,4 @@
-package com.pmnm.risk.map.continent;
+package pmnm.risk.game.databasedimpl;
 
 import java.awt.Color;
 
@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IProvince;
-import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.map.ContinentData;
 
 public final class Continent implements IContinent  {
@@ -43,6 +42,6 @@ public final class Continent implements IContinent  {
 	public boolean containsProvince(@NonNull IProvince province) { return equals(context.continentOf(province)); }
 
 	@Override
-	public UnmodifiableIterator<pmnm.risk.game.IProvince> getProvinces() { return context.provincesOf(this); }
+	public Iterable<IProvince> getProvinces() { return context.provincesOf(this); }
 
 }
