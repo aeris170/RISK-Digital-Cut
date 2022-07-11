@@ -24,6 +24,7 @@ import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 import pmnm.risk.game.IRiskGameContext;
 import pmnm.risk.game.databasedimpl.Continent;
+import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.map.board.ProvinceHitArea; 
  
 public final class GameInstance implements Serializable { 

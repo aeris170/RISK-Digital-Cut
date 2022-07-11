@@ -13,89 +13,106 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
+import com.pmnm.risk.globals.ProvinceColorBank;
 
+import lombok.experimental.UtilityClass;
+import pmnm.risk.map.Mesh2D;
+
+@UtilityClass
 public final class ProvinceHitAreaCacher {
 	
-	public static final Map<RenderingHints.Key, Object> HINTS = Map.of(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
-	        RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON, RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-	        RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE, RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON,
-	        RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC, RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY,
-	        RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE, RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	private static final Map<RenderingHints.Key, Object> HINTS = Map.of(
+		RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
+        RenderingHints.KEY_ANTIALIASING, 		RenderingHints.VALUE_ANTIALIAS_ON,
+        RenderingHints.KEY_COLOR_RENDERING, 	RenderingHints.VALUE_COLOR_RENDER_QUALITY,
+        RenderingHints.KEY_DITHERING, 			RenderingHints.VALUE_DITHER_ENABLE,
+        RenderingHints.KEY_FRACTIONALMETRICS, 	RenderingHints.VALUE_FRACTIONALMETRICS_ON,
+        RenderingHints.KEY_INTERPOLATION, 		RenderingHints.VALUE_INTERPOLATION_BICUBIC,
+        RenderingHints.KEY_RENDERING, 			RenderingHints.VALUE_RENDER_QUALITY,
+        RenderingHints.KEY_STROKE_CONTROL, 		RenderingHints.VALUE_STROKE_NORMALIZE,
+        RenderingHints.KEY_TEXT_ANTIALIASING, 	RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+    );
 
 
-	public static void Cache(ProvinceHitArea province) {
-		province.playerOwnedMeshes = new HashMap<>();
+	public static void cache(ProvinceHitArea pha) {
+		pha.playerOwnedMeshes = new HashMap<>();
 		List<Graphics2D> playerMeshRenderers = new ArrayList<>();
-		province.unoccupiedMesh = new BufferedImage(province.bounds.maxX - province.bounds.minX + 8, province.bounds.maxY - province.bounds.minY + 8, BufferedImage.TYPE_INT_ARGB);
-		province.selectedBorder = new BufferedImage(province.bounds.maxX - province.bounds.minX + 8, province.bounds.maxY - province.bounds.minY + 8, BufferedImage.TYPE_INT_ARGB);
-		province.selectedMesh = new BufferedImage(province.bounds.maxX - province.bounds.minX + 8, province.bounds.maxY - province.bounds.minY + 8, BufferedImage.TYPE_INT_ARGB);
-		province.emphasizedBorder = new BufferedImage(province.bounds.maxX - province.bounds.minX + 8, province.bounds.maxY - province.bounds.minY + 8, BufferedImage.TYPE_INT_ARGB);
-		province.highlightBorder = new BufferedImage(province.bounds.maxX - province.bounds.minX + 8, province.bounds.maxY - province.bounds.minY + 8, BufferedImage.TYPE_INT_ARGB);
-		for (int i = 0; i < PlayerColorBank.colors.length; i++) {
-			BufferedImage meshTexture = new BufferedImage(province.bounds.maxX - province.bounds.minX + 8, province.bounds.maxY - province.bounds.minY + 8, BufferedImage.TYPE_INT_ARGB);
+		ProvinceHitAreaBounds bounds = pha.getBounds();
+		int width 	= bounds.maxX - bounds.minX + 8;
+		int height 	= bounds.maxY - bounds.minY + 8;
+		int translateX = -bounds.minX + 4;
+		int translateY = -bounds.minY + 4;
+		
+		pha.unoccupiedMesh 		= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		pha.selectedBorder 		= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		pha.selectedMesh 		= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		pha.emphasizedBorder 	= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		pha.highlightBorder 	= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		for (int i = 0; i < PlayerColorBank.COLORS.length; i++) {
+			BufferedImage meshTexture = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 			meshTexture.setAccelerationPriority(1);
 			Graphics2D meshRenderer = meshTexture.createGraphics();
-			meshRenderer.translate(-province.bounds.minX + 4, -province.bounds.minY + 4);
+			meshRenderer.translate(translateX, translateY);
 			meshRenderer.setRenderingHints(HINTS);
 			meshRenderer.setStroke(new BasicStroke(2));
 			playerMeshRenderers.add(meshRenderer);
-			province.playerOwnedMeshes.put(PlayerColorBank.colors[i], meshTexture);
+			pha.playerOwnedMeshes.put(PlayerColorBank.COLORS[i], meshTexture);
 		}
-		province.unoccupiedMesh.setAccelerationPriority(1);
-		province.selectedBorder.setAccelerationPriority(1);
-		province.selectedMesh.setAccelerationPriority(1);
-		province.emphasizedBorder.setAccelerationPriority(1);
-		province.highlightBorder.setAccelerationPriority(1);
-		Graphics2D umr = province.unoccupiedMesh.createGraphics();
-		Graphics2D sbr = province.selectedBorder.createGraphics();
-		Graphics2D smr = province.selectedMesh.createGraphics();
-		Graphics2D ebr = province.emphasizedBorder.createGraphics();
-		Graphics2D hbr = province.highlightBorder.createGraphics();
-		umr.translate(-province.bounds.minX + 4, -province.bounds.minY + 4);
+		pha.unoccupiedMesh.setAccelerationPriority(1);
+		pha.selectedBorder.setAccelerationPriority(1);
+		pha.selectedMesh.setAccelerationPriority(1);
+		pha.emphasizedBorder.setAccelerationPriority(1);
+		pha.highlightBorder.setAccelerationPriority(1);
+		Graphics2D umr = pha.unoccupiedMesh.createGraphics();
+		Graphics2D sbr = pha.selectedBorder.createGraphics();
+		Graphics2D smr = pha.selectedMesh.createGraphics();
+		Graphics2D ebr = pha.emphasizedBorder.createGraphics();
+		Graphics2D hbr = pha.highlightBorder.createGraphics();
+		umr.translate(translateX, translateY);
 		umr.setRenderingHints(HINTS);
 		umr.setStroke(new BasicStroke(2));
-		sbr.translate(-province.bounds.minX + 4, -province.bounds.minY + 4);
+		sbr.translate(translateX, translateY);
 		sbr.setRenderingHints(HINTS);
 		sbr.setStroke(new BasicStroke(2));
-		smr.translate(-province.bounds.minX + 4, -province.bounds.minY + 4);
+		smr.translate(translateX, translateY);
 		smr.setRenderingHints(HINTS);
 		smr.setStroke(new BasicStroke(2));
-		ebr.translate(-province.bounds.minX + 4, -province.bounds.minY + 4);
+		ebr.translate(translateX, translateY);
 		ebr.setRenderingHints(HINTS);
 		ebr.setStroke(new BasicStroke(2));
-		hbr.translate(-province.bounds.minX + 4, -province.bounds.minY + 4);
+		hbr.translate(translateX, translateY);
 		hbr.setRenderingHints(HINTS);
 		hbr.setStroke(new BasicStroke(2));
-		for (GeneralPath gp : province.meshes) {
+		for(Mesh2D mesh : pha.getProvince().getMeshes()) {
+			GeneralPath gp = mesh.getBoundary();
 			Composite umrOldComposite = umr.getComposite();
 			umr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
-			umr.setColor(Globals.PROVINCE_UNOCCUPIED);
+			umr.setColor(ProvinceColorBank.UNOCCUPIED);
 			umr.fill(gp);
 			umr.setComposite(umrOldComposite);
-			umr.setColor(Globals.PROVINCE_UNOCCUPIED_BORDER);
+			umr.setColor(ProvinceColorBank.UNOCCUPIED_BORDER);
 			umr.draw(gp);
 
-			sbr.setColor(Globals.PROVINCE_SELECTED_BORDER);
+			sbr.setColor(ProvinceColorBank.SELECTED_BORDER);
 			sbr.draw(gp);
 
 			smr.setColor(Color.WHITE);
 			smr.fill(gp);
 
-			ebr.setColor(Globals.PROVINCE_EMPHASIZE);
+			ebr.setColor(ProvinceColorBank.EMPHASIZE);
 			ebr.draw(gp);
 
-			ebr.setColor(Globals.PROVINCE_HIGHLIGHT);
+			ebr.setColor(ProvinceColorBank.HIGHLIGHT);
 			hbr.draw(gp);
 			for (int i = 0; i < playerMeshRenderers.size(); i++) {
 				Graphics2D renderer = playerMeshRenderers.get(i);
 				Composite oldComposite = renderer.getComposite();
 				renderer.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f));
-				renderer.setColor(PlayerColorBank.colors[i]);
+				renderer.setColor(PlayerColorBank.COLORS[i]);
 				renderer.fill(gp);
 				renderer.setComposite(oldComposite);
-				renderer.setColor(Globals.PROVINCE_UNOCCUPIED_BORDER);
+				renderer.setColor(ProvinceColorBank.UNOCCUPIED_BORDER);
 				renderer.draw(gp);
 			}
 		}
@@ -105,6 +122,4 @@ public final class ProvinceHitAreaCacher {
 		hbr.dispose();
 		playerMeshRenderers.forEach(Graphics2D::dispose);
 	}
-	
-	private ProvinceHitAreaCacher() {}
 }

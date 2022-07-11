@@ -1,4 +1,4 @@
-package com.pmnm.risk.main;
+package pmnm.risk.game.databasedimpl;
 
 import java.awt.Color;
 import java.util.HashMap;
@@ -7,45 +7,75 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import doa.engine.graphics.DoaGraphicsContext;
+import com.pmnm.risk.main.GameManager;
+
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.scripts.DoaScript;
-import pmnm.risk.game.databasedimpl.Continent;
+import lombok.Getter;
+import pmnm.risk.game.Conflict;
+import pmnm.risk.game.Deploy;
+import pmnm.risk.game.Dice;
+import pmnm.risk.game.IPlayer;
+import pmnm.risk.game.IProvince;
+import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.Reinforce;
 import pmnm.risk.map.board.ProvinceHitArea;
-import pmnm.risk.map.province.Province;
 
-public class Player extends DoaObject {
+public class Player extends DoaObject implements IPlayer {
 
 	private static final long serialVersionUID = 1411773994871441922L;
 
-	public static Map<String, Player> NAME_PLAYER = new HashMap<>();
+	private static int ID = 1;
 
-	private static int number = 1;
+	private IRiskGameContext context;
+	@Getter private int id;
+	@Getter private String name;
+	@Getter private Color color;
+	@Getter private boolean isLocalPlayer;
 
-	private Color playerColor;
-	private String playerName;
-	protected boolean isInTurn;
-	private int id;
-	private boolean isLocalPlayer;
-
-	private Province source = null;
-	private Province destination = null;
-
-	public Player(String playerName, Color playerColor, boolean isLocalPlayer) {
-		this.playerName = playerName;
-		this.playerColor = playerColor;
-		id = number;
-		if (NAME_PLAYER.get(playerName) == null) {
-			NAME_PLAYER.put(playerName, this);
-		} else {
-			throw new RuntimeException("Player names must be unique!");
-		}
-		number++;
+	private Deploy deploy;
+	private Conflict conflict;
+	private Reinforce reinforce;
+	
+	public Player(IRiskGameContext context, String name, Color color, boolean isLocalPlayer) {
+		this.context = context;
+		this.id = ID++;
+		this.name = name;
+		this.color = color;
 		this.isLocalPlayer = isLocalPlayer;
 		
 		addComponent(new MouseController());
 	}
+
+	@Override
+	public void occupyProvince(final IProvince province) {
+		context.occupyProvince(this, province);
+	}
+	
+	@Override
+	public Iterable<IProvince> getOccupiedProvinces() { return context.provincesOf(this); }
+
+	@Override
+	public void deployToProvince(IProvince province, int amount) {
+		deploy = context.setUpDeploy(province, amount);
+		context.applyDeployResult(deploy.calculateResult());
+	}
+
+	@Override
+	public void attackToProvince(IProvince source, IProvince destination, Dice method) {
+		conflict = context.setUpConflict(source, destination, method);
+		context.applyConflictResult(conflict.calculateResult());
+	}
+	
+	@Override
+	public void reinforceProvince(final IProvince source, final IProvince destination, final int amount) {
+		reinforce = context.setUpReinforce(source, destination, amount);
+		context.applyReinforceResult(reinforce.calculateResult());
+	}
+
+	@Override
+	public boolean isHumanPlayer() { return true; }
 	
 	public class MouseController extends DoaScript {
 
@@ -113,71 +143,4 @@ public class Player extends DoaObject {
 		}
 	}
 
-	public void turn() {
-		isInTurn = true;
-	}
-
-	public boolean isTurn() {
-		return isInTurn;
-	}
-
-	public String getName() {
-		return playerName;
-	}
-
-	public Color getColor() {
-		return playerColor;
-	}
-
-	public void setColor(Color pColor) {
-		playerColor = pColor;
-	}
-
-	public int getID() {
-		return id;
-	}
-
-	public static int findStartingTroopCount(int numberOfPlayers) {
-		return 50 - 5 * numberOfPlayers;
-	}
-
-	public static int calculateReinforcementsForThisTurn(Player player) {
-		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
-		int reinforcementsForThisTurn = Math.max(playerProvinces.size() / 3, 3);
-		for (Entry<String, Continent> entry : Continent.NAME_CONTINENT.entrySet()) {
-			Continent currentContinent = entry.getValue();
-			if (playerProvinces.containsAll(currentContinent.getProvinces())) {
-				reinforcementsForThisTurn += currentContinent.getCaptureBonus();
-			}
-		}
-		return reinforcementsForThisTurn;
-	}
-
-	public static boolean hasProvinces(Player player) {
-		List<Province> playerProvinces = Province.ALL_PROVINCES.stream().filter(province -> province.isOwnedBy(player)).collect(Collectors.toList());
-		return !playerProvinces.isEmpty();
-	}
-
-	// TODO DOA OPTIMIZE
-	public static List<Province> getPlayerProvinces(Player player) {
-		return Province.ALL_PROVINCES.stream().filter(p -> p.getOwner() == player).collect(Collectors.toList());
-	}
-
-	public static void resetIDs() {
-		number = 1;
-	}
-
-	public void endTurn() {
-		isInTurn = false;
-	}
-
-	public boolean isLocalPlayer() {
-		return isLocalPlayer;
-	}
-
-	@Override
-	public String toString() {
-		return "Player [playerColor=" + playerColor + ", playerName=" + playerName + ", isInTurn=" + isInTurn + ", id=" + id + ", isLocalPlayer=" + isLocalPlayer + ", source="
-		        + source + ", destination=" + destination + "]";
-	}
 }

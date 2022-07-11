@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterators;
 import com.pmnm.risk.globals.Globals;
 
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import pmnm.risk.game.Conflict;
 import pmnm.risk.game.Deploy;
 import pmnm.risk.game.Dice;
@@ -16,6 +21,7 @@ import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IPlayer;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.Reinforce;
 import pmnm.risk.map.ContinentData;
 import pmnm.risk.map.MapData;
 import pmnm.risk.map.ProvinceData;
@@ -31,6 +37,10 @@ public class RiskGameContext implements IRiskGameContext {
 	
 	private MapData map;
 	private IPlayer[] players;
+	
+	@Getter
+	@Setter
+	private boolean isPaused;
 
 	/* Data <-> Implementation Association */
 	private Map<IContinent, ContinentData> continentData;
@@ -39,15 +49,15 @@ public class RiskGameContext implements IRiskGameContext {
 	private Map<ProvinceData, IProvince> dataProvince;
 	
 	/* Continent <-> Province Association */
-	private Map<IContinent, @NonNull ImmutableList<IProvince>> continentProvinces;
+	private Map<IContinent, @NonNull ImmutableList<@NonNull IProvince>> continentProvinces;
 	private Map<IProvince, IContinent> provinceContinents;
 	
 	/* Player <-> Province Association */
-	private Map<IPlayer, @NonNull ArrayList<IProvince>> playerProvinces;
+	private Map<IPlayer, @NonNull ArrayList<@NonNull IProvince>> playerProvinces;
 	private Map<IProvince, IPlayer> provincePlayers;
 	
 	/* Province Runtime info */
-	private Map<IProvince, @NonNull ImmutableList<IProvince>> neighbors;
+	private Map<IProvince, @NonNull ImmutableList<@NonNull IProvince>> neighbors;
 	private Map<IProvince, @NonNull Integer> numberOfTroops;
 	
 	/* Game Runtime info */
@@ -130,10 +140,22 @@ public class RiskGameContext implements IRiskGameContext {
 	/* Game API */
 	@Override
 	public IPlayer getCurrentPlayer() { return currentPlayingPlayer; }
+	@Override
 	public TurnPhase getCurrentPhase() { return currentTurnPhase; }
 	@Override
-	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice attackerDice) {
-		return new Conflict(this, attacker, defender, attackerDice);
+	public Deploy setUpDeploy(@NonNull IProvince target, int amount) {
+		return new Deploy(this, target, amount);
+	}
+	@Override
+	public void applyDeployResult(@NonNull final Deploy.Result result) {
+		Deploy deploy = result.getDeploy();
+		
+		IProvince target = deploy.getTarget();
+		numberOfTroops.put(target, result.getRemainingTargetTroops());
+	}
+	@Override
+	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice method) {
+		return new Conflict(this, attacker, defender, method);
 	}
 	@Override
 	public void applyConflictResult(@NonNull final Conflict.Result result) {
@@ -156,21 +178,53 @@ public class RiskGameContext implements IRiskGameContext {
 		}
 	}
 	@Override
-	public Deploy setUpDeploy(@NonNull final IProvince source, @NonNull final IProvince defender, int amount) {
-		return new Deploy(this, source, defender, amount);
+	public Reinforce setUpReinforce(@NonNull final IProvince source, @NonNull final IProvince destination, int amount) {
+		return new Reinforce(this, source, destination, amount);
 	}
 	@Override
-	public void applyDeployResult(@NonNull final Deploy.Result result) {
-		Deploy deploy = result.getDeploy();
+	public void applyReinforceResult(@NonNull final Reinforce.Result result) {
+		Reinforce reinforce = result.getReinforce();
 		
-		IProvince deployer = deploy.getSource();
-		numberOfTroops.put(deployer, result.getRemainingSourceTroops());
+		IProvince reinforcer = reinforce.getSource();
+		numberOfTroops.put(reinforcer, result.getRemainingSourceTroops());
 
-		IProvince deployee = deploy.getDestination();
-		numberOfTroops.put(deployee, result.getRemainingDestinationTroops());
+		IProvince reinforcee = reinforce.getDestination();
+		numberOfTroops.put(reinforcee, result.getRemainingDestinationTroops());
+	}
+	@Override
+	public int calculateStartingTroopCount() { return 50 - 5 * players.length; }
+	@Override
+	public int calculateTurnReinforcementsFor(@NonNull IPlayer player) {
+		Iterable<@NonNull IProvince> playerProvinces = provincesOf(player);
+		List<@NonNull IProvince> playerProvincesList = new ArrayList<>();
+		playerProvinces.forEach(playerProvincesList::add);
+		int provinceCount = playerProvincesList.size();
+		int reinforcementsForThisTurn = Math.max(provinceCount / 3, 3);
+		for (@NonNull IContinent continent : continentData.keySet()) {
+			@NonNull ImmutableList<@NonNull IProvince> provinces = continentProvinces.get(continent);
+			if (playerProvincesList.containsAll(provinces)) {
+				reinforcementsForThisTurn += continent.getCaptureBonus();
+			}
+		}
+		return reinforcementsForThisTurn;
 	}
 	
+	/* Player API */
+	public Iterable<IProvince> provincesOf(@NonNull final IPlayer player) { return playerProvinces.get(player); }
+	public void occupyProvince(@NonNull final IPlayer player, @NonNull IProvince province) {
+		IPlayer previousOccupier = province.getOccupier();
+		if (previousOccupier != null) {
+			playerProvinces.get(previousOccupier).remove(province);
+		}
+		playerProvinces.get(player).add(province);
+		provincePlayers.put(province, player);
+	}	
+	
 	/* Province API */
+	@Override
+	public Iterable<@NonNull IProvince> getProvinces() {
+		return provinceData.keySet();
+	}
 	@Override
 	public IContinent continentOf(@NonNull final IProvince province) {
 		return provinceContinents.get(province);
@@ -193,6 +247,10 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	
 	/* Continent API */
+	@Override
+	public Iterable<@NonNull IContinent> getContinents() {
+		return continentData.keySet();
+	}
 	@Override
 	public Iterable<IProvince> provincesOf(@NonNull final IContinent continent) {
 		return continentProvinces.get(continent);

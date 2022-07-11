@@ -1,13 +1,10 @@
 package pmnm.risk.game;
 
-import com.pmnm.risk.globals.Globals;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
-import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @Data
 @ToString(includeFieldNames = true)
@@ -22,24 +19,16 @@ public final class Deploy {
 		private final Deploy deploy;
 
 		@Getter
-		private final int remainingSourceTroops;
-		
-		@Getter
-		private final int remainingDestinationTroops;
-		
+		private final int remainingTargetTroops;		
 	}
 	
 	@NonNull
-	private final RiskGameContext context;
+	private final IRiskGameContext context;
 	
 	@Getter
 	@NonNull
-	private final IProvince source;
-	
-	@Getter
-	@NonNull
-	private final IProvince destination;
-	
+	private final IProvince target;
+		
 	@Getter
 	private final int amount;
 	
@@ -48,20 +37,12 @@ public final class Deploy {
 	public Result calculateResult() {
 		if (result != null) return result;
 		
-		int sourceTroops = context.numberOfTroopsOn(source);
-		if (sourceTroops <= amount) { throw new IllegalArgumentException(""); }
-		
-		int destinationTroops = context.numberOfTroopsOn(destination);
-		if (destinationTroops == Globals.UNKNOWN_TROOP_COUNT) {
-			destinationTroops = 0;
-		}
-		destinationTroops += amount;
-		sourceTroops -= amount;
-		
+		int targetTroops = context.numberOfTroopsOn(target);
+		targetTroops += amount;
+
 		Result rv = new Result(
 			this,
-			sourceTroops,
-			destinationTroops
+			targetTroops
 		);
 		result = rv;
 		return rv;

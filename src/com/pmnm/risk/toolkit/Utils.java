@@ -5,9 +5,12 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.Path2D;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,12 +19,42 @@ import com.pmnm.risk.main.Main;
 import doa.engine.core.DoaCamera;
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.maths.DoaVector;
+import lombok.experimental.UtilityClass;
+import pmnm.risk.map.Vertex2D;
 import pmnm.risk.map.board.ProvinceHitArea;
 import pmnm.risk.map.province.Province;
 
+@UtilityClass
 public final class Utils {
-
-	private Utils() {}
+	
+	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath
+	// by finnw
+	public static Vertex2D[] getPointsOf(Path2D path) {
+		List<Vertex2D> pointList = new ArrayList<>();
+		double[] coords = new double[6];
+		int numSubPaths = 0;
+		for (PathIterator pi = path.getPathIterator(null); !pi.isDone(); pi.next()) {
+			switch (pi.currentSegment(coords)) {
+				case PathIterator.SEG_MOVETO:
+					Vertex2D vertex = new Vertex2D((int)coords[0], (int)coords[1]);
+					pointList.add(vertex);
+					++numSubPaths;
+					break;
+				case PathIterator.SEG_LINETO: 
+					vertex = new Vertex2D((int)coords[0], (int)coords[1]);
+					pointList.add(vertex);
+					break;
+				case PathIterator.SEG_CLOSE:
+					if (numSubPaths > 1) {
+						throw new IllegalArgumentException("Path contains multiple subpaths");
+					}
+					return pointList.toArray(Vertex2D[]::new);
+				default:
+					throw new IllegalArgumentException("Path contains curves");
+			}
+		}
+		throw new IllegalArgumentException("Unclosed path");
+	}
 
 	public static float mapXCoordinateByZoom(final float x) {
 		return mapCoordinatesByZoom(x, 0).x;

@@ -4,7 +4,6 @@ import com.doa.engine.scene.DoaObjectBuilder;
 import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.main.AIPlayer;
 import com.pmnm.risk.main.GameManager;
-import com.pmnm.risk.main.Player;
 import com.pmnm.roy.ui.ColorComboButton;
 import com.pmnm.roy.ui.DifficultyComboButton;
 import com.pmnm.roy.ui.LanguageButton;
@@ -34,6 +33,7 @@ import com.pmnm.roy.ui.menu.PlayOnlineMenu;
 import com.pmnm.roy.ui.menu.RulesMenu;
 import com.pmnm.roy.ui.menu.SettingsMenu;
 
+import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.map.board.GameBoard;
 import pmnm.risk.map.board.ProvinceConnector;
 import pmnm.risk.map.board.ProvinceHitArea;
