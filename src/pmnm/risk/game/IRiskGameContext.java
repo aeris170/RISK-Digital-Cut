@@ -23,8 +23,9 @@ public interface IRiskGameContext extends Serializable {
 	boolean isEveryProvinceOccupied();
 	
 	/* Player API */
-	public Iterable<IProvince> provincesOf(@NonNull final IPlayer player);
-	public void occupyProvince(@NonNull final IPlayer player, @NonNull IProvince province);
+	Iterable<IProvince> provincesOf(@NonNull final IPlayer player);
+	void occupyProvince(@NonNull final IPlayer player, @NonNull IProvince province);
+	void finishCurrentPlayerTurn();
 	
 	/* Province API */
 	Iterable<@NonNull IProvince> getProvinces();

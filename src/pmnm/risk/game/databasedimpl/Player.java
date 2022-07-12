@@ -52,6 +52,7 @@ public class Player extends DoaObject implements IPlayer {
 
 	@Override
 	public void occupyProvince(final IProvince province) {
+		if (itIsNotMyTurn()) return;
 		context.occupyProvince(this, province);
 	}
 	
@@ -60,18 +61,21 @@ public class Player extends DoaObject implements IPlayer {
 
 	@Override
 	public void deployToProvince(IProvince province, int amount) {
+		if (itIsNotMyTurn()) return;
 		lastDeploy = context.setUpDeploy(province, amount);
 		context.applyDeployResult(lastDeploy.calculateResult());
 	}
 
 	@Override
 	public void attackToProvince(IProvince source, IProvince destination, Dice method) {
+		if (itIsNotMyTurn()) return;
 		lastConflict = context.setUpConflict(source, destination, method);
 		context.applyConflictResult(lastConflict.calculateResult());
 	}
 	
 	@Override
 	public void reinforceProvince(final IProvince source, final IProvince destination, final int amount) {
+		if (itIsNotMyTurn()) return;
 		lastReinforce = context.setUpReinforce(source, destination, amount);
 		context.applyReinforceResult(lastReinforce.calculateResult());
 	}
@@ -81,7 +85,8 @@ public class Player extends DoaObject implements IPlayer {
 	
 	@Override
 	public void finishTurn() {
-		context.
+		if (itIsNotMyTurn()) return;
+		context.finishCurrentPlayerTurn();
 	}
 	
 	public class MouseController extends DoaScript {

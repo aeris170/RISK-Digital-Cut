@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.util.CircularQueue;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -38,7 +39,7 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	
 	private MapData map;
-	private IPlayer[] players;
+	private CircularQueue<IPlayer> players;
 	
 	@Getter
 	@Setter
@@ -200,7 +201,7 @@ public class RiskGameContext implements IRiskGameContext {
 		numberOfTroops.put(reinforcee, result.getRemainingDestinationTroops());
 	}
 	@Override
-	public int calculateStartingTroopCount() { return 50 - 5 * players.length; }
+	public int calculateStartingTroopCount() { return 50 - 5 * players.size(); }
 	@Override
 	public int calculateTurnReinforcementsFor(@NonNull IPlayer player) {
 		Iterable<@NonNull IProvince> playerProvinces = provincesOf(player);
@@ -216,9 +217,24 @@ public class RiskGameContext implements IRiskGameContext {
 		}
 		return reinforcementsForThisTurn;
 	}
+	@Override
+	public boolean isInitialPlacementComplete() {
+		return true;
+	}
+	@Override
+	public boolean isEveryProvinceOccupied() {
+		for (IProvince province : provinceData.keySet()) {
+			if (provincePlayers.get(province) == null) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	/* Player API */
+	@Override
 	public Iterable<IProvince> provincesOf(@NonNull final IPlayer player) { return playerProvinces.get(player); }
+	@Override
 	public void occupyProvince(@NonNull final IPlayer player, @NonNull IProvince province) {
 		IPlayer previousOccupier = province.getOccupier();
 		if (previousOccupier != null) {
@@ -226,7 +242,9 @@ public class RiskGameContext implements IRiskGameContext {
 		}
 		playerProvinces.get(player).add(province);
 		provincePlayers.put(province, player);
-	}	
+	}
+	@Override
+	public void finishCurrentPlayerTurn() { currentPlayingPlayer = players.getNext(); }
 	
 	/* Province API */
 	@Override
