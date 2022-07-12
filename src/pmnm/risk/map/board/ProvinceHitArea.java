@@ -46,7 +46,7 @@ import pmnm.risk.map.Vertex2D;
 
 public class ProvinceHitArea extends DoaObject {
 	
-	public static ProvinceHitArea of(IProvince province) {
+	static ProvinceHitArea of(IProvince province) {
 		return new ProvinceHitArea(province);
 	}
 
