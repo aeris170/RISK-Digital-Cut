@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
@@ -203,9 +204,7 @@ public class RiskGameContext implements IRiskGameContext {
 	public int calculateStartingTroopCount() { return 50 - 5 * players.size(); }
 	@Override
 	public int calculateTurnReinforcementsFor(@NonNull IPlayer player) {
-		Iterable<@NonNull IProvince> playerProvinces = provincesOf(player);
-		List<@NonNull IProvince> playerProvincesList = new ArrayList<>();
-		playerProvinces.forEach(playerProvincesList::add);
+		List<@NonNull IProvince> playerProvincesList = StreamSupport.stream(provincesOf(player).spliterator(), false).toList();
 		int provinceCount = playerProvincesList.size();
 		int reinforcementsForThisTurn = Math.max(provinceCount / 3, 3);
 		for (@NonNull IContinent continent : continentData.keySet()) {
