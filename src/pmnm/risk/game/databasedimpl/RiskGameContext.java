@@ -138,9 +138,8 @@ public class RiskGameContext implements IRiskGameContext {
 
 		/* ----------------- Step 6, add provinces to this map ----------------- */
 		numberOfTroops = new HashMap<>();
-		provinceData.keySet().forEach(province -> {
-			numberOfTroops.put(province, Globals.UNKNOWN_TROOP_COUNT);
-		});
+		provinceData.keySet()
+			.forEach(province -> numberOfTroops.put(province, Globals.UNKNOWN_TROOP_COUNT));
 		/* --------------------------------------------------------------------- */ 
 		
 		areas = new ProvinceHitAreas(this);
@@ -281,9 +280,11 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	
 	/* Private Getters */
+	@SuppressWarnings("unused")
 	private ProvinceData dataOf(@NonNull final IProvince province) {
 		return provinceData.get(province);
 	}
+	@SuppressWarnings("unused")
 	private ContinentData dataOf(@NonNull final IContinent continent) {
 		return continentData.get(continent);
 	}
