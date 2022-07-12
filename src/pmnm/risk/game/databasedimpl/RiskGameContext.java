@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.pmnm.risk.globals.Globals;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -25,6 +26,7 @@ import pmnm.risk.game.Reinforce;
 import pmnm.risk.map.ContinentData;
 import pmnm.risk.map.MapData;
 import pmnm.risk.map.ProvinceData;
+import pmnm.risk.map.board.ProvinceHitAreas;
 
 public class RiskGameContext implements IRiskGameContext {
 
@@ -63,6 +65,10 @@ public class RiskGameContext implements IRiskGameContext {
 	/* Game Runtime info */
 	private IPlayer currentPlayingPlayer;
 	private TurnPhase currentTurnPhase;
+	
+	/* Visuals */
+	@Getter(value = AccessLevel.PACKAGE)
+	private ProvinceHitAreas areas;
 	
 	private RiskGameContext(@NonNull final MapData data) {
 		map = data;
@@ -135,6 +141,8 @@ public class RiskGameContext implements IRiskGameContext {
 			numberOfTroops.put(province, Globals.UNKNOWN_TROOP_COUNT);
 		});
 		/* --------------------------------------------------------------------- */ 
+		
+		areas = new ProvinceHitAreas(this);
 	}
 	
 	/* Game API */

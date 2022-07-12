@@ -19,6 +19,8 @@ public interface IRiskGameContext extends Serializable {
 	int calculateStartingTroopCount();
 	int calculateTurnReinforcementsFor(@NonNull IPlayer player);
 	
+	boolean isInitialPlacementComplete();
+	boolean isEveryProvinceOccupied();
 	
 	/* Player API */
 	public Iterable<IProvince> provincesOf(@NonNull final IPlayer player);

@@ -50,8 +50,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
-	@Getter(value = AccessLevel.PACKAGE)
-	private IProvince province;
+	@Getter private IProvince province;
 
 	/* MESHES */
 	transient BufferedImage unoccupiedMesh;

@@ -27,4 +27,5 @@ public interface IProvince extends Serializable {
 	
 	int getNumberOfTroops();
 	boolean canLaunchAttack();
+	boolean canReinforceAnotherProvince();
 }

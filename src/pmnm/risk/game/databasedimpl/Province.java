@@ -85,4 +85,6 @@ public final class Province implements IProvince {
 	@Override
 	public boolean canLaunchAttack() { return getNumberOfTroops() > 1; }
 
+	@Override
+	public boolean canReinforceAnotherProvince() { return getNumberOfTroops() > 1; }
 }
