@@ -37,6 +37,7 @@ import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.map.Mesh2D;
@@ -50,7 +51,9 @@ public class ProvinceHitArea extends DoaObject {
 
 	private static final long serialVersionUID = -6848368535793292243L;
 
-	@Getter private IProvince province;
+	@Getter
+	@NonNull
+	private IProvince province;
 
 	/* MESHES */
 	transient BufferedImage unoccupiedMesh;
