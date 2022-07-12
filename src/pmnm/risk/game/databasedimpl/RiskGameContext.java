@@ -218,9 +218,7 @@ public class RiskGameContext implements IRiskGameContext {
 		return reinforcementsForThisTurn;
 	}
 	@Override
-	public boolean isInitialPlacementComplete() {
-		return true;
-	}
+	public boolean isInitialPlacementComplete() { return true; }
 	@Override
 	public boolean isEveryProvinceOccupied() {
 		for (IProvince province : provinceData.keySet()) {
