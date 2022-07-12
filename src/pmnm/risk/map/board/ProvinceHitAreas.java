@@ -123,7 +123,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		return StreamSupport.stream(province.getProvince().getNeighbors().spliterator(), false)
 			.filter(p -> p.isOccupiedBy(province.getProvince().getOccupier()))
 			.map(this::findHitAreaOf)
-			.collect(Collectors.toUnmodifiableList());
+			.toList();
 	}
 	
 	private Iterable<ProvinceHitArea> findNeighborsWithDifferentOccupier(ProvinceHitArea province) {
@@ -131,7 +131,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		return StreamSupport.stream(province.getProvince().getNeighbors().spliterator(), false)
 			.filter(p -> !p.isOccupiedBy(province.getProvince().getOccupier()))
 			.map(this::findHitAreaOf)
-			.collect(Collectors.toUnmodifiableList());
+			.toList();
 	}
 
 	@SuppressWarnings("serial")
