@@ -1,9 +1,11 @@
 package pmnm.risk.game;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public interface IPlayer {
+public interface IPlayer extends Serializable {
 	
+	int getId();
 	String getName();
 	Color getColor();
 
