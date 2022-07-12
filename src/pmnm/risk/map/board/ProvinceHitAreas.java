@@ -34,6 +34,7 @@ public final class ProvinceHitAreas extends DoaObject {
 	@Getter private ProvinceHitArea reinforceeProvince;
 	
 	@Getter	private List<ProvinceHitArea> areas;
+	private ProvinceConnector connector;
 	
 	public ProvinceHitAreas(IRiskGameContext context) {
 		this.context = context;
@@ -43,6 +44,8 @@ public final class ProvinceHitAreas extends DoaObject {
 		for (IProvince p : provinces) {
 			areas.add(ProvinceHitArea.of(p));
 		}
+		
+		connector = new ProvinceConnector(context);
 		
 		addComponent(new ProvinceHitAreaHighlighter());
 		addComponent(new ProvinceHitAreaSelector());
@@ -56,6 +59,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		for (ProvinceHitArea pha : areas) {
 			scene.add(pha);
 		}
+		scene.add(connector);
 	}
 	
 	@Override
@@ -64,6 +68,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		for (ProvinceHitArea pha : areas) {
 			scene.remove(pha);
 		}
+		scene.remove(connector);
 	}
 	
 	public void selectAttackerProvinceAs(IProvince province) {
