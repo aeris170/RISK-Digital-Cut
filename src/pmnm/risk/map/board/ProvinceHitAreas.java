@@ -7,6 +7,7 @@ import com.pmnm.risk.globals.Scenes;
 
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;
+import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
 import lombok.NonNull;
@@ -46,6 +47,22 @@ public final class ProvinceHitAreas extends DoaObject {
 		addComponent(new ProvinceHitAreaSelector());
 		
 		Scenes.GAME_SCENE.add(this);
+	}
+	
+	@Override
+	public void onAddToScene(DoaScene scene) {
+		super.onAddToScene(scene);
+		for (ProvinceHitArea pha : areas) {
+			scene.add(pha);
+		}
+	}
+	
+	@Override
+	public void onRemoveFromScene(DoaScene scene) {
+		super.onRemoveFromScene(scene);
+		for (ProvinceHitArea pha : areas) {
+			scene.remove(pha);
+		}
 	}
 	
 	public void selectAttackerProvinceAs(IProvince province) {
