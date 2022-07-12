@@ -1,10 +1,14 @@
 package pmnm.risk.map.board;
 
+import java.io.Serializable;
+
 import lombok.NonNull;
 import pmnm.risk.map.Mesh2D;
 import pmnm.risk.map.Vertex2D;
 
-public final class ProvinceHitAreaBounds {
+public final class ProvinceHitAreaBounds implements Serializable {
+
+	private static final long serialVersionUID = 5855949010693537574L;
 
 	public int minX = Integer.MAX_VALUE;
 	public int minY = Integer.MAX_VALUE;
