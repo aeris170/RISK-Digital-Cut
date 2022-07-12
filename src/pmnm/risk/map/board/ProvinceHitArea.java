@@ -33,6 +33,7 @@ import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaMouse;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
+import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.AccessLevel;
@@ -82,6 +83,8 @@ public class ProvinceHitArea extends DoaObject {
 
 	private float meshAlpha = 0f;
 	private float meshAlphaDelta = 0.005f;
+	
+	private ProvinceSymbol symbol;
 
 	private ProvinceHitArea(IProvince province) {
 		this.province = province;
@@ -92,8 +95,19 @@ public class ProvinceHitArea extends DoaObject {
 		addComponent(new ZOrderAndAlphaSetter());
 		addComponent(new Renderer());
 		
-		ProvinceSymbol symbol = new ProvinceSymbol(this);
+		symbol = ProvinceSymbol.of(this);
+	}
+	
+	@Override
+	public void onAddToScene(DoaScene scene) {
+		super.onAddToScene(scene);
 		Scenes.GAME_SCENE.add(symbol);
+	}
+	
+	@Override
+	public void onRemoveFromScene(DoaScene scene) {
+		super.onRemoveFromScene(scene);
+		Scenes.GAME_SCENE.remove(symbol);
 	}
 
 	public class ZOrderAndAlphaSetter extends DoaScript {
