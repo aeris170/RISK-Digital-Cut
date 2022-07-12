@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.pmnm.risk.globals.Globals;
 import com.pmnm.roy.ui.UIInit;
 
 import doa.engine.core.DoaGraphicsFunctions;
@@ -14,18 +15,24 @@ import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
+import pmnm.risk.game.IPlayer;
+import pmnm.risk.game.IProvince;
 
 public final class ProvinceSymbol extends DoaObject {
 
 	private static final long serialVersionUID = -5094307362006544586L;
 	
+	static ProvinceSymbol of(ProvinceHitArea province) {
+		return new ProvinceSymbol(province);
+	}
+	
 	private ProvinceHitArea province;
 	
-	public ProvinceSymbol(ProvinceHitArea province) {
+	private ProvinceSymbol(ProvinceHitArea province) {
 		this.province = province;
 		setzOrder(9);
-		transform.position = new DoaVector(province.bounds.centerX, province.bounds.centerY);
 		addComponent(new Renderer());
+		//transform.position = new DoaVector(province.getBounds().centerX, province.getBounds().centerY);
 	}
 	
 	private class Renderer extends DoaRenderer {
@@ -34,40 +41,43 @@ public final class ProvinceSymbol extends DoaObject {
 
 		@Override
 		public void render() {
-			Province p = province.getProvince();
-			if (p.isClaimed()) {
-				DoaGraphicsFunctions.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
-				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics();
-				DoaGraphicsFunctions.setColor(Color.BLACK);
-				BufferedImage ownerLogo = DoaSprites.getSprite("p" + p.getOwner().getID() + "Pawn");
-				BufferedImage continentLogo = DoaSprites.getSprite(p.getContinent().getAbbreviation());
-				DoaGraphicsFunctions.drawImage(
-					continentLogo, 
-					province.bounds.centerX - continentLogo.getWidth() * 0.33f, 
-					province.bounds.centerY - continentLogo.getHeight() * 0.33f, 
-					continentLogo.getWidth() * 0.66f, 
-					continentLogo.getHeight() * 0.66f
-				);
-				DoaGraphicsFunctions.drawImage(
-					ownerLogo, 
-					province.bounds.centerX - ownerLogo.getWidth() * 0.33f, 
-					province.bounds.centerY - ownerLogo.getHeight() * 0.33f,
-					ownerLogo.getWidth() * 0.66f,
-			        ownerLogo.getHeight() * 0.66f
-		        );
-				int troopCount = p.getTroops();
-				String troops = "";
-				if (troopCount == -1) {
-					troops = "???";
-				} else {
-					troops = "" + troopCount;
-				}
-				DoaGraphicsFunctions.drawString(
-					troops, 
-					province.bounds.centerX - fm.stringWidth(troops) / 2f, 
-					province.bounds.centerY + (fm.getHeight() - fm.getAscent()) / 2f
-				);
+			IProvince p = province.getProvince();
+			if (!p.isOccupied()) { return; }
+			IPlayer occupier = p.getOccupier();
+			float tx = province.getBounds().centerX;
+			float ty = province.getBounds().centerY;
+			
+			DoaGraphicsFunctions.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
+			FontMetrics fm = DoaGraphicsFunctions.getFontMetrics();
+			DoaGraphicsFunctions.setColor(Color.BLACK);
+			BufferedImage ownerLogo = DoaSprites.getSprite("p" + occupier.getId() + "Pawn");
+			BufferedImage continentLogo = DoaSprites.getSprite(p.getContinent().getAbbreviation());
+			DoaGraphicsFunctions.drawImage(
+				continentLogo, 
+				tx - continentLogo.getWidth() * 0.33f, 
+				ty - continentLogo.getHeight() * 0.33f, 
+				continentLogo.getWidth() * 0.66f, 
+				continentLogo.getHeight() * 0.66f
+			);
+			DoaGraphicsFunctions.drawImage(
+				ownerLogo, 
+				tx - ownerLogo.getWidth() * 0.33f, 
+				ty - ownerLogo.getHeight() * 0.33f,
+				ownerLogo.getWidth() * 0.66f,
+		        ownerLogo.getHeight() * 0.66f
+	        );
+			int troopCount = p.getNumberOfTroops();
+			String troops = "";
+			if (troopCount != Globals.UNKNOWN_TROOP_COUNT) {
+				troops = Integer.toString(troopCount);
+			} else {
+				troops = "???";
 			}
+			DoaGraphicsFunctions.drawString(
+				troops, 
+				tx - fm.stringWidth(troops) / 2f, 
+				ty + (fm.getHeight() - fm.getAscent()) / 2f
+			);
 		}
 	}		
 }
