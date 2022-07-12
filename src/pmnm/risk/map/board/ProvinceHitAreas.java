@@ -2,6 +2,10 @@ package pmnm.risk.map.board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import com.pmnm.risk.globals.Scenes;
 
@@ -68,9 +72,13 @@ public final class ProvinceHitAreas extends DoaObject {
 	public void selectAttackerProvinceAs(IProvince province) {
 		if(attackerProvince != null) {
 			attackerProvince.deselectAsAttacker();
+			findNeighborsWithDifferentOccupier(attackerProvince).forEach(ProvinceHitArea::deemphasizeForAttack);
 		}
 		attackerProvince = findHitAreaOf(province);
-		attackerProvince.selectAsAttacker();
+		if(attackerProvince != null) {
+			attackerProvince.selectAsAttacker();
+			findNeighborsWithDifferentOccupier(attackerProvince).forEach(ProvinceHitArea::emphasizeForAttack);
+		}
 	}
 	
 	public void selectDefenderProvinceAs(IProvince province) {
@@ -78,27 +86,52 @@ public final class ProvinceHitAreas extends DoaObject {
 			defenderProvince.deselectAsDefender();
 		}
 		defenderProvince = findHitAreaOf(province);
-		defenderProvince.selectAsDefender();
+		if(defenderProvince != null) {
+			defenderProvince.selectAsDefender();
+		}
 	}
 	
 	public void selectReinforcingProvinceAs(IProvince province) {
 		if(reinforcingProvince != null) {
 			reinforcingProvince.deselectAsReinforcing();
+			findNeighborsWithSameOccupier(reinforcingProvince).forEach(ProvinceHitArea::deemphasizeForReinforcement);
 		}
 		reinforcingProvince = findHitAreaOf(province);
-		reinforcingProvince.deselectAsReinforcing();
+		if(reinforcingProvince != null) {
+			reinforcingProvince.deselectAsReinforcing();
+			findNeighborsWithSameOccupier(reinforcingProvince).forEach(ProvinceHitArea::emphasizeForReinforcement);
+		}
 	}
 	
 	public void selectReinforceeProvinceAs(IProvince province) {
-		if(defenderProvince != null) {
-			defenderProvince.deselectAsReinforced();
+		if(reinforceeProvince != null) {
+			reinforceeProvince.deselectAsReinforced();
 		}
-		defenderProvince = findHitAreaOf(province);
-		defenderProvince.deselectAsReinforced();
+		reinforceeProvince = findHitAreaOf(province);
+		if(reinforceeProvince != null) {
+			reinforceeProvince.selectAsReinforced();
+		}
 	}
 	
-	public ProvinceHitArea findHitAreaOf(@NonNull IProvince province) {
-		return areas.stream().filter(area -> area.getProvince().equals(province)).findFirst().get();
+	private ProvinceHitArea findHitAreaOf(IProvince province) {
+		if (province == null) return null;
+		return areas.stream().filter(area -> area.getProvince().equals(province)).findFirst().orElseThrow();
+	}
+	
+	private Iterable<ProvinceHitArea> findNeighborsWithSameOccupier(ProvinceHitArea province) {
+		if (province == null) return null;
+		return StreamSupport.stream(province.getProvince().getNeighbors().spliterator(), false)
+			.filter(p -> p.isOccupiedBy(province.getProvince().getOccupier()))
+			.map(this::findHitAreaOf)
+			.collect(Collectors.toUnmodifiableList());
+	}
+	
+	private Iterable<ProvinceHitArea> findNeighborsWithDifferentOccupier(ProvinceHitArea province) {
+		if (province == null) return null;
+		return StreamSupport.stream(province.getProvince().getNeighbors().spliterator(), false)
+			.filter(p -> !p.isOccupiedBy(province.getProvince().getOccupier()))
+			.map(this::findHitAreaOf)
+			.collect(Collectors.toUnmodifiableList());
 	}
 
 	@SuppressWarnings("serial")
