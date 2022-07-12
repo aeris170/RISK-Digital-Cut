@@ -1,13 +1,16 @@
 package com.pmnm.util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public final class CircularQueue<E> implements Deque<E> {
+public final class CircularQueue<E extends Serializable> implements Deque<E>, Serializable {
 
+	private static final long serialVersionUID = 341944174576430374L;
+	
 	private List<E> elements;
 	private int index = -1;
 	
