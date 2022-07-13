@@ -34,6 +34,7 @@ public final class AssetLoader {
 			DoaSprites.createSprite("FleurDeLisGold", "/ui/FleurDeLisGold.png");
 			DoaSprites.createSprite("ButtonIdle", "/ui/ButtonIdle.png");
 			DoaSprites.createSprite("ButtonHover", "/ui/ButtonHover.png");
+			DoaSprites.createSprite("ButtonPressed", "/ui/ButtonPressed.png");
 			DoaSprites.createSprite("escapeMenu", "/ui/gameScreenElements/escapeMenu.png");
 
 			{// SINGLEPLAYER MENU
@@ -97,7 +98,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("ExitPopupBackground", "/ui/popupBox.png");
 				DoaSprites.createSprite("MiniButtonIdle", "/ui/MiniButtonIdle.png");
 				DoaSprites.createSprite("MiniButtonHover", "/ui/MiniButtonHover.png");
-				DoaSprites.createSprite("MiniButtonClick", "/ui/MiniButtonPressed.png");
+				DoaSprites.createSprite("MiniButtonPressed", "/ui/MiniButtonPressed.png");
 			}
 
 			{// TOP INFO
