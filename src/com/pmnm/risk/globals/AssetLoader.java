@@ -12,6 +12,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import doa.engine.graphics.DoaAnimations;
+import doa.engine.graphics.DoaFonts;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.sound.DoaSounds;
 import lombok.experimental.UtilityClass;
@@ -206,11 +207,8 @@ public final class AssetLoader {
 			}
 			DoaAnimations.createAnimation("RiskLogoAnim", riskLogoKeyFrames, 100);
 
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			Font customFont = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/Constantia.ttf")).deriveFont(12f);
-			ge.registerFont(customFont);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, AssetLoader.class.getResourceAsStream("/ui/fonts/BookAntiqua.ttf")).deriveFont(12f);
-			ge.registerFont(customFont2);
+			DoaFonts.createFont("Constantia", "/ui/fonts/Constantia.ttf");
+			DoaFonts.createFont("BookAntiqua", "/ui/fonts/BookAntiqua.ttf");
 		} catch (IOException | FontFormatException | UnsupportedAudioFileException | LineUnavailableException ex) {
 			ex.printStackTrace();
 		}
