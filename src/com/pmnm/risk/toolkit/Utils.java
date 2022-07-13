@@ -104,11 +104,11 @@ public final class Utils {
 		return (float) Math.sqrt(Math.pow((second.x - first.x), 2) + Math.pow((second.y - first.y), 2));
 	}
 
-	public static float findMaxFontSizeToFitInArea(Font f, DoaVector r, String s) {
-		float fontSize = 0;
+	public static int findMaxFontSizeToFitInArea(Font f, DoaVector r, String s) {
+		int fontSize = 0;
 		FontMetrics fm;
 		do {
-			f = new Font(f.getFontName(), Font.PLAIN, f.getSize() + 1);
+			f = new Font(f.getFontName(), Font.PLAIN, fontSize);
 			fontSize++;
 			fm = DoaGraphicsFunctions.getFontMetrics(f);
 		} while (fm.stringWidth(s) < r.x && fm.getHeight() < r.y);
