@@ -14,7 +14,7 @@ import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 public class TopPanel extends DoaPanel {
 
@@ -71,8 +71,8 @@ public class TopPanel extends DoaPanel {
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, 51);
 		g.drawImage(DoaSprites.get("seasonCircle"), (Main.WINDOW_WIDTH - DoaSprites.get("seasonCircle").getWidth()) / 2f, 0);
 		g.drawImage(DoaSprites.get(Season.getCurrentSeason().toString()), (Main.WINDOW_WIDTH - DoaSprites.get(Season.getCurrentSeason().toString()).getWidth()) / 2f, 0);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 26f));
-		g.setColor(UIInit.FONT_COLOR);
+		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, 26f));
+		g.setColor(UIConstants.FONT_COLOR);
 
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
 		String turn = "TURN: " + (int) Math.ceil((gm.turnCount + 1) / (double) gm.numberOfPlayers);

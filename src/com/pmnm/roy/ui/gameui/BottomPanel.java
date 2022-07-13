@@ -17,7 +17,7 @@ import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.main.TurnPhase;
 import com.pmnm.risk.toolkit.Utils;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.gameui.actions.CenterPieceButtonAction;
 import com.pmnm.roy.ui.gameui.actions.DecrementButtonAction;
 import com.pmnm.roy.ui.gameui.actions.IncrementButtonAction;
@@ -130,7 +130,7 @@ public class BottomPanel extends DoaPanel {
 			nameText += clickedProvince.getName().toUpperCase();
 			continentText += clickedProvince.getContinent().getName().toUpperCase();
 		}
-		g.setColor(UIInit.FONT_COLOR);
+		g.setColor(UIConstants.FONT_COLOR);
 
 		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - DoaSprites.get("MainMenuBottomRing").getHeight() + 6d);
 
@@ -139,7 +139,7 @@ public class BottomPanel extends DoaPanel {
 
 		String phaseText = gm.currentPhase.name();
 		DoaVectorF phaseArea = new DoaVectorF(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, phaseArea, phaseText)));
+		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT, phaseArea, phaseText)));
 		g.drawString(gm.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
 
 		g.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (double) Main.WINDOW_HEIGHT - MIDDLE.getHeight());
@@ -153,23 +153,23 @@ public class BottomPanel extends DoaPanel {
 		g.drawImage(continentSprite, continentTopLeft.x, continentTopLeft.y);
 		g.drawImage(DoaSprites.get("continentHolderIcon"), Main.WINDOW_WIDTH * 0.559f, Main.WINDOW_HEIGHT * 0.953f);
 
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 25f));
+		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, 25f));
 		FontMetrics fm = g.getFontMetrics();
 
 		g.drawString(garrisonText, garrisonTopLeft.x + (garrisonSprite.getWidth() - fm.stringWidth(garrisonText)) / 2f, garrisonTopLeft.y * 1.031f);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, 30f));
+		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, 30f));
 		fm = g.getFontMetrics();
 		if (clickedProvince != null) {
 			g.setColor(gm.clickedHitArea.getProvince().getOwner().getColor());
 		}
 		g.drawString(ownerText, ownerTopLeft.x + (ownerSprite.getWidth() - fm.stringWidth(ownerText)) / 2f, ownerTopLeft.y * 1.03f);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN,
-		        Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, new DoaVectorF(nameSprite.getWidth() * 0.95f, nameSprite.getHeight()), nameText)));
-		g.setColor(UIInit.FONT_COLOR);
+		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN,
+		        Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT, new DoaVectorF(nameSprite.getWidth() * 0.95f, nameSprite.getHeight()), nameText)));
+		g.setColor(UIConstants.FONT_COLOR);
 		fm = g.getFontMetrics();
 		g.drawString(nameText, nameTopLeft.x + (nameSprite.getWidth() - fm.stringWidth(nameText)) / 2f, nameTopLeft.y * 1.03f);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN,
-		        Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, new DoaVectorF(continentSprite.getWidth() * 0.95f, continentSprite.getHeight()), continentText)));
+		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN,
+		        Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT, new DoaVectorF(continentSprite.getWidth() * 0.95f, continentSprite.getHeight()), continentText)));
 		fm = g.getFontMetrics();
 		g.drawString(continentText, continentTopLeft.x + (continentSprite.getWidth() - fm.stringWidth(continentText)) / 2f, continentTopLeft.y * 1.03f);
 	}

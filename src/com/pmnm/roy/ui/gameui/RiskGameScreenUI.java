@@ -8,7 +8,7 @@ import com.doa.engine.scene.DoaScene;
 import com.doa.engine.scene.DoaSceneHandler;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 import pmnm.risk.map.MapLoader;
 
@@ -32,7 +32,7 @@ public final class RiskGameScreenUI {
 		Builders.BPB.scene(gameScene).instantiate();
 		Builders.GMB.args(mapName, playerTypes, playerNames, playerColors, aiNames, aiColors, difficulties, randomPlacement).scene(gameScene).instantiate();
 		Builders.GBB.scene(gameScene).instantiate();
-		UIInit.pm = Builders.PMB.scene(gameScene).instantiate();
+		UIConstants.pm = Builders.PMB.scene(gameScene).instantiate();
 		DoaSceneHandler.loadScene(gameScene);
 	}
 }

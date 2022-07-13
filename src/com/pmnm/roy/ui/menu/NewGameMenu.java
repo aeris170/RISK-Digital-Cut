@@ -15,7 +15,7 @@ import com.pmnm.roy.ui.DifficultyComboButton;
 import com.pmnm.roy.ui.RandomPlacementButton;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.TypeComboButton;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 import doa.engine.graphics.DoaGraphicsContext;
@@ -28,11 +28,11 @@ public class NewGameMenu extends DoaUIPanel {
 
 	private static final long serialVersionUID = -7552086909580890620L;
 
-	private static final TextImageButton playButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.BUTTON_SIZE.x,
-	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "PLAY", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR)
+	private static final TextImageButton playButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.UIConstants.x,
+	        UIInit.UIConstants.y, DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "PLAY", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR)
 	        .instantiate();
-	private static final TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f), UIInit.BUTTON_SIZE.x,
-	        UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR)
+	private static final TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f), UIInit.UIConstants.x,
+	        UIInit.UIConstants.y, DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR)
 	        .instantiate();
 
 	private static final DoaUIImageButton prevMapButton = Builders.DIBB
@@ -59,7 +59,7 @@ public class NewGameMenu extends DoaUIPanel {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		playButton.addAction(() -> {
 			hide();
-			UIInit.fb.hide();
+			UIConstants.fb.hide();
 			List<Integer> playerTypes = new ArrayList<>();
 			List<String> playerNames = new ArrayList<>();
 			List<Color> playerColors = new ArrayList<>();
@@ -82,7 +82,7 @@ public class NewGameMenu extends DoaUIPanel {
 		});
 		backButton.addAction(() -> {
 			hide();
-			UIInit.pofm.show();
+			UIConstants.pofm.show();
 		});
 		prevMapButton.addAction(() -> {
 			mapNumber--;
@@ -148,8 +148,8 @@ public class NewGameMenu extends DoaUIPanel {
 
 		DoaVector bounds = new DoaVector(nextMapButton.getPosition().x - prevMapButton.getPosition().x + prevMapButton.getWidth() - prevMapButton.getWidth() * 2,
 		        prevMapButton.getHeight());
-		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
-		g.setColor(UIInit.FONT_COLOR);
+		g.setFont(UIConstants.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT.deriveFont(1), bounds, s)));
+		g.setColor(UIConstants.FONT_COLOR);
 		FontMetrics fm = g.getFontMetrics();
 		g.drawString(s, prevMapButton.getPosition().x + prevMapButton.getWidth() + (bounds.x - fm.stringWidth(s)) / 2, prevMapButton.getPosition().y + bounds.y * 3 / 4);
 

@@ -73,7 +73,7 @@ public class ColorComboButton extends DoaUIImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (!hidden) {
-			g.setColor(UIInit.FONT_COLOR);
+			g.setColor(UIConstants.FONT_COLOR);
 			g.drawImage(OPTIONS[index], position.x - Main.WINDOW_WIDTH * 0.027f, position.y);
 
 			g.drawImage(DoaSprites.get("ColorBorder"), position.x - Main.WINDOW_WIDTH * 0.029f, position.y - Main.WINDOW_HEIGHT * 0.003f);

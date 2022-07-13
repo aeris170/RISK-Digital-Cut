@@ -17,7 +17,7 @@ import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 public final class PauseMenu extends DoaPanel {
 
@@ -32,10 +32,10 @@ public final class PauseMenu extends DoaPanel {
 		 * saveButton.setText(Translator.getInstance().getTranslatedString("SAVED")); }).start(); });
 		 * loadButton.addAction(() -> { try { GameInstance.loadGame(); } catch (ClassNotFoundException |
 		 * IOException ex) { ex.printStackTrace(); } }); */
-		rulesButton.addAction(() -> UIInit.rm.show());
+		rulesButton.addAction(() -> UIConstants.rm.show());
 		backButton.addAction(() -> {
-			UIInit.fb.show();
-			UIInit.mm.show();
+			UIConstants.fb.show();
+			UIConstants.mm.show();
 			DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 			Scenes.GAME_SCENE.clear();
 		});
@@ -78,18 +78,18 @@ public final class PauseMenu extends DoaPanel {
 	}
 
 	private TextImageButton saveButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.342f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SAVE_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true)
+	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SAVE_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
 	        .instantiate();
 	private TextImageButton loadButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.407f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "LOAD_GAME", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true)
+	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "LOAD_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
 	        .instantiate();
 	private TextImageButton rulesButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.472f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "RULES", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true)
+	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "RULES", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
 	        .instantiate();
 	private TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.537f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "BACK_M", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true)
+	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "BACK_M", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
 	        .instantiate();
 	private TextImageButton exitButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.602f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "EXIT", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true)
+	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "EXIT", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
 	        .instantiate();
 }

@@ -60,7 +60,7 @@ public class DifficultyComboButton extends DoaUIImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		if (!hidden) {
-			g.setColor(UIInit.FONT_COLOR);
+			g.setColor(UIConstants.FONT_COLOR);
 			g.drawImage(DoaSprites.get("DifficultyBorder"), position.x - Main.WINDOW_WIDTH * 0.077f, position.y - Main.WINDOW_HEIGHT * 0.003f);
 			String s = Translator.getInstance().getTranslatedString(DIFFICULTIES[index]);
 			g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1), position.x - Main.WINDOW_WIDTH * 0.070f, position.y + Main.WINDOW_HEIGHT * 0.029f);

@@ -13,7 +13,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 public class Translator {
 
@@ -39,7 +39,7 @@ public class Translator {
 				System.err.println("Exception while reading language data for Language: " + l.name() + " " + ex.getMessage());
 			}
 		}
-		setCurrentLanguageIndex(Preferences.userNodeForPackage(UIInit.class).getInt("language", 0));
+		setCurrentLanguageIndex(Preferences.userNodeForPackage(UIConstants.class).getInt("language", 0));
 	}
 
 	public Language getCurrentLanguage() { return currentLanguage; }

@@ -21,17 +21,17 @@ import com.pmnm.roy.ui.DifficultyComboButton;
 import com.pmnm.roy.ui.RandomPlacementButton;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.TypeComboButton;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 public class JoinGameMenu extends DoaPanel {
 
 	private static final long serialVersionUID = 5144711918711184497L;
 
-	TextImageButton playButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "PLAY", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
-	TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
+	TextImageButton playButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.662f), UIInit.UIConstants.x, UIInit.UIConstants.y,
+	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "PLAY", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
+	TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.716f, Main.WINDOW_HEIGHT * 0.752f), UIInit.UIConstants.x, UIInit.UIConstants.y,
+	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
 
 	DoaImageButton prevMapButton = Builders.DIBB
 	        .args(Main.WINDOW_WIDTH * 0.731f, Main.WINDOW_HEIGHT * 0.27f, 38, 38, DoaSprites.get("ArrowLeftIdle"), DoaSprites.get("ArrowLeftClick")).instantiate();
@@ -159,8 +159,8 @@ public class JoinGameMenu extends DoaPanel {
 
 		DoaVectorF bounds = new DoaVectorF(nextMapButton.getPosition().x - prevMapButton.getPosition().x + prevMapButton.getWidth() - prevMapButton.getWidth() * 2,
 		        prevMapButton.getHeight());
-		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
-		g.setColor(UIInit.FONT_COLOR);
+		g.setFont(UIConstants.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT.deriveFont(1), bounds, s)));
+		g.setColor(UIConstants.FONT_COLOR);
 		FontMetrics fm = g.getFontMetrics();
 		g.drawString(s, prevMapButton.getPosition().x + prevMapButton.getWidth() + (bounds.x - fm.stringWidth(s)) / 2, prevMapButton.getPosition().y + bounds.y * 3 / 4);
 

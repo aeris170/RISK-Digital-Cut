@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.pmnm.risk.globals.Globals;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -47,7 +47,7 @@ public final class ProvinceSymbol extends DoaObject {
 			float tx = province.getBounds().centerX;
 			float ty = province.getBounds().centerY;
 			
-			DoaGraphicsFunctions.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, 18f));
+			DoaGraphicsFunctions.setFont(UIConstants.UI_FONT.deriveFont(Font.BOLD, 18f));
 			FontMetrics fm = DoaGraphicsFunctions.getFontMetrics();
 			DoaGraphicsFunctions.setColor(Color.BLACK);
 			BufferedImage ownerLogo = DoaSprites.getSprite("p" + occupier.getId() + "Pawn");

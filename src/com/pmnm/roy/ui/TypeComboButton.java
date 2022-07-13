@@ -63,9 +63,9 @@ public class TypeComboButton extends DoaUIImageButton {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		g.setColor(UIInit.FONT_COLOR);
+		g.setColor(UIConstants.FONT_COLOR);
 		String s = Translator.getInstance().getTranslatedString(OPTIONS[index]);
-		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, s)));
+		g.setFont(UIConstants.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT.deriveFont(1), bounds, s)));
 		g.drawImage(DoaSprites.get("PlayerTypeBorder"), position.x - Main.WINDOW_WIDTH * 0.103f, position.y - Main.WINDOW_HEIGHT * 0.003f);
 		g.drawString(s.substring(0, 1).toUpperCase() + s.substring(1), position.x - Main.WINDOW_WIDTH * 0.098f, position.y + Main.WINDOW_HEIGHT * 0.029f);
 		if (isSinglePlayer || COMBO_BUTTONS.get(COMBO_BUTTONS.size() - 1) != this) {

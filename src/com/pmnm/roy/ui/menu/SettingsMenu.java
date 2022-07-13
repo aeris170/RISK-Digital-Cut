@@ -8,7 +8,7 @@ import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.LanguageButton;
 import com.pmnm.roy.ui.TextImageButton;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 import doa.engine.graphics.DoaGraphicsContext;
 import doa.engine.graphics.DoaSprites;
@@ -38,8 +38,8 @@ public class SettingsMenu extends DoaUIPanel {
 
 	LanguageButton selectedButton;
 
-	TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.651f, Main.WINDOW_HEIGHT * 0.694f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
+	TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.651f, Main.WINDOW_HEIGHT * 0.694f), UIInit.UIConstants.x, UIInit.UIConstants.y,
+	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
 
 	public SettingsMenu() {
 		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
@@ -79,7 +79,7 @@ public class SettingsMenu extends DoaUIPanel {
 		turkishButton.addAction(() -> selectButton(turkishButton, Language.TR));
 		backButton.addAction(() -> {
 			hide();
-			UIInit.mm.show();
+			UIConstants.mm.show();
 		});
 		add(englishButton);
 		add(deutchButton);

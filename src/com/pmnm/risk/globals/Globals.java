@@ -1,7 +1,7 @@
 package com.pmnm.risk.globals;
 
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 import lombok.experimental.UtilityClass;
 import pmnm.risk.map.MapConfig;
@@ -19,7 +19,7 @@ public final class Globals {
 		AssetLoader.initializeAssets();
 		MapConfig.readMapConfigs();
 		Translator.getInstance();
-		UIInit.initUI();
+		UIConstants.initUI();
 	}
 
 }

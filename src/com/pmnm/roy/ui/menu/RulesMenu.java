@@ -7,7 +7,7 @@ import java.util.Map;
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.TextImageButton;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.graphics.DoaGraphicsContext;
@@ -22,8 +22,8 @@ public class RulesMenu extends DoaUIPanel {
 
 	private Map<BufferedImage, Boolean> pages = new HashMap<>();
 
-	TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.016f, Main.WINDOW_HEIGHT * 0.902f), UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y,
-	        DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE), DoaSprites.get(UIInit.BUTTON_HOVER_SPRITE), "BACK", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR).instantiate();
+	TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.016f, Main.WINDOW_HEIGHT * 0.902f), UIInit.UIConstants.x, UIInit.UIConstants.y,
+	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
 
 	public RulesMenu() {
 		super(0f, -Main.WINDOW_HEIGHT, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);

@@ -48,8 +48,8 @@ public class RandomPlacementButton extends DoaUIImageButton {
 		}
 		DoaVector bounds = new DoaVector(randomPlacementBG.getWidth() * 0.9f, randomPlacementBG.getHeight());
 		String ss = Translator.getInstance().getTranslatedString(s).toUpperCase();
-		g.setFont(UIInit.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(1), bounds, ss)));
-		g.setColor(UIInit.FONT_COLOR);
+		g.setFont(UIConstants.UI_FONT.deriveFont(Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT.deriveFont(1), bounds, ss)));
+		g.setColor(UIConstants.FONT_COLOR);
 		FontMetrics fm = g.getFontMetrics();
 		g.drawString(ss, textX + (randomPlacementBG.getWidth() * 0.9f - fm.stringWidth(ss)) / 2, textY + fm.getHeight());
 	}

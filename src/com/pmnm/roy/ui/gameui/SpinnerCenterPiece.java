@@ -9,7 +9,7 @@ import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.toolkit.Utils;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.ui.UIConstants;
 
 public class SpinnerCenterPiece extends DoaImageButton {
 
@@ -39,7 +39,7 @@ public class SpinnerCenterPiece extends DoaImageButton {
 	@Override
 	public void render(DoaGraphicsContext g) {
 		super.render(g);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, new DoaVectorF(width * 0.6f, height * 0.6f), text)));
+		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT, new DoaVectorF(width * 0.6f, height * 0.6f), text)));
 		g.setColor(textColor);
 		if (hover) {
 			g.setColor(hoverTextColor);
