@@ -1,58 +1,143 @@
 package com.pmnm.roy.ui.menu;
 
 import java.awt.Font;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.panel.DoaPanel;
-import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
-import com.pmnm.roy.ui.TextImageButton;
-import com.pmnm.roy.ui.UIInit;
+import com.pmnm.roy.IRoyContainer;
+import com.pmnm.roy.IRoyElement;
+import com.pmnm.roy.RoyMiniButton;
+import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
 
-public final class ExitPopup extends DoaPanel {
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.maths.DoaVector;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.DoaScene;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import lombok.Getter;
+import lombok.NonNull;
 
-	private static final long serialVersionUID = 3563748749529849739L;
+@SuppressWarnings("serial")
+public final class ExitPopup extends DoaObject implements IRoyContainer {
 
-	private DoaVectorF bounds = new DoaVectorF(Main.WINDOW_WIDTH * 0.300f, Main.WINDOW_HEIGHT * 0.036f);
+	@Getter
+	private boolean isVisible;
 
+	private ExitFadeToBlack ef;
+	private List<IRoyElement> elements;
+	
 	private String areYouSureText;
+	private DoaVector textDimensions = new DoaVector(576, 40);
 
 	public ExitPopup() {
-		super(Main.WINDOW_WIDTH * 0.314f, Main.WINDOW_HEIGHT * 0.388f, (int) (Main.WINDOW_WIDTH * 0.371f), (int) (Main.WINDOW_HEIGHT * 0.222f));
-		yesButton.addAction(() -> UIInit.ef.show());
-		noButton.addAction(this::hide);
+		transform.position = new DoaVector(600, 420);
+		
+		elements = new ArrayList<>();
+		
+		RoyMiniButton yesButton = RoyMiniButton.builder()
+			.text("YES")
+			.action(() -> {
+				setVisible(false);
+				ef.setVisible(true);
+			})
+			.build();
+		yesButton.setPosition(new DoaVector(666, 560));
+		addElement(yesButton);
+		
+		RoyMiniButton noButton = RoyMiniButton.builder()
+			.text("NO")
+			.action(() -> setVisible(false))
+			.build();
+		noButton.setPosition(new DoaVector(1066, 560));
+		addElement(noButton);
+		
+		ef = new ExitFadeToBlack();
+		addElement(ef);
+		
 		setzOrder(ZOrders.EXIT_MENU_Z);
-		add(yesButton);
-		add(noButton);
-		hide();
-	}
 
+		addComponent(new Renderer());
+		setVisible(false);
+	}
+	
+	public class Renderer extends DoaRenderer {
+		
+		@Override
+		public void render() {
+			if (!isVisible) { return; }
+			
+			DoaGraphicsFunctions.drawImage(UIConstants.getExitPopupBackground(), 0, 0, 712, 240);
+			
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.BOLD, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, areYouSureText)));
+			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
+			
+			DoaGraphicsFunctions.drawString(
+				areYouSureText, 
+				72 + (textDimensions.x - DoaGraphicsFunctions.getFontMetrics().stringWidth(areYouSureText)) / 2f,
+				100
+			);
+		}
+	}
+	
 	@Override
-	public void show() {
-		super.show();
+	public void onAddToScene(DoaScene scene) {
+		super.onAddToScene(scene);
+		for (IRoyElement e : elements) {
+			if (e instanceof DoaObject) {
+				scene.add((DoaObject) e);
+			}
+		}
+	}
+	
+	@Override
+	public void onRemoveFromScene(DoaScene scene) {
+		super.onRemoveFromScene(scene);
+		for (IRoyElement e : elements) {
+			if (e instanceof DoaObject) {
+				scene.remove((DoaObject) e);
+			}
+		}
+	}
+	
+	@Override
+	public void setzOrder(int zOrder) {
+		super.setzOrder(zOrder);
+		for (IRoyElement e : elements) {
+			if(e instanceof DoaObject) {
+				((DoaObject)e).setzOrder(zOrder + 1);
+			}
+		}
+	}
+	
+	@Override
+	public void setVisible(boolean value) {
 		areYouSureText = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT").toUpperCase();
+		isVisible = value;
+		for (IRoyElement e : elements) {
+			e.setVisible(value);
+		}
+		ef.setVisible(false); /* ef should never be affected by this call, otherwise the game will close on its own */
+	}
+	
+	@Override
+	public void setPosition(DoaVector position) {
+		transform.position.x = position.x;
+		transform.position.y = position.y;
 	}
 
 	@Override
-	public void tick() {}
+	public Rectangle getContentArea() { return null; }
 
 	@Override
-	public void render(DoaGraphicsContext g) {
-		g.drawImage(DoaSprites.get("ExitPopupBackground"), position.x, position.y, width, height);
-		g.setFont(UIInit.UI_FONT.deriveFont(Font.BOLD, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT.deriveFont(Font.BOLD, 1), bounds, areYouSureText)));
-		g.setColor(UIInit.FONT_COLOR);
-		g.drawString(areYouSureText, Main.WINDOW_WIDTH * 0.350f + (bounds.x - g.getFontMetrics().stringWidth(areYouSureText)) / 2d, Main.WINDOW_WIDTH * 0.262f);
-	}
+	public Iterable<IRoyElement> getElements() { return elements; }
 
-	private TextImageButton yesButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.347f, Main.WINDOW_HEIGHT * 0.519f), (int) (Main.WINDOW_WIDTH * 0.096f),
-	        (int) (Main.WINDOW_HEIGHT * 0.055f), DoaSprites.get("MiniButtonIdle"), DoaSprites.get("MiniButtonHover"), "YES", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true)
-	        .instantiate();
-	private TextImageButton noButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.555f, Main.WINDOW_HEIGHT * 0.519f), (int) (Main.WINDOW_WIDTH * 0.096f),
-	        (int) (Main.WINDOW_HEIGHT * 0.055f), DoaSprites.get("MiniButtonIdle"), DoaSprites.get("MiniButtonHover"), "NO", UIInit.FONT_COLOR, UIInit.HOVER_FONT_COLOR, true)
-	        .instantiate();
+	@Override
+	public void addElement(@NonNull IRoyElement element) { elements.add(element); }
+
+	@Override
+	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
 }

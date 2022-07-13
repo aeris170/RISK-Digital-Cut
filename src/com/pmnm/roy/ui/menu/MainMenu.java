@@ -35,12 +35,14 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 	private boolean isVisible;
 
 	private ExitPopup ep;
-	//private ExitFadeToBlack ef;
 
 	private List<IRoyElement> elements;
 
 	public MainMenu() {
 		elements = new ArrayList<>();
+
+		ep = new ExitPopup();
+		elements.add(ep);
 		
 		RoyButton exitButton = RoyButton
 			.builder()
@@ -89,6 +91,8 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 
 		@Override
 		public void render() {
+			if (!isVisible) { return; }
+			
 			DoaAnimation riskLogoAnim = DoaAnimations.getAnimation("RiskLogoAnim");
 			DoaGraphicsFunctions.drawAnimation(
 				riskLogoAnim,
@@ -116,6 +120,16 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 		for (IRoyElement e : elements) {
 			if (e instanceof DoaObject) {
 				scene.remove((DoaObject) e);
+			}
+		}
+	}
+	
+	@Override
+	public void setzOrder(int zOrder) {
+		super.setzOrder(zOrder);
+		for (IRoyElement e : elements) {
+			if(e instanceof DoaObject) {
+				((DoaObject)e).setzOrder(zOrder + 1);
 			}
 		}
 	}

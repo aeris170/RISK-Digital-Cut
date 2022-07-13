@@ -12,7 +12,6 @@ import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
 
 import doa.engine.core.DoaGraphicsFunctions;
-import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaMouse;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
@@ -119,19 +118,13 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 		public void render() {
 			if (!isVisible) return;
 			if (font == null) {
-				int[] size = DoaGraphicsFunctions.warp(image.getWidth()* .75f, image.getHeight() * .75f);
+				int[] size = DoaGraphicsFunctions.warp(image.getWidth()* .70f, image.getHeight() * .70f);
 				contentSize = new DoaVector(size[0], size[1]);
 				font = UIConstants.getFont().deriveFont(
 					Font.PLAIN,
-					72//Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(image.getWidth(), image.getHeight()), text)
+					Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), contentSize, text)
 				);
 			}
-			int[] size = DoaGraphicsFunctions.warp(image.getWidth()* .70f, image.getHeight() * .70f);
-			contentSize = new DoaVector(size[0], size[1]);
-			font = UIConstants.getFont().deriveFont(
-				Font.PLAIN,
-				Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), contentSize, text)
-			);
 			
 			DoaGraphicsFunctions.pushAll();
 			
@@ -148,5 +141,4 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			DoaGraphicsFunctions.popAll();
 		}		
 	}
-
 }

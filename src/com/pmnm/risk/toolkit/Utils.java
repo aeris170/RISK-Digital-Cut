@@ -105,10 +105,10 @@ public final class Utils {
 	}
 
 	public static int findMaxFontSizeToFitInArea(Font f, DoaVector r, String s) {
-		int fontSize = 0;
+		int fontSize = 1;
 		FontMetrics fm;
 		do {
-			f = new Font(f.getFontName(), Font.PLAIN, fontSize);
+			f = f.deriveFont(Font.PLAIN, fontSize);
 			fontSize++;
 			fm = DoaGraphicsFunctions.getFontMetrics(f);
 		} while (fm.stringWidth(s) < r.x && fm.getHeight() < r.y);

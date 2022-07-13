@@ -1,11 +1,15 @@
 package com.pmnm.roy;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Locale;
 
+import com.google.errorprone.annotations.ForOverride;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
@@ -13,9 +17,11 @@ import com.pmnm.roy.ui.UIConstants;
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaMouse;
 import doa.engine.maths.DoaVector;
+import doa.engine.scene.DoaComponent;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
+import doa.engine.utils.DoaUtils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -52,19 +58,18 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 	private transient IRoyAction action = null;
 	
 	private transient BufferedImage currentImage;
+	
+	private DoaVector contentSize;
+	private DoaVector textPosition;
 
 	@Builder
-	RoyMiniButton(boolean isVisible, @NonNull String text, @NonNull IRoyAction action) {
-		this.isVisible = isVisible;
-		this.text = Translator.getInstance().getTranslatedString(text);
+	RoyMiniButton(@NonNull String text, @NonNull IRoyAction action) {
+		this.text = Translator.getInstance().getTranslatedString(text).toUpperCase(Locale.getDefault());
 		this.action = action;
 		this.image = UIConstants.getMiniButtonIdleSprite();
 		this.hoverImage = UIConstants.getMiniButtonHoverSprite();
 		this.pressImage = UIConstants.getMiniButtonPressedSprite();
-		this.font = UIConstants.getFont().deriveFont(
-			Font.PLAIN,
-			Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(image.getWidth(), image.getHeight()), this.text)
-		);
+
 		this.textColor = UIConstants.getTextColor();
 		this.hoverTextColor = UIConstants.getHoverTextColor();
 		
@@ -82,11 +87,13 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 
 	@Override
 	public Rectangle getContentArea() {
+		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
+		int[] size = DoaGraphicsFunctions.warp(image.getWidth(), image.getHeight());
 		return new Rectangle(
-			(int) transform.position.x,
-			(int) transform.position.y,
-			image.getWidth(),
-			image.getHeight()
+			pos[0],
+			pos[1],
+			size[0],
+			size[1]
 		);
 	}
 	
@@ -116,6 +123,22 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 		@Override
 		public void render() {
 			if (!isVisible) return;
+			if (font == null) {
+				contentSize = new DoaVector(image.getWidth() * 0.70f, image.getHeight() * 0.70f);
+				font = UIConstants.getFont().deriveFont(
+					Font.PLAIN,
+					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), contentSize, text), 0)[0]
+				);
+							
+				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
+				int stringWidth = fm.stringWidth(text);
+				int stringHeight = fm.getHeight();
+				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, stringHeight);
+				stringWidth = strSize[0];
+				stringHeight = strSize[1];
+				textPosition = new DoaVector(image.getWidth() / 2f - stringWidth / 2f, image.getHeight() / 2f + stringHeight / 4f);
+			}		
+			
 			DoaGraphicsFunctions.pushAll();
 			
 			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, image.getWidth(), image.getHeight());
@@ -126,9 +149,13 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 			}
 			DoaGraphicsFunctions.setFont(font);
 			
-			DoaGraphicsFunctions.drawString(text, 20, image.getHeight() - 17);
+			DoaGraphicsFunctions.drawString(
+				text,
+				textPosition.x,
+				textPosition.y
+			);
 			
 			DoaGraphicsFunctions.popAll();
-		}		
+		}
 	}
 }

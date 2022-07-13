@@ -36,6 +36,7 @@ public final class UIConstants {
 	public static final String TOP_RING = "MainMenuTopRing";
 	public static final String BOTTOM_RING = "MainMenuBottomRing";
 	public static final String BG = "BG";
+	public static final String EXIT_POPUP_BG = "ExitPopupBackground";
 	public static final String BUTTON_IDLE = "ButtonIdle";
 	public static final String BUTTON_HOVER = "ButtonHover";
 	public static final String BUTTON_PRESSED = "ButtonPressed";
@@ -68,6 +69,10 @@ public final class UIConstants {
 	private static BufferedImage bottomRing;
 	@NonNull
 	private static BufferedImage[] backgrounds = new BufferedImage[6];
+	
+	@Getter
+	@NonNull
+	private static BufferedImage exitPopupBackground;
 	
 	@Getter
 	@NonNull
@@ -112,6 +117,7 @@ public final class UIConstants {
 		for (int i = 0; i < backgrounds.length; i++) {
 			backgrounds[i] = DoaSprites.getSprite(BG.concat(Integer.toString(i)));
 		}
+		exitPopupBackground = DoaSprites.getSprite(EXIT_POPUP_BG);
 		
 		buttonIdleSprite = DoaSprites.getSprite(BUTTON_IDLE);
 		buttonHoverSprite = DoaSprites.getSprite(BUTTON_HOVER);
