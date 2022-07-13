@@ -42,7 +42,7 @@ public final class MapConfig implements Serializable {
 			}
 		}
 
-		CONFIGS = ImmutableList.copyOf(CONFIGS);
+		CONFIGS = ImmutableList.copyOf(configs);
 		INITIALIZED = true;
 	}
 	
