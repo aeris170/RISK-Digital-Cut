@@ -1,6 +1,7 @@
 package com.pmnm.roy.ui.menu;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer {
 	
 	private String areYouSureText;
 	private DoaVector textDimensions = new DoaVector(576, 40);
+	private int stringWidth;
 
 	public ExitPopup() {
 		transform.position = new DoaVector(600, 420);
@@ -66,18 +68,31 @@ public final class ExitPopup extends DoaObject implements IRoyContainer {
 	
 	public class Renderer extends DoaRenderer {
 		
+		private Font font;
+		
 		@Override
 		public void render() {
 			if (!isVisible) { return; }
+			if (font == null) {
+				font = UIConstants.getFont().deriveFont(
+					Font.BOLD,
+					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, areYouSureText), 0)[0]
+				);
+				
+				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
+				stringWidth = fm.stringWidth(areYouSureText);
+				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
+				stringWidth = strSize[0];
+			}
 			
 			DoaGraphicsFunctions.drawImage(UIConstants.getExitPopupBackground(), 0, 0, 712, 240);
 			
-			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.BOLD, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, areYouSureText)));
+			DoaGraphicsFunctions.setFont(font);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 			
 			DoaGraphicsFunctions.drawString(
 				areYouSureText, 
-				72 + (textDimensions.x - DoaGraphicsFunctions.getFontMetrics().stringWidth(areYouSureText)) / 2f,
+				72 + (textDimensions.x - stringWidth) / 2f,
 				100
 			);
 		}

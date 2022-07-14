@@ -1,108 +1,130 @@
 package com.pmnm.roy.ui.menu;
 
-import java.util.prefs.Preferences;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.globals.localization.Language;
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.LanguageButton;
-import com.pmnm.roy.ui.TextImageButton;
+import com.pmnm.risk.globals.localization.Translator.Language;
+import com.pmnm.roy.IRoyContainer;
+import com.pmnm.roy.IRoyElement;
+import com.pmnm.roy.RoyButton;
+import com.pmnm.roy.RoyLanguageButton;
+import com.pmnm.roy.RoyLanguageButtonGroup;
 import com.pmnm.roy.ui.UIConstants;
 
-import doa.engine.graphics.DoaGraphicsContext;
-import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
-import doa.engine.ui.panel.DoaUIPanel;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.DoaScene;
+import lombok.Getter;
+import lombok.NonNull;
 
-public class SettingsMenu extends DoaUIPanel {
+@SuppressWarnings("serial")
+public class SettingsMenu extends DoaObject implements IRoyContainer {
+	
+	@Getter
+	private boolean isVisible = true;
+	private transient List<IRoyElement> elements = new ArrayList<>();
 
-	private static final long serialVersionUID = -7299297354577954327L;
+	private RoyLanguageButtonGroup group;
+	private RoyLanguageButton englishButton;
+	private RoyLanguageButton deutchButton;
+	private RoyLanguageButton espanolButton;
+	private RoyLanguageButton franceButton;
+	private RoyLanguageButton italianButton;
+	private RoyLanguageButton russianButton;
+	private RoyLanguageButton turkishButton;
 
-	private static final DoaVector LANGUAGE_BUTTON_SIZE = new DoaVector(Main.WINDOW_WIDTH * 0.072f, Main.WINDOW_HEIGHT * 0.129f);
-
-	LanguageButton englishButton = Builders.LBB
-	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.052f, Main.WINDOW_HEIGHT * 0.601f), LANGUAGE_BUTTON_SIZE.x, LANGUAGE_BUTTON_SIZE.y, DoaSprites.get("English")).instantiate();
-	LanguageButton deutchButton = Builders.LBB
-	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.125f, Main.WINDOW_HEIGHT * 0.694f), LANGUAGE_BUTTON_SIZE.x, LANGUAGE_BUTTON_SIZE.y, DoaSprites.get("Deutch")).instantiate();
-	LanguageButton espanolButton = Builders.LBB
-	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.197f, Main.WINDOW_HEIGHT * 0.601f), LANGUAGE_BUTTON_SIZE.x, LANGUAGE_BUTTON_SIZE.y, DoaSprites.get("Espanol")).instantiate();
-	LanguageButton franceButton = Builders.LBB
-	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.270f, Main.WINDOW_HEIGHT * 0.694f), LANGUAGE_BUTTON_SIZE.x, LANGUAGE_BUTTON_SIZE.y, DoaSprites.get("France")).instantiate();
-	LanguageButton italianButton = Builders.LBB
-	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.343f, Main.WINDOW_HEIGHT * 0.601f), LANGUAGE_BUTTON_SIZE.x, LANGUAGE_BUTTON_SIZE.y, DoaSprites.get("Italian")).instantiate();
-	LanguageButton russianButton = Builders.LBB
-	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.416f, Main.WINDOW_HEIGHT * 0.694f), LANGUAGE_BUTTON_SIZE.x, LANGUAGE_BUTTON_SIZE.y, DoaSprites.get("Russian")).instantiate();
-	LanguageButton turkishButton = Builders.LBB
-	        .args(new DoaVector(Main.WINDOW_WIDTH * 0.489f, Main.WINDOW_HEIGHT * 0.601f), LANGUAGE_BUTTON_SIZE.x, LANGUAGE_BUTTON_SIZE.y, DoaSprites.get("Turkish")).instantiate();
-
-	LanguageButton selectedButton;
-
-	TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.651f, Main.WINDOW_HEIGHT * 0.694f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
+	private RoyButton backButton;
 
 	public SettingsMenu() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		group = new RoyLanguageButtonGroup();
+		englishButton = group.createButton(Language.EN);
+		deutchButton = group.createButton(Language.DE);
+		espanolButton = group.createButton(Language.ES);
+		franceButton = group.createButton(Language.FR);
+		italianButton = group.createButton(Language.IT);
+		russianButton = group.createButton(Language.RU);
+		turkishButton = group.createButton(Language.TR);
+		
+		englishButton.setPosition(new DoaVector(100, 650));
+		deutchButton.setPosition(new DoaVector(240, 700));
+		espanolButton.setPosition(new DoaVector(380, 650));
+		franceButton.setPosition(new DoaVector(520, 700));
+		italianButton.setPosition(new DoaVector(660, 650));
+		russianButton.setPosition(new DoaVector(800, 700));
+		turkishButton.setPosition(new DoaVector(940, 650));
+		
 		switch (Translator.getInstance().getCurrentLanguage()) {
-			case EN:
-				selectedButton = englishButton;
-				break;
-			case DE:
-				selectedButton = deutchButton;
-				break;
-			case IT:
-				selectedButton = italianButton;
-				break;
-			case RU:
-				selectedButton = russianButton;
-				break;
-			case TR:
-				selectedButton = turkishButton;
-				break;
-			case FR:
-				selectedButton = franceButton;
-				break;
-			case ES:
-				selectedButton = espanolButton;
-				break;
-			default:
-				selectedButton = englishButton;
-				break;
+			case EN: group.setSelected(englishButton); break;
+			case DE: group.setSelected(deutchButton); break;
+			case ES: group.setSelected(espanolButton); break;
+			case FR: group.setSelected(franceButton); break;
+			case IT: group.setSelected(italianButton); break;
+			case RU: group.setSelected(russianButton); break;
+			case TR: group.setSelected(turkishButton); break;	
 		}
-		selectedButton.select();
-		englishButton.addAction(() -> selectButton(englishButton, Language.EN));
-		deutchButton.addAction(() -> selectButton(deutchButton, Language.DE));
-		espanolButton.addAction(() -> selectButton(espanolButton, Language.ES));
-		franceButton.addAction(() -> selectButton(franceButton, Language.FR));
-		italianButton.addAction(() -> selectButton(italianButton, Language.IT));
-		russianButton.addAction(() -> selectButton(russianButton, Language.RU));
-		turkishButton.addAction(() -> selectButton(turkishButton, Language.TR));
-		backButton.addAction(() -> {
-			hide();
-			UIConstants.mm.show();
-		});
-		add(englishButton);
-		add(deutchButton);
-		add(espanolButton);
-		add(franceButton);
-		add(italianButton);
-		add(russianButton);
-		add(turkishButton);
-		add(backButton);
-		hide();
+		elements.add(group);
+		
+		backButton = RoyButton.builder()
+			.text("BACK")
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getMainMenu().setVisible(true);
+			})
+			.build();
+		backButton.setPosition(new DoaVector(1250, 750));
+		elements.add(backButton);
 	}
 
 	@Override
-	public void tick() {}
+	public void onAddToScene(DoaScene scene) {
+		super.onAddToScene(scene);
+		for (IRoyElement e : elements) {
+			if (e instanceof DoaObject) {
+				scene.add((DoaObject) e);
+			}
+		}
+	}
+	
+	@Override
+	public void onRemoveFromScene(DoaScene scene) {
+		super.onRemoveFromScene(scene);
+		for (IRoyElement e : elements) {
+			if (e instanceof DoaObject) {
+				scene.remove((DoaObject) e);
+			}
+		}
+	}
+	
+	@Override
+	public void setzOrder(int zOrder) {
+		super.setzOrder(zOrder);
+		for (IRoyElement e : elements) {
+			if(e instanceof DoaObject) {
+				((DoaObject)e).setzOrder(zOrder + 1);
+			}
+		}
+	}
 
 	@Override
-	public void render(DoaGraphicsContext g) {}
-
-	private void selectButton(LanguageButton b, Language l) {
-		b.select();
-		selectedButton.deselect();
-		selectedButton = b;
-		Translator.getInstance().setCurrentLanguage(l);
-		Preferences.userNodeForPackage(getClass()).putInt("language", Translator.getInstance().getCurrentLanguageIndex());
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+		elements.forEach(e -> e.setVisible(isVisible));
 	}
+
+	@Override
+	public void setPosition(DoaVector position) { throw new UnsupportedOperationException("not implemented"); }
+
+	@Override
+	public Rectangle getContentArea() { return new Rectangle(0, 0, 1920, 1080); }
+
+	@Override
+	public Iterable<IRoyElement> getElements() { return elements; }
+
+	@Override
+	public void addElement(@NonNull IRoyElement element) { elements.add(element); }
+
+	@Override
+	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
 }

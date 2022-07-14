@@ -1,78 +1,145 @@
 package com.pmnm.roy.ui.menu;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.TextImageButton;
+import com.pmnm.roy.IRoyContainer;
+import com.pmnm.roy.IRoyElement;
+import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
 
-import doa.engine.graphics.DoaGraphicsContext;
-import doa.engine.graphics.DoaSprites;
+import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaKeyboard;
 import doa.engine.maths.DoaVector;
-import doa.engine.ui.panel.DoaUIPanel;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.DoaScene;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
+import lombok.Getter;
+import lombok.NonNull;
 
-public class RulesMenu extends DoaUIPanel {
+@SuppressWarnings("serial")
+public class RulesMenu extends DoaObject implements IRoyContainer {
+	
+	@Getter
+	private boolean isVisible;
+	private transient List<IRoyElement> elements = new ArrayList<>();
 
-	private static final long serialVersionUID = 7874225793360662873L;
-
-	private Map<BufferedImage, Boolean> pages = new HashMap<>();
-
-	TextImageButton backButton = Builders.TIBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.016f, Main.WINDOW_HEIGHT * 0.902f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
-
+	private int index = 0;
+	private transient BufferedImage[] pages;
+	private RoyButton backButton; 
+	
 	public RulesMenu() {
-		super(0f, -Main.WINDOW_HEIGHT, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-		pages.put(DoaSprites.get("pt0"), true);
-		pages.put(DoaSprites.get("pt1"), false);
-		pages.put(DoaSprites.get("pt2"), false);
-		pages.put(DoaSprites.get("pt3"), false);
-		pages.put(DoaSprites.get("pt4"), false);
-		pages.put(DoaSprites.get("pt5"), false);
-		backButton.addAction(() -> {
-			hide();
-			pages.replaceAll((k, v) -> false);
-		});
-		add(backButton);
+		pages = UIConstants.getRulesImages();
+		
+		backButton = RoyButton.builder()
+			.text("BACK")
+			.action(() -> {
+				index = 0;
+				setVisible(false);
+				UIConstants.getBackground().setVisible(true);
+				UIConstants.getMainMenu().setVisible(true);
+			})
+			.build();
+		backButton.setPosition(new DoaVector(30, 975));
+		elements.add(backButton);
+
 		setzOrder(ZOrders.RULES_Z);
-		hide();
+		addComponent(new Script());
+		addComponent(new Renderer());
+	}
+
+	public class Script extends DoaScript {
+
+		@Override
+		public void tick() {
+			if (!isVisible) { return; }
+			
+			if (DoaKeyboard.ONE || DoaKeyboard.NUM_1) {
+				index = 0;
+			}
+			if (DoaKeyboard.TWO || DoaKeyboard.NUM_2) {
+				index = 1;
+			}
+			if (DoaKeyboard.THREE || DoaKeyboard.NUM_3) {
+				index = 2;
+			}
+			if (DoaKeyboard.FOUR || DoaKeyboard.NUM_4) {
+				index = 3;
+			}
+			if (DoaKeyboard.FIVE || DoaKeyboard.NUM_5) {
+				index = 4;
+			}
+			if (DoaKeyboard.SIX || DoaKeyboard.NUM_6) {
+				index = 5;
+			}
+		}
+	}
+
+	public class Renderer extends DoaRenderer {
+		
+		@Override
+		public void render() {
+			if (!isVisible) { return; }
+			
+			DoaGraphicsFunctions.drawImage(pages[index], 0, 0, 1920, 1080);
+		}
+	}
+	
+	@Override
+	public void onAddToScene(DoaScene scene) {
+		super.onAddToScene(scene);
+		for (IRoyElement e : elements) {
+			if (e instanceof DoaObject) {
+				scene.add((DoaObject) e);
+			}
+		}
+	}
+	
+	@Override
+	public void onRemoveFromScene(DoaScene scene) {
+		super.onRemoveFromScene(scene);
+		for (IRoyElement e : elements) {
+			if (e instanceof DoaObject) {
+				scene.remove((DoaObject) e);
+			}
+		}
+	}
+	
+	@Override
+	public void setzOrder(int zOrder) {
+		super.setzOrder(zOrder);
+		for (IRoyElement e : elements) {
+			if(e instanceof DoaObject) {
+				((DoaObject)e).setzOrder(zOrder + 1);
+			}
+		}
 	}
 
 	@Override
-	public void tick() {
-		if (DoaKeyboard.ONE || DoaKeyboard.NUM_1) {
-			pages.replaceAll((k, v) -> false);
-			pages.replace(DoaSprites.get("pt0"), true);
-		}
-		if (DoaKeyboard.TWO || DoaKeyboard.NUM_2) {
-			pages.replaceAll((k, v) -> false);
-			pages.replace(DoaSprites.get("pt1"), true);
-		}
-		if (DoaKeyboard.THREE || DoaKeyboard.NUM_3) {
-			pages.replaceAll((k, v) -> false);
-			pages.replace(DoaSprites.get("pt2"), true);
-		}
-		if (DoaKeyboard.FOUR || DoaKeyboard.NUM_4) {
-			pages.replaceAll((k, v) -> false);
-			pages.replace(DoaSprites.get("pt3"), true);
-		}
-		if (DoaKeyboard.FIVE || DoaKeyboard.NUM_5) {
-			pages.replaceAll((k, v) -> false);
-			pages.replace(DoaSprites.get("pt4"), true);
-		}
-		if (DoaKeyboard.SIX || DoaKeyboard.NUM_6) {
-			pages.replaceAll((k, v) -> false);
-			pages.replace(DoaSprites.get("pt5"), true);
-		}
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+		elements.forEach(e -> e.setVisible(isVisible));
 	}
 
 	@Override
-	public void render(DoaGraphicsContext g) {
-		g.drawImage(pages.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).findFirst().orElse(DoaSprites.get("pt0")), 0f, 0f, Main.WINDOW_WIDTH,
-		        Main.WINDOW_HEIGHT);
-	}
+	public void setPosition(DoaVector position) { throw new UnsupportedOperationException("not implemented"); }
+
+	@Override
+	public Rectangle getContentArea() { return new Rectangle(0, 0, 1920, 1080); }
+
+	@Override
+	public Iterable<IRoyElement> getElements() { return elements; }
+
+	@Override
+	public void addElement(@NonNull IRoyElement element) { elements.add(element); }
+
+	@Override
+	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
+
+
 }

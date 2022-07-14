@@ -47,7 +47,7 @@ public final class ProvinceSymbol extends DoaObject {
 			float tx = province.getBounds().centerX;
 			float ty = province.getBounds().centerY;
 			
-			DoaGraphicsFunctions.setFont(UIConstants.UI_FONT.deriveFont(Font.BOLD, 18f));
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.BOLD, 18f));
 			FontMetrics fm = DoaGraphicsFunctions.getFontMetrics();
 			DoaGraphicsFunctions.setColor(Color.BLACK);
 			BufferedImage ownerLogo = DoaSprites.getSprite("p" + occupier.getId() + "Pawn");

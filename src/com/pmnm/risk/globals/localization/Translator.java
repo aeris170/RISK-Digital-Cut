@@ -45,7 +45,10 @@ public class Translator {
 	public Language getCurrentLanguage() { return currentLanguage; }
 	public int getCurrentLanguageIndex() { return Arrays.asList(Language.values()).indexOf(currentLanguage); }
 
-	public void setCurrentLanguage(Language newLanguage) { currentLanguage = newLanguage; }
+	public void setCurrentLanguage(Language newLanguage) {
+		currentLanguage = newLanguage;
+		Preferences.userNodeForPackage(getClass()).putInt("language", getCurrentLanguageIndex());
+	}
 	public void setCurrentLanguageIndex(int newLanguage) { currentLanguage = Language.values()[newLanguage]; }
 
 	public String getTranslatedString(String key) {

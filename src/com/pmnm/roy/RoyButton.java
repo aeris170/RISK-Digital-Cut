@@ -27,7 +27,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 
 	@Getter
 	@Setter
-	private boolean isVisible = true;
+	private boolean isVisible;
 	
 	@NonNull
 	private String text = "";

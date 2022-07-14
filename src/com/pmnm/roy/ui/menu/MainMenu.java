@@ -22,16 +22,16 @@ import com.pmnm.roy.IRoyElement;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.ui.UIConstants;
 
+@SuppressWarnings("serial")
 public class MainMenu extends DoaObject implements IRoyContainer {
-
-	private static final long serialVersionUID = -7825162499964842632L;
 
 	private static final DoaVector PLAY_OFFLINE_LOCATION 	= new DoaVector(1377f, 511f);
 	private static final DoaVector PLAY_ONLINE_LOCATION 	= new DoaVector(1377f, 584f);
-	private static final DoaVector SETTING_LOCATION 		= new DoaVector(1377f, 657f);
+	private static final DoaVector SETTINGS_LOCATION 		= new DoaVector(1377f, 657f);
 	private static final DoaVector RULES_LOCATION 			= new DoaVector(1377f, 730f);
 	private static final DoaVector EXIT_LOCATION 			= new DoaVector(1377f, 803f);
 	
+	@Getter
 	private boolean isVisible;
 
 	private ExitPopup ep;
@@ -40,7 +40,33 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 
 	public MainMenu() {
 		elements = new ArrayList<>();
-
+		
+		RoyButton settingsButton = RoyButton
+			.builder()
+			.text("SETTINGS")
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getSettingsMenu().setVisible(true);
+			})
+			.build();
+		settingsButton.setPosition(SETTINGS_LOCATION);
+		elements.add(settingsButton);
+			
+		/* Rules Button */
+		RoyButton rulesButton = RoyButton
+			.builder()
+			.text("RULES")
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getBackground().setVisible(false);
+				UIConstants.getRulesMenu().setVisible(true);
+			})
+			.build();
+		rulesButton.setPosition(RULES_LOCATION);
+		elements.add(rulesButton);
+		/* ------------ */
+		
+		/* Exit Button and related stuff */
 		ep = new ExitPopup();
 		elements.add(ep);
 		
@@ -51,6 +77,7 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 			.build();
 		exitButton.setPosition(EXIT_LOCATION);
 		elements.add(exitButton);
+		/* ----------------------------- */
 			
 		/*
 		TextImageButton playOfflineButton = Builders.TIBB.args(PLAY_OFFLINE_LOCATION, UIInit.BUTTON_SIZE.x, UIInit.BUTTON_SIZE.y, DoaSprites.get(UIInit.BUTTON_IDLE_SPRITE),
@@ -86,8 +113,6 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 	}
 	
 	private final class Renderer extends DoaRenderer {
-		
-		private static final long serialVersionUID = 3801971320354359812L;
 
 		@Override
 		public void render() {
@@ -113,7 +138,7 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onRemoveFromScene(DoaScene scene) {
 		super.onRemoveFromScene(scene);
@@ -135,19 +160,17 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 	}
 
 	@Override
-	public boolean isVisible() { return isVisible; }
-
-	@Override
 	public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
 		elements.forEach(e -> e.setVisible(isVisible));
+		ep.setVisible(false); /* Exit popups should not be affected */
 	}
 
 	@Override
 	public void setPosition(DoaVector position) { throw new UnsupportedOperationException("not implemented"); }
 
 	@Override
-	public Rectangle getContentArea() { throw new UnsupportedOperationException("not implemented"); }
+	public Rectangle getContentArea() { return new Rectangle(0, 0, 1920, 1080); }
 
 	@Override
 	public Iterable<IRoyElement> getElements() { return elements; }

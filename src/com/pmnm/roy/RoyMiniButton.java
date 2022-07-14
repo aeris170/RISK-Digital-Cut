@@ -137,7 +137,7 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 				stringWidth = strSize[0];
 				stringHeight = strSize[1];
 				textPosition = new DoaVector(image.getWidth() / 2f - stringWidth / 2f, image.getHeight() / 2f + stringHeight / 4f);
-			}		
+			}
 			
 			DoaGraphicsFunctions.pushAll();
 			

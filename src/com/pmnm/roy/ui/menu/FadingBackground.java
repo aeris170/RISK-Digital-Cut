@@ -20,6 +20,8 @@ public class FadingBackground extends DoaObject {
 	private static final long serialVersionUID = -873986354085676812L;
 
 	private static final int TIME_BETWEEN_FADES = 10000; // 10 seconds
+	
+	private boolean isVisible = true;
 
 	private float alpha = 1f;
 	private float alphaDelta = 0.01f;
@@ -52,6 +54,8 @@ public class FadingBackground extends DoaObject {
 
 		@Override
 		public void tick() {
+			if (!isVisible) { return; }
+			
 			DoaTasker.guardExecution(() -> {
 				while (alpha >= 0) {
 					DoaTasker.guardExecution(() -> alpha -= alphaDelta, alphaGuard, 10);
@@ -68,6 +72,8 @@ public class FadingBackground extends DoaObject {
 
 		@Override
 		public void render() {
+			if (!isVisible) { return; }
+			
 			int width = Main.WINDOW_WIDTH;
 			int height = Main.WINDOW_HEIGHT;
 				
@@ -93,4 +99,6 @@ public class FadingBackground extends DoaObject {
 			return backgrounds[index % backgrounds.length];
 		}
 	}
+
+	public void setVisible(boolean value) { isVisible = value; }
 }

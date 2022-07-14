@@ -3,9 +3,11 @@ package com.pmnm.roy.ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
+import java.util.EnumMap;
 
 import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
+import com.pmnm.risk.globals.localization.Translator.Language;
 import com.pmnm.roy.ui.gameui.PauseMenu;
 import com.pmnm.roy.ui.menu.ExitFadeToBlack;
 import com.pmnm.roy.ui.menu.ExitPopup;
@@ -44,15 +46,37 @@ public final class UIConstants {
 	public static final String MINI_BUTTON_HOVER = "MiniButtonHover";
 	public static final String MINI_BUTTON_PRESSED = "MiniButtonPressed";
 
+	public static final String RULES_IMAGES = "pt";
+	public static final int RULES_IMAGES_COUNT = 6;
+	
+	public static final String LENS = "Lens";
+	public static final String LENS_HOVER = "LensHover";
+	public static final String LENS_SELECTED = "LensSelect";
+	public static final String EN = "English";
+	public static final String DE = "Deutch";
+	public static final String ES = "Espanol";
+	public static final String FR = "France";
+	public static final String IT = "Italian";
+	public static final String RU = "Russian";
+	public static final String TR = "Turkish";
+
 	public static final int FLEUR_WIDTH = DoaSprites.getSprite(FLEUR_DE_LIS).getWidth() / 6;
 	public static final int FLEUR_HEIGHT = DoaSprites.getSprite(FLEUR_DE_LIS).getHeight() / 6;
 
-	public static FadingBackground fb;
-	public static MainMenu mm;
+	@Getter
+	@NonNull
+	private static FadingBackground background;
+	@Getter
+	@NonNull
+	private static MainMenu mainMenu;
 	public static PlayOfflineMenu pofm;
 	public static PlayOnlineMenu ponm;
-	public static SettingsMenu sm;
-	public static RulesMenu rm;
+	@Getter
+	@NonNull
+	private static SettingsMenu settingsMenu;
+	@Getter
+	@NonNull
+	private static RulesMenu rulesMenu;
 
 	public static NewGameMenu ngm;
 	public static LoadGameMenu lgm;
@@ -100,6 +124,26 @@ public final class UIConstants {
 	
 	@Getter
 	@NonNull
+	private static BufferedImage[] rulesImages;
+	
+	@Getter
+	@NonNull
+	private static BufferedImage lensImage;
+	
+	@Getter
+	@NonNull
+	private static BufferedImage lensHoverImage;
+	
+	@Getter
+	@NonNull
+	private static BufferedImage lensSelectedImage;
+	
+	@Getter
+	@NonNull
+	private static EnumMap<Language, BufferedImage> languageImages = new EnumMap<>(Language.class);
+	
+	@Getter
+	@NonNull
 	private static Font font;
 	
 	@Getter
@@ -126,17 +170,35 @@ public final class UIConstants {
 		miniButtonHoverSprite = DoaSprites.getSprite(MINI_BUTTON_HOVER);
 		miniButtonPressedSprite = DoaSprites.getSprite(MINI_BUTTON_PRESSED);
 		
+		rulesImages = new BufferedImage[RULES_IMAGES_COUNT];
+		for (int i = 0; i < RULES_IMAGES_COUNT; i++) {
+			rulesImages[i] = DoaSprites.getSprite(RULES_IMAGES + i);
+		}
+		
+		lensImage = DoaSprites.getSprite(LENS);
+		lensHoverImage = DoaSprites.getSprite(LENS_HOVER);
+		lensSelectedImage = DoaSprites.getSprite(LENS_SELECTED);
+		
+		languageImages.put(Language.EN, DoaSprites.getSprite(EN));
+		languageImages.put(Language.DE, DoaSprites.getSprite(DE));
+		languageImages.put(Language.ES, DoaSprites.getSprite(ES));
+		languageImages.put(Language.FR, DoaSprites.getSprite(FR));
+		languageImages.put(Language.IT, DoaSprites.getSprite(IT));
+		languageImages.put(Language.RU, DoaSprites.getSprite(RU));
+		languageImages.put(Language.TR, DoaSprites.getSprite(TR));
+		
 		font = DoaFonts.getFont("BookAntiqua");
 		
 		DoaScene menuScene = Scenes.MENU_SCENE;
-		FadingBackground fb = new FadingBackground(fleurDeLis, topRing, bottomRing, backgrounds);
-		MainMenu mm = new MainMenu();
+		background = new FadingBackground(fleurDeLis, topRing, bottomRing, backgrounds);
+		mainMenu = new MainMenu();
+		mainMenu.setVisible(true);
 		//fb = Builders.FBB.scene(menuScene).instantiate();
 		//mm = Builders.MMB.scene(menuScene).instantiate();
 		//pofm = Builders.POFMB.scene(menuScene).instantiate();
 		//ponm = Builders.PONMB.scene(menuScene).instantiate();
-		//sm = Builders.SMB.scene(menuScene).instantiate();
-		//rm = Builders.RMB.scene(menuScene).instantiate();
+		settingsMenu = new SettingsMenu();
+		rulesMenu = new RulesMenu();
 		//ngm = Builders.NGMB.scene(menuScene).instantiate();
 		//lgm = Builders.LGMB.scene(menuScene).instantiate();
 		//hgm = Builders.HGMB.scene(menuScene).instantiate();
@@ -144,8 +206,10 @@ public final class UIConstants {
 		//ep = Builders.EPB.scene(menuScene).instantiate();
 		//ef = Builders.EFTBB.scene(menuScene).instantiate();
 		
-		menuScene.add(fb);
-		menuScene.add(mm);
+		menuScene.add(background);
+		menuScene.add(mainMenu);
+		menuScene.add(settingsMenu);
+		menuScene.add(rulesMenu);
 		DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 	}
 }
