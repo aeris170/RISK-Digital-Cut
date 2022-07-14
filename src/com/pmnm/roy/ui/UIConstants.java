@@ -5,12 +5,9 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.EnumMap;
 
-import com.pmnm.risk.globals.Builders;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.localization.Translator.Language;
 import com.pmnm.roy.ui.gameui.PauseMenu;
-import com.pmnm.roy.ui.menu.ExitFadeToBlack;
-import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.FadingBackground;
 import com.pmnm.roy.ui.menu.HostGameMenu;
 import com.pmnm.roy.ui.menu.JoinGameMenu;
@@ -24,7 +21,6 @@ import com.pmnm.roy.ui.menu.SettingsMenu;
 
 import doa.engine.graphics.DoaFonts;
 import doa.engine.graphics.DoaSprites;
-import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.DoaSceneHandler;
 import lombok.Getter;
