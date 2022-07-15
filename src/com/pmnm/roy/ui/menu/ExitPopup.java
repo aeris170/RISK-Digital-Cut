@@ -5,6 +5,8 @@ import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
@@ -13,6 +15,8 @@ import com.pmnm.roy.IRoyElement;
 import com.pmnm.roy.RoyMiniButton;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
+import com.pmnm.util.Observable;
+import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.maths.DoaVector;
@@ -23,7 +27,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 @SuppressWarnings("serial")
-public final class ExitPopup extends DoaObject implements IRoyContainer {
+public final class ExitPopup extends DoaObject implements IRoyContainer, Observer {
 
 	@Getter
 	private boolean isVisible;
@@ -41,7 +45,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer {
 		elements = new ArrayList<>();
 		
 		RoyMiniButton yesButton = RoyMiniButton.builder()
-			.text("YES")
+			.textKey("YES")
 			.action(() -> {
 				setVisible(false);
 				ef.setVisible(true);
@@ -51,7 +55,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer {
 		addElement(yesButton);
 		
 		RoyMiniButton noButton = RoyMiniButton.builder()
-			.text("NO")
+			.textKey("NO")
 			.action(() -> setVisible(false))
 			.build();
 		noButton.setPosition(new DoaVector(1066, 560));
@@ -64,6 +68,9 @@ public final class ExitPopup extends DoaObject implements IRoyContainer {
 
 		addComponent(new Renderer());
 		setVisible(false);
+
+		areYouSureText = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT");
+		Translator.getInstance().registerObserver(this);
 	}
 	
 	public class Renderer extends DoaRenderer {
@@ -130,7 +137,6 @@ public final class ExitPopup extends DoaObject implements IRoyContainer {
 	
 	@Override
 	public void setVisible(boolean value) {
-		areYouSureText = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT").toUpperCase();
 		isVisible = value;
 		for (IRoyElement e : elements) {
 			e.setVisible(value);
@@ -155,4 +161,11 @@ public final class ExitPopup extends DoaObject implements IRoyContainer {
 
 	@Override
 	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
+	
+	@Override
+	public void onNotify(Observable b) {
+		areYouSureText = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT");
+		getComponentByType(Renderer.class).get().font = null;
+		/* make font null so on next frame it will be calculated again with appropriate size */
+	}
 }

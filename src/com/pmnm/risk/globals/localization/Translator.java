@@ -2,9 +2,12 @@ package com.pmnm.risk.globals.localization;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
@@ -13,11 +16,25 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.util.Observable;
+import com.pmnm.util.Observer;
 
-public class Translator {
+import lombok.Getter;
 
-	public enum Language { EN, DE, IT, RU, TR, FR, ES; }
+public class Translator implements Observable {
+
+	public enum Language {
+		EN(Locale.forLanguageTag("en-US")),
+		DE(Locale.forLanguageTag("de-DE")),
+		IT(Locale.forLanguageTag("it-IT")),
+		RU(Locale.forLanguageTag("ru-RU")),
+		TR(Locale.forLanguageTag("tr-TR")),
+		FR(Locale.forLanguageTag("fr-FR")),
+		ES(Locale.forLanguageTag("es-ES"));
+		
+		@Getter private Locale locale;
+		private Language(Locale l) { locale = l; }
+	}
 
 	private static final String LANGUAGE_DATA_PATH = "res/languages/";
 	
@@ -33,13 +50,13 @@ public class Translator {
 				Map<String, String> languageData = new HashMap<>();
 				Document languageDocument = new SAXBuilder().build(new File(LANGUAGE_DATA_PATH + l.name() + ".xml"));
 				Element root = languageDocument.getRootElement();
-				root.getChildren().forEach(pair -> languageData.put(pair.getChildText("key").trim(), pair.getChildText("value").trim()));
+				root.getChildren().forEach(pair -> languageData.put(pair.getChildText("key".trim()), pair.getChildText("value").trim()));
 				languages.put(l, languageData);
 			} catch (JDOMException | IOException ex) {
 				System.err.println("Exception while reading language data for Language: " + l.name() + " " + ex.getMessage());
 			}
 		}
-		setCurrentLanguageIndex(Preferences.userNodeForPackage(UIConstants.class).getInt("language", 0));
+		setCurrentLanguageIndex(Preferences.userNodeForPackage(getClass()).getInt("language", 0));
 	}
 
 	public Language getCurrentLanguage() { return currentLanguage; }
@@ -48,11 +65,31 @@ public class Translator {
 	public void setCurrentLanguage(Language newLanguage) {
 		currentLanguage = newLanguage;
 		Preferences.userNodeForPackage(getClass()).putInt("language", getCurrentLanguageIndex());
+		notifyObservers();
 	}
-	public void setCurrentLanguageIndex(int newLanguage) { currentLanguage = Language.values()[newLanguage]; }
+	public void setCurrentLanguageIndex(int newLanguage) {
+		try {
+			setCurrentLanguage(Language.values()[newLanguage]);
+		} catch(IndexOutOfBoundsException e) {
+			setCurrentLanguage(Language.values()[0]);
+		}
+	}
 
 	public String getTranslatedString(String key) {
+		String rv = languages.get(currentLanguage).get(key).toUpperCase(currentLanguage.locale);
+		return (rv != null && rv.length() != 0) ? rv : "ROY::UNMAPPED_STR";
+	}
+	
+	public String getTranslatedStringAsIs(String key) {
 		String rv = languages.get(currentLanguage).get(key);
 		return (rv != null && rv.length() != 0) ? rv : "ROY::UNMAPPED_STR";
 	}
+
+	/* Observable */
+	private List<Observer> observers = new ArrayList<>();
+	@Override
+	public void registerObserver(Observer o) { observers.add(o); }
+	@Override
+	public void notifyObservers() { observers.forEach(o -> o.onNotify(this)); }
+	/* ---------- */
 }

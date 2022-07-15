@@ -67,7 +67,7 @@ public class SettingsMenu extends DoaObject implements IRoyContainer {
 		elements.add(group);
 		
 		backButton = RoyButton.builder()
-			.text("BACK")
+			.textKey("BACK")
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getMainMenu().setVisible(true);

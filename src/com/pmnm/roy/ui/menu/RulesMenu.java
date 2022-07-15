@@ -37,7 +37,7 @@ public class RulesMenu extends DoaObject implements IRoyContainer {
 		pages = UIConstants.getRulesImages();
 		
 		backButton = RoyButton.builder()
-			.text("BACK")
+			.textKey("BACK")
 			.action(() -> {
 				index = 0;
 				setVisible(false);
@@ -140,6 +140,5 @@ public class RulesMenu extends DoaObject implements IRoyContainer {
 
 	@Override
 	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
-
 
 }

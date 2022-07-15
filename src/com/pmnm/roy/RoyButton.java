@@ -10,6 +10,8 @@ import java.util.Locale;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.util.Observable;
+import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaMouse;
@@ -23,12 +25,13 @@ import lombok.NonNull;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-public final class RoyButton extends DoaObject implements IRoyInteractableElement {
+public final class RoyButton extends DoaObject implements IRoyInteractableElement, Observer {
 
 	@Getter
 	@Setter
 	private boolean isVisible;
 	
+	private String textKey;
 	@NonNull
 	private String text = "";
 	
@@ -57,8 +60,9 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	private DoaVector contentSize;
 
 	@Builder
-	RoyButton(@NonNull String text, @NonNull IRoyAction action) {
-		this.text = Translator.getInstance().getTranslatedString(text).toUpperCase(Locale.getDefault());
+	RoyButton(@NonNull String textKey, @NonNull IRoyAction action) {
+		this.textKey = textKey;
+		this.text = Translator.getInstance().getTranslatedString(textKey);
 		this.action = action;
 		this.image = UIConstants.getButtonIdleSprite();
 		this.hoverImage = UIConstants.getButtonHoverSprite();
@@ -71,6 +75,8 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 
 		addComponent(new Script());
 		addComponent(new Renderer());
+		
+		Translator.getInstance().registerObserver(this);
 	}
 
 	@Override
@@ -89,6 +95,12 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			size[0],
 			size[1]
 		);
+	}
+	
+	@Override
+	public void onNotify(Observable b) {
+		this.text = Translator.getInstance().getTranslatedString(textKey);
+		font = null; /* make font null so on next frame it will be calculated again with appropriate size */
 	}
 	
 	private final class Script extends DoaScript {
@@ -139,6 +151,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			DoaGraphicsFunctions.drawString(text, 20, image.getHeight() - 17);
 			
 			DoaGraphicsFunctions.popAll();
-		}		
+		}
 	}
+
 }

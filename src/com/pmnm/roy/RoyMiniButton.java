@@ -1,6 +1,5 @@
 package com.pmnm.roy;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -9,31 +8,31 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Locale;
 
-import com.google.errorprone.annotations.ForOverride;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.util.Observable;
+import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaMouse;
 import doa.engine.maths.DoaVector;
-import doa.engine.scene.DoaComponent;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
-import doa.engine.utils.DoaUtils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-public final class RoyMiniButton extends DoaObject implements IRoyInteractableElement  {
+public final class RoyMiniButton extends DoaObject implements IRoyInteractableElement, Observer {
 
 	@Getter
 	@Setter
 	private boolean isVisible = true;
 	
+	private String textKey;
 	@NonNull
 	private String text = "";
 	
@@ -63,8 +62,9 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 	private DoaVector textPosition;
 
 	@Builder
-	RoyMiniButton(@NonNull String text, @NonNull IRoyAction action) {
-		this.text = Translator.getInstance().getTranslatedString(text).toUpperCase(Locale.getDefault());
+	RoyMiniButton(@NonNull String textKey, @NonNull IRoyAction action) {
+		this.textKey = textKey;
+		this.text = Translator.getInstance().getTranslatedString(textKey);
 		this.action = action;
 		this.image = UIConstants.getMiniButtonIdleSprite();
 		this.hoverImage = UIConstants.getMiniButtonHoverSprite();
@@ -77,6 +77,8 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 
 		addComponent(new Script());
 		addComponent(new Renderer());
+		
+		Translator.getInstance().registerObserver(this);
 	}
 
 	@Override
@@ -95,6 +97,12 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 			size[0],
 			size[1]
 		);
+	}
+	
+	@Override
+	public void onNotify(Observable b) {
+		this.text = Translator.getInstance().getTranslatedString(textKey);
+		font = null; /* make font null so on next frame it will be calculated again with appropriate size */
 	}
 	
 	private final class Script extends DoaScript {

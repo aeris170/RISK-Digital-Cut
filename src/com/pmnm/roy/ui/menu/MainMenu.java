@@ -43,7 +43,7 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 		
 		RoyButton settingsButton = RoyButton
 			.builder()
-			.text("SETTINGS")
+			.textKey("SETTINGS")
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getSettingsMenu().setVisible(true);
@@ -55,7 +55,7 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 		/* Rules Button */
 		RoyButton rulesButton = RoyButton
 			.builder()
-			.text("RULES")
+			.textKey("RULES")
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getBackground().setVisible(false);
@@ -72,7 +72,7 @@ public class MainMenu extends DoaObject implements IRoyContainer {
 		
 		RoyButton exitButton = RoyButton
 			.builder()
-			.text("EXIT")
+			.textKey("EXIT")
 			.action(() -> ep.setVisible(true))
 			.build();
 		exitButton.setPosition(EXIT_LOCATION);
