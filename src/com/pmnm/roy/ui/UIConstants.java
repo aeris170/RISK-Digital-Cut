@@ -7,6 +7,7 @@ import java.util.EnumMap;
 
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.localization.Translator.Language;
+import com.pmnm.risk.main.SystemSpecs;
 import com.pmnm.roy.ui.gameui.PauseMenu;
 import com.pmnm.roy.ui.menu.FadingBackground;
 import com.pmnm.roy.ui.menu.HostGameMenu;
@@ -206,6 +207,7 @@ public final class UIConstants {
 		menuScene.add(mainMenu);
 		menuScene.add(settingsMenu);
 		menuScene.add(rulesMenu);
+		menuScene.add(new SystemSpecs());
 		DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 	}
 }
