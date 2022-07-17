@@ -1,48 +1,52 @@
 package com.pmnm.roy.ui.menu;
 
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.TextImageButton;
+import com.pmnm.roy.RoyButton;
+import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 
-import doa.engine.graphics.DoaGraphicsContext;
-import doa.engine.graphics.DoaSprites;
-import doa.engine.ui.panel.DoaUIPanel;
+import doa.engine.maths.DoaVector;
 
-public class PlayOfflineMenu extends DoaUIPanel {
+@SuppressWarnings("serial")
+public class PlayOfflineMenu extends RoyMenu {
+	
+	private static final DoaVector NEW_GAME_LOCATION 	= new DoaVector(1377f, 511f);
+	private static final DoaVector LOAD_GAME_LOCATION 	= new DoaVector(1377f, 584f);
+	private static final DoaVector BACK_LOCATION 		= new DoaVector(1377f, 803f);
 
-	private static final long serialVersionUID = -8533259801260650400L;
-
-	private static final TextImageButton newGameButton = Builders.TIBB.args(new DoaVectorF(1377f, 511f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "NEW_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
-	private static final TextImageButton loadGameButton = Builders.TIBB.args(new DoaVectorF(1377f, 584f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "LOAD_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
-	private static final TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(1377f, 803f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
-
-	public PlayOfflineMenu() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-		newGameButton.addAction(() -> {
-			hide();
-			UIConstants.ngm.show();
-		});
-		loadGameButton.addAction(() -> {
-			hide();
-			UIConstants.lgm.show();
-		});
-		backButton.addAction(() -> {
-			hide();
-			UIConstants.mm.show();
-		});
-		add(newGameButton);
-		add(loadGameButton);
-		add(backButton);
-		hide();
+	public PlayOfflineMenu() {		 
+		RoyButton newGameButton = RoyButton
+			.builder()
+			.textKey("NEW_GAME")
+			.action(() -> {
+				setVisible(false);
+				//UIConstants.getNewGameMenu().setVisible(true);
+			})
+			.build();
+		newGameButton.setPosition(NEW_GAME_LOCATION);
+		addElement(newGameButton);
+		
+		RoyButton loadGameButton = RoyButton
+			.builder()
+			.textKey("LOAD_GAME")
+			.action(() -> {
+				setVisible(false);
+				//UIConstants.getLoadGameMenu().setVisible(true);
+			})
+			.build();
+		loadGameButton.setPosition(LOAD_GAME_LOCATION);
+		addElement(loadGameButton);
+		
+		RoyButton backButton = RoyButton
+			.builder()
+			.textKey("BACK")
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getMainMenu().setVisible(true);
+			})
+			.build();
+		backButton.setPosition(BACK_LOCATION);
+		addElement(backButton);
+		
+		setVisible(false);
 	}
-
-	@Override
-	public void tick() {}
-
-	@Override
-	public void render(DoaGraphicsContext g) {}
 }

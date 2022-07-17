@@ -1,30 +1,17 @@
 package com.pmnm.roy.ui.menu;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.globals.localization.Translator.Language;
-import com.pmnm.roy.IRoyContainer;
-import com.pmnm.roy.IRoyElement;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyLanguageButton;
 import com.pmnm.roy.RoyLanguageButtonGroup;
+import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 
 import doa.engine.maths.DoaVector;
-import doa.engine.scene.DoaObject;
-import doa.engine.scene.DoaScene;
-import lombok.Getter;
-import lombok.NonNull;
 
 @SuppressWarnings("serial")
-public class SettingsMenu extends DoaObject implements IRoyContainer {
-	
-	@Getter
-	private boolean isVisible = true;
-	private transient List<IRoyElement> elements = new ArrayList<>();
+public class SettingsMenu extends RoyMenu {
 
 	private RoyLanguageButtonGroup group;
 	private RoyLanguageButton englishButton;
@@ -64,7 +51,7 @@ public class SettingsMenu extends DoaObject implements IRoyContainer {
 			case RU: group.setSelected(russianButton); break;
 			case TR: group.setSelected(turkishButton); break;	
 		}
-		elements.add(group);
+		addElement(group);
 		
 		backButton = RoyButton.builder()
 			.textKey("BACK")
@@ -74,57 +61,6 @@ public class SettingsMenu extends DoaObject implements IRoyContainer {
 			})
 			.build();
 		backButton.setPosition(new DoaVector(1250, 750));
-		elements.add(backButton);
+		addElement(backButton);
 	}
-
-	@Override
-	public void onAddToScene(DoaScene scene) {
-		super.onAddToScene(scene);
-		for (IRoyElement e : elements) {
-			if (e instanceof DoaObject) {
-				scene.add((DoaObject) e);
-			}
-		}
-	}
-	
-	@Override
-	public void onRemoveFromScene(DoaScene scene) {
-		super.onRemoveFromScene(scene);
-		for (IRoyElement e : elements) {
-			if (e instanceof DoaObject) {
-				scene.remove((DoaObject) e);
-			}
-		}
-	}
-	
-	@Override
-	public void setzOrder(int zOrder) {
-		super.setzOrder(zOrder);
-		for (IRoyElement e : elements) {
-			if(e instanceof DoaObject) {
-				((DoaObject)e).setzOrder(zOrder + 1);
-			}
-		}
-	}
-
-	@Override
-	public void setVisible(boolean isVisible) {
-		this.isVisible = isVisible;
-		elements.forEach(e -> e.setVisible(isVisible));
-	}
-
-	@Override
-	public void setPosition(DoaVector position) { throw new UnsupportedOperationException("not implemented"); }
-
-	@Override
-	public Rectangle getContentArea() { return new Rectangle(0, 0, 1920, 1080); }
-
-	@Override
-	public Iterable<IRoyElement> getElements() { return elements; }
-
-	@Override
-	public void addElement(@NonNull IRoyElement element) { elements.add(element); }
-
-	@Override
-	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
 }

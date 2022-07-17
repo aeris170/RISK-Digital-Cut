@@ -1,12 +1,10 @@
-package com.pmnm.roy.ui.menu;
+package com.pmnm.roy.ui.menu.extensions;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.function.Function;
 
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
@@ -64,8 +62,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 		ef = new ExitFadeToBlack();
 		addElement(ef);
 		
-		setzOrder(ZOrders.EXIT_MENU_Z);
-
+		setzOrder(ZOrders.POPUP_Z);
 		addComponent(new Renderer());
 		setVisible(false);
 

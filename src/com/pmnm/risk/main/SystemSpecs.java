@@ -11,7 +11,7 @@ import doa.engine.utils.hardwareinfo.*;
 @SuppressWarnings("serial")
 public final class SystemSpecs extends DoaObject {
 	
-	public static boolean isVisible = false;
+	public static boolean isVisible = true;
 
 	private DoaRuntimeInfo runtime;
 	private DoaOSInfo os;

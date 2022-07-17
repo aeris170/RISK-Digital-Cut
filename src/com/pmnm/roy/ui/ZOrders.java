@@ -12,8 +12,8 @@ public final class ZOrders {
 	public static final int SEASON_Z = 100;
 	
 	public static final int RULES_Z = 2;
-	public static final int EXIT_MENU_Z = 3;
-	public static final int EXIT_FADE_TO_BLACK_Z = 4;
+	public static final int POPUP_Z = 5;
+	public static final int EXIT_FADE_TO_BLACK_Z = 10;
 
 	private ZOrders() {}
 

@@ -1,4 +1,4 @@
-package com.pmnm.roy.ui.menu;
+package com.pmnm.roy.ui.menu.extensions;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

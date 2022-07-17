@@ -31,49 +31,41 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class UIConstants {
 
-	public static final String FLEUR_DE_LIS = "FleurDeLis";
-	public static final String TOP_RING = "MainMenuTopRing";
-	public static final String BOTTOM_RING = "MainMenuBottomRing";
-	public static final String BG = "BG";
-	public static final String EXIT_POPUP_BG = "ExitPopupBackground";
-	public static final String BUTTON_IDLE = "ButtonIdle";
-	public static final String BUTTON_HOVER = "ButtonHover";
-	public static final String BUTTON_PRESSED = "ButtonPressed";
-	public static final String MINI_BUTTON_IDLE = "MiniButtonIdle";
-	public static final String MINI_BUTTON_HOVER = "MiniButtonHover";
-	public static final String MINI_BUTTON_PRESSED = "MiniButtonPressed";
+	private static final String FLEUR_DE_LIS = "FleurDeLis";
+	private static final String TOP_RING = "MainMenuTopRing";
+	private static final String BOTTOM_RING = "MainMenuBottomRing";
+	private static final String BG = "BG";
+	private static final String EXIT_POPUP_BG = "ExitPopupBackground";
+	private static final String BUTTON_IDLE = "ButtonIdle";
+	private static final String BUTTON_HOVER = "ButtonHover";
+	private static final String BUTTON_PRESSED = "ButtonPressed";
+	private static final String MINI_BUTTON_IDLE = "MiniButtonIdle";
+	private static final String MINI_BUTTON_HOVER = "MiniButtonHover";
+	private static final String MINI_BUTTON_PRESSED = "MiniButtonPressed";
 
-	public static final String RULES_IMAGES = "pt";
-	public static final int RULES_IMAGES_COUNT = 6;
+	private static final String RULES_IMAGES = "pt";
+	private static final int RULES_IMAGES_COUNT = 6;
 	
-	public static final String LENS = "Lens";
-	public static final String LENS_HOVER = "LensHover";
-	public static final String LENS_SELECTED = "LensSelect";
-	public static final String EN = "English";
-	public static final String DE = "Deutch";
-	public static final String ES = "Espanol";
-	public static final String FR = "France";
-	public static final String IT = "Italian";
-	public static final String RU = "Russian";
-	public static final String TR = "Turkish";
+	private static final String LENS = "Lens";
+	private static final String LENS_HOVER = "LensHover";
+	private static final String LENS_SELECTED = "LensSelect";
+	private static final String EN = "English";
+	private static final String DE = "Deutch";
+	private static final String ES = "Espanol";
+	private static final String FR = "France";
+	private static final String IT = "Italian";
+	private static final String RU = "Russian";
+	private static final String TR = "Turkish";
 
 	public static final int FLEUR_WIDTH = DoaSprites.getSprite(FLEUR_DE_LIS).getWidth() / 6;
 	public static final int FLEUR_HEIGHT = DoaSprites.getSprite(FLEUR_DE_LIS).getHeight() / 6;
 
-	@Getter
-	@NonNull
-	private static FadingBackground background;
-	@Getter
-	@NonNull
-	private static MainMenu mainMenu;
-	public static PlayOfflineMenu pofm;
-	public static PlayOnlineMenu ponm;
-	@Getter
-	@NonNull
-	private static SettingsMenu settingsMenu;
-	@Getter
-	@NonNull
-	private static RulesMenu rulesMenu;
+	@Getter @NonNull private static FadingBackground background;
+	@Getter @NonNull private static MainMenu mainMenu;
+	@Getter @NonNull private static PlayOfflineMenu playOfflineMenu;
+	@Getter @NonNull private static PlayOnlineMenu playOnlineMenu;
+	@Getter @NonNull private static SettingsMenu settingsMenu;
+	@Getter @NonNull private static RulesMenu rulesMenu;
 
 	public static NewGameMenu ngm;
 	public static LoadGameMenu lgm;
@@ -82,74 +74,26 @@ public final class UIConstants {
 
 	public static PauseMenu pm;
 	
-	@NonNull
-	private static BufferedImage fleurDeLis;
-	@NonNull
-	private static BufferedImage topRing;
-	@NonNull
-	private static BufferedImage bottomRing;
-	@NonNull
-	private static BufferedImage[] backgrounds = new BufferedImage[6];
+	@NonNull private static BufferedImage fleurDeLis;
+	@NonNull private static BufferedImage topRing;
+	@NonNull private static BufferedImage bottomRing;
+	@NonNull private static final BufferedImage[] backgrounds = new BufferedImage[6];
 	
-	@Getter
-	@NonNull
-	private static BufferedImage exitPopupBackground;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage buttonIdleSprite;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage buttonHoverSprite;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage buttonPressedSprite;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage miniButtonIdleSprite;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage miniButtonHoverSprite;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage miniButtonPressedSprite;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage[] rulesImages;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage lensImage;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage lensHoverImage;
-	
-	@Getter
-	@NonNull
-	private static BufferedImage lensSelectedImage;
-	
-	@Getter
-	@NonNull
-	private static EnumMap<Language, BufferedImage> languageImages = new EnumMap<>(Language.class);
-	
-	@Getter
-	@NonNull
-	private static Font font;
-	
-	@Getter
-	@NonNull
-	private static final Color textColor = new Color(189, 164, 79);
-
-	@Getter
-	@NonNull
-	private static final Color hoverTextColor = new Color(94, 82, 42);
+	@Getter @NonNull private static BufferedImage exitPopupBackground;
+	@Getter @NonNull private static BufferedImage buttonIdleSprite;
+	@Getter @NonNull private static BufferedImage buttonHoverSprite;
+	@Getter @NonNull private static BufferedImage buttonPressedSprite;
+	@Getter @NonNull private static BufferedImage miniButtonIdleSprite;
+	@Getter @NonNull private static BufferedImage miniButtonHoverSprite;
+	@Getter @NonNull private static BufferedImage miniButtonPressedSprite;
+	@Getter @NonNull private static BufferedImage[] rulesImages;
+	@Getter @NonNull private static BufferedImage lensImage;
+	@Getter @NonNull private static BufferedImage lensHoverImage;
+	@Getter @NonNull private static BufferedImage lensSelectedImage;
+	@Getter @NonNull private static final EnumMap<Language, BufferedImage> languageImages = new EnumMap<>(Language.class);
+	@Getter @NonNull private static Font font;
+	@Getter @NonNull private static final Color textColor = new Color(189, 164, 79);
+	@Getter @NonNull private static final Color hoverTextColor = new Color(94, 82, 42);
 
 	public static void initUI() {
 		fleurDeLis = DoaSprites.getSprite(FLEUR_DE_LIS);
@@ -190,10 +134,8 @@ public final class UIConstants {
 		background = new FadingBackground(fleurDeLis, topRing, bottomRing, backgrounds);
 		mainMenu = new MainMenu();
 		mainMenu.setVisible(true);
-		//fb = Builders.FBB.scene(menuScene).instantiate();
-		//mm = Builders.MMB.scene(menuScene).instantiate();
-		//pofm = Builders.POFMB.scene(menuScene).instantiate();
-		//ponm = Builders.PONMB.scene(menuScene).instantiate();
+		playOfflineMenu = new PlayOfflineMenu();
+		playOnlineMenu = new PlayOnlineMenu();
 		settingsMenu = new SettingsMenu();
 		rulesMenu = new RulesMenu();
 		//ngm = Builders.NGMB.scene(menuScene).instantiate();
@@ -205,6 +147,8 @@ public final class UIConstants {
 		
 		menuScene.add(background);
 		menuScene.add(mainMenu);
+		menuScene.add(playOfflineMenu);
+		menuScene.add(playOnlineMenu);
 		menuScene.add(settingsMenu);
 		menuScene.add(rulesMenu);
 		menuScene.add(new SystemSpecs());

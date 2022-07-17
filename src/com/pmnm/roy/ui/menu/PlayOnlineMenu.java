@@ -1,48 +1,52 @@
 package com.pmnm.roy.ui.menu;
 
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.TextImageButton;
+import com.pmnm.roy.RoyButton;
+import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 
-import doa.engine.graphics.DoaGraphicsContext;
-import doa.engine.graphics.DoaSprites;
-import doa.engine.ui.panel.DoaUIPanel;
+import doa.engine.maths.DoaVector;
 
-public class PlayOnlineMenu extends DoaUIPanel {
+@SuppressWarnings("serial")
+public class PlayOnlineMenu extends RoyMenu {
+	
+	private static final DoaVector HOST_GAME_LOCATION 	= new DoaVector(1377f, 511f);
+	private static final DoaVector JOIN_GAME_LOCATION 	= new DoaVector(1377f, 584f);
+	private static final DoaVector BACK_LOCATION 		= new DoaVector(1377f, 803f);
 
 	public PlayOnlineMenu() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-		hostGameButton.addAction(() -> {
-			hide();
-			UIConstants.hgm.show();
-		});
-		joinGameButton.addAction(() -> {
-			hide();
-			UIConstants.jgm.show();
-		});
-		backButton.addAction(() -> {
-			hide();
-			UIConstants.mm.show();
-		});
-		add(hostGameButton);
-		add(joinGameButton);
-		add(backButton);
-		hide();
+		RoyButton hostGameButton = RoyButton
+			.builder()
+			.textKey("HOST_GAME")
+			.action(() -> {
+				setVisible(false);
+				//UIConstants.getNewGameMenu().setVisible(true);
+			})
+			.build();
+		hostGameButton.setPosition(HOST_GAME_LOCATION);
+		addElement(hostGameButton);
+		
+		RoyButton joinGameButton = RoyButton
+			.builder()
+			.textKey("JOIN_GAME")
+			.action(() -> {
+				setVisible(false);
+				//UIConstants.getLoadGameMenu().setVisible(true);
+			})
+			.build();
+		joinGameButton.setPosition(JOIN_GAME_LOCATION);
+		addElement(joinGameButton);
+		
+		RoyButton backButton = RoyButton
+			.builder()
+			.textKey("BACK")
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getMainMenu().setVisible(true);
+			})
+			.build();
+		backButton.setPosition(BACK_LOCATION);
+		addElement(backButton);
+		
+		setVisible(false);
 	}
-
-	@Override
-	public void tick() {}
-
-	@Override
-	public void render(DoaGraphicsContext g) {}
-
-	private static final long serialVersionUID = 1834343492692029824L;
-
-	private static final TextImageButton hostGameButton = Builders.TIBB.args(new DoaVectorF(1377f, 511f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "HOST_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
-	private static final TextImageButton joinGameButton = Builders.TIBB.args(new DoaVectorF(1377f, 584f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "JOIN_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
-	private static final TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(1377f, 803f), UIInit.UIConstants.x, UIInit.UIConstants.y,
-	        DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE), DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
 }
