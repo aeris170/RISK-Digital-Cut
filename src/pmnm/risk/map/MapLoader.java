@@ -41,7 +41,7 @@ public final class MapLoader {
 			connectProvinces(map.getNeighborsFile()); /* set up adjacencies */
 			solidifyProvinces(map.getVerticesFile()); /* set up meshes */
 			groupProvinces(map.getContinentsFile()); /* create continents */
-			bgImg = DoaSprites.createSprite(map.getName() + "MapBackground", map.getBackgroundImageFile().getAbsolutePath());
+			bgImg = DoaSprites.createSprite(map.getName() + "MapBackground", map.getBackgroundImageFile().getPath());
 			return new MapData(map, bgImg, ImmutableList.copyOf(CONTINENTS));
 		} catch (JDOMException | IOException ex) {
 			DoaGame.getInstance().exit();

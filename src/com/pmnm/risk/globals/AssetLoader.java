@@ -42,9 +42,9 @@ public final class AssetLoader {
 				DoaSprites.createSprite("ArrowLeftIdle", "/ui/playOffline/arrowUnpressedLeft.png");
 				DoaSprites.createSprite("ArrowRightIdle", "/ui/playOffline/arrowUnpressedRight.png");
 				DoaSprites.createSprite("ArrowDownIdle", "/ui/playOffline/arrowUnpressedDown.png");
-				DoaSprites.createSprite("ArrowLeftClick", "/ui/playOffline/arrowPressedLeft.png");
-				DoaSprites.createSprite("ArrowRightClick", "/ui/playOffline/arrowPressedRight.png");
-				DoaSprites.createSprite("ArrowDownClick", "/ui/playOffline/arrowPressedDown.png");
+				DoaSprites.createSprite("ArrowLeftPressed", "/ui/playOffline/arrowPressedLeft.png");
+				DoaSprites.createSprite("ArrowRightPressed", "/ui/playOffline/arrowPressedRight.png");
+				DoaSprites.createSprite("ArrowDownPressed", "/ui/playOffline/arrowPressedDown.png");
 				DoaSprites.createSprite("White", "/ui/playOffline/colour.png");
 				DoaSprites.createSprite("ColorBorder", "/ui/playOffline/colourRect.png");
 				DoaSprites.createSprite("MapChooserBackground", "/ui/playOffline/mapChooserContainer.png");

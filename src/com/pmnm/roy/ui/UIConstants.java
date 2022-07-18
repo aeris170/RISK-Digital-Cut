@@ -42,6 +42,10 @@ public final class UIConstants {
 	private static final String MINI_BUTTON_IDLE = "MiniButtonIdle";
 	private static final String MINI_BUTTON_HOVER = "MiniButtonHover";
 	private static final String MINI_BUTTON_PRESSED = "MiniButtonPressed";
+	private static final String ARROW_LEFT_IDLE = "ArrowLeftIdle";
+	private static final String ARROW_LEFT_PRESSED = "ArrowLeftPressed";
+	private static final String ARROW_RIGHT_IDLE = "ArrowRightIdle";
+	private static final String ARROW_RIGHT_PRESSED = "ArrowRightPressed";
 
 	private static final String RULES_IMAGES = "pt";
 	private static final int RULES_IMAGES_COUNT = 6;
@@ -67,7 +71,7 @@ public final class UIConstants {
 	@Getter @NonNull private static SettingsMenu settingsMenu;
 	@Getter @NonNull private static RulesMenu rulesMenu;
 
-	public static NewGameMenu ngm;
+	@Getter @NonNull private static NewGameMenu newGameMenu;
 	public static LoadGameMenu lgm;
 	public static HostGameMenu hgm;
 	public static JoinGameMenu jgm;
@@ -86,6 +90,10 @@ public final class UIConstants {
 	@Getter @NonNull private static BufferedImage miniButtonIdleSprite;
 	@Getter @NonNull private static BufferedImage miniButtonHoverSprite;
 	@Getter @NonNull private static BufferedImage miniButtonPressedSprite;
+	@Getter @NonNull private static BufferedImage arrowLeftIdleSprite;
+	@Getter @NonNull private static BufferedImage arrowLeftPressedSprite;
+	@Getter @NonNull private static BufferedImage arrowRightIdleSprite;
+	@Getter @NonNull private static BufferedImage arrowRightPressedSprite;
 	@Getter @NonNull private static BufferedImage[] rulesImages;
 	@Getter @NonNull private static BufferedImage lensImage;
 	@Getter @NonNull private static BufferedImage lensHoverImage;
@@ -110,6 +118,10 @@ public final class UIConstants {
 		miniButtonIdleSprite = DoaSprites.getSprite(MINI_BUTTON_IDLE);
 		miniButtonHoverSprite = DoaSprites.getSprite(MINI_BUTTON_HOVER);
 		miniButtonPressedSprite = DoaSprites.getSprite(MINI_BUTTON_PRESSED);
+		arrowLeftIdleSprite = DoaSprites.getSprite(ARROW_LEFT_IDLE);
+		arrowLeftPressedSprite = DoaSprites.getSprite(ARROW_LEFT_PRESSED);
+		arrowRightIdleSprite = DoaSprites.getSprite(ARROW_RIGHT_IDLE);
+		arrowRightPressedSprite = DoaSprites.getSprite(ARROW_RIGHT_PRESSED);
 		
 		rulesImages = new BufferedImage[RULES_IMAGES_COUNT];
 		for (int i = 0; i < RULES_IMAGES_COUNT; i++) {
@@ -138,7 +150,7 @@ public final class UIConstants {
 		playOnlineMenu = new PlayOnlineMenu();
 		settingsMenu = new SettingsMenu();
 		rulesMenu = new RulesMenu();
-		//ngm = Builders.NGMB.scene(menuScene).instantiate();
+		newGameMenu = new NewGameMenu();
 		//lgm = Builders.LGMB.scene(menuScene).instantiate();
 		//hgm = Builders.HGMB.scene(menuScene).instantiate();
 		//jgm = Builders.JGMB.scene(menuScene).instantiate();
@@ -151,6 +163,7 @@ public final class UIConstants {
 		menuScene.add(playOnlineMenu);
 		menuScene.add(settingsMenu);
 		menuScene.add(rulesMenu);
+		menuScene.add(newGameMenu);
 		menuScene.add(new SystemSpecs());
 		DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 	}

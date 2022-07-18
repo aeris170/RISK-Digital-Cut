@@ -31,8 +31,8 @@ public final class MapData implements Serializable {
 	private final transient BufferedImage backgroundImage;
 	
 	@NonNull
-	private final ImmutableList<pmnm.risk.map.ContinentData> continents;
-	public Iterable<pmnm.risk.map.ContinentData> getContinents() {
+	private final ImmutableList<ContinentData> continents;
+	public Iterable<ContinentData> getContinents() {
 		return continents;
 	}
 

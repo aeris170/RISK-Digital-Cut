@@ -1,5 +1,8 @@
 package pmnm.risk.map;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -7,7 +10,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-import lombok.Data;
+import doa.engine.graphics.DoaSprites;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
@@ -35,6 +38,8 @@ public final class MapConfig implements Serializable {
 			} catch(MapValidationException ex) {
 				ex.printStackTrace();
 				/* swallow the exception? */
+			} catch(IOException ex2) {
+				ex2.printStackTrace();
 			}
 
 			if(config != null) {
@@ -46,7 +51,8 @@ public final class MapConfig implements Serializable {
 		INITIALIZED = true;
 	}
 	
-	public static Iterable<@NonNull MapConfig> getConfigs() { 
+	
+	public static List<@NonNull MapConfig> getConfigs() { 
 		if(!INITIALIZED) { readMapConfigs(); }
 		return CONFIGS;
 	}
@@ -58,8 +64,9 @@ public final class MapConfig implements Serializable {
 	@Getter private final File neighborsFile;
 	@Getter private final File verticesFile;
 	@Getter private final File backgroundImageFile;
+	@Getter private final transient BufferedImage backgroundImagePreview;
 	
-	public MapConfig(String mapName) throws MapValidationException {
+	public MapConfig(String mapName) throws MapValidationException, IOException {
 		name = mapName;
 		path = Path.of("res/maps", mapName);
 		check(path.toFile());
@@ -78,6 +85,10 @@ public final class MapConfig implements Serializable {
 		
 		backgroundImageFile = new File(path + "/map.png");
 		check(backgroundImageFile);
+		
+		String p = path.toFile().getPath();
+		p = p.substring(p.indexOf(File.separator)).replace(File.separator, "/");
+		backgroundImagePreview = DoaSprites.createSprite(name + "preview", p + "/preview.png");
 	}
 	
 	public void validate() throws MapValidationException {

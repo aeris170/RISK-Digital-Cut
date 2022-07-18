@@ -34,8 +34,6 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 	private List<IRoyElement> elements;
 	
 	private String areYouSureText;
-	private DoaVector textDimensions = new DoaVector(576, 40);
-	private int stringWidth;
 
 	public ExitPopup() {
 		transform.position = new DoaVector(600, 420);
@@ -73,6 +71,8 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 	public class Renderer extends DoaRenderer {
 		
 		private Font font;
+		private int stringWidth;
+		private DoaVector textDimensions = new DoaVector(576, 40);
 		
 		@Override
 		public void render() {
