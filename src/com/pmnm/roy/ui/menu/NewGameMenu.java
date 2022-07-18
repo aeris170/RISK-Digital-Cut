@@ -1,10 +1,12 @@
 package com.pmnm.roy.ui.menu;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Locale;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.toolkit.Utils;
@@ -19,9 +21,12 @@ import com.pmnm.roy.ui.UIConstants;
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
+import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 import pmnm.risk.map.MapConfig;
 
 @SuppressWarnings("serial")
@@ -41,8 +46,6 @@ public class NewGameMenu extends RoyMenu {
 	        .args(new DoaVector(610, 687), DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
 	        .instantiate();
 	*/
-	
-	private static final DoaVector mapNameArea = new DoaVector(175, 45);
 
 	private static final TypeComboButton[] tbca = new TypeComboButton[Globals.MAX_NUM_PLAYERS];
 	private static final ColorComboButton[] ccba = new ColorComboButton[Globals.MAX_NUM_PLAYERS];
@@ -156,7 +159,7 @@ public class NewGameMenu extends RoyMenu {
 	*/
 	
 	private void setSelectedMap(MapConfig config) {
-		selectedMapName = config.getName().replace("_", " "); /* map names have _ instead of spaces */
+		selectedMapName = config.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = config.getBackgroundImagePreview();
 		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.font = null);
 	}
@@ -170,6 +173,7 @@ public class NewGameMenu extends RoyMenu {
 		private Font font;
 		private int stringWidth;
 		private DoaVector textDimensions;
+		private DoaVector textPosition;
 		
 		private Renderer() {
 			mainScroll = DoaSprites.getSprite("MainScroll");
@@ -180,19 +184,17 @@ public class NewGameMenu extends RoyMenu {
 		@Override
 		public void render() {
 			if (!isVisible()) { return; }
-			
-			DoaGraphicsFunctions.drawImage(mainScroll, 24, 176, mainScroll.getWidth(), mainScroll.getHeight());
-			DoaGraphicsFunctions.drawImage(mapChooserBg, 1363, 259, mapChooserBg.getWidth(), mapChooserBg.getHeight());
-	
 			if (font == null) {
 				Rectangle nextMapButton = NewGameMenu.this.nextMapButton.getContentArea();
 				Rectangle prevMapButton = NewGameMenu.this.prevMapButton.getContentArea();
 				textDimensions = new DoaVector(
-					nextMapButton.x - prevMapButton.x + prevMapButton.width - prevMapButton.width * 2,
+					nextMapButton.x - prevMapButton.x - prevMapButton.width,
 					prevMapButton.height
 				);
+				textDimensions.x *= 0.9;
 				
 				font = UIConstants.getFont().deriveFont(
+					Font.PLAIN,
 					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, selectedMapName), 0)[0]
 				);
 				
@@ -200,16 +202,23 @@ public class NewGameMenu extends RoyMenu {
 				stringWidth = fm.stringWidth(selectedMapName);
 				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
 				stringWidth = strSize[0];
+
+				textPosition = new DoaVector(
+					prevMapButton.x + prevMapButton.width + (nextMapButton.x - prevMapButton.x - prevMapButton.width - textDimensions.x) / 2,
+					prevMapButton.y + prevMapButton.height / 2f + fm.getHeight() / 3f // why divide by 3??!?!?!?!?!?
+				);
 			}
-			
+
+			DoaGraphicsFunctions.drawImage(mainScroll, 24, 176, mainScroll.getWidth(), mainScroll.getHeight());
+			DoaGraphicsFunctions.drawImage(mapChooserBg, 1363, 259, mapChooserBg.getWidth(), mapChooserBg.getHeight());
+	
 			DoaGraphicsFunctions.setFont(font);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 			DoaGraphicsFunctions.drawString(
-				selectedMapName, 
-				mapNameArea.x + (textDimensions.x - stringWidth) / 2f,
-				mapNameArea.y
+				selectedMapName,
+				textPosition.x + (textDimensions.x - stringWidth) / 2f,
+				textPosition.y
 			);
-			//DoaGraphicsFunctions.drawString(s, prevMapButton.getPosition().x + prevMapButton.getWidth() + (bounds.x - fm.stringWidth(s)) / 2, prevMapButton.getPosition().y + bounds.y * 3 / 4);
 		
 			DoaGraphicsFunctions.drawImage(
 				selectedMapPreview,
@@ -222,12 +231,14 @@ public class NewGameMenu extends RoyMenu {
 	}
 	
 	@Data
-	private static final class Slot {
+	@ToString(includeFieldNames = true)
+	@EqualsAndHashCode(callSuper = true)
+	private static final class Slot extends DoaObject {
 		
 		private Status status;
 		private String playerName;
 		private int playerColor;
-		private int playerPawn;
+		private final int playerPawn;
 		
 		private Slot(int index) {
 			status = Status.OPEN;
@@ -237,7 +248,7 @@ public class NewGameMenu extends RoyMenu {
 		}
 		
 		private enum Status {
-			OPEN, CLOSED, HUMAN,;
+			OPEN, CLOSED, HUMAN;
 		}
 	}
 	

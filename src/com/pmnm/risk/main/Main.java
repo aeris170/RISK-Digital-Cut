@@ -37,7 +37,7 @@ public class Main extends DoaGame {
 	        "Kaan's Cursor"
 		);
 		wSettings.ICON = new ImageIcon(Main.class.getResource("/ui/icon.png")).getImage();
-		//wSettings.RESOLUTION_OD = new DoaVector(WINDOW_WIDTH, WINDOW_HEIGHT);
+		wSettings.RESOLUTION_OD = new DoaVector(WINDOW_WIDTH, WINDOW_HEIGHT);
 		wSettings.WM = DoaWindowMode.WINDOWED;
 
 		Globals.initilaizeGlobals();
