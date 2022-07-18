@@ -1,9 +1,6 @@
 package com.pmnm.roy.ui.gameui.actions;
 
-import com.doa.ui.action.DoaUIAction;
-import com.pmnm.risk.main.GameManager;
-
-public class DiceButtonAction implements DoaUIAction {
+public class DiceButtonAction implements UIAction {
 
 	private int diceAmount;
 
@@ -13,6 +10,7 @@ public class DiceButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		GameManager.INSTANCE.toss(diceAmount);
+		// TODO
+		// GameManager.INSTANCE.toss(diceAmount);
 	}
 }

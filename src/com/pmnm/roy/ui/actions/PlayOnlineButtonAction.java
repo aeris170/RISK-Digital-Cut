@@ -1,8 +1,8 @@
 package com.pmnm.roy.ui.actions;
 
-import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.MainMenu;
 import com.pmnm.roy.ui.menu.PlayOnlineMenu;
+import com.pmnm.roy.ui.menu.extensions.ExitPopup;
 
 import doa.engine.ui.action.DoaUIAction;
 

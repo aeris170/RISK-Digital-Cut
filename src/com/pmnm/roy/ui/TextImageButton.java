@@ -54,7 +54,7 @@ public class TextImageButton extends DoaUIImageButton {
 		super.render(g);
 		displayedText = Translator.getInstance().getTranslatedString(text).toUpperCase();
 		if (fontNeedsRecalculation) {
-			textFont = UIInit.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIInit.UI_FONT, textRect, displayedText));
+			textFont = UIInit.UI_FONT.deriveFont(Font.PLAIN, );
 			g.setFont(textFont);
 			FontMetrics fm = g.getFontMetrics();
 			stringWidth = fm.stringWidth(displayedText);

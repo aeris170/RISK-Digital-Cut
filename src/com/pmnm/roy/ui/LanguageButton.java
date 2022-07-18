@@ -14,8 +14,6 @@ public class LanguageButton extends DoaUIImageButton {
 
 	private BufferedImage idleImage;
 
-	private boolean selected = false;
-
 	public LanguageButton(DoaVector position, Integer width, Integer height, BufferedImage idleImage) {
 		super(position, width, height, idleImage);
 		this.idleImage = idleImage;

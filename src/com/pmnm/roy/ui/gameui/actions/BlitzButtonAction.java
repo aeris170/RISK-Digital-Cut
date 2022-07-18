@@ -1,12 +1,10 @@
 package com.pmnm.roy.ui.gameui.actions;
 
-import com.doa.ui.action.DoaUIAction;
-import com.pmnm.risk.main.GameManager;
-
-public class BlitzButtonAction implements DoaUIAction {
+public class BlitzButtonAction implements UIAction {
 
 	@Override
 	public void execute() {
-		GameManager.INSTANCE.blitz();
+		// TODO
+		//GameManager.INSTANCE.blitz();
 	}
 }

@@ -1,9 +1,8 @@
 package com.pmnm.roy.ui.gameui.actions;
 
-import com.doa.ui.action.DoaUIAction;
 import com.pmnm.roy.ui.gameui.BottomPanel;
 
-public class DecrementButtonAction implements DoaUIAction {
+public class DecrementButtonAction implements UIAction {
 
 	private BottomPanel bottomPanel;
 
@@ -13,6 +12,6 @@ public class DecrementButtonAction implements DoaUIAction {
 
 	@Override
 	public void execute() {
-		bottomPanel.decrementIndex();
+		//bottomPanel.decrementIndex();
 	}
 }
