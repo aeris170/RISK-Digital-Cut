@@ -3,23 +3,9 @@ package com.pmnm.roy.ui.menu;
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaAnimation;
 import doa.engine.graphics.DoaAnimations;
-import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 import doa.engine.maths.DoaVector;
-import doa.engine.scene.DoaObject;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.pmnm.risk.globals.Scenes;
-import com.pmnm.risk.main.Main;
-import com.pmnm.risk.main.SystemSpecs;
-import com.pmnm.roy.IRoyContainer;
-import com.pmnm.roy.IRoyElement;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
