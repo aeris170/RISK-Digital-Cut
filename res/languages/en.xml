@@ -145,5 +145,8 @@
 		<key>BACK_M</key>
 		<value>back to main menu</value>
 	</pair>
-	
+	<pair>
+		<key>LOAD</key>
+		<value>load</value>
+	</pair>
 </en>

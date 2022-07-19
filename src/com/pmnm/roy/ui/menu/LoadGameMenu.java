@@ -59,7 +59,7 @@ public class LoadGameMenu extends RoyMenu {
 		for(int i = 0; i < f.length; i++) {
 			final int index = i;
 			RoyMiniButton loadButton  = RoyMiniButton.builder()
-				.textKey("LOAD_GAME")
+				.textKey("LOAD")
 				.action(() -> {
 					setVisible(false);
 					// load game

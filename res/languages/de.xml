@@ -136,4 +136,9 @@
 		<key>JOIN_GAME</key>
 		<value>Spiel beitreten</value>
 	</pair>
+	<pair>
+		<key>LOAD</key>
+		<value>laden</value>
+	</pair>
+	
 </de>

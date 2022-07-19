@@ -144,4 +144,8 @@
 		<key>BACK_M</key>
 		<value>ana menüye dön</value>
 	</pair>
+	<pair>
+		<key>LOAD</key>
+		<value>yükle</value>
+	</pair>
 </tr>
