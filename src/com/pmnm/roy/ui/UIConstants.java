@@ -46,6 +46,8 @@ public final class UIConstants {
 	private static final String ARROW_LEFT_PRESSED = "ArrowLeftPressed";
 	private static final String ARROW_RIGHT_IDLE = "ArrowRightIdle";
 	private static final String ARROW_RIGHT_PRESSED = "ArrowRightPressed";
+	private static final String ARROW_DOWN_IDLE = "ArrowDownIdle";
+	private static final String ARROW_DOWN_PRESSED = "ArrowDownPressed";
 	
 	private static final String SAVE_SCROLL = "SaveScroll";
 	private static final String SAVE_MAP_CONTAINER = "SaveMapContainer";
@@ -97,6 +99,8 @@ public final class UIConstants {
 	@Getter @NonNull private static BufferedImage arrowLeftPressedSprite;
 	@Getter @NonNull private static BufferedImage arrowRightIdleSprite;
 	@Getter @NonNull private static BufferedImage arrowRightPressedSprite;
+	@Getter @NonNull private static BufferedImage arrowDownIdleSprite;
+	@Getter @NonNull private static BufferedImage arrowDownPressedSprite;
 	@Getter @NonNull private static BufferedImage saveScrollSprite;
 	@Getter @NonNull private static BufferedImage saveMapContainerSprite;
 	@Getter @NonNull private static BufferedImage[] rulesImages;
@@ -127,6 +131,8 @@ public final class UIConstants {
 		arrowLeftPressedSprite = DoaSprites.getSprite(ARROW_LEFT_PRESSED);
 		arrowRightIdleSprite = DoaSprites.getSprite(ARROW_RIGHT_IDLE);
 		arrowRightPressedSprite = DoaSprites.getSprite(ARROW_RIGHT_PRESSED);
+		arrowDownIdleSprite = DoaSprites.getSprite(ARROW_DOWN_IDLE);
+		arrowDownPressedSprite = DoaSprites.getSprite(ARROW_DOWN_PRESSED);
 		
 		saveScrollSprite = DoaSprites.getSprite(SAVE_SCROLL);
 		saveMapContainerSprite = DoaSprites.getSprite(SAVE_MAP_CONTAINER);

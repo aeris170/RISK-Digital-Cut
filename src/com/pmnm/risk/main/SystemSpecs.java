@@ -55,7 +55,7 @@ public final class SystemSpecs extends DoaObject {
 			renderText("RAM: " + memory.getTotalMemory());
 			renderText("----");
 			renderText("GPU: " + gpu.getName());
-			renderText("CÂ°: " + gpu.getTemperature());
+			renderText("C°: " + gpu.getTemperature());
 			renderText("RESOLUTION: " + display.getCurrentResolution());
 			renderText("REFRESH RATE: " + display.getRefreshRate());
 			

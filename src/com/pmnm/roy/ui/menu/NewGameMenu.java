@@ -11,6 +11,7 @@ import java.util.Locale;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
+import com.pmnm.roy.RoyComboBox;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.ColorComboButton;
@@ -41,15 +42,16 @@ public class NewGameMenu extends RoyMenu {
 	private final RoyImageButton prevMapButton; 
 	private final RoyImageButton nextMapButton;
 
+	private static final DoaVector COMBO_BOX_POSITION = new DoaVector(960, 540);
+	private static final DoaVector COLOR_COMBO_BOX_POSITION = new DoaVector(560, 540);
+	private RoyComboBox comboBox;
+	private RoyComboBox comboBox2;
+
 	/*
 	private static final RandomPlacementButton randomPlacementButton = Builders.RPBB
 	        .args(new DoaVector(610, 687), DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
 	        .instantiate();
 	*/
-
-	private static final TypeComboButton[] tbca = new TypeComboButton[Globals.MAX_NUM_PLAYERS];
-	private static final ColorComboButton[] ccba = new ColorComboButton[Globals.MAX_NUM_PLAYERS];
-	private static final DifficultyComboButton[] dcba = new DifficultyComboButton[Globals.MAX_NUM_PLAYERS];
 
 	private final Slot[] slots = new Slot[Globals.MAX_NUM_PLAYERS];
 
@@ -60,10 +62,23 @@ public class NewGameMenu extends RoyMenu {
 	public NewGameMenu() {
 		selectedMapIndex = 0;
 		setSelectedMap(MapConfig.getConfigs().get(selectedMapIndex));
-		
+
 		for (int i = 0; i < slots.length; i++) {
 			slots[i] = new Slot(i);
 		}
+
+		// COMBOBOXES
+		String[] names = new String[]{"MMMMMMMMMMMMMMMMMMMMMM","Doa","SMG"};
+		comboBox = new RoyComboBox(names);
+		comboBox.setPosition(COMBO_BOX_POSITION);
+		addElement(comboBox);
+		
+		Color[] colors = new Color[]{Color.BLUE, Color.RED, Color.GREEN};
+		comboBox2 = new RoyComboBox(colors);
+		comboBox2.setPosition(COLOR_COMBO_BOX_POSITION);
+		addElement(comboBox2);
+		
+		// COMBOBOXES END
 		
 		RoyButton playButton = RoyButton.builder()
 			.textKey("PLAY")
