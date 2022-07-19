@@ -125,7 +125,9 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	}
 	
 	private final class Renderer extends DoaRenderer {
-
+		
+		private int textHeight;
+		
 		@Override
 		public void render() {
 			if (!isVisible) return;
@@ -136,6 +138,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 					Font.PLAIN,
 					Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), contentSize, text)
 				);
+				textHeight = DoaGraphicsFunctions.getFontMetrics(font).getHeight();
 			}
 			
 			DoaGraphicsFunctions.pushAll();
@@ -148,7 +151,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			}
 			DoaGraphicsFunctions.setFont(font);
 			
-			DoaGraphicsFunctions.drawString(text, 20, image.getHeight() - 17);
+			DoaGraphicsFunctions.drawString(text, image.getWidth() * 0.05f, image.getHeight() / 2f + textHeight / 4f);
 			
 			DoaGraphicsFunctions.popAll();
 		}
