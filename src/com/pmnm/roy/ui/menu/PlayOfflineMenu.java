@@ -30,7 +30,7 @@ public class PlayOfflineMenu extends RoyMenu {
 			.textKey("LOAD_GAME")
 			.action(() -> {
 				setVisible(false);
-				//UIConstants.getLoadGameMenu().setVisible(true);
+				UIConstants.getLoadGameMenu().setVisible(true);
 			})
 			.build();
 		loadGameButton.setPosition(LOAD_GAME_LOCATION);
@@ -46,7 +46,5 @@ public class PlayOfflineMenu extends RoyMenu {
 			.build();
 		backButton.setPosition(BACK_LOCATION);
 		addElement(backButton);
-		
-		setVisible(false);
 	}
 }

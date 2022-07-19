@@ -64,7 +64,7 @@ public final class AssetLoader {
 
 				{ // SAVE/LOAD MENU
 					DoaSprites.createSprite("SaveScroll", "/ui/saveLoad/savedGameScroll.png");
-					DoaSprites.createSprite("SaveMapContainter", "/ui/saveLoad/savedMapContainer.png");
+					DoaSprites.createSprite("SaveMapContainer", "/ui/saveLoad/savedMapContainer.png");
 				}
 			}
 

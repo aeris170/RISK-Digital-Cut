@@ -1,54 +1,69 @@
 package com.pmnm.roy.ui.menu;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.panel.DoaPanel;
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.TextImageButton;
+import com.pmnm.roy.RoyButton;
+import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 
-public class LoadGameMenu extends DoaPanel {
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.maths.DoaVector;
+import doa.engine.scene.elements.renderers.DoaRenderer;
 
-	private static final long serialVersionUID = -7370360337478315048L;
+@SuppressWarnings("serial")
+public class LoadGameMenu extends RoyMenu {
+	
+	private static final DoaVector BACK_LOCATION = new DoaVector(1377f, 803f);
 
 	private File[] f;
 
-	TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(1377f, 803f), UIInit.UIConstants.x, UIInit.UIConstants.y, DoaSprites.get(UIConstants.BUTTON_IDLE_SPRITE),
-	        DoaSprites.get(UIConstants.BUTTON_HOVER_SPRITE), "BACK", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR).instantiate();
-
 	public LoadGameMenu() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		f = new File(System.getProperty("user.home") + "\\Documents\\My Games\\RiskDigitalCut\\Saves\\").listFiles();
-		backButton.addAction(() -> {
-			hide();
-			UIConstants.pofm.show();
-		});
-		add(backButton);
-		hide();
+		
+		RoyButton backButton = RoyButton
+			.builder()
+			.textKey("BACK")
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getPlayOfflineMenu().setVisible(true);
+			})
+			.build();
+		backButton.setPosition(BACK_LOCATION);
+		addElement(backButton);
+		
+		addComponent(new Renderer());
 	}
 
-	@Override
-	public void tick() {}
-
-	@Override
-	public void render(DoaGraphicsContext g) {
-		g.drawImage(DoaSprites.get("SaveScroll"), 15, 148);
-		g.drawImage(DoaSprites.get("SaveMapContainter"), 127, 242);
-
-		g.drawImage(DoaSprites.get("SaveScroll"), 655, 148);
-		g.drawImage(DoaSprites.get("SaveMapContainter"), 767, 242);
-
-		g.drawImage(DoaSprites.get("SaveScroll"), 1295, 148);
-		g.drawImage(DoaSprites.get("SaveMapContainter"), 1407, 242);
-
-		g.drawImage(DoaSprites.get("SaveScroll"), 15, 540);
-		g.drawImage(DoaSprites.get("SaveMapContainter"), 127, 634);
-
-		g.drawImage(DoaSprites.get("SaveScroll"), 655, 540);
-		g.drawImage(DoaSprites.get("SaveMapContainter"), 767, 634);
+	
+	private final class Renderer extends DoaRenderer {
+		
+		private transient BufferedImage saveScroll;	
+		private transient BufferedImage saveMapContainer;
+		
+		private Renderer() {
+			saveScroll = UIConstants.getSaveScrollSprite();
+			saveMapContainer = UIConstants.getSaveMapContainerSprite();
+		}
+		
+		@Override
+		public void render() {
+			if(!isVisible()) { return; }
+			
+			DoaGraphicsFunctions.drawImage(saveScroll, 15, 148);
+			DoaGraphicsFunctions.drawImage(saveMapContainer, 127, 242);
+	
+			DoaGraphicsFunctions.drawImage(saveScroll, 655, 148);
+			DoaGraphicsFunctions.drawImage(saveMapContainer, 767, 242);
+	
+			DoaGraphicsFunctions.drawImage(saveScroll, 1295, 148);
+			DoaGraphicsFunctions.drawImage(saveMapContainer, 1407, 242);
+	
+			DoaGraphicsFunctions.drawImage(saveScroll, 15, 540);
+			DoaGraphicsFunctions.drawImage(saveMapContainer, 127, 634);
+	
+			DoaGraphicsFunctions.drawImage(saveScroll, 655, 540);
+			DoaGraphicsFunctions.drawImage(saveMapContainer, 767, 634);
+		}
 	}
 }

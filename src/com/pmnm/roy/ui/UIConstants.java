@@ -46,6 +46,9 @@ public final class UIConstants {
 	private static final String ARROW_LEFT_PRESSED = "ArrowLeftPressed";
 	private static final String ARROW_RIGHT_IDLE = "ArrowRightIdle";
 	private static final String ARROW_RIGHT_PRESSED = "ArrowRightPressed";
+	
+	private static final String SAVE_SCROLL = "SaveScroll";
+	private static final String SAVE_MAP_CONTAINER = "SaveMapContainer";
 
 	private static final String RULES_IMAGES = "pt";
 	private static final int RULES_IMAGES_COUNT = 6;
@@ -72,7 +75,7 @@ public final class UIConstants {
 	@Getter @NonNull private static RulesMenu rulesMenu;
 
 	@Getter @NonNull private static NewGameMenu newGameMenu;
-	public static LoadGameMenu lgm;
+	@Getter @NonNull private static LoadGameMenu loadGameMenu;
 	public static HostGameMenu hgm;
 	public static JoinGameMenu jgm;
 
@@ -94,6 +97,8 @@ public final class UIConstants {
 	@Getter @NonNull private static BufferedImage arrowLeftPressedSprite;
 	@Getter @NonNull private static BufferedImage arrowRightIdleSprite;
 	@Getter @NonNull private static BufferedImage arrowRightPressedSprite;
+	@Getter @NonNull private static BufferedImage saveScrollSprite;
+	@Getter @NonNull private static BufferedImage saveMapContainerSprite;
 	@Getter @NonNull private static BufferedImage[] rulesImages;
 	@Getter @NonNull private static BufferedImage lensImage;
 	@Getter @NonNull private static BufferedImage lensHoverImage;
@@ -123,6 +128,9 @@ public final class UIConstants {
 		arrowRightIdleSprite = DoaSprites.getSprite(ARROW_RIGHT_IDLE);
 		arrowRightPressedSprite = DoaSprites.getSprite(ARROW_RIGHT_PRESSED);
 		
+		saveScrollSprite = DoaSprites.getSprite(SAVE_SCROLL);
+		saveMapContainerSprite = DoaSprites.getSprite(SAVE_MAP_CONTAINER);
+		
 		rulesImages = new BufferedImage[RULES_IMAGES_COUNT];
 		for (int i = 0; i < RULES_IMAGES_COUNT; i++) {
 			rulesImages[i] = DoaSprites.getSprite(RULES_IMAGES + i);
@@ -151,7 +159,7 @@ public final class UIConstants {
 		settingsMenu = new SettingsMenu();
 		rulesMenu = new RulesMenu();
 		newGameMenu = new NewGameMenu();
-		//lgm = Builders.LGMB.scene(menuScene).instantiate();
+		loadGameMenu = new LoadGameMenu();
 		//hgm = Builders.HGMB.scene(menuScene).instantiate();
 		//jgm = Builders.JGMB.scene(menuScene).instantiate();
 		//ep = Builders.EPB.scene(menuScene).instantiate();
@@ -164,6 +172,7 @@ public final class UIConstants {
 		menuScene.add(settingsMenu);
 		menuScene.add(rulesMenu);
 		menuScene.add(newGameMenu);
+		menuScene.add(loadGameMenu);
 		menuScene.add(new SystemSpecs());
 		DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 	}
