@@ -68,7 +68,7 @@ public class NewGameMenu extends RoyMenu {
 		}
 
 		// COMBOBOXES
-		String[] names = new String[]{"MMMMMMMMMMMMMMMMMMMMMM","Doa","SMG"};
+		String[] names = new String[]{"Simge","Doa <3 ŞÜMOŞ","SMG"};
 		comboBox = new RoyComboBox(names);
 		comboBox.setPosition(COMBO_BOX_POSITION);
 		addElement(comboBox);
