@@ -239,7 +239,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 			
 			if(isOpen) {
 				DoaGraphicsFunctions.drawImage(dropDownBg, 0, mainBg.getHeight(), dropDownBg.getWidth(), dropDownBg.getHeight());
-				DoaGraphicsFunctions.drawImage(buttonIcon2, mainBg.getWidth() - buttonIcon2.getWidth() - 4, 3, buttonIcon2.getWidth(), buttonIcon2.getHeight());
+				DoaGraphicsFunctions.drawImage(buttonIcon2, mainBg.getWidth() - buttonIcon2.getWidth() - 3, 3, buttonIcon2.getWidth(), buttonIcon2.getHeight());
 
 				DoaGraphicsFunctions.pushTransform();
 				DoaGraphicsFunctions.resetTransform();
