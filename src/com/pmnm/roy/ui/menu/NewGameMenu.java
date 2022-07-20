@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,10 +16,9 @@ import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyComboBox;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
-import com.pmnm.roy.ui.ColorComboButton;
-import com.pmnm.roy.ui.DifficultyComboButton;
-import com.pmnm.roy.ui.TypeComboButton;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.util.Observable;
+import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -36,7 +36,7 @@ import pmnm.risk.map.MapData;
 import pmnm.risk.map.MapLoader;
 
 @SuppressWarnings("serial")
-public class NewGameMenu extends RoyMenu {
+public class NewGameMenu extends RoyMenu implements Observer {
 
 	private static final DoaVector PLAY_POSITION = new DoaVector(1377f, 715f);
 	private static final DoaVector BACK_POSITION = new DoaVector(1377f, 803f);
@@ -47,10 +47,8 @@ public class NewGameMenu extends RoyMenu {
 	private final RoyImageButton prevMapButton; 
 	private final RoyImageButton nextMapButton;
 
-	private static final DoaVector COMBO_BOX_POSITION = new DoaVector(960, 540);
-	private static final DoaVector COLOR_COMBO_BOX_POSITION = new DoaVector(560, 540);
-	private RoyComboBox comboBox;
-	private RoyComboBox comboBox2;
+	private static final DoaVector COMBO_BOX_POSITION = new DoaVector(150, 290);
+	private static final DoaVector COLOR_COMBO_BOX_POSITION = new DoaVector(400, 290);
 
 	/*
 	private static final RandomPlacementButton randomPlacementButton = Builders.RPBB
@@ -63,6 +61,9 @@ public class NewGameMenu extends RoyMenu {
 	private BufferedImage selectedMapPreview;
 	private String selectedMapName;
 	private int selectedMapIndex;
+
+	private List<Integer> selectedColorIndices = new ArrayList<>();
+	private List<RoyComboBox> colorComboBoxes = new ArrayList<>();
 	
 	public NewGameMenu() {
 		selectedMapIndex = 0;
@@ -74,14 +75,25 @@ public class NewGameMenu extends RoyMenu {
 
 		// COMBOBOXES
 		String[] names = new String[]{"Simge","Doa <3 ŞÜMOŞ","SMG"};
-		comboBox = new RoyComboBox(names);
-		comboBox.setPosition(COMBO_BOX_POSITION);
-		addElement(comboBox);
+		Color[] colors = PlayerColorBank.COLORS;
+		//Color[] colors = new Color[]{Color.RED, Color.GREEN, Color.BLUE};
+		for(int i = 0; i < 3; i++) {
+			RoyComboBox comboBox = new RoyComboBox(names);
+			comboBox.setPosition(new DoaVector(COMBO_BOX_POSITION.x, COMBO_BOX_POSITION.y + (i * 55)));
+			addElement(comboBox);
+			
+			RoyComboBox comboBox2 = new RoyComboBox(colors);
+			comboBox2.setPosition(new DoaVector(COLOR_COMBO_BOX_POSITION.x, COLOR_COMBO_BOX_POSITION.y + (i * 55)));
+			comboBox2.setSelectedIndex(i);
+			selectedColorIndices.add(i);
+			colorComboBoxes.add(comboBox2);
+			comboBox2.registerObserver(this);
+			addElement(comboBox2);
+		}
 		
-		Color[] colors = new Color[]{Color.BLUE, Color.RED, Color.GREEN};
-		comboBox2 = new RoyComboBox(PlayerColorBank.COLORS);
-		comboBox2.setPosition(COLOR_COMBO_BOX_POSITION);
-		addElement(comboBox2);
+		for(RoyComboBox b : colorComboBoxes) {
+			b.setLockedIndices(selectedColorIndices);
+		}
 		
 		// COMBOBOXES END
 		
@@ -277,6 +289,17 @@ public class NewGameMenu extends RoyMenu {
 		private enum Status {
 			OPEN, CLOSED, HUMAN;
 		}
+	}
+
+	@Override
+	public void onNotify(Observable b) {
+		selectedColorIndices.clear();
+		colorComboBoxes.forEach(c -> selectedColorIndices.add(c.getSelectedIndex()));
+		
+		for(RoyComboBox rcb : colorComboBoxes) {
+			rcb.setLockedIndices(selectedColorIndices);
+		}
+		
 	}
 	
 }

@@ -5,9 +5,14 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.UIUtils;
+import com.pmnm.roy.ui.ZOrders;
+import com.pmnm.util.Observable;
+import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -23,7 +28,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @SuppressWarnings("serial")
-public final class RoyComboBox extends DoaObject implements IRoyElement {
+public final class RoyComboBox extends DoaObject implements IRoyElement, Observable {
 
 	private final DoaVector SELECTED_ELEMENT_CONTENT_OFFSET = new DoaVector(10, 30);
 	private final DoaVector ELEMENT_CONTENT_OFFSET;
@@ -43,11 +48,15 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 	@Setter
 	private boolean isVisible;
 	private boolean isOpen = false;
+	@Getter
+	@Setter
 	private int selectedIndex = 0;
 	private Element[] elements;
 
 	private Type type;
 	private enum Type { STRING, COLOR, SPRITE; }
+	
+	private List<Integer> lockedIndices = new ArrayList<>();
 	
 	public RoyComboBox(String[] names) {
 		type = Type.STRING;
@@ -83,6 +92,10 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 		
 		addComponent(new Script());
 		addComponent(new Renderer());
+	}
+	
+	public void setLockedIndices(List<Integer> lockedIndeces) {
+		this.lockedIndices = lockedIndeces;
 	}
 	
 	@Override
@@ -139,22 +152,35 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 			return false;
 		}
 		
+		private void setOpen(boolean open) {
+			isOpen = open;
+			if(isOpen)
+				setzOrder(ZOrders.COMBOBOX_OPEN);
+			else
+				setzOrder(ZOrders.COMBOBOX_CLOSE);
+				
+		}
+		
 		@Override
 		public void tick() {
-			enableDebugRender = true;
+			enableDebugRender = false;
 			if (!isVisible) return;
-			
-			if (buttonArea().contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
-				if(DoaMouse.MB1_RELEASE) {
-					isOpen = !isOpen;
+			boolean isOpen = RoyComboBox.this.isOpen;
+			if(DoaMouse.MB1_RELEASE) {
+				if (buttonArea().contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
+					setOpen(!isOpen);
+				} else {
+					setOpen(false);
 				}
 			}
 			
 			if(!isOpen) return;
 			for(int i = 0; i < elements.length; i++) {
-				if(elementIsPressed(elements[i].elementArea)) {
+				if(elementIsPressed(elements[i].elementArea) && !RoyComboBox.this.lockedIndices.contains(i)) {
 					selectedIndex = i;
-					isOpen = false;
+					setOpen(false);
+					notifyObservers();
+					DoaMouse.MB1_RELEASE = false;
 				}
 			}
 		}
@@ -250,7 +276,19 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 					DoaGraphicsFunctions.setColor(elements[i].color);
 					DoaGraphicsFunctions.fill(elements[i].contentArea);
 					DoaGraphicsFunctions.drawImage(colorBorder, elements[i].elementArea.x, elements[i].elementArea.y, colorBorder.getWidth(), colorBorder.getHeight());
+					if(i == selectedIndex)
+						DoaGraphicsFunctions.drawImage(
+								colorBorderSelected,
+								elements[i].elementArea.x + 5,
+								elements[i].elementArea.y + 5,
+								colorBorder.getWidth() - 10,
+								colorBorder.getHeight() - 10);
+
+					DoaGraphicsFunctions.setColor(Color.GRAY);
+					if(i != selectedIndex && lockedIndices.contains(i))
+						DoaGraphicsFunctions.fill(elements[i].contentArea);
 				}
+				
 				DoaGraphicsFunctions.popTransform();
 			} else {
 				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
@@ -268,5 +306,17 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 		private Color color;
 		
 		public Element(int index) {}
+	}
+
+	List<Observer> observers = new ArrayList<>();
+	
+	@Override
+	public void registerObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		observers.forEach(o -> o.onNotify(this));
 	}
 }

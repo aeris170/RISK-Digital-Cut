@@ -15,6 +15,9 @@ public final class ZOrders {
 	public static final int POPUP_Z = 5;
 	public static final int EXIT_FADE_TO_BLACK_Z = 10;
 
+	public static final int COMBOBOX_CLOSE = 0;
+	public static final int COMBOBOX_OPEN = 1;
+
 	private ZOrders() {}
 
 }
