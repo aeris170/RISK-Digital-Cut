@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyComboBox;
@@ -74,7 +75,7 @@ public class NewGameMenu extends RoyMenu {
 		addElement(comboBox);
 		
 		Color[] colors = new Color[]{Color.BLUE, Color.RED, Color.GREEN};
-		comboBox2 = new RoyComboBox(colors);
+		comboBox2 = new RoyComboBox(PlayerColorBank.COLORS);
 		comboBox2.setPosition(COLOR_COMBO_BOX_POSITION);
 		addElement(comboBox2);
 		
