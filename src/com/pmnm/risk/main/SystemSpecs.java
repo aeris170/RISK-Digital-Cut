@@ -21,6 +21,7 @@ public final class SystemSpecs extends DoaObject {
 	private DoaDisplay display;
 	
 	public SystemSpecs() {
+		DoaEngineInfo.initialize();
 		runtime = DoaEngineInfo.getRuntimeInfo();
 		display = DoaEngineInfo.getDisplayInfo().getDisplayDevices().get(0);
 		gpu = DoaEngineInfo.getGpuInfo().getGraphicsCards().get(0);
@@ -51,11 +52,12 @@ public final class SystemSpecs extends DoaObject {
 			renderText("Operating System: " + os.getName());
 			renderText("----");
 			renderText("CPU: " + cpu.getModelName());
+			renderText("C°: " + cpu.getTemperature());
 			renderText("Clock Frequency: " + cpu.getMhz() + "MHz");
 			renderText("RAM: " + memory.getTotalMemory());
 			renderText("----");
 			renderText("GPU: " + gpu.getName());
-			renderText("C�: " + gpu.getTemperature());
+			renderText("C°: " + gpu.getTemperature());
 			renderText("RESOLUTION: " + display.getCurrentResolution());
 			renderText("REFRESH RATE: " + display.getRefreshRate());
 			
