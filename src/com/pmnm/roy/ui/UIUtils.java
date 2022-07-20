@@ -34,14 +34,14 @@ public final class UIUtils {
 	public static final Font adjustFontToFitInArea(String text, DoaVector area) {
 		return UIConstants.getFont().deriveFont(
 			Font.PLAIN,
-			Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), area, text)
+			DoaGraphicsFunctions.warpX(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), area, text))
 		);
 	}
 	
-	public static final String limitString(Font font, String string, int width) {
+	public static final String limitString(Font font, String string, float width) {
 		return limitString(font, string, width, "...");
 	}
-	public static final String limitString(Font font, String string, int width, String limiter) {
+	public static final String limitString(Font font, String string, float width, String limiter) {
 		if (textWidth(font, string) < width) { return string; }
 		
 		int limiterWidth = textWidth(font, limiter);
@@ -54,7 +54,7 @@ public final class UIUtils {
 		return sub + limiter;
 	}
 	
-	public static final String[] wrapString(Font font, String string, int width) {
+	public static final String[] wrapString(Font font, String string, float width) {
 		List<String> strings = new ArrayList<>();
 		
 		String[] words = string.split(" ");
