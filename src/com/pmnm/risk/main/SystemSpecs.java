@@ -11,7 +11,7 @@ import doa.engine.utils.hardwareinfo.*;
 @SuppressWarnings("serial")
 public final class SystemSpecs extends DoaObject {
 	
-	public static boolean isVisible = true;
+	public static boolean isVisible = false;
 
 	private DoaRuntimeInfo runtime;
 	private DoaOSInfo os;
@@ -21,6 +21,8 @@ public final class SystemSpecs extends DoaObject {
 	private DoaDisplay display;
 	
 	public SystemSpecs() {
+		if (!isVisible) { return; }
+		
 		DoaEngineInfo.initialize();
 		runtime = DoaEngineInfo.getRuntimeInfo();
 		display = DoaEngineInfo.getDisplayInfo().getDisplayDevices().get(0);
