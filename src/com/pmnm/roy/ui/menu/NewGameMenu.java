@@ -29,7 +29,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
+import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.map.MapConfig;
+import pmnm.risk.map.MapData;
+import pmnm.risk.map.MapLoader;
 
 @SuppressWarnings("serial")
 public class NewGameMenu extends RoyMenu {
@@ -83,7 +87,7 @@ public class NewGameMenu extends RoyMenu {
 		
 		RoyButton playButton = RoyButton.builder()
 			.textKey("PLAY")
-			.action(() -> {}) // TODO
+			.action(this::startGame)
 			.build();
 		playButton.setPosition(PLAY_POSITION);
 		addElement(playButton);
@@ -178,6 +182,13 @@ public class NewGameMenu extends RoyMenu {
 		selectedMapName = config.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = config.getBackgroundImagePreview();
 		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.font = null);
+	}
+	
+	private void startGame() {
+		List<@NonNull MapConfig> configs = MapConfig.getConfigs();
+		MapConfig selectedConfig = configs.get(selectedMapIndex);
+		MapData data = MapLoader.loadMap(selectedConfig);
+		IRiskGameContext context = RiskGameContext.of(data);
 	}
 	
 	private final class Renderer extends DoaRenderer {
