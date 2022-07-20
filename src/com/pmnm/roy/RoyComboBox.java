@@ -36,6 +36,8 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 	private transient BufferedImage dropDownBg;
 	
 	private transient BufferedImage colorBorder;
+	
+	private transient BufferedImage colorBorderSelected;
 
 	@Getter
 	@Setter
@@ -77,6 +79,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 		mainBg = DoaSprites.getSprite("ColorBorder");
 		dropDownBg = DoaSprites.getSprite("DropDownColor");
 		colorBorder = DoaSprites.getSprite("ColorBorder");
+		colorBorderSelected = DoaSprites.getSprite("ColorBorderSelected");
 		
 		addComponent(new Script());
 		addComponent(new Renderer());
