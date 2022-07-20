@@ -45,10 +45,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 	private Element[] elements;
 
 	private Type type;
-	private enum Type {
-		STRING, COLOR, SPRITE;
-	}
-	
+	private enum Type { STRING, COLOR, SPRITE; }
 	
 	public RoyComboBox(String[] names) {
 		type = Type.STRING;
@@ -260,7 +257,6 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 		private String name;
 		private Color color;
 		
-		public Element(int index) {
-		}
+		public Element(int index) {}
 	}
 }
