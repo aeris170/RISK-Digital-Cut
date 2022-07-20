@@ -23,7 +23,28 @@ public class Main extends DoaGame {
 	public static void main(final String[] args) { launch(args); }
 
 	@Override
-	public void initialize(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
+	public void initializeEngine(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
+		Locale.setDefault(Locale.ENGLISH);
+		//DoaLogger.LOGGER.setLevel(LogLevel.FINEST);
+		eSettings.REFERENCE_RESOLUTION = new DoaVector(WINDOW_WIDTH, WINDOW_HEIGHT);
+		eSettings.TICK_RATE = 240;
+		eSettings.RENDERING_MODE = DoaRenderingMode.BALANCED;
+
+		wSettings.TITLE = "RISK Digital Cut!";
+		wSettings.DEFAULT_CURSOR = Toolkit.getDefaultToolkit().createCustomCursor(
+			new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(),
+			new Point(0, 0),
+	        "Kaan's Cursor"
+		);
+		wSettings.ICON = new ImageIcon(Main.class.getResource("/ui/icon.png")).getImage();
+		wSettings.RESOLUTION_OD = new DoaVector(WINDOW_WIDTH, WINDOW_HEIGHT);
+		wSettings.WM = DoaWindowMode.WINDOWED;
+
+		Globals.initilaizeGlobals();
+	}
+	
+	@Override
+	public void initializeGame(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
 		Locale.setDefault(Locale.ENGLISH);
 		//DoaLogger.LOGGER.setLevel(LogLevel.FINEST);
 		eSettings.REFERENCE_RESOLUTION = new DoaVector(WINDOW_WIDTH, WINDOW_HEIGHT);
