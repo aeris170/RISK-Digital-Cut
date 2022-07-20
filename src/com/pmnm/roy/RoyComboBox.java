@@ -93,7 +93,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 		transform.position.y = position.y;
 		
 		for(int i = 0; i < elements.length; i++) {
-			int[] pos = DoaGraphicsFunctions.warp(transform.position.x + ELEMENT_OFFSET.x, transform.position.y + mainBg.getHeight() + (mainBg.getHeight() - 13) * i + ELEMENT_OFFSET.y);
+			int[] pos = DoaGraphicsFunctions.warp(position.x + ELEMENT_OFFSET.x, position.y + mainBg.getHeight() + (mainBg.getHeight() - 13) * i + ELEMENT_OFFSET.y);
 			int[] size = DoaGraphicsFunctions.warp(dropDownBg.getWidth() - ELEMENT_OFFSET.x * 2, mainBg.getHeight() - ELEMENT_OFFSET.y * 2 - 2);
 			
 			elements[i].contentArea = new Rectangle(pos[0], pos[1], size[0], size[1]);
