@@ -11,6 +11,7 @@ import java.util.Locale;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.UIUtils;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -133,10 +134,7 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 			if (!isVisible) return;
 			if (font == null) {
 				contentSize = new DoaVector(image.getWidth() * 0.70f, image.getHeight() * 0.70f);
-				font = UIConstants.getFont().deriveFont(
-					Font.PLAIN,
-					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), contentSize, text), 0)[0]
-				);
+				font = UIUtils.adjustFontToFitInArea(text, contentSize);
 							
 				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
 				int stringWidth = fm.stringWidth(text);

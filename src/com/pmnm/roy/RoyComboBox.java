@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.UIUtils;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -166,10 +167,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 			if (font == null) {
 				int[] size = DoaGraphicsFunctions.warp(mainBg.getWidth() - 10, mainBg.getHeight() - 10);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
-				font = UIConstants.getFont().deriveFont(
-					Font.PLAIN,
-					Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), contentSize, "COMBOBOXboxbox")
-				);
+				font = UIUtils.adjustFontToFitInArea("COMBOBOXboxbox", contentSize);
 			}
 
 			DoaGraphicsFunctions.setFont(font);
@@ -195,20 +193,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 				
 				DoaGraphicsFunctions.setColor(Color.WHITE);
 				for (int i = 0; i < elements.length; i++) {
-					String text = elements[i].name;
-					int len = elements[i].name.length();
-					FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
-					if(fm.stringWidth(elements[i].name) > dropDownBg.getWidth() * .9) {
-						String sub = elements[i].name.substring(0, len);
-						sub += "...";
-						while(fm.stringWidth(sub) > dropDownBg.getWidth() * .9) {
-							len--;
-							sub = elements[i].name.substring(0, len);
-							sub += "...";
-						}
-						text = sub;
-					}
-					
+					String text = UIUtils.limitString(font, elements[i].name, dropDownBg.getWidth() * 0.9f);
 					DoaGraphicsFunctions.drawString(text, ELEMENT_CONTENT_OFFSET.x, mainBg.getHeight() + elements[i].contentArea.height * (i + 1) + ELEMENT_CONTENT_OFFSET.y);
 				}
 			} else {

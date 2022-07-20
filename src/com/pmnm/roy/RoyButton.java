@@ -10,6 +10,7 @@ import java.util.Locale;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.UIUtils;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -134,11 +135,8 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			if (font == null) {
 				int[] size = DoaGraphicsFunctions.warp(image.getWidth()* .70f, image.getHeight() * .70f);
 				contentSize = new DoaVector(size[0], size[1]);
-				font = UIConstants.getFont().deriveFont(
-					Font.PLAIN,
-					Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), contentSize, text)
-				);
-				textHeight = DoaGraphicsFunctions.getFontMetrics(font).getHeight();
+				font = UIUtils.adjustFontToFitInArea(text, contentSize);
+				textHeight = UIUtils.textHeight(font);
 			}
 			
 			DoaGraphicsFunctions.pushAll();
