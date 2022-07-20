@@ -109,7 +109,14 @@ public final class RoyComboBox extends DoaObject implements IRoyElement {
 
 	@Override
 	public Rectangle getContentArea() {
-		return null;
+		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
+		int[] size = DoaGraphicsFunctions.warp(mainBg.getWidth(), mainBg.getHeight());
+		return new Rectangle(
+			pos[0],
+			pos[1],
+			size[0],
+			size[1]
+		);
 	}
 	
 	private final class Script extends DoaScript {
