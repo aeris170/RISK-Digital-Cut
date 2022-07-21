@@ -54,7 +54,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 	private Element[] elements;
 
 	private Type type;
-	private enum Type { STRING, COLOR, SPRITE; }
+	private enum Type { STRING, COLOR, IMAGE; }
 	
 	private List<Integer> lockedIndices = new ArrayList<>();
 	
@@ -83,6 +83,25 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		for(int i = 0; i < colors.length; i++) {
 			elements[i] = new Element(i);
 			elements[i].color = colors[i];
+		}
+
+		mainBg = DoaSprites.getSprite("ColorBorder");
+		dropDownBg = DoaSprites.getSprite("DropDownColor");
+		colorBorder = DoaSprites.getSprite("ColorBorder");
+		colorBorderSelected = DoaSprites.getSprite("ColorBorderSelected");
+		
+		addComponent(new Script());
+		addComponent(new Renderer());
+	}
+	
+	public RoyComboBox(BufferedImage[] images) {
+		type = Type.IMAGE;
+		ELEMENT_CONTENT_OFFSET = new DoaVector(3, 3);
+		
+		elements = new Element[images.length];
+		for(int i = 0; i < images.length; i++) {
+			elements[i] = new Element(i);
+			elements[i].image = images[i];
 		}
 
 		mainBg = DoaSprites.getSprite("ColorBorder");
@@ -225,6 +244,8 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				stringCBRender();
 			} else if(type == Type.COLOR) {
 				colorCBRender();
+			} else if(type == Type.IMAGE) {
+				imageCBRender();
 			}
 		}
 		
@@ -294,6 +315,48 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
 			}
 		}
+		
+		private void imageCBRender() {
+			//DoaGraphicsFunctions.setColor(elements[selectedIndex].color);
+			//DoaGraphicsFunctions.fillRect(ELEMENT_CONTENT_OFFSET.x, ELEMENT_CONTENT_OFFSET.y, elements[0].elementArea.width - ELEMENT_CONTENT_OFFSET.x * 2, mainBg.getHeight() - ELEMENT_CONTENT_OFFSET.y * 2);
+			DoaGraphicsFunctions.drawImage(elements[selectedIndex].image, 0, 0, elements[selectedIndex].image.getWidth() / 2, elements[selectedIndex].image.getHeight() / 2);
+			DoaGraphicsFunctions.drawImage(mainBg, 0, 0, mainBg.getWidth(), mainBg.getHeight());
+			
+			if(isOpen) {
+				DoaGraphicsFunctions.drawImage(dropDownBg, 0, mainBg.getHeight(), dropDownBg.getWidth(), dropDownBg.getHeight());
+				DoaGraphicsFunctions.drawImage(buttonIcon2, mainBg.getWidth() - buttonIcon2.getWidth() - 3, 3, buttonIcon2.getWidth(), buttonIcon2.getHeight());
+
+				DoaGraphicsFunctions.pushTransform();
+				DoaGraphicsFunctions.resetTransform();
+				for (int i = 0; i < elements.length; i++) {
+					//DoaGraphicsFunctions.setColor(elements[i].color);
+					//DoaGraphicsFunctions.fill(elements[i].contentArea);
+					DoaGraphicsFunctions.drawImage(
+							elements[i].image,
+							elements[i].elementArea.x + elements[i].elementArea.width,
+							elements[i].elementArea.y + elements[i].elementArea.height,
+							elements[i].image.getWidth() / 2,
+							elements[i].image.getHeight() / 2
+						);
+					DoaGraphicsFunctions.drawImage(colorBorder, elements[i].elementArea.x, elements[i].elementArea.y, colorBorder.getWidth(), colorBorder.getHeight());
+					if(i == selectedIndex)
+						DoaGraphicsFunctions.drawImage(
+								colorBorderSelected,
+								elements[i].elementArea.x + 5,
+								elements[i].elementArea.y + 5,
+								colorBorder.getWidth() - 10,
+								colorBorder.getHeight() - 10);
+
+					DoaGraphicsFunctions.setColor(Color.GRAY);
+					if(i != selectedIndex && lockedIndices.contains(i))
+						DoaGraphicsFunctions.fill(elements[i].contentArea);
+				}
+				
+				DoaGraphicsFunctions.popTransform();
+			} else {
+				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
+			}
+		}
 	}
 	
 	@ToString(includeFieldNames = true)
@@ -304,6 +367,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		private Rectangle contentArea;
 		private String name;
 		private Color color;
+		private BufferedImage image;
 		
 		public Element(int index) {}
 	}

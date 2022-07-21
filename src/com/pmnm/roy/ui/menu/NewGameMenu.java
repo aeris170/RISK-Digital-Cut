@@ -49,6 +49,7 @@ public class NewGameMenu extends RoyMenu implements Observer {
 
 	private static final DoaVector COMBO_BOX_POSITION = new DoaVector(150, 290);
 	private static final DoaVector COLOR_COMBO_BOX_POSITION = new DoaVector(400, 290);
+	private static final DoaVector PAWN_COMBO_BOX_POSITION = new DoaVector(550, 290);
 
 	/*
 	private static final RandomPlacementButton randomPlacementButton = Builders.RPBB
@@ -64,6 +65,7 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	private List<Integer> selectedColorIndices = new ArrayList<>();
 	private List<RoyComboBox> playerComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> colorComboBoxes = new ArrayList<>();
+	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
 	
 	public NewGameMenu() {
 		selectedMapIndex = 0;
@@ -82,6 +84,14 @@ public class NewGameMenu extends RoyMenu implements Observer {
 			//"AI Impossible"
 		};
 		Color[] colors = PlayerColorBank.COLORS;
+		BufferedImage[] pawns = new BufferedImage[]{
+				DoaSprites.getSprite("p1Pawn"),
+				DoaSprites.getSprite("p2Pawn"),
+				DoaSprites.getSprite("p3Pawn"),
+				DoaSprites.getSprite("p4Pawn"),
+				DoaSprites.getSprite("p5Pawn"),
+				DoaSprites.getSprite("p6Pawn")
+			};
 		slots = new Slot[Globals.MAX_NUM_PLAYERS];
 		for(int i = 0; i < slots.length; i++) {
 			slots[i] = new Slot(i);
@@ -99,8 +109,16 @@ public class NewGameMenu extends RoyMenu implements Observer {
 			addElement(colorBox);
 			colorComboBoxes.add(colorBox);
 			
+			RoyComboBox pawnBox = new RoyComboBox(pawns);
+			pawnBox.setPosition(new DoaVector(PAWN_COMBO_BOX_POSITION.x, PAWN_COMBO_BOX_POSITION.y + (i * 55)));
+			pawnBox.setSelectedIndex(i);
+			pawnBox.registerObserver(this);
+			addElement(pawnBox);
+			pawnComboBoxes.add(pawnBox);
+			
 			slots[i].playerBox = playerBox;
 			slots[i].colorBox = colorBox;
+			slots[i].pawnBox = pawnBox;
 		}
 		// COMBOBOXES END
 		
