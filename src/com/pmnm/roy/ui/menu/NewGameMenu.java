@@ -37,6 +37,8 @@ import pmnm.risk.map.MapLoader;
 
 @SuppressWarnings("serial")
 public class NewGameMenu extends RoyMenu implements Observer {
+	
+	public enum Type { SINGLE_PLAYER, MULTI_PLAYER }
 
 	private static final DoaVector PLAY_POSITION = new DoaVector(1377f, 715f);
 	private static final DoaVector BACK_POSITION = new DoaVector(1377f, 803f);
@@ -67,22 +69,28 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	private List<RoyComboBox> colorComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
 	
-	public NewGameMenu() {
+	public NewGameMenu(Type t) {
 		selectedMapIndex = 0;
 		setSelectedMap(MapConfig.getConfigs().get(selectedMapIndex));
 
 		// COMBOBOXES
-		String[] names = new String[] { 
-			"OPEN",
-			"CLOSED",
-			"Local Player",
-			//"AI Passive",
-			//"AI Easy",
-			//"AI Medium",
-			//"AI Hard",
-			//"AI Insane",
-			//"AI Impossible"
-		};
+		String[] names = new String[3];
+		if (t == Type.SINGLE_PLAYER) {
+			names[0] = "OPEN";
+			names[1] = "LOCAL_PLAYER";
+			names[2] = "AI";
+				//"AI Passive",
+				//"AI Easy",
+				//"AI Medium",
+				//"AI Hard",
+				//"AI Insane",
+				//"AI Impossible"
+		} else if (t == Type.MULTI_PLAYER) {
+			names[0] = "OPEN";
+			names[1] = "CLOSED";
+			names[2] = "AI";
+		} else { throw new IllegalArgumentException("wtf"); }
+		
 		Color[] colors = PlayerColorBank.COLORS;
 		BufferedImage[] pawns = new BufferedImage[]{
 				DoaSprites.getSprite("p1Pawn"),

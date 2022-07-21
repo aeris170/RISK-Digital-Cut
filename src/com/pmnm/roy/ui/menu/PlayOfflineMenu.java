@@ -19,7 +19,7 @@ public class PlayOfflineMenu extends RoyMenu {
 			.textKey("NEW_GAME")
 			.action(() -> {
 				setVisible(false);
-				UIConstants.getNewGameMenu().setVisible(true);
+				UIConstants.getNewGameMenuSP().setVisible(true);
 			})
 			.build();
 		newGameButton.setPosition(NEW_GAME_LOCATION);

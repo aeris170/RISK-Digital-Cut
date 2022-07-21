@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.EnumMap;
 
+import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.localization.Translator.Language;
 import com.pmnm.risk.main.SystemSpecs;
@@ -65,6 +66,8 @@ public final class UIConstants {
 	private static final String IT = "Italian";
 	private static final String RU = "Russian";
 	private static final String TR = "Turkish";
+	
+	private static final String PLAYER_PAWN = "p_Pawn";
 
 	public static final int FLEUR_WIDTH = DoaSprites.getSprite(FLEUR_DE_LIS).getWidth() / 6;
 	public static final int FLEUR_HEIGHT = DoaSprites.getSprite(FLEUR_DE_LIS).getHeight() / 6;
@@ -76,8 +79,9 @@ public final class UIConstants {
 	@Getter @NonNull private static SettingsMenu settingsMenu;
 	@Getter @NonNull private static RulesMenu rulesMenu;
 
-	@Getter @NonNull private static NewGameMenu newGameMenu;
+	@Getter @NonNull private static NewGameMenu newGameMenuSP;
 	@Getter @NonNull private static LoadGameMenu loadGameMenu;
+	@Getter @NonNull private static NewGameMenu newGameMenuMP;
 	public static HostGameMenu hgm;
 	public static JoinGameMenu jgm;
 
@@ -164,8 +168,9 @@ public final class UIConstants {
 		playOnlineMenu = new PlayOnlineMenu();
 		settingsMenu = new SettingsMenu();
 		rulesMenu = new RulesMenu();
-		newGameMenu = new NewGameMenu();
+		newGameMenuSP = new NewGameMenu(NewGameMenu.Type.SINGLE_PLAYER);
 		loadGameMenu = new LoadGameMenu();
+		newGameMenuMP = new NewGameMenu(NewGameMenu.Type.MULTI_PLAYER);
 		//hgm = Builders.HGMB.scene(menuScene).instantiate();
 		//jgm = Builders.JGMB.scene(menuScene).instantiate();
 		//ep = Builders.EPB.scene(menuScene).instantiate();
@@ -177,8 +182,9 @@ public final class UIConstants {
 		menuScene.add(playOnlineMenu);
 		menuScene.add(settingsMenu);
 		menuScene.add(rulesMenu);
-		menuScene.add(newGameMenu);
+		menuScene.add(newGameMenuSP);
 		menuScene.add(loadGameMenu);
+		menuScene.add(newGameMenuMP);
 		menuScene.add(new SystemSpecs());
 		DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 	}
