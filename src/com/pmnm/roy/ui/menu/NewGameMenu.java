@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
@@ -59,7 +60,9 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	private String selectedMapName;
 	private int selectedMapIndex;
 
+	private Slot[] slots;
 	private List<Integer> selectedColorIndices = new ArrayList<>();
+	private List<RoyComboBox> playerComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> colorComboBoxes = new ArrayList<>();
 	
 	public NewGameMenu() {
@@ -67,26 +70,38 @@ public class NewGameMenu extends RoyMenu implements Observer {
 		setSelectedMap(MapConfig.getConfigs().get(selectedMapIndex));
 
 		// COMBOBOXES
-		String[] names = new String[]{"Simge","Doa <3 ŞÜMOŞ","SMG"};
+		String[] names = new String[] { 
+			"OPEN",
+			"CLOSED",
+			"Local Player",
+			//"AI Passive",
+			//"AI Easy",
+			//"AI Medium",
+			//"AI Hard",
+			//"AI Insane",
+			//"AI Impossible"
+		};
 		Color[] colors = PlayerColorBank.COLORS;
-		for(int i = 0; i < 3; i++) {
-			RoyComboBox comboBox = new RoyComboBox(names);
-			comboBox.setPosition(new DoaVector(COMBO_BOX_POSITION.x, COMBO_BOX_POSITION.y + (i * 55)));
-			addElement(comboBox);
+		slots = new Slot[Globals.MAX_NUM_PLAYERS];
+		for(int i = 0; i < slots.length; i++) {
+			slots[i] = new Slot(i);
+			
+			RoyComboBox playerBox = new RoyComboBox(names);
+			playerBox.setPosition(new DoaVector(COMBO_BOX_POSITION.x, COMBO_BOX_POSITION.y + (i * 55)));
+			playerBox.registerObserver(this);
+			addElement(playerBox);
+			playerComboBoxes.add(playerBox);
 			
 			RoyComboBox colorBox = new RoyComboBox(colors);
 			colorBox.setPosition(new DoaVector(COLOR_COMBO_BOX_POSITION.x, COLOR_COMBO_BOX_POSITION.y + (i * 55)));
 			colorBox.setSelectedIndex(i);
-			selectedColorIndices.add(i);
-			colorComboBoxes.add(colorBox);
 			colorBox.registerObserver(this);
 			addElement(colorBox);
+			colorComboBoxes.add(colorBox);
+			
+			slots[i].playerBox = playerBox;
+			slots[i].colorBox = colorBox;
 		}
-		
-		for(RoyComboBox b : colorComboBoxes) {
-			b.setLockedIndices(selectedColorIndices);
-		}
-		
 		// COMBOBOXES END
 		
 		RoyButton playButton = RoyButton.builder()
@@ -272,25 +287,36 @@ public class NewGameMenu extends RoyMenu implements Observer {
 		// private RoyToggleButton readyButton;
 		
 		private String playerName;
-		private int playerColor;
-		private final int playerPawn;
 		
 		private Slot(int index) {
 			playerName = null;
-			playerColor = index;
-			playerPawn = index;
 		}
 
+		private boolean hasPlayer() { return playerBox.getSelectedIndex() != 0 && playerBox.getSelectedIndex() != 1; }
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
+	}
+	
+	@Override
+	public void setVisible(boolean value) {
+		super.setVisible(value);
+		for(Slot slot : slots) {
+			slot.colorBox.setVisible(slot.hasPlayer());
+			//slot.pawnBox.setVisible(slot.hasPlayer());
+		}
 	}
 
 	@Override
 	public void onNotify(Observable b) {
 		selectedColorIndices.clear();
-		colorComboBoxes.forEach(c -> selectedColorIndices.add(c.getSelectedIndex()));
-		
-		for(RoyComboBox rcb : colorComboBoxes) {
-			rcb.setLockedIndices(selectedColorIndices);
+		for(int i = 0; i < slots.length; i++) {
+			Slot slot = slots[i];
+			slot.colorBox.setVisible(slot.hasPlayer());
+			if(slot.hasPlayer()) {
+				selectedColorIndices.add(slot.colorBox.getSelectedIndex());
+			}
+			//slot.pawnBox.setVisible(slot.hasPlayer());
 		}
+		
+		colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
 	}
 }
