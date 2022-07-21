@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
