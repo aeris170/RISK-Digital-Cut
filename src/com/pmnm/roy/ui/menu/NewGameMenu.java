@@ -92,14 +92,7 @@ public class NewGameMenu extends RoyMenu implements Observer {
 		} else { throw new IllegalArgumentException("wtf"); }
 		
 		Color[] colors = PlayerColorBank.COLORS;
-		BufferedImage[] pawns = new BufferedImage[]{
-				DoaSprites.getSprite("p1Pawn"),
-				DoaSprites.getSprite("p2Pawn"),
-				DoaSprites.getSprite("p3Pawn"),
-				DoaSprites.getSprite("p4Pawn"),
-				DoaSprites.getSprite("p5Pawn"),
-				DoaSprites.getSprite("p6Pawn")
-			};
+		BufferedImage[] pawns = UIConstants.getPlayerPawnSprites();
 		slots = new Slot[Globals.MAX_NUM_PLAYERS];
 		for(int i = 0; i < slots.length; i++) {
 			slots[i] = new Slot(i);

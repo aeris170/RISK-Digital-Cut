@@ -112,6 +112,7 @@ public final class UIConstants {
 	@Getter @NonNull private static BufferedImage lensHoverImage;
 	@Getter @NonNull private static BufferedImage lensSelectedImage;
 	@Getter @NonNull private static final EnumMap<Language, BufferedImage> languageImages = new EnumMap<>(Language.class);
+	@Getter @NonNull private static final BufferedImage[] playerPawnSprites = new BufferedImage[Globals.MAX_NUM_PLAYERS];
 	@Getter @NonNull private static Font font;
 	@Getter @NonNull private static final Color textColor = new Color(189, 164, 79);
 	@Getter @NonNull private static final Color hoverTextColor = new Color(94, 82, 42);
@@ -157,6 +158,10 @@ public final class UIConstants {
 		languageImages.put(Language.IT, DoaSprites.getSprite(IT));
 		languageImages.put(Language.RU, DoaSprites.getSprite(RU));
 		languageImages.put(Language.TR, DoaSprites.getSprite(TR));
+		
+		for(int i = 0; i < playerPawnSprites.length; i++) {
+			playerPawnSprites[i] = DoaSprites.getSprite(PLAYER_PAWN.replace('_', (char)('0' + i)));
+		}
 		
 		font = DoaFonts.getFont("BookAntiqua");
 		
