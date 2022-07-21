@@ -51,7 +51,7 @@ public class NewGameMenu extends RoyMenu implements Observer {
 
 	private static final DoaVector COMBO_BOX_POSITION = new DoaVector(150, 290);
 	private static final DoaVector COLOR_COMBO_BOX_POSITION = new DoaVector(400, 290);
-	private static final DoaVector PAWN_COMBO_BOX_POSITION = new DoaVector(550, 290);
+	private static final DoaVector PAWN_COMBO_BOX_POSITION = new DoaVector(508, 290);
 
 	/*
 	private static final RandomPlacementButton randomPlacementButton = Builders.RPBB
@@ -65,6 +65,7 @@ public class NewGameMenu extends RoyMenu implements Observer {
 
 	private Slot[] slots;
 	private List<Integer> selectedColorIndices = new ArrayList<>();
+	private List<Integer> selectedPawnIndices = new ArrayList<>();
 	private List<RoyComboBox> playerComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> colorComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
@@ -122,6 +123,7 @@ public class NewGameMenu extends RoyMenu implements Observer {
 			slots[i].pawnBox = pawnBox;
 		}
 		// COMBOBOXES END
+		slots[0].playerBox.setSelectedOverload("Simge");
 		
 		RoyButton playButton = RoyButton.builder()
 			.textKey("PLAY")
@@ -320,22 +322,25 @@ public class NewGameMenu extends RoyMenu implements Observer {
 		super.setVisible(value);
 		for(Slot slot : slots) {
 			slot.colorBox.setVisible(slot.hasPlayer());
-			//slot.pawnBox.setVisible(slot.hasPlayer());
+			slot.pawnBox.setVisible(slot.hasPlayer());
 		}
 	}
 
 	@Override
 	public void onNotify(Observable b) {
 		selectedColorIndices.clear();
+		selectedPawnIndices.clear();
 		for(int i = 0; i < slots.length; i++) {
 			Slot slot = slots[i];
-			slot.colorBox.setVisible(slot.hasPlayer());
 			if(slot.hasPlayer()) {
 				selectedColorIndices.add(slot.colorBox.getSelectedIndex());
+				selectedPawnIndices.add(slot.colorBox.getSelectedIndex());
 			}
-			//slot.pawnBox.setVisible(slot.hasPlayer());
+			slot.colorBox.setVisible(slot.hasPlayer());
+			slot.pawnBox.setVisible(slot.hasPlayer());
 		}
 		
 		colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
+		pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
 	}
 }
