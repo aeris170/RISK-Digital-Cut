@@ -160,7 +160,7 @@ public final class UIConstants {
 		languageImages.put(Language.TR, DoaSprites.getSprite(TR));
 		
 		for(int i = 0; i < playerPawnSprites.length; i++) {
-			playerPawnSprites[i] = DoaSprites.getSprite(PLAYER_PAWN.replace('_', (char)('0' + i)));
+			playerPawnSprites[i] = DoaSprites.getSprite(PLAYER_PAWN.replace('_', (char)('1' + i)));
 		}
 		
 		font = DoaFonts.getFont("BookAntiqua");
