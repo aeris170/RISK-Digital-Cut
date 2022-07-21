@@ -56,8 +56,6 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	        .instantiate();
 	*/
 
-	private final Slot[] slots = new Slot[Globals.MAX_NUM_PLAYERS];
-
 	private BufferedImage selectedMapPreview;
 	private String selectedMapName;
 	private int selectedMapIndex;
@@ -69,26 +67,21 @@ public class NewGameMenu extends RoyMenu implements Observer {
 		selectedMapIndex = 0;
 		setSelectedMap(MapConfig.getConfigs().get(selectedMapIndex));
 
-		for (int i = 0; i < slots.length; i++) {
-			slots[i] = new Slot(i);
-		}
-
 		// COMBOBOXES
 		String[] names = new String[]{"Simge","Doa <3 ŞÜMOŞ","SMG"};
 		Color[] colors = PlayerColorBank.COLORS;
-		//Color[] colors = new Color[]{Color.RED, Color.GREEN, Color.BLUE};
 		for(int i = 0; i < 3; i++) {
 			RoyComboBox comboBox = new RoyComboBox(names);
 			comboBox.setPosition(new DoaVector(COMBO_BOX_POSITION.x, COMBO_BOX_POSITION.y + (i * 55)));
 			addElement(comboBox);
 			
-			RoyComboBox comboBox2 = new RoyComboBox(colors);
-			comboBox2.setPosition(new DoaVector(COLOR_COMBO_BOX_POSITION.x, COLOR_COMBO_BOX_POSITION.y + (i * 55)));
-			comboBox2.setSelectedIndex(i);
+			RoyComboBox colorBox = new RoyComboBox(colors);
+			colorBox.setPosition(new DoaVector(COLOR_COMBO_BOX_POSITION.x, COLOR_COMBO_BOX_POSITION.y + (i * 55)));
+			colorBox.setSelectedIndex(i);
 			selectedColorIndices.add(i);
-			colorComboBoxes.add(comboBox2);
-			comboBox2.registerObserver(this);
-			addElement(comboBox2);
+			colorComboBoxes.add(colorBox);
+			colorBox.registerObserver(this);
+			addElement(colorBox);
 		}
 		
 		for(RoyComboBox b : colorComboBoxes) {
@@ -274,21 +267,22 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	@EqualsAndHashCode(callSuper = true)
 	private static final class Slot extends DoaObject {
 		
-		private Status status;
+		private RoyComboBox playerBox;
+		private RoyComboBox colorBox;
+		private RoyComboBox pawnBox;
+		// private RoyToggleButton readyButton;
+		
 		private String playerName;
 		private int playerColor;
 		private final int playerPawn;
 		
 		private Slot(int index) {
-			status = Status.OPEN;
 			playerName = null;
 			playerColor = index;
 			playerPawn = index;
 		}
-		
-		private enum Status {
-			OPEN, CLOSED, HUMAN;
-		}
+
+		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
 	}
 
 	@Override
@@ -299,7 +293,5 @@ public class NewGameMenu extends RoyMenu implements Observer {
 		for(RoyComboBox rcb : colorComboBoxes) {
 			rcb.setLockedIndices(selectedColorIndices);
 		}
-		
 	}
-	
 }
