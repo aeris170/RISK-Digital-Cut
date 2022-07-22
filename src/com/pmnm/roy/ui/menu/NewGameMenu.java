@@ -27,7 +27,9 @@ import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
 import pmnm.risk.game.IRiskGameContext;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
@@ -62,6 +64,8 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	private BufferedImage selectedMapPreview;
 	private String selectedMapName;
 	private int selectedMapIndex;
+	
+	private Type type;
 
 	private Slot[] slots;
 	private List<Integer> selectedColorIndices = new ArrayList<>();
@@ -71,6 +75,8 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
 	
 	public NewGameMenu(Type t) {
+		type = t;
+		
 		selectedMapIndex = 0;
 		setSelectedMap(MapConfig.getConfigs().get(selectedMapIndex));
 
@@ -123,7 +129,6 @@ public class NewGameMenu extends RoyMenu implements Observer {
 			slots[i].pawnBox = pawnBox;
 		}
 		// COMBOBOXES END
-		slots[0].playerBox.setSelectedOverload("Simge");
 		
 		RoyButton playButton = RoyButton.builder()
 			.textKey("PLAY")
@@ -172,51 +177,9 @@ public class NewGameMenu extends RoyMenu implements Observer {
 			.build();
 		nextMapButton.setPosition(NEXT_MAP_POSITION);
 		addElement(nextMapButton);
-		/*
-		for (int i = 0; i < Globals.MAX_NUM_PLAYERS; i++) {
-			System.out.println(i + ": " + (getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1));
-			TypeComboButton tbc = Builders.TCBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.182f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)), true)
-			        .instantiate();
-			tbc.setzOrder(getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1);
-			add(tbc);
-			tbca[i] = tbc;
 
-			DifficultyComboButton dcb = Builders.DCBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.289f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i)))
-			        .instantiate();
-			dcb.setzOrder(getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1);
-			add(dcb);
-			dcba[i] = dcb;
-
-			ColorComboButton ccb = Builders.CCBB.args(new DoaVector(Main.WINDOW_WIDTH * 0.347f, Main.WINDOW_HEIGHT * 0.275f + (Main.WINDOW_HEIGHT * 0.048f * i))).instantiate();
-			ccb.setzOrder(getzOrder() + Globals.MAX_NUM_PLAYERS - i + 1);
-			add(ccb);
-			ccba[i] = ccb;
-		}
-		tbca[0].index = 1;
-		tbca[1].index = 2;
-		s = Globals.MAP_NAMES[mapNumber];
-		*/
 		addComponent(new Renderer());
 	}
-
-	/*
-	@Override
-	public void tick() {
-		for (int i = 0; i < Globals.MAX_NUM_PLAYERS; i++) {
-			if (tbca[i].index == 0) {
-				dcba[i].hide();
-				ccba[i].hide();
-			} else if (tbca[i].index == 1) {
-				dcba[i].hide();
-				ccba[i].show();
-			} else {
-				dcba[i].show();
-				ccba[i].show();
-			}
-		}
-		s = Globals.MAP_NAMES[mapNumber];
-	}
-	*/
 	
 	private void setSelectedMap(MapConfig config) {
 		selectedMapName = config.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
@@ -300,47 +263,83 @@ public class NewGameMenu extends RoyMenu implements Observer {
 	@Data
 	@ToString(includeFieldNames = true)
 	@EqualsAndHashCode(callSuper = true)
-	private static final class Slot extends DoaObject {
+	private final class Slot extends DoaObject {
 		
+		private int index;
 		private RoyComboBox playerBox;
 		private RoyComboBox colorBox;
 		private RoyComboBox pawnBox;
 		// private RoyToggleButton readyButton;
 		
+		@Getter
+		@Setter
 		private String playerName;
 		
 		private Slot(int index) {
+			this.index = index;
 			playerName = null;
 		}
 
-		private boolean hasPlayer() { return playerBox.getSelectedIndex() != 0 && playerBox.getSelectedIndex() != 1; }
+		private boolean hasPlayer() { 
+			if (type == Type.SINGLE_PLAYER) {
+				return playerBox.getSelectedIndex() != 0;	
+			} else if (type == Type.MULTI_PLAYER) {
+				return playerBox.getSelectedIndex() != 0 && playerBox.getSelectedIndex() != 1;	
+			} else { throw new IllegalStateException("wtf?"); }
+		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
+	}
+	
+	public Slot findSlotOf(RoyComboBox box) {
+		for (Slot slot : slots) {
+			if (slot.playerBox == box
+				|| slot.colorBox == box
+				|| slot.pawnBox == box) {
+				return slot;
+			}
+		}
+		return null;
 	}
 	
 	@Override
 	public void setVisible(boolean value) {
 		super.setVisible(value);
-		for(Slot slot : slots) {
-			slot.colorBox.setVisible(slot.hasPlayer());
-			slot.pawnBox.setVisible(slot.hasPlayer());
+		if (isVisible()) {
+			for (Slot slot : slots) {
+				slot.playerBox.setSelectedIndex(0);
+				slot.colorBox.setSelectedIndex(0);
+				slot.pawnBox.setSelectedIndex(0);
+				slot.colorBox.setVisible(slot.hasPlayer());
+				slot.pawnBox.setVisible(slot.hasPlayer());
+			}
 		}
 	}
 
 	@Override
 	public void onNotify(Observable b) {
-		selectedColorIndices.clear();
-		selectedPawnIndices.clear();
-		for(int i = 0; i < slots.length; i++) {
-			Slot slot = slots[i];
-			if(slot.hasPlayer()) {
-				selectedColorIndices.add(slot.colorBox.getSelectedIndex());
-				selectedPawnIndices.add(slot.colorBox.getSelectedIndex());
+		if (b instanceof RoyComboBox) {
+			Slot changedSlot = findSlotOf((RoyComboBox)b);
+			
+			selectedColorIndices.clear();
+			selectedPawnIndices.clear();
+			for(int i = 0; i < slots.length; i++) {
+				Slot slot = slots[i];
+				if (slot != changedSlot && slot.hasPlayer()) {
+					selectedColorIndices.add(slot.colorBox.getSelectedIndex());
+					selectedPawnIndices.add(slot.pawnBox.getSelectedIndex());
+				}
 			}
-			slot.colorBox.setVisible(slot.hasPlayer());
-			slot.pawnBox.setVisible(slot.hasPlayer());
-		}
-		
-		colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
-		pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
+			colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
+			pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
+			
+			changedSlot.colorBox.setVisible(changedSlot.hasPlayer());
+			changedSlot.pawnBox.setVisible(changedSlot.hasPlayer());
+			
+			selectedColorIndices.add(changedSlot.colorBox.getSelectedIndex());
+			selectedPawnIndices.add(changedSlot.pawnBox.getSelectedIndex());
+			
+			colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
+			pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
+		}		
 	}
 }

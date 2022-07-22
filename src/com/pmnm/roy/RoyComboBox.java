@@ -29,6 +29,9 @@ import lombok.ToString;
 
 @SuppressWarnings("serial")
 public final class RoyComboBox extends DoaObject implements IRoyElement, Observable {
+	
+	 /* used when combo needs to display something not on its list */
+	private static final int OVERRIDEN_INDEX = -1979779;
 
 	private final DoaVector SELECTED_ELEMENT_CONTENT_OFFSET = new DoaVector(10, 30);
 	private final DoaVector ELEMENT_CONTENT_OFFSET;
@@ -45,23 +48,22 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 	private transient BufferedImage colorBorderSelected;
 
 	@Getter
-	@Setter
 	private boolean isVisible;
+	
 	private boolean isOpen = false;
+	
 	@Getter
 	@Setter
 	private int selectedIndex = 0;
+	
 	private Element[] elements;
 
 	private Object selected;
 
-	private Type type;
-	private enum Type { STRING, COLOR, IMAGE; }
-	
+	@Setter
 	private List<Integer> lockedIndices = new ArrayList<>();
 	
 	public RoyComboBox(String[] names) {
-		type = Type.STRING;
 		ELEMENT_CONTENT_OFFSET = new DoaVector(10, 5);
 		
 		elements = new Element[names.length];
@@ -74,11 +76,10 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		dropDownBg = DoaSprites.getSprite("DropDownTexType");
 		
 		addComponent(new Script());
-		addComponent(new Renderer());
+		addComponent(new StringComboRenderer());
 	}
 	
 	public RoyComboBox(Color[] colors) {
-		type = Type.COLOR;
 		ELEMENT_CONTENT_OFFSET = new DoaVector(3, 3);
 		
 		elements = new Element[colors.length];
@@ -93,11 +94,10 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		colorBorderSelected = DoaSprites.getSprite("ColorBorderSelected");
 		
 		addComponent(new Script());
-		addComponent(new Renderer());
+		addComponent(new ColorComboRenderer());
 	}
 	
 	public RoyComboBox(BufferedImage[] images) {
-		type = Type.IMAGE;
 		ELEMENT_CONTENT_OFFSET = new DoaVector(5, 5);
 		
 		elements = new Element[images.length];
@@ -112,16 +112,14 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		colorBorderSelected = DoaSprites.getSprite("ColorBorderSelected");
 		
 		addComponent(new Script());
-		addComponent(new Renderer());
+		addComponent(new SpriteComboRenderer());
 	}
 	
-	public void setLockedIndices(List<Integer> lockedIndeces) {
-		this.lockedIndices = lockedIndeces;
-	}
+	public int getElementCount() { return elements.length; }
 	
 	public void setSelectedOverload(Object o){
 		selected = o;
-		selectedIndex = -1;
+		selectedIndex = OVERRIDEN_INDEX;
 	}
 	
 	@Override
@@ -131,17 +129,17 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		
 		int[] pos, size, pos2, size2;
 		for(int i = 0; i < elements.length; i++) {
-			pos = DoaGraphicsFunctions.warp(position.x,
-											position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i);
+			pos = DoaGraphicsFunctions.warp(position.x, position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i);
+			size = DoaGraphicsFunctions.warp(dropDownBg.getWidth(), dropDownBg.getHeight() / elements.length);
 			
-			size = DoaGraphicsFunctions.warp(dropDownBg.getWidth(),
-											 dropDownBg.getHeight() / elements.length);
-			
-			pos2 = DoaGraphicsFunctions.warp(position.x + ELEMENT_CONTENT_OFFSET.x,
-											 position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i + ELEMENT_CONTENT_OFFSET.y);
-			
-			size2 = DoaGraphicsFunctions.warp(dropDownBg.getWidth() - ELEMENT_CONTENT_OFFSET.x * 2,
-											  dropDownBg.getHeight() / elements.length - ELEMENT_CONTENT_OFFSET.y * 2);
+			pos2 = DoaGraphicsFunctions.warp(
+				position.x + ELEMENT_CONTENT_OFFSET.x,
+				position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i + ELEMENT_CONTENT_OFFSET.y
+			);
+			size2 = DoaGraphicsFunctions.warp(
+				dropDownBg.getWidth() - ELEMENT_CONTENT_OFFSET.x * 2,
+				dropDownBg.getHeight() / elements.length - ELEMENT_CONTENT_OFFSET.y * 2
+			);
 
 			elements[i].contentArea = new Rectangle(pos2[0], pos2[1], size2[0], size2[1]);
 			elements[i].elementArea = new Rectangle(pos[0], pos[1], size[0], size[1]);
@@ -161,6 +159,20 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		);
 	}
 	
+	@Override
+	public void setVisible(boolean value) {
+		isVisible = value;
+		if (lockedIndices.contains(selectedIndex)) {
+			for(int i = 0; i < elements.length; i++) {
+				int currentIndex = i;
+				if (!lockedIndices.contains(currentIndex)) {
+					selectedIndex = currentIndex;
+					break;
+				}
+			}
+		}
+	}
+	
 	private final class Script extends DoaScript {
 
 		public Rectangle buttonArea() {
@@ -172,19 +184,12 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		}
 
 		private boolean elementIsPressed(Rectangle pos) {
-			if(pos.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y)) && DoaMouse.MB1_RELEASE) {
-				return true;
-			}
-			return false;
+			return pos.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y)) && DoaMouse.MB1_RELEASE;
 		}
 		
 		private void setOpen(boolean open) {
 			isOpen = open;
-			if(isOpen)
-				setzOrder(ZOrders.COMBOBOX_OPEN);
-			else
-				setzOrder(ZOrders.COMBOBOX_CLOSE);
-				
+			setzOrder(isOpen ? ZOrders.COMBOBOX_OPEN : ZOrders.COMBOBOX_CLOSE);
 		}
 		
 		@Override
@@ -236,7 +241,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		}
 	}
 	
-	private final class Renderer extends DoaRenderer {
+	private final class StringComboRenderer extends DoaRenderer {
 
 		private transient Font font = null;
 
@@ -247,16 +252,6 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		public void render() {
 			if (!isVisible) return;
 			
-			if(type == Type.STRING) {
-				stringCBRender();
-			} else if(type == Type.COLOR) {
-				colorCBRender();
-			} else if(type == Type.IMAGE) {
-				imageCBRender();
-			}
-		}
-		
-		private void stringCBRender() {
 			if (font == null) {
 				int[] size = DoaGraphicsFunctions.warp(mainBg.getWidth() - 10, mainBg.getHeight() - 10);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
@@ -268,19 +263,20 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			DoaGraphicsFunctions.drawImage(mainBg, 0, 0, mainBg.getWidth(), mainBg.getHeight());
 			DoaGraphicsFunctions.setColor(Color.WHITE);
 			
-			if(selectedIndex == -1)
+			if(selectedIndex == OVERRIDEN_INDEX) {
 				DoaGraphicsFunctions.drawString(selected.toString().toString(), SELECTED_ELEMENT_CONTENT_OFFSET.x, SELECTED_ELEMENT_CONTENT_OFFSET.y);
-			else
+			} else {
 				DoaGraphicsFunctions.drawString(elements[selectedIndex].name, SELECTED_ELEMENT_CONTENT_OFFSET.x, SELECTED_ELEMENT_CONTENT_OFFSET.y);
+			}
 			
-			if(isOpen) {
+			if (isOpen) {
 				DoaGraphicsFunctions.drawImage(dropDownBg, 0, mainBg.getHeight(), dropDownBg.getWidth(), dropDownBg.getHeight());
 				DoaGraphicsFunctions.drawImage(buttonIcon2, mainBg.getWidth() - buttonIcon2.getWidth() - 4, 3, buttonIcon2.getWidth(), buttonIcon2.getHeight());
 				
 				DoaGraphicsFunctions.pushTransform();
 				DoaGraphicsFunctions.resetTransform();
 				
-				if(selectedIndex != -1) {
+				if (selectedIndex != OVERRIDEN_INDEX) {
 					DoaGraphicsFunctions.setColor(new Color(255, 255, 255, 40));
 					DoaGraphicsFunctions.fill(elements[selectedIndex].elementArea);
 				}
@@ -295,8 +291,17 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
 			}
 		}
+	}
+	
+	private final class ColorComboRenderer extends DoaRenderer {
+
+		@NonNull
+		private transient BufferedImage buttonIcon2 = UIConstants.getArrowDownPressedSprite();
 		
-		private void colorCBRender() {
+		@Override
+		public void render() {
+			if (!isVisible) return;
+			
 			DoaGraphicsFunctions.setColor(elements[selectedIndex].color);
 			DoaGraphicsFunctions.fillRect(ELEMENT_CONTENT_OFFSET.x, ELEMENT_CONTENT_OFFSET.y, elements[0].elementArea.width - ELEMENT_CONTENT_OFFSET.x * 2, mainBg.getHeight() - ELEMENT_CONTENT_OFFSET.y * 2);
 			DoaGraphicsFunctions.drawImage(mainBg, 0, 0, mainBg.getWidth(), mainBg.getHeight());
@@ -329,8 +334,17 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
 			}
 		}
+	}
+	
+	private final class SpriteComboRenderer extends DoaRenderer {
+
+		@NonNull
+		private transient BufferedImage buttonIcon2 = UIConstants.getArrowDownPressedSprite();
 		
-		private void imageCBRender() {
+		@Override
+		public void render() {
+			if (!isVisible) return;
+			
 			DoaGraphicsFunctions.drawImage(
 					elements[selectedIndex].image,
 					(mainBg.getWidth() - buttonIcon.getWidth()) / 2 - ELEMENT_CONTENT_OFFSET.x * 2,
