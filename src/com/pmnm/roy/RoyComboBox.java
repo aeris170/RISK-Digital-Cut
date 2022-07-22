@@ -263,7 +263,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			DoaGraphicsFunctions.drawImage(mainBg, 0, 0, mainBg.getWidth(), mainBg.getHeight());
 			DoaGraphicsFunctions.setColor(Color.WHITE);
 			
-			if(selectedIndex == OVERRIDEN_INDEX) {
+			if (selectedIndex == OVERRIDEN_INDEX) {
 				DoaGraphicsFunctions.drawString(selected.toString().toString(), SELECTED_ELEMENT_CONTENT_OFFSET.x, SELECTED_ELEMENT_CONTENT_OFFSET.y);
 			} else {
 				DoaGraphicsFunctions.drawString(elements[selectedIndex].name, SELECTED_ELEMENT_CONTENT_OFFSET.x, SELECTED_ELEMENT_CONTENT_OFFSET.y);
@@ -306,7 +306,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			DoaGraphicsFunctions.fillRect(ELEMENT_CONTENT_OFFSET.x, ELEMENT_CONTENT_OFFSET.y, elements[0].elementArea.width - ELEMENT_CONTENT_OFFSET.x * 2, mainBg.getHeight() - ELEMENT_CONTENT_OFFSET.y * 2);
 			DoaGraphicsFunctions.drawImage(mainBg, 0, 0, mainBg.getWidth(), mainBg.getHeight());
 			
-			if(isOpen) {
+			if (isOpen) {
 				DoaGraphicsFunctions.drawImage(dropDownBg, 0, mainBg.getHeight(), dropDownBg.getWidth(), dropDownBg.getHeight());
 				DoaGraphicsFunctions.drawImage(buttonIcon2, mainBg.getWidth() - buttonIcon2.getWidth() - 3, 3, buttonIcon2.getWidth(), buttonIcon2.getHeight());
 
@@ -316,17 +316,18 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 					DoaGraphicsFunctions.setColor(elements[i].color);
 					DoaGraphicsFunctions.fill(elements[i].contentArea);
 					DoaGraphicsFunctions.drawImage(colorBorder, elements[i].elementArea.x, elements[i].elementArea.y, colorBorder.getWidth(), colorBorder.getHeight());
-					if(i == selectedIndex)
+					if (i == selectedIndex) {
 						DoaGraphicsFunctions.drawImage(
-								colorBorderSelected,
-								elements[i].elementArea.x + 5,
-								elements[i].elementArea.y + 5,
-								colorBorder.getWidth() - 10,
-								colorBorder.getHeight() - 10);
-
+							colorBorderSelected,
+							elements[i].elementArea.x + 5,
+							elements[i].elementArea.y + 5,
+							colorBorder.getWidth() - 10,
+							colorBorder.getHeight() - 10);
+					}
 					DoaGraphicsFunctions.setColor(Color.DARK_GRAY);
-					if(i != selectedIndex && lockedIndices.contains(i))
+					if (i != selectedIndex && lockedIndices.contains(i)) {
 						DoaGraphicsFunctions.fill(elements[i].contentArea);
+					}
 				}
 				
 				DoaGraphicsFunctions.popTransform();
@@ -346,12 +347,12 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			if (!isVisible) return;
 			
 			DoaGraphicsFunctions.drawImage(
-					elements[selectedIndex].image,
-					(mainBg.getWidth() - buttonIcon.getWidth()) / 2 - ELEMENT_CONTENT_OFFSET.x * 2,
-					ELEMENT_CONTENT_OFFSET.y * 2,
-					elements[selectedIndex].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2,
-					elements[selectedIndex].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2
-				);
+				elements[selectedIndex].image,
+				(mainBg.getWidth() - buttonIcon.getWidth()) / 2 - ELEMENT_CONTENT_OFFSET.x * 2,
+				ELEMENT_CONTENT_OFFSET.y * 2,
+				elements[selectedIndex].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2,
+				elements[selectedIndex].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2
+			);
 			DoaGraphicsFunctions.drawImage(mainBg, 0, 0, mainBg.getWidth(), mainBg.getHeight());
 			
 			if(isOpen) {
@@ -362,24 +363,26 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				DoaGraphicsFunctions.resetTransform();
 				for (int i = 0; i < elements.length; i++) {
 					DoaGraphicsFunctions.drawImage(
-							elements[i].image,
-							elements[i].elementArea.x + (elements[i].contentArea.width - (elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2)) / 2 + ELEMENT_CONTENT_OFFSET.x,
-							elements[i].elementArea.y + ELEMENT_CONTENT_OFFSET.y * 2,
-							elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2,
-							elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2
-						);
+						elements[i].image,
+						elements[i].elementArea.x + (elements[i].contentArea.width - (elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2)) / 2 + ELEMENT_CONTENT_OFFSET.x,
+						elements[i].elementArea.y + ELEMENT_CONTENT_OFFSET.y * 2,
+						elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2,
+						elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y * 2
+					);
 					DoaGraphicsFunctions.drawImage(colorBorder, elements[i].elementArea.x, elements[i].elementArea.y, colorBorder.getWidth(), colorBorder.getHeight());
-					if(i == selectedIndex)
+					if(i == selectedIndex) {
 						DoaGraphicsFunctions.drawImage(
-								colorBorderSelected,
-								elements[i].elementArea.x + 5,
-								elements[i].elementArea.y + 5,
-								colorBorder.getWidth() - 10,
-								colorBorder.getHeight() - 10);
+							colorBorderSelected,
+							elements[i].elementArea.x + 5,
+							elements[i].elementArea.y + 5,
+							colorBorder.getWidth() - 10,
+							colorBorder.getHeight() - 10);
+					}
 
 					DoaGraphicsFunctions.setColor(Color.DARK_GRAY);
-					if(i != selectedIndex && lockedIndices.contains(i))
+					if(i != selectedIndex && lockedIndices.contains(i)) {
 						DoaGraphicsFunctions.fill(elements[i].contentArea);
+					}
 				}
 				
 				DoaGraphicsFunctions.popTransform();
