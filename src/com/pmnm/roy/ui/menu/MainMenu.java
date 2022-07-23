@@ -15,6 +15,12 @@ import com.pmnm.roy.ui.menu.extensions.ExitPopup;
 
 @SuppressWarnings("serial")
 public class MainMenu extends RoyMenu {
+	
+	private static final String PLAY_OFFLINE_KEY 	= "PLAY_OFFLINE";
+	private static final String PLAY_ONLINE_KEY 	= "PLAY_ONLINE";
+	private static final String SETTINGS_KEY 		= "SETTINGS";
+	private static final String RULES_KEY 			= "RULES";
+	private static final String EXIT_KEY 			= "EXIT";
 
 	private static final DoaVector PLAY_OFFLINE_LOCATION 	= new DoaVector(1377f, 511f);
 	private static final DoaVector PLAY_ONLINE_LOCATION 	= new DoaVector(1377f, 584f);
@@ -28,7 +34,7 @@ public class MainMenu extends RoyMenu {
 		/* Play Offline Button */		
 		RoyButton playOfflineButton = RoyButton
 			.builder()
-			.textKey("PLAY_OFFLINE")
+			.textKey(PLAY_OFFLINE_KEY)
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getPlayOfflineMenu().setVisible(true);	
@@ -41,7 +47,7 @@ public class MainMenu extends RoyMenu {
 		/* Play Online Button */
 		RoyButton playOnlineButton = RoyButton
 			.builder()
-			.textKey("PLAY_ONLINE")
+			.textKey(PLAY_ONLINE_KEY)
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getPlayOnlineMenu().setVisible(true);
@@ -54,7 +60,7 @@ public class MainMenu extends RoyMenu {
 		/* Settings Button */
 		RoyButton settingsButton = RoyButton
 			.builder()
-			.textKey("SETTINGS")
+			.textKey(SETTINGS_KEY)
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getSettingsMenu().setVisible(true);
@@ -67,7 +73,7 @@ public class MainMenu extends RoyMenu {
 		/* Rules Button */
 		RoyButton rulesButton = RoyButton
 			.builder()
-			.textKey("RULES")
+			.textKey(RULES_KEY)
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getBackground().setVisible(false);
@@ -84,7 +90,7 @@ public class MainMenu extends RoyMenu {
 		
 		RoyButton exitButton = RoyButton
 			.builder()
-			.textKey("EXIT")
+			.textKey(EXIT_KEY)
 			.action(() -> ep.setVisible(true))
 			.build();
 		exitButton.setPosition(EXIT_LOCATION);
