@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
+import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.discordrichpresence.DiscordRichPresenceAdapter;
 import com.pmnm.risk.globals.discordrichpresence.IDiscordActivityMutator;
 import com.pmnm.risk.toolkit.Utils;
@@ -28,6 +29,7 @@ import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
+import doa.engine.scene.DoaSceneHandler;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.utils.discordapi.DoaDiscordActivity;
 import doa.engine.utils.discordapi.DoaDiscordService;
@@ -37,7 +39,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import pmnm.risk.game.GameConfig;
 import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.map.MapConfig;
 import pmnm.risk.map.MapData;
@@ -201,6 +205,17 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		MapConfig selectedConfig = configs.get(selectedMapIndex);
 		MapData data = MapLoader.loadMap(selectedConfig);
 		IRiskGameContext context = RiskGameContext.of(data);
+		List<Player.Data> playerDatas = new ArrayList<>(slots.length);
+		for (Slot slot : slots) {
+			if (slot.hasPlayer()) {
+				Player.Data playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+				playerDatas.add(playerData);
+			}
+		}
+		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), false); // FIXME not always false, implement random selection
+		context.initiliazeGame(config);
+		// TODO add game stuff to game scene
+		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);
 	}
 	
 	private final class Renderer extends DoaRenderer {
