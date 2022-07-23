@@ -1,5 +1,6 @@
 package com.pmnm.risk.globals;
 
+import com.pmnm.risk.globals.discordrichpresence.DiscordRichPresenceAdapter;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.roy.ui.UIConstants;
 
@@ -19,6 +20,7 @@ public final class Globals {
 		AssetLoader.initializeAssets();
 		MapConfig.readMapConfigs();
 		Translator.getInstance();
+		DiscordRichPresenceAdapter.initialize();
 		UIConstants.initUI();
 	}
 

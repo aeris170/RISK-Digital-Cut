@@ -4,6 +4,8 @@ import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaAnimation;
 import doa.engine.graphics.DoaAnimations;
 import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.utils.discordapi.DoaDiscordActivity;
+import doa.engine.utils.discordapi.DoaDiscordService;
 import doa.engine.maths.DoaVector;
 
 import com.pmnm.roy.RoyButton;
@@ -114,5 +116,13 @@ public class MainMenu extends RoyMenu {
 		super.setVisible(isVisible);
 		/* popups should not be affected */
 		ep.setVisible(false);
+		
+		if (isVisible()) {
+			DoaDiscordActivity activity = DoaDiscordService.getCurrentActivity();
+			if (activity != null) {
+				activity.setDescription("Main Menu");
+				DoaDiscordService.switchActivity(activity);
+			}
+		}
 	}
 }

@@ -312,6 +312,8 @@ public class NewGameMenu extends RoyMenu implements Observer {
 				slot.colorBox.setVisible(slot.hasPlayer());
 				slot.pawnBox.setVisible(slot.hasPlayer());
 			}
+
+			applyCustomActivity();
 		}
 	}
 
@@ -340,6 +342,23 @@ public class NewGameMenu extends RoyMenu implements Observer {
 			
 			colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
 			pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
+
+			int playerCount = (int)Stream.of(slots).filter(Slot::hasPlayer).count();
+			if(playerCount > 0) {
+				DoaDiscordActivity activity = DoaDiscordService.getCurrentActivity();
+				activity.setPartySize(playerCount);
+				activity.setPartyMaxSize(Globals.MAX_NUM_PLAYERS);
+				DoaDiscordService.switchActivity(activity);
+			} else {
+				applyCustomActivity();
+			}
 		}		
+	}
+	
+	@Override
+	public void applyCustomActivity() {
+		DoaDiscordActivity customActivity = DiscordRichPresenceAdapter.getDefaultActivity();
+		customActivity.setDescription("Creating game");
+		DoaDiscordService.switchActivity(customActivity);
 	}
 }
