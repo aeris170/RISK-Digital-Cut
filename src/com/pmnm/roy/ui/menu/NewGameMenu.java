@@ -47,6 +47,9 @@ import pmnm.risk.map.MapLoader;
 public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMutator {
 	
 	public enum Type { SINGLE_PLAYER, MULTI_PLAYER }
+	
+	private static final String PLAY_KEY = "PLAY";
+	private static final String BACK_KEY = "BACK";
 
 	private static final DoaVector PLAY_POSITION = new DoaVector(1377f, 715f);
 	private static final DoaVector BACK_POSITION = new DoaVector(1377f, 803f);
@@ -137,14 +140,14 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		// COMBOBOXES END
 		
 		RoyButton playButton = RoyButton.builder()
-			.textKey("PLAY")
+			.textKey(PLAY_KEY)
 			.action(this::startGame)
 			.build();
 		playButton.setPosition(PLAY_POSITION);
 		addElement(playButton);
 		
 		RoyButton backButton = RoyButton.builder()
-			.textKey("BACK")
+			.textKey(BACK_KEY)
 			.action(() -> {
 				setVisible(false);
 				UIConstants.getPlayOfflineMenu().setVisible(true);
@@ -294,6 +297,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			} else { throw new IllegalStateException("wtf?"); }
 		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
+		private String getPawn() { return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]); }
+		private boolean isLocalPlayer() { return true; } /* TODO  */
 	}
 	
 	public Slot findSlotOf(RoyComboBox box) {
