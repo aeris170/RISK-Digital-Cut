@@ -6,11 +6,15 @@ import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.PlayerColorBank;
+import com.pmnm.risk.globals.discordrichpresence.DiscordRichPresenceAdapter;
+import com.pmnm.risk.globals.discordrichpresence.IDiscordActivityMutator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyComboBox;
@@ -25,6 +29,8 @@ import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.utils.discordapi.DoaDiscordActivity;
+import doa.engine.utils.discordapi.DoaDiscordService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -38,7 +44,7 @@ import pmnm.risk.map.MapData;
 import pmnm.risk.map.MapLoader;
 
 @SuppressWarnings("serial")
-public class NewGameMenu extends RoyMenu implements Observer {
+public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMutator {
 	
 	public enum Type { SINGLE_PLAYER, MULTI_PLAYER }
 
