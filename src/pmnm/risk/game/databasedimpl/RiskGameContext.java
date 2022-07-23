@@ -20,6 +20,7 @@ import lombok.Setter;
 import pmnm.risk.game.Conflict;
 import pmnm.risk.game.Deploy;
 import pmnm.risk.game.Dice;
+import pmnm.risk.game.GameConfig;
 import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IPlayer;
 import pmnm.risk.game.IProvince;
@@ -45,6 +46,8 @@ public class RiskGameContext implements IRiskGameContext {
 	@Getter
 	@Setter
 	private boolean isPaused;
+	
+	private boolean isInitialized;
 
 	/* Data <-> Implementation Association */
 	private Map<IContinent, ContinentData> continentData;
@@ -147,6 +150,16 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	
 	/* Game API */
+	@Override
+	public void initiliazeGame(@NonNull final GameConfig gameConfig) {
+		if (isInitialized) return;
+		
+		players = new CircularQueue<>();
+		for (Player.Data data : gameConfig.getData()) {
+			players.add(new Player(this, data));
+		}
+		isInitialized = true;
+	}
 	@Override
 	public IPlayer getCurrentPlayer() { return currentPlayingPlayer; }
 	@Override

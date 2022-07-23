@@ -1,24 +1,20 @@
 package pmnm.risk.game.databasedimpl;
 
 import java.awt.Color;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-import com.pmnm.risk.main.GameManager;
-
-import doa.engine.input.DoaMouse;
+import doa.engine.graphics.DoaSprites;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import pmnm.risk.game.Conflict;
 import pmnm.risk.game.Deploy;
 import pmnm.risk.game.Dice;
 import pmnm.risk.game.IPlayer;
 import pmnm.risk.game.IProvince;
-import pmnm.risk.game.IRiskGameContext;
 import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.game.Reinforce;
 import pmnm.risk.map.board.ProvinceHitArea;
@@ -32,23 +28,28 @@ public class Player extends DoaObject implements IPlayer {
 
 	private RiskGameContext context;
 	@Getter private int id;
-	@Getter private String name;
-	@Getter private Color color;
-	@Getter private boolean isLocalPlayer;
+	@NonNull private Player.Data data;
 
 	private Deploy lastDeploy;
 	private Conflict lastConflict;
 	private Reinforce lastReinforce;
 	
-	public Player(RiskGameContext context, String name, Color color, boolean isLocalPlayer) {
+	public Player(@NonNull final RiskGameContext context, @NonNull final Player.Data data) {
 		this.context = context;
 		this.id = ID++;
-		this.name = name;
-		this.color = color;
-		this.isLocalPlayer = isLocalPlayer;
+		this.data = data;
 		
 		addComponent(new MouseController());
 	}
+
+	@Override
+	public String getName() { return data.getName(); }
+
+	@Override
+	public Color getColor() { return data.getColor(); }
+
+	@Override
+	public boolean isLocalPlayer() { return data.isLocalPlayer(); }
 
 	@Override
 	public void occupyProvince(final IProvince province) {
@@ -150,4 +151,23 @@ public class Player extends DoaObject implements IPlayer {
 	}
 	
 	private boolean itIsNotMyTurn() { return !equals(context.getCurrentPlayer()); }
+	
+	@RequiredArgsConstructor
+	public static class Data implements Serializable {
+
+		private static final long serialVersionUID = 8565091325727904597L;
+		
+		@Getter @NonNull private final String name;
+		@Getter @NonNull private final Color color;
+		@NonNull private final String pawnKey;
+		@Getter private final boolean isLocalPlayer;
+		private transient BufferedImage pawn;
+		
+		public BufferedImage getPawn() {
+			if (pawn == null) {
+				pawn = DoaSprites.getSprite(pawnKey);
+			}
+			return pawn;
+		}
+	}
 }

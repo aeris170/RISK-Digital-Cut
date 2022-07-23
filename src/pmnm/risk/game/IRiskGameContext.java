@@ -7,6 +7,7 @@ import lombok.NonNull;
 public interface IRiskGameContext extends Serializable {
 	
 	/* Game API */
+	void initiliazeGame(@NonNull final GameConfig gameConfig);
 	boolean isPaused();
 	IPlayer getCurrentPlayer();
 	TurnPhase getCurrentPhase();
