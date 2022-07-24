@@ -27,7 +27,7 @@ public class Main extends DoaGame {
 		Locale.setDefault(Locale.ENGLISH);
 		//DoaLogger.LOGGER.setLevel(LogLevel.FINEST);
 		eSettings.REFERENCE_RESOLUTION = new DoaVector(WINDOW_WIDTH, WINDOW_HEIGHT);
-		eSettings.TICK_RATE = 240;
+		eSettings.TICK_RATE = Globals.TICK_RATE;
 		eSettings.RENDERING_MODE = DoaRenderingMode.BALANCED;
 
 		wSettings.TITLE = "RISK Digital Cut!";
