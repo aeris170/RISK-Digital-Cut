@@ -41,7 +41,7 @@ public final class MapLoader {
 			connectProvinces(map.getNeighborsFile()); /* set up adjacencies */
 			solidifyProvinces(map.getVerticesFile()); /* set up meshes */
 			groupProvinces(map.getContinentsFile()); /* create continents */
-			bgImg = DoaSprites.createSprite(map.getName() + "MapBackground", map.getBackgroundImageFile().getPath());
+			bgImg = loadBackgroundImage(map.getName(), map.getBackgroundImageFile());
 			return new MapData(map, bgImg, ImmutableList.copyOf(CONTINENTS));
 		} catch (JDOMException | IOException ex) {
 			DoaGame.getInstance().exit();
@@ -75,7 +75,7 @@ public final class MapLoader {
 			
 			List<ProvinceData> neighbors = new ArrayList<>();
 			provinceElement.getChildren("neighbour").forEach(neighborElement -> {
-				String neighborName = neighboursElement.getText();
+				String neighborName = neighborElement.getText();
 				ProvinceData neighbor = NAME_PROVINCE.get(neighborName);
 				neighbors.add(neighbor);
 			});
@@ -125,7 +125,7 @@ public final class MapLoader {
 			
 			List<ProvinceData> provinces = new ArrayList<>();
 			continentElement.getChildren("province").forEach(child -> {
-				final String provinceName = child.getChildText("name");
+				final String provinceName = child.getText();
 				
 				final ProvinceData province = NAME_PROVINCE.get(provinceName);
 
@@ -137,6 +137,12 @@ public final class MapLoader {
 			
 			provinces.forEach(province -> province.setContinent(c));
 		});
+	}
+	
+	private static BufferedImage loadBackgroundImage(String mapName, File backgroundImage) throws IOException {
+		String p = backgroundImage.getPath();
+		p = p.substring(p.indexOf(File.separator)).replace(File.separator, "/");
+		return DoaSprites.createSprite(mapName + "MapBackground", p);
 	}
 	
 	private static Document createXMLDocumentFrom(File file) throws JDOMException, IOException {

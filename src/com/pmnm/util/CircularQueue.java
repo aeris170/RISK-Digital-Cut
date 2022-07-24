@@ -1,6 +1,7 @@
 package com.pmnm.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
@@ -11,7 +12,7 @@ public final class CircularQueue<E extends Serializable> implements Deque<E>, Se
 
 	private static final long serialVersionUID = 341944174576430374L;
 	
-	private List<E> elements;
+	private List<E> elements = new ArrayList<>();
 	private int index = -1;
 	
 	public E getNext() {

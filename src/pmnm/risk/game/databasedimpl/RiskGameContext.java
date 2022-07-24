@@ -123,7 +123,9 @@ public class RiskGameContext implements IRiskGameContext {
 		/* ------------------ Step 4, set player associations ------------------ */
 		playerProvinces = new HashMap<>();
 		provincePlayers = new HashMap<>();
-		
+		provinceData.keySet().forEach(province -> {
+			provincePlayers.put(province, null);
+		});
 		/* --------------------------------------------------------------------- */ 
 
 		/* ----------------- Step 5, set neigbors of provinces ----------------- */
@@ -156,7 +158,9 @@ public class RiskGameContext implements IRiskGameContext {
 		
 		players = new CircularQueue<>();
 		for (Player.Data data : gameConfig.getData()) {
-			players.add(new Player(this, data));
+			Player p = new Player(this, data);
+			players.add(p);
+			playerProvinces.put(p, new ArrayList<>());
 		}
 		isInitialized = true;
 	}

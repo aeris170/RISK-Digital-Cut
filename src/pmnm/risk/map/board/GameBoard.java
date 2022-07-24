@@ -16,7 +16,7 @@ public final class GameBoard extends DoaObject {
 		DoaSpriteRenderer r = new DoaSpriteRenderer();
 		r.setSprite(data.getBackgroundImage(), false);
 		r.setOffset(new DoaVector(0, 0));
-		r.setDimensions(new DoaVector(Main.WINDOW_WIDTH - 1f, Main.WINDOW_HEIGHT - 1f));
+		r.setDimensions(new DoaVector(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT));
 		addComponent(r);
 	}
 }

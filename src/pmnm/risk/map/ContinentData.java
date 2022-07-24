@@ -6,12 +6,14 @@ import com.google.common.collect.ImmutableList;
 
 import java.awt.Color;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.Value;
 
-@Value
+@RequiredArgsConstructor
 @ToString(includeFieldNames = true)
 public final class ContinentData implements Serializable {
 
@@ -33,6 +35,7 @@ public final class ContinentData implements Serializable {
 	private final Color color;
 	
 	@NonNull
+	@EqualsAndHashCode.Exclude
 	private final ImmutableList<pmnm.risk.map.ProvinceData> provinces;
 	public Iterable<pmnm.risk.map.ProvinceData> getProvinces() {
 		return provinces;

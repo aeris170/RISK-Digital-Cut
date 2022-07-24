@@ -1,12 +1,9 @@
 package pmnm.risk.game.databasedimpl;
 
-import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.UnmodifiableIterator;
 
 import doa.engine.maths.DoaVector;
 import lombok.AccessLevel;

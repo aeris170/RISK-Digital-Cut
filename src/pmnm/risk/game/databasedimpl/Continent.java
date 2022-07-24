@@ -5,12 +5,16 @@ import java.awt.Color;
 import com.google.common.collect.UnmodifiableIterator;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import pmnm.risk.game.IContinent;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.map.ContinentData;
 
+@EqualsAndHashCode
+@ToString(includeFieldNames = true)
 public final class Continent implements IContinent  {
 
 	private static final long serialVersionUID = 4714708201174941610L;
