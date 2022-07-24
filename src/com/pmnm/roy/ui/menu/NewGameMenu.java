@@ -301,7 +301,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		
 		private Slot(int index) {
 			this.index = index;
-			playerName = null;
+			playerName = "Player" + index;
 		}
 
 		private boolean hasPlayer() { 
@@ -313,7 +313,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
 		private String getPawn() { return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]); }
-		private boolean isLocalPlayer() { return true; } /* TODO  */
+		private boolean isLocalPlayer() { return type == Type.SINGLE_PLAYER; } /* TODO  */
 	}
 	
 	public Slot findSlotOf(RoyComboBox box) {
