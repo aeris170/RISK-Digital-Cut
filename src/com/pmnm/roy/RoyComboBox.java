@@ -50,6 +50,10 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 	@Getter
 	private boolean isVisible;
 	
+	@Getter
+	@Setter
+	private boolean isEditable = true;
+	
 	private boolean isOpen = false;
 	
 	@Getter
@@ -180,7 +184,6 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			int[] size = DoaGraphicsFunctions.warp(buttonIcon.getWidth(), buttonIcon.getHeight());
 
 			return new Rectangle(pos[0], pos[1], size[0], size[1]);
-			
 		}
 
 		private boolean elementIsPressed(Rectangle pos) {
@@ -188,14 +191,15 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		}
 		
 		private void setOpen(boolean open) {
+			if (!isEditable) { return; }
 			isOpen = open;
 			setzOrder(isOpen ? ZOrders.COMBOBOX_OPEN : ZOrders.COMBOBOX_CLOSE);
 		}
 		
 		@Override
 		public void tick() {
-			enableDebugRender = false;
-			if (!isVisible) return;
+			if (!isVisible) { return; }
+			if (!isEditable) { return; }
 			boolean isOpen = RoyComboBox.this.isOpen;
 			if(DoaMouse.MB1_RELEASE) {
 				if (buttonArea().contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
@@ -205,7 +209,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				}
 			}
 			
-			if(!isOpen) return;
+			if(!isOpen) { return; }
 			for(int i = 0; i < elements.length; i++) {
 				if(elementIsPressed(elements[i].elementArea) && !RoyComboBox.this.lockedIndices.contains(i)) {
 					selectedIndex = i;
@@ -288,7 +292,9 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				}
 				DoaGraphicsFunctions.popTransform();
 			} else {
-				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
+				if (isEditable) {
+					DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
+				}
 			}
 		}
 	}
@@ -332,7 +338,9 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				
 				DoaGraphicsFunctions.popTransform();
 			} else {
-				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
+				if (isEditable) {
+					DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
+				}
 			}
 		}
 	}
@@ -387,7 +395,9 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				
 				DoaGraphicsFunctions.popTransform();
 			} else {
-				DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
+				if (isEditable) {
+					DoaGraphicsFunctions.drawImage(buttonIcon, mainBg.getWidth() - buttonIcon.getWidth() - 3, 3, buttonIcon.getWidth(), buttonIcon.getHeight());
+				}
 			}
 		}
 	}
