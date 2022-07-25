@@ -119,10 +119,13 @@ public class Player extends DoaObject implements IPlayer {
 				/* if province is not occupied, occupy it. otherwise if it is occupied by me, deploy 1 troop */
 				if (!province.isOccupied()) {
 					occupyProvince(province);
+					areas.deselectSelectedProvince();
+					finishTurn();
 				} else if (province.isOccupiedBy(Player.this) && context.isEveryProvinceOccupied()) {
 					deployToProvince(province, 1);
+					areas.deselectSelectedProvince();
+					finishTurn();
 				}
-				finishTurn();
 				return;
 			}
 

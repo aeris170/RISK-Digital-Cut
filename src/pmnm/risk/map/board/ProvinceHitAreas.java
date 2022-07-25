@@ -70,6 +70,20 @@ public final class ProvinceHitAreas extends DoaObject {
 		scene.remove(connector);
 	}
 	
+	public void dehighlightHighlightedProvince() {
+		if (highlightedProvince != null) {
+			highlightedProvince.setHighlighted(false);
+			highlightedProvince = null;
+		}
+	}
+	
+	public void deselectSelectedProvince() {
+		if (selectedProvince != null) {
+			selectedProvince.setSelected(false);
+			selectedProvince = null;
+		}
+	}
+	
 	public void selectAttackerProvinceAs(IProvince province) {
 		if(attackerProvince != null) {
 			attackerProvince.deselectAsAttacker();
@@ -146,35 +160,23 @@ public final class ProvinceHitAreas extends DoaObject {
 				DoaGraphicsFunctions.warpX(DoaMouse.X),
 				DoaGraphicsFunctions.warpY(DoaMouse.Y)
 			);
-			boolean compositeHighlight = false;
-			for (ProvinceHitArea area : areas) {
-				boolean highlight = false;
+			ProvinceHitArea candidate = null;
+	 outer: for (ProvinceHitArea area : areas) {
 				Iterable<@NonNull Mesh2D> meshes = area.getProvince().getMeshes();
 				for (Mesh2D mesh : meshes) {
 					if (mesh.encasesPoint(mousePoint)) {
-						highlight = true;
-						break;
+						candidate = area;
+						break outer;
 					}
 				}
-				if (highlight) {
-					if (highlightedProvince != null) {
-						highlightedProvince.setHighlighted(false);
-						highlightedProvince = null;
-					}
-					highlightedProvince = area;
-					area.setHighlighted(highlight);
-					compositeHighlight = true;
-				}
 			}
-			if (!compositeHighlight && highlightedProvince != null) {
-				highlightedProvince.setHighlighted(false);
-				highlightedProvince = null;
-			}
-			if (highlightedProvince != null) {
-				System.out.println(highlightedProvince.getProvince().getName());
-			} else {
-				System.out.println("null");
-			}
+	 		if (candidate == null) {
+	 			dehighlightHighlightedProvince();
+	 		} else if (candidate != highlightedProvince) {
+	 			dehighlightHighlightedProvince();
+				highlightedProvince = candidate;
+				candidate.setHighlighted(true);
+	 		}
 		}
 	}
 	
@@ -186,16 +188,13 @@ public final class ProvinceHitAreas extends DoaObject {
 			if (context.isPaused()) return;
 			
 			if (DoaMouse.MB1) {
-				if (highlightedProvince != null) {
-					if (selectedProvince != null) {
-						selectedProvince.setSelected(false);
-						selectedProvince = null;
-					}
+				deselectSelectedProvince();
+				if (highlightedProvince == null) {
+					deselectSelectedProvince();
+				} else if (highlightedProvince != selectedProvince) {
+					deselectSelectedProvince();
 					selectedProvince = highlightedProvince;
 					selectedProvince.setSelected(true);
-				} else {
-					selectedProvince.setSelected(false);
-					selectedProvince = null;
 				}
 			}
 		}
