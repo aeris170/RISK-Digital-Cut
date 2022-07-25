@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -30,7 +31,7 @@ public final class ProvinceSymbol extends DoaObject {
 	
 	private ProvinceSymbol(ProvinceHitArea province) {
 		this.province = province;
-		setzOrder(9);
+		setzOrder(ZOrders.PROVINCE_SYMBOL_Z);
 		addComponent(new Renderer());
 		//transform.position = new DoaVector(province.getBounds().centerX, province.getBounds().centerY);
 	}
