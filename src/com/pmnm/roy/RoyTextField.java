@@ -1,10 +1,16 @@
 package com.pmnm.roy;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.List;
 
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.UIUtils;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaKeyboard;
@@ -25,6 +31,7 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 	private boolean isVisible;
 	private boolean clicked = false;
 	private String marker = "|";
+	@Getter
 	private String text = "";
 	
 	private int width;
@@ -32,6 +39,7 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 	@Setter
 	@NonNull
 	private String placeholder = "";
+	@Getter
 	@Setter
 	private int maxCharacters = Integer.MAX_VALUE;
 	
@@ -75,9 +83,6 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 
 	private final class InputScript extends DoaScript {
 		
-		int counter = 40;
-		boolean locked = false;
-		
 		@Override
 		public void tick() {
 			enableDebugRender = true;
@@ -90,19 +95,19 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 				}
 			}
 			
-			if(clicked && !locked && text.length() < maxCharacters) {
-				if(DoaKeyboard.A) {
-					text += "A";
-					locked = true;
-				}
-			}
-			
-			if(locked) {
-				if(counter > 0)
-					counter--;
-				else {
-					counter = 40;
-					locked = false;
+			if(clicked) {
+				List<Character> chars = DoaKeyboard.getTypedChars();
+				for(Character c : chars) {
+					if(text.length() < maxCharacters && 
+						(('0' <= c && c <= '9') ||	// numbers
+						('A' <= c && c <= 'Z') ||	// upper case letters
+						('a' <= c && c <= 'z') ||	// lower case letters
+						(c == ' '))					// space
+					) {
+						text += c;
+					} else if(c == '\b' && text.length() > 0) {	// backspace
+						text = text.substring(0, text.length() - 1);
+					}
 				}
 			}
 			
@@ -142,7 +147,9 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 	
 	private final class Renderer extends DoaRenderer {
 		
-		boolean isMarkerVisible = true;
+		private Font font;
+		private int stringWidth;
+		private boolean isMarkerVisible = true;
 		
 		private Rectangle textArea;
 		
@@ -154,6 +161,17 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 		@Override
 		public void render() {
 			if(!isVisible()) return;
+			if (font == null) {
+				font = UIConstants.getFont().deriveFont(
+					Font.BOLD,
+					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(textArea.width, textArea.height), text), 0)[0]
+				);
+				
+				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
+				stringWidth = fm.stringWidth(text);
+				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
+				stringWidth = strSize[0];
+			}
 			
 			DoaGraphicsFunctions.pushTransform();
 			DoaGraphicsFunctions.resetTransform();
@@ -170,6 +188,8 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 			DoaGraphicsFunctions.setClip(textArea);
 			
 			if(text.length() > 0) {
+				DoaGraphicsFunctions.setColor(Color.RED);
+				DoaGraphicsFunctions.drawRect(getContentArea().x + 10, getContentArea().y, UIUtils.textWidth(font, text), getContentArea().height);
 				DoaGraphicsFunctions.setColor(Color.WHITE);
 				DoaGraphicsFunctions.drawString(text, getContentArea().x + 10, (float) getContentArea().y + 35);
 			}
@@ -179,10 +199,10 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 			}
 			
 			DoaGraphicsFunctions.popClip();
-			
+
 			if(clicked && isMarkerVisible) {
 				DoaGraphicsFunctions.setColor(Color.WHITE);
-				DoaGraphicsFunctions.drawString(marker, getContentArea().x + 10 + text.length() * 25, (float) getContentArea().y + 35);
+				DoaGraphicsFunctions.drawString(marker, getContentArea().x + UIUtils.textWidth(font, text) + 5, (float) getContentArea().y + 35);
 			}
 
 			DoaGraphicsFunctions.popTransform();

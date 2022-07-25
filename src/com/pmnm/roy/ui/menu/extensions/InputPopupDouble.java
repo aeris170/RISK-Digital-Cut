@@ -13,6 +13,7 @@ import com.pmnm.roy.RoyMiniButton;
 import com.pmnm.roy.RoyTextField;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
+import com.pmnm.roy.ui.menu.extensions.InputPopup.Script;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -21,6 +22,7 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -35,23 +37,25 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 	private String hostIDText = "Host ID:";
 	private String nameText = "Name:";
 
+	private RoyTextField idTextField = new RoyTextField(450, 50);
+	private RoyTextField nameTextField = new RoyTextField(450, 50);
+	RoyMiniButton yesButton;
+
 	public InputPopupDouble() {
 		transform.position = new DoaVector(600, 420);
 		
 		elements = new ArrayList<>();
 		
-		RoyTextField idTextField = new RoyTextField(450, 50);
 		idTextField.setPosition(new DoaVector(800, 450));
 		addElement(idTextField);
 		
-		RoyTextField nameTextField = new RoyTextField(450, 50);
 		nameTextField.setPosition(new DoaVector(800, 510));
 		nameTextField.setPlaceholder("max. 10 characters");
 		nameTextField.setMaxCharacters(10);
 		addElement(nameTextField);
 		
 		RoyMiniButton noButton = RoyMiniButton.builder()
-			.textKey("NO")
+			.textKey("BACK")
 			.action(() -> {
 				setVisible(false);
 			})
@@ -59,7 +63,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		noButton.setPosition(new DoaVector(650, 570));
 		addElement(noButton);
 		
-		RoyMiniButton yesButton = RoyMiniButton.builder()
+		yesButton = RoyMiniButton.builder()
 			.textKey("YES")
 			.action(() -> {
 				setVisible(false);
@@ -70,6 +74,19 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		
 		setzOrder(ZOrders.POPUP_Z);
 		addComponent(new Renderer());
+		addComponent(new Script());
+	}
+	
+	public class Script extends DoaScript {
+
+		@Override
+		public void tick() {
+			if(idTextField.getText().length() > 0 && nameTextField.getText().length() > 0) {
+				yesButton.setVisible(true);
+			} else {
+				yesButton.setVisible(false);
+			}
+		}
 	}
 	
 	public class Renderer extends DoaRenderer {
