@@ -30,7 +30,6 @@ public final class ProvinceSymbol extends DoaObject {
 		this.province = province;
 		setzOrder(ZOrders.PROVINCE_SYMBOL_Z);
 		addComponent(new Renderer());
-		//transform.position = new DoaVector(province.getBounds().centerX, province.getBounds().centerY);
 	}
 	
 	private class Renderer extends DoaRenderer {
