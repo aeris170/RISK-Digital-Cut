@@ -55,6 +55,7 @@ public class Player extends DoaObject implements IPlayer {
 	public void occupyProvince(final IProvince province) {
 		if (itIsNotMyTurn()) return;
 		context.occupyProvince(this, province);
+		deployToProvince(province, 1);
 	}
 	
 	@Override

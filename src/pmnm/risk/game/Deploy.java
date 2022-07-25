@@ -1,5 +1,7 @@
 package pmnm.risk.game;
 
+import com.pmnm.risk.globals.Globals;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
@@ -38,6 +40,9 @@ public final class Deploy {
 		if (result != null) return result;
 		
 		int targetTroops = context.numberOfTroopsOn(target);
+		if (targetTroops == Globals.UNKNOWN_TROOP_COUNT) {
+			targetTroops = 0;
+		}
 		targetTroops += amount;
 
 		Result rv = new Result(
