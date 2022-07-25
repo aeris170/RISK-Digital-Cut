@@ -21,7 +21,6 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
-import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -47,6 +46,7 @@ public final class InputPopup extends DoaObject implements IRoyContainer, Observ
 		nameTextField.setPosition(new DoaVector(800, 470));
 		nameTextField.setPlaceholder("max. 10 characters");
 		nameTextField.setMaxCharacters(10);
+		nameTextField.registerObserver(this);
 		addElement(nameTextField);
 		
 		RoyMiniButton noButton = RoyMiniButton.builder()
@@ -65,23 +65,11 @@ public final class InputPopup extends DoaObject implements IRoyContainer, Observ
 			})
 			.build();
 		yesButton.setPosition(new DoaVector(1070, 550));
+		yesButton.setVisible(false);
 		addElement(yesButton);
 		
 		setzOrder(ZOrders.POPUP_Z);
 		addComponent(new Renderer());
-		addComponent(new Script());
-	}
-	
-	public class Script extends DoaScript {
-
-		@Override
-		public void tick() {
-			if(nameTextField.getText().length() > 0) {
-				yesButton.setVisible(true);
-			} else {
-				yesButton.setVisible(false);
-			}
-		}
 	}
 	
 	public class Renderer extends DoaRenderer {
@@ -150,6 +138,7 @@ public final class InputPopup extends DoaObject implements IRoyContainer, Observ
 		for (IRoyElement e : elements) {
 			e.setVisible(value);
 		}
+		yesButton.setVisible(false);
 	}
 	
 	@Override
@@ -172,6 +161,9 @@ public final class InputPopup extends DoaObject implements IRoyContainer, Observ
 	
 	@Override
 	public void onNotify(Observable b) {
-		
+		if (b instanceof RoyTextField) {
+			int textLength = ((RoyTextField) b).getText().length();
+			yesButton.setVisible(textLength != 0);
+		}
 	}
 }

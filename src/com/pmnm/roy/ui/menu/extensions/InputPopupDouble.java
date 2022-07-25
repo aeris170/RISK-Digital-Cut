@@ -13,7 +13,6 @@ import com.pmnm.roy.RoyMiniButton;
 import com.pmnm.roy.RoyTextField;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
-import com.pmnm.roy.ui.menu.extensions.InputPopup.Script;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -22,7 +21,6 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
-import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -47,11 +45,13 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		elements = new ArrayList<>();
 		
 		idTextField.setPosition(new DoaVector(800, 450));
+		idTextField.registerObserver(this);
 		addElement(idTextField);
 		
 		nameTextField.setPosition(new DoaVector(800, 510));
 		nameTextField.setPlaceholder("max. 10 characters");
 		nameTextField.setMaxCharacters(10);
+		nameTextField.registerObserver(this);
 		addElement(nameTextField);
 		
 		RoyMiniButton noButton = RoyMiniButton.builder()
@@ -70,23 +70,11 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 			})
 			.build();
 		yesButton.setPosition(new DoaVector(1070, 570));
+		yesButton.setVisible(false);
 		addElement(yesButton);
 		
 		setzOrder(ZOrders.POPUP_Z);
 		addComponent(new Renderer());
-		addComponent(new Script());
-	}
-	
-	public class Script extends DoaScript {
-
-		@Override
-		public void tick() {
-			if(idTextField.getText().length() > 0 && nameTextField.getText().length() > 0) {
-				yesButton.setVisible(true);
-			} else {
-				yesButton.setVisible(false);
-			}
-		}
 	}
 	
 	public class Renderer extends DoaRenderer {
@@ -156,6 +144,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		for (IRoyElement e : elements) {
 			e.setVisible(value);
 		}
+		yesButton.setVisible(false);
 	}
 	
 	@Override
@@ -178,6 +167,9 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 	
 	@Override
 	public void onNotify(Observable b) {
-		
+		if (b instanceof RoyTextField) {
+			int textLength = ((RoyTextField) b).getText().length();
+			yesButton.setVisible(textLength != 0);
+		}
 	}
 }

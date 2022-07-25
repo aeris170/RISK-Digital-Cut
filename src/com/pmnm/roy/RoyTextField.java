@@ -5,12 +5,15 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.UIUtils;
+import com.pmnm.util.Observable;
+import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaKeyboard;
@@ -24,7 +27,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-public class RoyTextField extends DoaObject implements IRoyElement{
+public class RoyTextField extends DoaObject implements IRoyElement, Observable {
 
 	@Getter
 	@Setter
@@ -43,14 +46,16 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 	@Setter
 	private int maxCharacters = Integer.MAX_VALUE;
 	
+	private Renderer renderer;
+	
 	public RoyTextField(int width, int height) {
 		this.width = width;
 		this.height = height;
 		
 		addComponent(new InputScript());
-		Renderer r = new Renderer();
-		addComponent(r);
-		addComponent(new MarkerBlinkScript(r));
+		renderer = new Renderer();
+		addComponent(renderer);
+		addComponent(new MarkerBlinkScript(renderer));
 	}
 	
 	@Override
@@ -66,7 +71,6 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 				getContentArea().height - 6
 			)
 		);
-		
 	}
 
 	@Override
@@ -85,9 +89,8 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 		
 		@Override
 		public void tick() {
-			enableDebugRender = true;
 			if (!isVisible) return;
-			if(DoaMouse.MB1_RELEASE) {
+			if (DoaMouse.MB1_RELEASE) {
 				if (getContentArea().contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
 					clicked = true;
 				} else {
@@ -95,32 +98,40 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 				}
 			}
 			
-			if(clicked) {
+			if (clicked) {
+				boolean changed = false;
+				
 				List<Character> chars = DoaKeyboard.getTypedChars();
-				for(Character c : chars) {
-					if(text.length() < maxCharacters && 
+				for (Character c : chars) {
+					if (text.length() < maxCharacters && 
 						(('0' <= c && c <= '9') ||	// numbers
 						('A' <= c && c <= 'Z') ||	// upper case letters
 						('a' <= c && c <= 'z') ||	// lower case letters
 						(c == ' '))					// space
 					) {
 						text += c;
+						changed = true;
 					} else if(c == '\b' && text.length() > 0) {	// backspace
 						text = text.substring(0, text.length() - 1);
+						changed = true;
 					}
+				}
+				
+				if (changed) {
+					renderer.textChanged();
+					notifyObservers();
 				}
 			}
 			
 		}
-		
+
 		@Override
 		public void debugRender() {
-			if(isVisible) {
+			if (isVisible) {
 				DoaGraphicsFunctions.setColor(Color.RED);
 				DoaGraphicsFunctions.draw(getContentArea());
 			}
 		}
-	
 	}
 	
 	private final class MarkerBlinkScript extends DoaScript {
@@ -142,35 +153,35 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 				counter = -number;
 			}
 		}
-		
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 		
 		private Font font;
 		private int stringWidth;
+		private int stringHeight;
 		private boolean isMarkerVisible = true;
 		
 		private Rectangle textArea;
+		private Rectangle textPadding;
 		
 		public Renderer() {
 			Rectangle area = getContentArea();
 			textArea = new Rectangle(area.x + 3, area.y + 3, area.width - 6, area.height - 6);
+			textPadding = new Rectangle(7, 0, 0, 0);
 		}
 		
 		@Override
 		public void render() {
-			if(!isVisible()) return;
+			if (!isVisible()) return;
 			if (font == null) {
 				font = UIConstants.getFont().deriveFont(
 					Font.BOLD,
 					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(textArea.width, textArea.height), text), 0)[0]
 				);
 				
-				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
-				stringWidth = fm.stringWidth(text);
-				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
-				stringWidth = strSize[0];
+				stringWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(font, text));
+				stringHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(font));
 			}
 			
 			DoaGraphicsFunctions.pushTransform();
@@ -179,7 +190,7 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 			DoaGraphicsFunctions.setColor(Color.DARK_GRAY);
 			DoaGraphicsFunctions.fill(getContentArea());
 			
-			if(clicked) {
+			if (clicked) {
 				DoaGraphicsFunctions.setColor(Color.GRAY);
 				DoaGraphicsFunctions.fill(textArea);
 			}
@@ -187,26 +198,32 @@ public class RoyTextField extends DoaObject implements IRoyElement{
 			DoaGraphicsFunctions.pushClip();
 			DoaGraphicsFunctions.setClip(textArea);
 			
-			if(text.length() > 0) {
-				DoaGraphicsFunctions.setColor(Color.RED);
-				DoaGraphicsFunctions.drawRect(getContentArea().x + 10, getContentArea().y, UIUtils.textWidth(font, text), getContentArea().height);
+			DoaGraphicsFunctions.setFont(font);
+			
+			if (text.length() > 0) {
 				DoaGraphicsFunctions.setColor(Color.WHITE);
-				DoaGraphicsFunctions.drawString(text, getContentArea().x + 10, (float) getContentArea().y + 35);
-			}
-			else {
+				DoaGraphicsFunctions.drawString(text, textArea.x + textPadding.x, textArea.y + textArea.height - stringHeight / 4f);
+			} else {
 				DoaGraphicsFunctions.setColor(Color.WHITE.darker().darker());
-				DoaGraphicsFunctions.drawString(placeholder, getContentArea().x + 10, (float) getContentArea().y + 35);
+				DoaGraphicsFunctions.drawString(placeholder, textArea.x + textPadding.x, textArea.y + textArea.height - stringHeight / 4f);
 			}
 			
 			DoaGraphicsFunctions.popClip();
 
-			if(clicked && isMarkerVisible) {
+			if (clicked && isMarkerVisible) {
 				DoaGraphicsFunctions.setColor(Color.WHITE);
-				DoaGraphicsFunctions.drawString(marker, getContentArea().x + UIUtils.textWidth(font, text) + 5, (float) getContentArea().y + 35);
+				DoaGraphicsFunctions.drawString(marker, textArea.x + stringWidth, textArea.y + textArea.height - stringHeight / 4f);
 			}
 
 			DoaGraphicsFunctions.popTransform();
 		}
 		
+		public void textChanged() {
+			font = null;
+		}
 	}
+	
+	private List<Observer> observers = new ArrayList<>();
+	@Override public void registerObserver(Observer o) { observers.add(o); }
+	@Override public void notifyObservers() { observers.forEach(o -> o.onNotify(this)); }
 }
