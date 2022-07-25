@@ -70,6 +70,7 @@ public class RiskGameContext implements IRiskGameContext {
 	private Map<IProvince, @NonNull Integer> numberOfTroops;
 	
 	/* Game Runtime info */
+	private boolean isInitialPlacementComplete;
 	private IPlayer currentPlayingPlayer;
 	private TurnPhase currentTurnPhase;
 	
@@ -239,7 +240,19 @@ public class RiskGameContext implements IRiskGameContext {
 		return reinforcementsForThisTurn;
 	}
 	@Override
-	public boolean isInitialPlacementComplete() { return true; }
+	public boolean isInitialPlacementComplete() {
+		if (!isInitialPlacementComplete) {
+			int requiredAmount = 50 - 5 * players.size();
+			for (IPlayer player : players) {
+				int totalPlayerTroops = playerProvinces.get(player).stream().mapToInt(IProvince::getNumberOfTroops).sum();
+				if (totalPlayerTroops != requiredAmount) {
+					return false;
+				}
+			}
+			isInitialPlacementComplete = true;
+		}
+		return isInitialPlacementComplete;
+	}
 	@Override
 	public boolean isEveryProvinceOccupied() {
 		for (IProvince province : provinceData.keySet()) {
