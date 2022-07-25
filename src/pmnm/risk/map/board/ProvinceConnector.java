@@ -3,18 +3,14 @@ package pmnm.risk.map.board;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
-import com.pmnm.risk.globals.Scenes;
-import com.pmnm.risk.main.GameManager;
-
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import pmnm.risk.game.IRiskGameContext;
 
+@SuppressWarnings("serial")
 public final class ProvinceConnector extends DoaObject {
-
-	private static final long serialVersionUID = -6230774776747052926L;
 
 	private IRiskGameContext context;
 	private ProvinceHitArea[] provinceHitAreas;
@@ -24,8 +20,8 @@ public final class ProvinceConnector extends DoaObject {
 	ProvinceConnector(IRiskGameContext context) {
 		this.context = context;
 		setzOrder(10);
-		addComponent(new ProvinceConnectorScript());
-		addComponent(new ProvinceConnectorRenderer());
+		addComponent(new Script());
+		addComponent(new Renderer());
 	}
 	
 
@@ -34,10 +30,7 @@ public final class ProvinceConnector extends DoaObject {
 		dashPhase = 0;
 	}
 	
-	private class ProvinceConnectorScript extends DoaScript {
-		
-		private static final long serialVersionUID = 8252737118743603352L;
-
+	private class Script extends DoaScript {
 		@Override
 		public void tick() {
 			if (context.isPaused()) { return; }
@@ -45,10 +38,7 @@ public final class ProvinceConnector extends DoaObject {
 		}	
 	}
 	
-	private class ProvinceConnectorRenderer extends DoaRenderer {
-		
-		private static final long serialVersionUID = -8982130745576574664L;
-
+	private class Renderer extends DoaRenderer {
 		@Override
 		public void render() {
 			if (provinceHitAreas == null) { return; }

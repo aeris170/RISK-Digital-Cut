@@ -6,6 +6,7 @@ import java.util.stream.StreamSupport;
 
 import com.pmnm.risk.globals.Scenes;
 
+import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.DoaScene;
@@ -49,8 +50,6 @@ public final class ProvinceHitAreas extends DoaObject {
 		
 		addComponent(new ProvinceHitAreaHighlighter());
 		addComponent(new ProvinceHitAreaSelector());
-		
-		Scenes.GAME_SCENE.add(this);
 	}
 	
 	@Override
@@ -142,23 +141,39 @@ public final class ProvinceHitAreas extends DoaObject {
 		@Override
 		public void tick() {
 			if (context.isPaused()) return;
-			
+
+			Vertex2D mousePoint = new Vertex2D(
+				DoaGraphicsFunctions.warpX(DoaMouse.X),
+				DoaGraphicsFunctions.warpY(DoaMouse.Y)
+			);
+			boolean compositeHighlight = false;
 			for (ProvinceHitArea area : areas) {
 				boolean highlight = false;
-				
 				Iterable<@NonNull Mesh2D> meshes = area.getProvince().getMeshes();
 				for (Mesh2D mesh : meshes) {
-					if (mesh.encasesPoint(new Vertex2D((int) DoaMouse.X, (int) DoaMouse.Y))) {
+					if (mesh.encasesPoint(mousePoint)) {
 						highlight = true;
 						break;
 					}
 				}
-				if (highlightedProvince != null) {
-					highlightedProvince.setHighlighted(false);
-					highlightedProvince = null;
+				if (highlight) {
+					if (highlightedProvince != null) {
+						highlightedProvince.setHighlighted(false);
+						highlightedProvince = null;
+					}
+					highlightedProvince = area;
+					area.setHighlighted(highlight);
+					compositeHighlight = true;
 				}
-				highlightedProvince = area;
-				area.setHighlighted(highlight);
+			}
+			if (!compositeHighlight && highlightedProvince != null) {
+				highlightedProvince.setHighlighted(false);
+				highlightedProvince = null;
+			}
+			if (highlightedProvince != null) {
+				System.out.println(highlightedProvince.getProvince().getName());
+			} else {
+				System.out.println("null");
 			}
 		}
 	}

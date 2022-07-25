@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.globals.Scenes;
 import com.pmnm.util.CircularQueue;
 
 import lombok.AccessLevel;
@@ -29,6 +30,7 @@ import pmnm.risk.game.Reinforce;
 import pmnm.risk.map.ContinentData;
 import pmnm.risk.map.MapData;
 import pmnm.risk.map.ProvinceData;
+import pmnm.risk.map.board.GameBoard;
 import pmnm.risk.map.board.ProvinceHitAreas;
 
 public class RiskGameContext implements IRiskGameContext {
@@ -123,9 +125,7 @@ public class RiskGameContext implements IRiskGameContext {
 		/* ------------------ Step 4, set player associations ------------------ */
 		playerProvinces = new HashMap<>();
 		provincePlayers = new HashMap<>();
-		provinceData.keySet().forEach(province -> {
-			provincePlayers.put(province, null);
-		});
+		provinceData.keySet().forEach(province -> provincePlayers.put(province, null));
 		/* --------------------------------------------------------------------- */ 
 
 		/* ----------------- Step 5, set neigbors of provinces ----------------- */
@@ -144,7 +144,8 @@ public class RiskGameContext implements IRiskGameContext {
 
 		/* ----------------- Step 6, add provinces to this map ----------------- */
 		numberOfTroops = new HashMap<>();
-		provinceData.keySet()
+		provinceData
+			.keySet()
 			.forEach(province -> numberOfTroops.put(province, Globals.UNKNOWN_TROOP_COUNT));
 		/* --------------------------------------------------------------------- */ 
 		
@@ -155,13 +156,18 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public void initiliazeGame(@NonNull final GameConfig gameConfig) {
 		if (isInitialized) return;
+		Scenes.GAME_SCENE.clear();
 		
 		players = new CircularQueue<>();
 		for (Player.Data data : gameConfig.getData()) {
 			Player p = new Player(this, data);
 			players.add(p);
 			playerProvinces.put(p, new ArrayList<>());
+			Scenes.GAME_SCENE.add(p);
 		}
+		Scenes.GAME_SCENE.add(new GameBoard(map));
+		Scenes.GAME_SCENE.add(areas);
+		currentPlayingPlayer = players.getNext();
 		isInitialized = true;
 	}
 	@Override
