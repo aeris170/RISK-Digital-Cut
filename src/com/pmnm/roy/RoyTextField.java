@@ -63,14 +63,15 @@ public class RoyTextField extends DoaObject implements IRoyElement, Observable {
 		transform.position.x = position.x;
 		transform.position.y = position.y;
 		
-		getComponentByType(Renderer.class).ifPresent(
-			r -> r.textArea = new Rectangle(
-				getContentArea().x + 3,
-				getContentArea().y + 3,
-				getContentArea().width - 6,
-				getContentArea().height - 6
-			)
-		);
+		getComponentByType(Renderer.class).ifPresent(r -> {
+			Rectangle area = getContentArea();
+			r.textArea = new Rectangle(
+				area.x + 3,
+				area.y + 3,
+				area.width - 6,
+				area.height - 6
+			);
+		});
 	}
 
 	@Override
@@ -133,7 +134,7 @@ public class RoyTextField extends DoaObject implements IRoyElement, Observable {
 			}
 		}
 	}
-	
+
 	private final class MarkerBlinkScript extends DoaScript {
 
 		int counter = 0;
@@ -222,7 +223,7 @@ public class RoyTextField extends DoaObject implements IRoyElement, Observable {
 			font = null;
 		}
 	}
-	
+
 	private List<Observer> observers = new ArrayList<>();
 	@Override public void registerObserver(Observer o) { observers.add(o); }
 	@Override public void notifyObservers() { observers.forEach(o -> o.onNotify(this)); }
