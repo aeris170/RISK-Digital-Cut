@@ -14,6 +14,7 @@ import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.util.CircularQueue;
 
+import doa.engine.maths.DoaMath;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -169,6 +170,29 @@ public class RiskGameContext implements IRiskGameContext {
 		Scenes.GAME_SCENE.add(new GameBoard(map));
 		Scenes.GAME_SCENE.add(areas);
 		currentPlayingPlayer = players.getNext();
+		
+		if (gameConfig.isRandomPlacementEnabled()) {
+			{ /* occupy all provinces */
+				List<IProvince> unoccupiedProvinces = new ArrayList<>(provinceData.keySet());
+				while (!unoccupiedProvinces.isEmpty()) {
+					int randomIndex = DoaMath.randomIntBetween(0, unoccupiedProvinces.size());
+					IProvince randomProvince = unoccupiedProvinces.get(randomIndex);
+					currentPlayingPlayer.occupyProvince(randomProvince);
+					unoccupiedProvinces.remove(randomIndex);
+					currentPlayingPlayer = players.getNext();
+				}
+			}
+			{ /* deploy to all provinces */
+				currentPlayingPlayer = players.getFirst();
+				while (!isInitialPlacementComplete()) {
+					List<IProvince> provinces = playerProvinces.get(currentPlayingPlayer);
+					int randomIndex = DoaMath.randomIntBetween(0, provinces.size());
+					IProvince randomProvince = provinces.get(randomIndex);
+					currentPlayingPlayer.deployToProvince(randomProvince, 1);
+					currentPlayingPlayer = players.getNext();
+				}
+			}
+		}
 		isInitialized = true;
 	}
 	@Override
