@@ -68,6 +68,10 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private static final DoaVector COLOR_COMBO_BOX_POSITION = new DoaVector(400, 290);
 	private static final DoaVector PAWN_COMBO_BOX_POSITION = new DoaVector(508, 290);
 
+	private static final DoaVector COMBO_BOX_OFFSET = new DoaVector(0, 55);
+	private static final DoaVector COLOR_COMBO_BOX_OFFSET = new DoaVector(0, 55);
+	private static final DoaVector PAWN_COMBO_BOX_OFFSET = new DoaVector(0, 55);
+
 	/*
 	private static final RandomPlacementButton randomPlacementButton = Builders.RPBB
 	        .args(new DoaVector(610, 687), DoaSprites.get("ReadyCircle"), DoaSprites.get("Ready"), "RANDOM_PLACEMENT")
@@ -86,6 +90,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private List<RoyComboBox> playerComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> colorComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
+	
+	private RoyButton playButton;
 	
 	public NewGameMenu(Type t) {
 		type = t;
@@ -118,20 +124,29 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			slots[i] = new Slot(i);
 			
 			RoyComboBox playerBox = new RoyComboBox(names);
-			playerBox.setPosition(new DoaVector(COMBO_BOX_POSITION.x, COMBO_BOX_POSITION.y + (i * 55)));
+			playerBox.setPosition(new DoaVector(
+				COMBO_BOX_POSITION.x + (i * COMBO_BOX_OFFSET.x),
+				COMBO_BOX_POSITION.y + (i * COMBO_BOX_OFFSET.y)
+			));
 			playerBox.registerObserver(this);
 			addElement(playerBox);
 			playerComboBoxes.add(playerBox);
 			
 			RoyComboBox colorBox = new RoyComboBox(colors);
-			colorBox.setPosition(new DoaVector(COLOR_COMBO_BOX_POSITION.x, COLOR_COMBO_BOX_POSITION.y + (i * 55)));
+			colorBox.setPosition(new DoaVector(
+				COLOR_COMBO_BOX_POSITION.x + (i * COLOR_COMBO_BOX_OFFSET.x),
+				COLOR_COMBO_BOX_POSITION.y + (i * COLOR_COMBO_BOX_OFFSET.y)
+			));
 			colorBox.setSelectedIndex(i);
 			colorBox.registerObserver(this);
 			addElement(colorBox);
 			colorComboBoxes.add(colorBox);
 			
 			RoyComboBox pawnBox = new RoyComboBox(pawns);
-			pawnBox.setPosition(new DoaVector(PAWN_COMBO_BOX_POSITION.x, PAWN_COMBO_BOX_POSITION.y + (i * 55)));
+			colorBox.setPosition(new DoaVector(
+				PAWN_COMBO_BOX_POSITION.x + (i * PAWN_COMBO_BOX_OFFSET.x),
+				PAWN_COMBO_BOX_POSITION.y + (i * PAWN_COMBO_BOX_OFFSET.y)
+			));
 			pawnBox.setSelectedIndex(i);
 			pawnBox.registerObserver(this);
 			addElement(pawnBox);
@@ -143,7 +158,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 		// COMBOBOXES END
 		
-		RoyButton playButton = RoyButton.builder()
+		playButton = RoyButton.builder()
 			.textKey(PLAY_KEY)
 			.action(this::startGame)
 			.build();
@@ -370,7 +385,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
 
 			int playerCount = (int)Stream.of(slots).filter(Slot::hasPlayer).count();
-			if(playerCount > 0) {
+			if (playerCount > 0) {
 				DoaDiscordActivity activity = DoaDiscordService.getCurrentActivity();
 				activity.setPartySize(playerCount);
 				activity.setPartyMaxSize(Globals.MAX_NUM_PLAYERS);
@@ -378,6 +393,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			} else {
 				applyCustomActivity();
 			}
+			
+			playButton.setVisible(playerCount >= 2);
 		}		
 	}
 	
