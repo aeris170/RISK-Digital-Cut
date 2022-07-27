@@ -172,7 +172,7 @@ public class RiskGameContext implements IRiskGameContext {
 		currentPlayingPlayer = players.getNext();
 		
 		if (gameConfig.isRandomPlacementEnabled()) {
-			{ /* occupy all provinces */
+			/* occupy all provinces */ { 
 				List<IProvince> unoccupiedProvinces = new ArrayList<>(provinceData.keySet());
 				while (!unoccupiedProvinces.isEmpty()) {
 					int randomIndex = DoaMath.randomIntBetween(0, unoccupiedProvinces.size());
@@ -182,7 +182,7 @@ public class RiskGameContext implements IRiskGameContext {
 					currentPlayingPlayer = players.getNext();
 				}
 			}
-			{ /* deploy to all provinces */
+			/* deploy to all provinces */ {
 				currentPlayingPlayer = players.getFirst();
 				while (!isInitialPlacementComplete()) {
 					List<IProvince> provinces = playerProvinces.get(currentPlayingPlayer);
