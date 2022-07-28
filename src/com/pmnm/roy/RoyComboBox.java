@@ -60,9 +60,9 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 	@Setter
 	private int selectedIndex = 0;
 	
-	private Element[] elements;
+	private transient Element[] elements;
 
-	private Object selected;
+	private transient Object selected;
 
 	@Setter
 	private List<Integer> lockedIndices = new ArrayList<>();
@@ -268,7 +268,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			DoaGraphicsFunctions.setColor(Color.WHITE);
 			
 			if (selectedIndex == OVERRIDEN_INDEX) {
-				DoaGraphicsFunctions.drawString(selected.toString().toString(), SELECTED_ELEMENT_CONTENT_OFFSET.x, SELECTED_ELEMENT_CONTENT_OFFSET.y);
+				DoaGraphicsFunctions.drawString(selected.toString(), SELECTED_ELEMENT_CONTENT_OFFSET.x, SELECTED_ELEMENT_CONTENT_OFFSET.y);
 			} else {
 				DoaGraphicsFunctions.drawString(elements[selectedIndex].name, SELECTED_ELEMENT_CONTENT_OFFSET.x, SELECTED_ELEMENT_CONTENT_OFFSET.y);
 			}
@@ -403,8 +403,8 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 	}
 	
 	@ToString(includeFieldNames = true)
-	@EqualsAndHashCode(callSuper = true)
-	private static final class Element extends DoaObject{
+	@EqualsAndHashCode
+	private static final class Element {
 		
 		private Rectangle elementArea;
 		private Rectangle contentArea;
