@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import com.google.common.collect.ImmutableList;
@@ -51,7 +52,7 @@ public class RiskGameContext implements IRiskGameContext {
 	private boolean isPaused;
 	
 	private boolean isInitialized;
-
+	
 	/* Data <-> Implementation Association */
 	private Map<IContinent, ContinentData> continentData;
 	private Map<ContinentData, IContinent> dataContinent;
@@ -177,7 +178,11 @@ public class RiskGameContext implements IRiskGameContext {
 				while (!unoccupiedProvinces.isEmpty()) {
 					int randomIndex = DoaMath.randomIntBetween(0, unoccupiedProvinces.size());
 					IProvince randomProvince = unoccupiedProvinces.get(randomIndex);
-					currentPlayingPlayer.occupyProvince(randomProvince);
+					
+					occupyProvince(currentPlayingPlayer, randomProvince);
+					Deploy deploy = setUpDeploy(randomProvince, 1);
+					applyDeployResult(deploy.calculateResult());
+					
 					unoccupiedProvinces.remove(randomIndex);
 					currentPlayingPlayer = players.getNext();
 				}
@@ -188,7 +193,10 @@ public class RiskGameContext implements IRiskGameContext {
 					List<IProvince> provinces = playerProvinces.get(currentPlayingPlayer);
 					int randomIndex = DoaMath.randomIntBetween(0, provinces.size());
 					IProvince randomProvince = provinces.get(randomIndex);
-					currentPlayingPlayer.deployToProvince(randomProvince, 1);
+
+					Deploy deploy = setUpDeploy(randomProvince, 1);
+					applyDeployResult(deploy.calculateResult());
+					
 					currentPlayingPlayer = players.getNext();
 				}
 			}
@@ -266,7 +274,7 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public boolean isInitialPlacementComplete() {
 		if (!isInitialPlacementComplete) {
-			int requiredAmount = 50 - 5 * players.size();
+			int requiredAmount = calculateStartingTroopCount();
 			for (IPlayer player : players) {
 				int totalPlayerTroops = playerProvinces.get(player).stream().mapToInt(IProvince::getNumberOfTroops).sum();
 				if (totalPlayerTroops != requiredAmount) {
