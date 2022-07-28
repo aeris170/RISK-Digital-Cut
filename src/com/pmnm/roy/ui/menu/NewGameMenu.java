@@ -143,7 +143,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			colorComboBoxes.add(colorBox);
 			
 			RoyComboBox pawnBox = new RoyComboBox(pawns);
-			colorBox.setPosition(new DoaVector(
+			pawnBox.setPosition(new DoaVector(
 				PAWN_COMBO_BOX_POSITION.x + (i * PAWN_COMBO_BOX_OFFSET.x),
 				PAWN_COMBO_BOX_POSITION.y + (i * PAWN_COMBO_BOX_OFFSET.y)
 			));
