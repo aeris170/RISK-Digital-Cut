@@ -208,6 +208,26 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public TurnPhase getCurrentPhase() { return currentTurnPhase; }
 	@Override
+	public void goToNextPhase() { 
+		switch(getCurrentPhase()) {
+			case DRAFT:
+				currentTurnPhase = TurnPhase.ATTACK;
+				break;
+			case ATTACK:
+				currentTurnPhase = TurnPhase.REINFORCE;
+				break;
+			case REINFORCE:
+				break;
+		}
+	}
+	@Override
+	public void finishCurrentPlayerTurn() {
+		if (getCurrentPhase() != TurnPhase.REINFORCE) { return; }
+		
+		currentTurnPhase = TurnPhase.DRAFT;
+		currentPlayingPlayer = players.getNext();
+	}
+	@Override
 	public Deploy setUpDeploy(@NonNull IProvince target, int amount) {
 		return new Deploy(this, target, amount);
 	}
@@ -307,8 +327,6 @@ public class RiskGameContext implements IRiskGameContext {
 		playerProvinces.get(player).add(province);
 		provincePlayers.put(province, player);
 	}
-	@Override
-	public void finishCurrentPlayerTurn() { currentPlayingPlayer = players.getNext(); }
 	
 	/* Province API */
 	@Override
