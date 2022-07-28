@@ -86,6 +86,7 @@ public final class ProvinceSymbol extends DoaObject {
 				ownerLogo.getWidth() * 0.66f,
 				ownerLogo.getHeight() * 0.66f
 			);
+			
 			int troopCount = p.getNumberOfTroops();
 			String troops = "";
 			if (troopCount != Globals.UNKNOWN_TROOP_COUNT) {
