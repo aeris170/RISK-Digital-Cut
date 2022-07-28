@@ -345,6 +345,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	@Override
 	public void setVisible(boolean value) {
 		super.setVisible(value);
+		playButton.setVisible(false);
 		if (isVisible()) {
 			for (Slot slot : slots) {
 				slot.playerBox.setSelectedIndex(0);
