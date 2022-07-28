@@ -103,7 +103,7 @@ public final class ProvinceHitAreaCacher {
 			ebr.setColor(ProvinceColorBank.EMPHASIZE);
 			ebr.draw(gp);
 
-			ebr.setColor(ProvinceColorBank.HIGHLIGHT);
+			hbr.setColor(ProvinceColorBank.HIGHLIGHT);
 			hbr.draw(gp);
 			for (int i = 0; i < playerMeshRenderers.size(); i++) {
 				Graphics2D renderer = playerMeshRenderers.get(i);
