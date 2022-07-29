@@ -161,7 +161,6 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public void initiliazeGame(@NonNull final GameConfig gameConfig) {
 		if (isInitialized) return;
-		Scenes.GAME_SCENE.clear();
 		
 		players = new CircularQueue<>();
 		for (Player.Data data : gameConfig.getData()) {
