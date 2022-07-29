@@ -6,7 +6,6 @@ import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -18,6 +17,7 @@ import com.pmnm.risk.globals.discordrichpresence.DiscordRichPresenceAdapter;
 import com.pmnm.risk.globals.discordrichpresence.IDiscordActivityMutator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
+import com.pmnm.roy.RoyCheckBox;
 import com.pmnm.roy.RoyComboBox;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
@@ -56,7 +56,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	
 	private static final String PLAY_KEY = "PLAY";
 	private static final String BACK_KEY = "BACK";
-
+	
+	private static final DoaVector RANDOM_PLACEMENT_CHECKBOX_POSITION = new DoaVector(1740f, 646f);
 	private static final DoaVector PLAY_POSITION = new DoaVector(1377f, 715f);
 	private static final DoaVector BACK_POSITION = new DoaVector(1377f, 803f);
 	
@@ -94,6 +95,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
 	
 	private RoyButton playButton;
+	RoyCheckBox randomPlacementButton;
 	
 	public NewGameMenu(Type t) {
 		type = t;
@@ -159,6 +161,10 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			slots[i].pawnBox = pawnBox;
 		}
 		// COMBOBOXES END
+		
+		randomPlacementButton = new RoyCheckBox();
+		randomPlacementButton.setPosition(RANDOM_PLACEMENT_CHECKBOX_POSITION);
+		addElement(randomPlacementButton);
 		
 		playButton = RoyButton.builder()
 			.textKey(PLAY_KEY)
@@ -232,7 +238,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 		
 		Scenes.GAME_SCENE.clear();
-		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), true); // FIXME not always false, implement random selection
+		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
 		context.initiliazeGame(config);
 		// TODO add game stuff to game scene
 		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);
@@ -247,16 +253,21 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		private transient BufferedImage mainScroll;
 		private transient BufferedImage mapChooserBg;
 		private transient BufferedImage mapBorder;
+		private transient BufferedImage randomPlacementBg;
 		
 		private Font font;
 		private int stringWidth;
 		private DoaVector textDimensions;
 		private DoaVector textPosition;
+
+		private final DoaVector RANDOM_PLACEMENT_POSITION = new DoaVector(1362f, 630f);
 		
 		private Renderer() {
 			mainScroll = DoaSprites.getSprite("MainScroll");
 			mapChooserBg = DoaSprites.getSprite("MapChooserBackground");
 			mapBorder = DoaSprites.getSprite("MapBorder");
+			
+			randomPlacementBg = DoaSprites.getSprite("RandomPlacementBorder");
 		}
 
 		@Override
@@ -305,6 +316,18 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				mapBorder.getWidth() - 5f,
 				mapBorder.getHeight() - 3f);
 			DoaGraphicsFunctions.drawImage(mapBorder, 1405, 357);
+			
+			// Random Placement
+			DoaGraphicsFunctions.drawImage(
+				randomPlacementBg,
+				RANDOM_PLACEMENT_POSITION.x,
+				RANDOM_PLACEMENT_POSITION.y,
+				randomPlacementBg.getWidth(),
+				randomPlacementBg.getHeight()
+			);
+
+			DoaGraphicsFunctions.setColor(Color.WHITE);
+			DoaGraphicsFunctions.drawString("Random Placement", RANDOM_PLACEMENT_POSITION.x + 20, RANDOM_PLACEMENT_POSITION.y + 37);
 		}
 	}
 	
