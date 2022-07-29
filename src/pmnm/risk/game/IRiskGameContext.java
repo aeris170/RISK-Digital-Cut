@@ -41,5 +41,5 @@ public interface IRiskGameContext extends Serializable {
 	Iterable<@NonNull IContinent> getContinents();
 	Iterable<@NonNull IProvince> provincesOf(@NonNull final IContinent continent);
 	
-	public enum TurnPhase { DRAFT, ATTACK, REINFORCE; }
+	public enum TurnPhase { SETUP, DRAFT, ATTACK, REINFORCE; }
 }

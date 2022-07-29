@@ -227,7 +227,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				playerDatas.add(playerData);
 			}
 		}
-		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), false); // FIXME not always false, implement random selection
+		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), true); // FIXME not always false, implement random selection
 		context.initiliazeGame(config);
 		// TODO add game stuff to game scene
 		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);

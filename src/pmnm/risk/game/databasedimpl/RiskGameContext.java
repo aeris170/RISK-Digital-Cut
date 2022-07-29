@@ -152,6 +152,8 @@ public class RiskGameContext implements IRiskGameContext {
 			.forEach(province -> numberOfTroops.put(province, Globals.UNKNOWN_TROOP_COUNT));
 		/* --------------------------------------------------------------------- */ 
 		
+		currentTurnPhase = TurnPhase.SETUP;
+		
 		areas = new ProvinceHitAreas(this);
 	}
 	
@@ -210,6 +212,8 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public void goToNextPhase() { 
 		switch(getCurrentPhase()) {
+			case SETUP:
+				break;
 			case DRAFT:
 				currentTurnPhase = TurnPhase.ATTACK;
 				break;
@@ -222,9 +226,14 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	@Override
 	public void finishCurrentPlayerTurn() {
-		if (getCurrentPhase() != TurnPhase.REINFORCE) { return; }
+		if (getCurrentPhase() == TurnPhase.DRAFT ||
+			getCurrentPhase() == TurnPhase.ATTACK) { return; }
 		
-		currentTurnPhase = TurnPhase.DRAFT;
+		if (getCurrentPhase() == TurnPhase.SETUP) {
+			currentTurnPhase = TurnPhase.SETUP;	
+		} else {
+			currentTurnPhase = TurnPhase.ATTACK;
+		}
 		currentPlayingPlayer = players.getNext();
 	}
 	@Override
