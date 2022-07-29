@@ -39,7 +39,9 @@ public class Player extends DoaObject implements IPlayer {
 		this.id = ID++;
 		this.data = data;
 		
-		addComponent(new MouseController());
+		if (data.isLocalPlayer) {
+			addComponent(new MouseController());
+		}
 	}
 
 	@Override
