@@ -1,95 +1,119 @@
 package com.pmnm.roy.ui.gameui;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Composite;
+import java.awt.image.BufferedImage;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaKeyboard;
-import com.doa.engine.scene.DoaSceneHandler;
-import com.doa.engine.task.DoaTasker;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.panel.DoaPanel;
-import com.doa.utils.DoaUtils;
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.globals.Scenes;
-import com.pmnm.risk.main.GameManager;
-import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.TextImageButton;
+import com.pmnm.roy.RoyButton;
+import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 
-public final class PauseMenu extends DoaPanel {
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaKeyboard;
+import doa.engine.maths.DoaVector;
+import doa.engine.scene.DoaSceneHandler;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
+import lombok.Getter;
+import lombok.Setter;
 
-	private static final long serialVersionUID = 8401721289376342254L;
+@SuppressWarnings("serial")
+public final class PauseMenu extends RoyMenu {
+	@Getter
+	@Setter
+	private boolean isVisible;
+
+	private static final String SETTINGS_KEY 		= "SETTINGS";
+	private static final String RULES_KEY 			= "RULES";
+	private static final String EXIT_KEY 			= "EXIT";
+
+	private static BufferedImage bg = DoaSprites.getSprite("escapeMenu");
+	private static final DoaVector BG_LOCATION 		= new DoaVector((1920 - bg.getWidth()) / 2, (1080 - bg.getHeight()) / 2);
+
+	private static final DoaVector SETTINGS_LOCATION 		= new DoaVector(1377f, 657f);
+	private static final DoaVector RULES_LOCATION 			= new DoaVector(0f, 0f);
+	private static final DoaVector EXIT_LOCATION 			= new DoaVector(1377f, 803f);
+	private static final DoaVector MAIN_MENU_LOCATION 		= new DoaVector(1377f, 803f);
+	
+	RoyButton rulesButton;
 
 	public PauseMenu() {
-		super(Main.WINDOW_WIDTH * 0.5f - DoaSprites.get("escapeMenu").getWidth() * 0.5f, Main.WINDOW_HEIGHT * 0.291f, (int) (Main.WINDOW_WIDTH * 0.240f),
-		        (int) (Main.WINDOW_HEIGHT * 0.419f));
-		/* saveButton.addAction(() -> { // TODO add to languages
-		 * saveButton.setText(Translator.getInstance().getTranslatedString("SAVING")); new Thread(() -> {
-		 * GameInstance.saveGame();
-		 * saveButton.setText(Translator.getInstance().getTranslatedString("SAVED")); }).start(); });
-		 * loadButton.addAction(() -> { try { GameInstance.loadGame(); } catch (ClassNotFoundException |
-		 * IOException ex) { ex.printStackTrace(); } }); */
-		rulesButton.addAction(() -> UIConstants.rm.show());
-		backButton.addAction(() -> {
-			UIConstants.fb.show();
-			UIConstants.mm.show();
-			DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
-			Scenes.GAME_SCENE.clear();
-		});
-		exitButton.addAction(RiskGameScreenUI.ExitPopup::show);
-		add(exitButton);
-		add(backButton);
-		add(rulesButton);
-		add(loadButton);
-		add(saveButton);
-		DoaTasker.executeNow(() -> {
-			while (true) {
-				if (DoaKeyboard.ESCAPE) {
-					if (isVisible) {
-						hide();
-						BottomPanel.signal();
-						RiskGameScreenUI.ExitPopup.hide();
-					} else {
-						show();
-					}
-					GameManager.INSTANCE.isPaused = isVisible;
-					DoaUtils.sleepFor(199);
-				}
-				DoaUtils.sleepFor(1);
+
+		/* Save Button */	
+
+		/* --------------- */
+
+
+		/* Load Button */	
+
+		/* --------------- */
+		
+		/* Rules Button */
+		rulesButton = RoyButton
+			.builder()
+			.textKey(RULES_KEY)
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getBackground().setVisible(false);
+				UIConstants.getRulesMenu().setVisible(true);
+			})
+			.build();
+		rulesButton.setPosition(RULES_LOCATION);
+		rulesButton.setzOrder(1000);
+		addElement(rulesButton);
+		/* --------------- */
+
+		/* Main Menu Button */
+		RoyButton mainMenuButton = RoyButton
+			.builder()
+			.textKey("BACK")
+			.action(() -> {
+				setVisible(false);
+				UIConstants.getMainMenu().setVisible(true);	
+			})
+			.build();
+		mainMenuButton.setPosition(MAIN_MENU_LOCATION);
+		addElement(mainMenuButton); 
+		/* --------------- */
+
+
+		/* Exit Button */	
+
+		/* --------------- */
+
+		addComponent(new Script());
+		addComponent(new Renderer());
+	}
+	
+	@Override
+	public void setzOrder(int zOrder) {
+		super.setzOrder(zOrder);
+		rulesButton.setzOrder(10000);
+	}
+
+	private final class Script extends DoaScript {
+		@Override
+		public void tick() {
+			if (DoaKeyboard.ESCAPE) {
+				setVisible(!isVisible);
 			}
-		});
-		hide();
+		}
 	}
 
-	@Override
-	public void tick() {}
+	private final class Renderer extends DoaRenderer {
+		@Override
+		public void render() {
+			if(!isVisible()) return;
 
-	@Override
-	public void render(DoaGraphicsContext g) {
-		Composite oldComposite = g.getComposite();
-		g.setColor(Color.darkGray);
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-		g.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-		g.setComposite(oldComposite);
-		g.drawImage(DoaSprites.get("escapeMenu"), position.x + 10, position.y, width, height);
+			System.out.println(DoaSceneHandler.getLoadedScene().contains(rulesButton));
+			DoaGraphicsFunctions.setColor(new Color(0,0,0,100));
+			DoaGraphicsFunctions.fillRect(0, 0, 1920, 1080);
+			
+			DoaGraphicsFunctions.drawImage(bg, BG_LOCATION.x, BG_LOCATION.y, bg.getWidth(), bg.getHeight());
+			
+			DoaGraphicsFunctions.setColor(Color.WHITE);
+			DoaGraphicsFunctions.drawString("PAUSE MENU", 840, 380);
+		}
+		
 	}
-
-	private TextImageButton saveButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.342f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "SAVE_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
-	        .instantiate();
-	private TextImageButton loadButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.407f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "LOAD_GAME", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
-	        .instantiate();
-	private TextImageButton rulesButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.472f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "RULES", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
-	        .instantiate();
-	private TextImageButton backButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.537f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "BACK_M", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
-	        .instantiate();
-	private TextImageButton exitButton = Builders.TIBB.args(new DoaVectorF(Main.WINDOW_WIDTH * 0.400f, Main.WINDOW_HEIGHT * 0.602f), (int) (Main.WINDOW_WIDTH * 0.202),
-	        (int) (Main.WINDOW_HEIGHT * 0.056f), DoaSprites.get("ButtonIdle"), DoaSprites.get("ButtonHover"), "EXIT", UIConstants.FONT_COLOR, UIConstants.HOVER_FONT_COLOR, true)
-	        .instantiate();
 }

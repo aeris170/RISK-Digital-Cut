@@ -9,7 +9,6 @@ import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.localization.Translator.Language;
 import com.pmnm.risk.main.SystemSpecs;
-import com.pmnm.roy.ui.gameui.PauseMenu;
 import com.pmnm.roy.ui.menu.FadingBackground;
 import com.pmnm.roy.ui.menu.HostGameMenu;
 import com.pmnm.roy.ui.menu.JoinGameMenu;
@@ -85,8 +84,6 @@ public final class UIConstants {
 	public static HostGameMenu hgm;
 	public static JoinGameMenu jgm;
 
-	public static PauseMenu pm;
-	
 	@NonNull private static BufferedImage fleurDeLis;
 	@NonNull private static BufferedImage topRing;
 	@NonNull private static BufferedImage bottomRing;
