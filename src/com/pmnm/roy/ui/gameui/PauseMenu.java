@@ -11,24 +11,18 @@ import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaKeyboard;
 import doa.engine.maths.DoaVector;
-import doa.engine.scene.DoaSceneHandler;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
-import lombok.Getter;
-import lombok.Setter;
 
 @SuppressWarnings("serial")
 public final class PauseMenu extends RoyMenu {
-	@Getter
-	@Setter
-	private boolean isVisible;
 
 	private static final String SETTINGS_KEY 		= "SETTINGS";
 	private static final String RULES_KEY 			= "RULES";
 	private static final String EXIT_KEY 			= "EXIT";
 
 	private static BufferedImage bg = DoaSprites.getSprite("escapeMenu");
-	private static final DoaVector BG_LOCATION 		= new DoaVector((1920 - bg.getWidth()) / 2, (1080 - bg.getHeight()) / 2);
+	private static final DoaVector BG_LOCATION 		= new DoaVector((1920 - bg.getWidth()) / 2f, (1080 - bg.getHeight()) / 2f);
 
 	private static final DoaVector SETTINGS_LOCATION 		= new DoaVector(1377f, 657f);
 	private static final DoaVector RULES_LOCATION 			= new DoaVector(0f, 0f);
@@ -59,7 +53,6 @@ public final class PauseMenu extends RoyMenu {
 			})
 			.build();
 		rulesButton.setPosition(RULES_LOCATION);
-		rulesButton.setzOrder(1000);
 		addElement(rulesButton);
 		/* --------------- */
 
@@ -84,18 +77,12 @@ public final class PauseMenu extends RoyMenu {
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
-	
-	@Override
-	public void setzOrder(int zOrder) {
-		super.setzOrder(zOrder);
-		rulesButton.setzOrder(10000);
-	}
 
 	private final class Script extends DoaScript {
 		@Override
 		public void tick() {
 			if (DoaKeyboard.ESCAPE) {
-				setVisible(!isVisible);
+				setVisible(!isVisible());
 			}
 		}
 	}
@@ -105,8 +92,7 @@ public final class PauseMenu extends RoyMenu {
 		public void render() {
 			if(!isVisible()) return;
 
-			System.out.println(DoaSceneHandler.getLoadedScene().contains(rulesButton));
-			DoaGraphicsFunctions.setColor(new Color(0,0,0,100));
+			DoaGraphicsFunctions.setColor(new Color(0, 0, 0, 100));
 			DoaGraphicsFunctions.fillRect(0, 0, 1920, 1080);
 			
 			DoaGraphicsFunctions.drawImage(bg, BG_LOCATION.x, BG_LOCATION.y, bg.getWidth(), bg.getHeight());
