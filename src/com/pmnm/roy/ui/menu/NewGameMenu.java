@@ -22,6 +22,8 @@ import com.pmnm.roy.RoyComboBox;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.gameui.GameType;
+import com.pmnm.roy.ui.gameui.PauseMenu;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -216,6 +218,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	}
 	
 	private void startGame() {
+		setVisible(false);
 		List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 		MapConfig selectedConfig = configs.get(selectedMapIndex);
 		MapData data = MapLoader.loadMap(selectedConfig);
@@ -233,6 +236,10 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		context.initiliazeGame(config);
 		// TODO add game stuff to game scene
 		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);
+
+		PauseMenu pm = new PauseMenu(GameType.SINGLE_PLAYER);
+		pm.setzOrder(10000);
+		DoaSceneHandler.getLoadedScene().add(pm);
 	}
 	
 	private final class Renderer extends DoaRenderer {
