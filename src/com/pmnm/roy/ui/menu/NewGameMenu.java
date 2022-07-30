@@ -24,6 +24,7 @@ import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.gameui.GameType;
 import com.pmnm.roy.ui.gameui.PauseMenu;
+import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -239,6 +240,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		Scenes.GAME_SCENE.add(new PauseMenu(type));
 		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
 		context.initiliazeGame(config);
+		RiskGameScreenUI.initUIFor(context, Scenes.GAME_SCENE);
 		// TODO add game stuff to game scene
 		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);
 	}
