@@ -52,8 +52,6 @@ import pmnm.risk.map.MapLoader;
 @SuppressWarnings("serial")
 public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMutator {
 	
-	public enum Type { SINGLE_PLAYER, MULTI_PLAYER }
-	
 	private static final String PLAY_KEY = "PLAY";
 	private static final String BACK_KEY = "BACK";
 	
@@ -85,7 +83,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private String selectedMapName;
 	private int selectedMapIndex;
 	
-	private Type type;
+	private GameType type;
 
 	private Slot[] slots;
 	private List<Integer> selectedColorIndices = new ArrayList<>();
@@ -97,7 +95,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private RoyButton playButton;
 	RoyCheckBox randomPlacementButton;
 	
-	public NewGameMenu(Type t) {
+	public NewGameMenu(GameType t) {
 		type = t;
 		
 		selectedMapIndex = 0;
@@ -105,7 +103,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 
 		// COMBOBOXES
 		String[] names = new String[3];
-		if (t == Type.SINGLE_PLAYER) {
+		if (t == GameType.SINGLE_PLAYER) {
 			names[0] = "OPEN";
 			names[1] = "LOCAL_PLAYER";
 			names[2] = "AI";
@@ -115,7 +113,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				//"AI Hard",
 				//"AI Insane",
 				//"AI Impossible"
-		} else if (t == Type.MULTI_PLAYER) {
+		} else if (t == GameType.MULTI_PLAYER) {
 			names[0] = "OPEN";
 			names[1] = "CLOSED";
 			names[2] = "AI";
@@ -238,14 +236,11 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 		
 		Scenes.GAME_SCENE.clear();
+		Scenes.GAME_SCENE.add(new PauseMenu(type));
 		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
 		context.initiliazeGame(config);
 		// TODO add game stuff to game scene
 		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);
-
-		PauseMenu pm = new PauseMenu(GameType.SINGLE_PLAYER);
-		pm.setzOrder(10000);
-		DoaSceneHandler.getLoadedScene().add(pm);
 	}
 	
 	private final class Renderer extends DoaRenderer {
@@ -352,15 +347,15 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 
 		private boolean hasPlayer() { 
-			if (type == Type.SINGLE_PLAYER) {
+			if (type == GameType.SINGLE_PLAYER) {
 				return playerBox.getSelectedIndex() != 0;	
-			} else if (type == Type.MULTI_PLAYER) {
+			} else if (type == GameType.MULTI_PLAYER) {
 				return playerBox.getSelectedIndex() != 0 && playerBox.getSelectedIndex() != 1;	
 			} else { throw new IllegalStateException("wtf?"); }
 		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
 		private String getPawn() { return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]); }
-		private boolean isLocalPlayer() { return type == Type.SINGLE_PLAYER; } /* TODO  */
+		private boolean isLocalPlayer() { return type == GameType.SINGLE_PLAYER; } /* TODO  */
 	}
 	
 	public Slot findSlotOf(RoyComboBox box) {

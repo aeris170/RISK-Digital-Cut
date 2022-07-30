@@ -9,6 +9,7 @@ import com.pmnm.risk.globals.Scenes;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -61,6 +62,7 @@ public final class PauseMenu extends RoyMenu {
 		
 		addButtons(type);
 		
+		setzOrder(ZOrders.PAUSE_Z);
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
