@@ -18,6 +18,7 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaSceneHandler;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
+import pmnm.risk.game.IRiskGameContext;
 
 @SuppressWarnings("serial")
 public final class PauseMenu extends RoyMenu {
@@ -37,7 +38,7 @@ public final class PauseMenu extends RoyMenu {
 	private DoaVector RULES_LOCATION;
 	private DoaVector QUIT_LOCATION;
 	
-	public PauseMenu(GameType type) {
+	public PauseMenu(IRiskGameContext context, GameType type) {		
 		float buttonsY = 0;
 		float distanceBetweenButtons = 0;
 		
@@ -63,10 +64,14 @@ public final class PauseMenu extends RoyMenu {
 		addButtons(type);
 		
 		setzOrder(ZOrders.PAUSE_Z);
-		addComponent(new Script());
+		if (type == GameType.SINGLE_PLAYER) {
+			addComponent(new ScriptSinglePlayer(context));
+		} else if (type == GameType.MULTI_PLAYER) {
+			addComponent(new ScriptMultiPlayer(context));
+		}
 		addComponent(new Renderer());
 	}
-	
+
 	private void addButtons(GameType type) {
 		if (type == GameType.SINGLE_PLAYER) {
 			/* Save Button */	
@@ -133,7 +138,39 @@ public final class PauseMenu extends RoyMenu {
 		/* --------------- */
 	}
 
-	private final class Script extends DoaScript {
+	private final class ScriptSinglePlayer extends DoaScript {
+		
+		private final IRiskGameContext context;
+		
+		private ScriptSinglePlayer(final IRiskGameContext context) {
+			this.context = context;
+		}
+		
+		@Override
+		public void tick() {
+			List<Character> chars = DoaKeyboard.getTypedChars();
+			for (Character c : chars) {
+				if (c == KeyEvent.VK_ESCAPE) {	// esc button
+					setVisible(!isVisible());
+					if (isVisible()) {
+						context.pauseGame();
+					} else {
+						context.resumeGame();
+					}
+				}
+			}
+		}
+	}
+
+	private final class ScriptMultiPlayer extends DoaScript {
+		
+		@SuppressWarnings("unused")
+		private final IRiskGameContext context;
+		
+		private ScriptMultiPlayer(final IRiskGameContext context) {
+			this.context = context;
+		}
+		
 		@Override
 		public void tick() {
 			List<Character> chars = DoaKeyboard.getTypedChars();

@@ -237,7 +237,6 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 		
 		Scenes.GAME_SCENE.clear();
-		Scenes.GAME_SCENE.add(new PauseMenu(type));
 		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
 		context.initiliazeGame(config);
 		RiskGameScreenUI.initUIFor(context, Scenes.GAME_SCENE);

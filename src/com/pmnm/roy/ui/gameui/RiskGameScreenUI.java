@@ -33,8 +33,10 @@ public final class RiskGameScreenUI {
 		*/
 	}
 	
-	public static void initUIFor(final IRiskGameContext context, final DoaScene gameScene) {
+	public static void initUIFor(final IRiskGameContext context, final DoaScene gameScene, final GameType type) {
 		if (isInitialized()) { throw new IllegalStateException("Please call destroyUI() first"); }
+		gameScene.clear();
+		gameScene.add(new PauseMenu(context, type));
 		
 		RiskGameScreenUI.context = context;
 		isInitialized = true;
