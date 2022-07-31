@@ -152,11 +152,7 @@ public final class PauseMenu extends RoyMenu {
 			for (Character c : chars) {
 				if (c == KeyEvent.VK_ESCAPE) {	// esc button
 					setVisible(!isVisible());
-					if (isVisible()) {
-						context.pauseGame();
-					} else {
-						context.resumeGame();
-					}
+					context.setPaused(isVisible());
 				}
 			}
 		}

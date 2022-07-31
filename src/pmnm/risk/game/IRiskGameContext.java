@@ -9,6 +9,7 @@ public interface IRiskGameContext extends Serializable {
 	/* Game API */
 	void initiliazeGame(@NonNull final GameConfig gameConfig);
 	boolean isPaused();
+	void setPaused(boolean value);
 	IPlayer getCurrentPlayer();
 	TurnPhase getCurrentPhase();
 	void goToNextPhase();
