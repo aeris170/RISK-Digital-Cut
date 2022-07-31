@@ -6,20 +6,20 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-import com.doa.engine.graphics.DoaAnimation;
-import com.doa.engine.graphics.DoaAnimations;
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.scene.DoaObject;
-import com.doa.maths.DoaMath;
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.ZOrders;
 
-public class SeasonEffect extends DoaObject {
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.graphics.DoaAnimation;
+import doa.engine.graphics.DoaAnimations;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.maths.DoaMath;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
 
-	private static final long serialVersionUID = -784946746221681591L;
+@SuppressWarnings("serial")
+public class SeasonEffect extends DoaObject {
 
 	public static SeasonEffect INSTANCE;
 
@@ -28,66 +28,75 @@ public class SeasonEffect extends DoaObject {
 	private double godrayAngle = 0;
 
 	public SeasonEffect() {
-		super(0f, 0f, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, ZOrders.SEASON_Z);
-		Builders.WB.scene(Scenes.GAME_SCENE).instantiate();
+		setzOrder(ZOrders.SEASON_Z);
 		INSTANCE = this;
+		addComponent(new Script());
+		addComponent(new Renderer());
 	}
 
-	@Override
-	public void tick() {
-		godrayAngle += 0.05f;
-		godrayAlpha += godrayAlphaDelta;
-		if (godrayAlpha >= 1f || godrayAlpha <= 0.5f) {
-			godrayAlphaDelta *= -1;
-			godrayAlpha = DoaMath.clamp(godrayAlpha, 0.5f, 1f);
-		}
-	}
+	private final class Script extends DoaScript {
 
-	@Override
-	public void render(DoaGraphicsContext g) {
-		Composite oldComposite = g.getComposite();
-		g.setColor(Season.getCurrentSeason().getSeasonColor());
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-		g.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-		g.setComposite(oldComposite);
-		AffineTransform oldTransform = g.getTransform();
-		switch (Season.getCurrentSeason()) {
-			case WINTER:
-				DoaAnimation snowfall = DoaAnimations.get("Snowfall");
-				g.translate(Main.WINDOW_WIDTH / 2f, 0);
-				// g.setClip(new Ellipse2D.Float(-200, -200, 400, 400)); same as below, made
-				// resolution friendly
-				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
-				g.scale(1.5f, 1.5f);
-				g.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f);
-				break;
-			case SPRING:
-				DoaAnimation petals = DoaAnimations.get("CherryPetals");
-				g.translate(Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT * 0.05f);
-				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
-				g.scale(1.5f, 1.5f);
-				g.rotate(45f);
-				g.drawAnimation(petals, -petals.getFrames().get(0).getWidth() / 2f, -petals.getFrames().get(0).getHeight() / 2f);
-				break;
-			case SUMMER:
-				BufferedImage godray = DoaSprites.get("godray");
-				g.translate(Main.WINDOW_WIDTH / 2f, 0);
-				g.rotate(Math.toRadians(godrayAngle));
-				g.scale(1.2f, 1.2f);
-				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, godrayAlpha));
-				g.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
-				break;
-			case FALL:
-				DoaAnimation rain = DoaAnimations.get("FloatingLeaves");
-				g.translate(Main.WINDOW_WIDTH / 2f, 0);
-				g.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
-				g.scale(1.8f, 1.8f);
-				g.rotate(22.5f);
-				g.drawAnimation(rain, -rain.getFrames().get(0).getWidth() / 2f, -rain.getFrames().get(0).getHeight() / 2f);
-				break;
+		@Override
+		public void tick() {
+			godrayAngle += 0.05f;
+			godrayAlpha += godrayAlphaDelta;
+			if (godrayAlpha >= 1f || godrayAlpha <= 0.5f) {
+				godrayAlphaDelta *= -1;
+				godrayAlpha = DoaMath.clamp(godrayAlpha, 0.5f, 1f);
+			}
 		}
-		g.setComposite(oldComposite);
-		g.setTransform(oldTransform);
-		g.setClip(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		
+	}
+	
+	private final class Renderer extends DoaRenderer {
+
+		@Override
+		public void render() {
+			Composite oldComposite = DoaGraphicsFunctions.getComposite();
+			DoaGraphicsFunctions.setColor(Season.getCurrentSeason().getSeasonColor());
+			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
+			DoaGraphicsFunctions.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+			DoaGraphicsFunctions.setComposite(oldComposite);
+			AffineTransform oldTransform = DoaGraphicsFunctions.getTransform();
+			switch (Season.getCurrentSeason()) {
+				case WINTER:
+					DoaAnimation snowfall = DoaAnimations.getAnimation("Snowfall");
+					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, 0);
+					// g.setClip(new Ellipse2D.Float(-200, -200, 400, 400)); same as below, made
+					// resolution friendly
+					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+					DoaGraphicsFunctions.scale(1.5f, 1.5f);
+					DoaGraphicsFunctions.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f);
+					break;
+				case SPRING:
+					DoaAnimation petals = DoaAnimations.getAnimation("CherryPetals");
+					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT * 0.05f);
+					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+					DoaGraphicsFunctions.scale(1.5f, 1.5f);
+					DoaGraphicsFunctions.rotate(45f);
+					DoaGraphicsFunctions.drawAnimation(petals, -petals.getFrames().get(0).getWidth() / 2f, -petals.getFrames().get(0).getHeight() / 2f);
+					break;
+				case SUMMER:
+					BufferedImage godray = DoaSprites.getSprite("godray");
+					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, 0);
+					DoaGraphicsFunctions.rotate((float) Math.toRadians(godrayAngle));
+					DoaGraphicsFunctions.scale(1.2f, 1.2f);
+					DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, godrayAlpha));
+					DoaGraphicsFunctions.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
+					break;
+				case FALL:
+					DoaAnimation rain = DoaAnimations.getAnimation("FloatingLeaves");
+					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, 0);
+					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+					DoaGraphicsFunctions.scale(1.8f, 1.8f);
+					DoaGraphicsFunctions.rotate(22.5f);
+					DoaGraphicsFunctions.drawAnimation(rain, -rain.getFrames().get(0).getWidth() / 2f, -rain.getFrames().get(0).getHeight() / 2f);
+					break;
+			}
+			DoaGraphicsFunctions.setComposite(oldComposite);
+			DoaGraphicsFunctions.setTransform(oldTransform);
+			DoaGraphicsFunctions.setClip(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		}
+		
 	}
 }

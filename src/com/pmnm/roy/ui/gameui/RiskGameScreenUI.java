@@ -49,6 +49,9 @@ public final class RiskGameScreenUI {
 		
 		BottomPanel bottomPanel = new BottomPanel();
 		gameScene.add(bottomPanel);
+		
+		SeasonEffect seasonEffect = new SeasonEffect();
+		gameScene.add(seasonEffect);
 	}
 	
 	public static void destroyUI() {
