@@ -46,6 +46,9 @@ public final class RiskGameScreenUI {
 		
 		TopPanel topPanel = new TopPanel();
 		gameScene.add(topPanel);
+		
+		BottomPanel bottomPanel = new BottomPanel();
+		gameScene.add(bottomPanel);
 	}
 	
 	public static void destroyUI() {

@@ -1,177 +1,228 @@
 package com.pmnm.roy.ui.gameui;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.maths.DoaVectorF;
-import com.doa.ui.button.DoaImageButton;
-import com.doa.ui.panel.DoaPanel;
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
-import com.pmnm.risk.main.TurnPhase;
 import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.RoyImageButton;
+import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.gameui.actions.CenterPieceButtonAction;
 import com.pmnm.roy.ui.gameui.actions.DecrementButtonAction;
 import com.pmnm.roy.ui.gameui.actions.IncrementButtonAction;
 import com.pmnm.roy.ui.gameui.actions.NextPhaseButtonAction;
 
-import pmnm.risk.map.province.Province;
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.maths.DoaVector;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
 
-public class BottomPanel extends DoaPanel {
+@SuppressWarnings("serial")
+public class BottomPanel extends RoyMenu {
 
 	public static BottomPanel INSTANCE;
-	private static final long serialVersionUID = -59674351675589726L;
 
-	private static final BufferedImage MIDDLE = DoaSprites.get("gaugeBig");
-	private static final BufferedImage LEFT = DoaSprites.get("gaugeLeft");
-	private static final BufferedImage RIGHT = DoaSprites.get("gaugeRight");
+	public static RoyImageButton nextPhaseButton;
+	public static RoyImageButton decrementButton;
+	public static RoyImageButton incrementButton;
+	public static RoyImageButton centerPieceButton;
 
-	public static DoaImageButton nextPhaseButton = Builders.DIBB.args(Main.WINDOW_WIDTH * 0.622f, Main.WINDOW_HEIGHT * 0.898f, 70, 70, DoaSprites.get("nextPhaseButtonIdle"),
-	        DoaSprites.get("nextPhaseButtonHover"), DoaSprites.get("nextPhaseButtonPressed"), DoaSprites.get("nextPhaseButtonDisabled")).instantiate();
-	public static DoaImageButton decrementButton = Builders.DIBB
-	        .args(Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.958f, 41, 36, DoaSprites.get("arrowDown"), DoaSprites.get("arrowDownHover"), DoaSprites.get("arrowDownPress"))
-	        .instantiate();
-	public static DoaImageButton incrementButton = Builders.DIBB
-	        .args(Main.WINDOW_WIDTH * 0.363f, Main.WINDOW_HEIGHT * 0.912f, 41, 36, DoaSprites.get("arrowUp"), DoaSprites.get("arrowUpHover"), DoaSprites.get("arrowUpPress"))
-	        .instantiate();
-	public static SpinnerCenterPiece centerPiece = Builders.SCPB
-	        .args(new DoaVectorF(Main.WINDOW_WIDTH * 0.320f, Main.WINDOW_HEIGHT * 0.925f), DoaSprites.get("centerPiece").getWidth(), DoaSprites.get("centerPiece").getHeight(),
-	                DoaSprites.get("centerPiece"), DoaSprites.get("centerPiece"), "", Color.BLACK, Color.RED)
-	        .instantiate();
-
+	
+	private static final DoaVector NEXT_PHASE_POSITION		= new DoaVector(0, 300);
+	private static final DoaVector DECREMENT_POSITION		= new DoaVector(0, 300);
+	private static final DoaVector INCREMENT_POSITION		= new DoaVector(0, 300);
+	private static final DoaVector CENTER_PIECE_POSITION	= new DoaVector(0, 0);
+	
 	public static List<Integer> spinnerValues;
 	public static int index = 0;
 
 	public BottomPanel() {
-		super(0f, 0f, 0, 0);
-		nextPhaseButton.addAction(new NextPhaseButtonAction(nextPhaseButton));
-		decrementButton.addAction(new DecrementButtonAction(this));
-		incrementButton.addAction(new IncrementButtonAction(this));
-		centerPiece.addAction(new CenterPieceButtonAction());
-		add(nextPhaseButton);
-		add(decrementButton);
-		add(incrementButton);
-		add(centerPiece);
-		nextPhaseButton.disable();
-		show();
+		nextPhaseButton = RoyImageButton.builder()
+				.image(DoaSprites.getSprite("nextPhaseButtonIdle"))
+				.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
+				.pressImage(DoaSprites.getSprite("nextPhaseButtonPressed"))
+				.action(() -> {
+					new NextPhaseButtonAction();
+				})
+				.build();
+		nextPhaseButton.setPosition(NEXT_PHASE_POSITION);
+		addElement(nextPhaseButton);
+		
+		decrementButton = RoyImageButton.builder()
+				.image(DoaSprites.getSprite("arrowDown"))
+				.hoverImage(DoaSprites.getSprite("arrowDownHover"))
+				.pressImage(DoaSprites.getSprite("arrowDownPress"))
+				.action(() -> {
+					new DecrementButtonAction(this);
+				})
+				.build();
+		decrementButton.setPosition(DECREMENT_POSITION);
+		addElement(decrementButton);
+		
+		incrementButton = RoyImageButton.builder()
+				.image(DoaSprites.getSprite("arrowUp"))
+				.hoverImage(DoaSprites.getSprite("arrowUpHover"))
+				.pressImage(DoaSprites.getSprite("arrowUpPress"))
+				.action(() -> {
+					new IncrementButtonAction(this);
+				})
+				.build();
+		incrementButton.setPosition(INCREMENT_POSITION);
+		addElement(incrementButton);
+		
+		centerPieceButton = RoyImageButton.builder()
+				.image(DoaSprites.getSprite("centerPiece"))
+				.hoverImage(DoaSprites.getSprite("centerPiece"))
+				.pressImage(DoaSprites.getSprite("centerPiece"))
+				.action(() -> {
+					new CenterPieceButtonAction();
+				})
+				.build();
+		centerPieceButton.setPosition(CENTER_PIECE_POSITION);
+		addElement(centerPieceButton);
+		
+		nextPhaseButton.setVisible(false);
+		
 		INSTANCE = this;
+
+		addComponent(new Script());
+		addComponent(new Renderer());
 	}
 
-	@Override
-	public void tick() {
-		if (GameManager.INSTANCE.isPaused) {
-			nextPhaseButton.disable();
-			decrementButton.disable();
-			incrementButton.disable();
-			centerPiece.disable();
-		}
-		if (GameManager.INSTANCE.currentPhase == TurnPhase.REINFORCE) {
-			if (GameManager.INSTANCE.getReinforcedProvince() != null) {
-				decrementButton.enable();
-				incrementButton.enable();
-				centerPiece.enable();
-				nextPhaseButton.disable();
-			} else {
-				decrementButton.disable();
-				incrementButton.disable();
-				centerPiece.disable();
-				nextPhaseButton.enable();
+	private final class Script extends DoaScript {
+
+		@Override
+		public void tick() {
+			/*if (GameManager.INSTANCE.isPaused) {
+				nextPhaseButton.setVisible(false);
+				decrementButton.setVisible(false);
+				incrementButton.setVisible(false);
+				centerPieceButton.setVisible(false);
+			}
+			if (GameManager.INSTANCE.currentPhase == TurnPhase.REINFORCE) {
+				if (GameManager.INSTANCE.getReinforcedProvince() != null) {
+					decrementButton.setVisible(true);
+					incrementButton.setVisible(true);
+					centerPieceButton.setVisible(true);
+					nextPhaseButton.setVisible(false);
+				} else {
+					decrementButton.setVisible(false);
+					incrementButton.setVisible(false);
+					centerPieceButton.setVisible(false);
+					nextPhaseButton.setVisible(true);
+				}
+			}*/
+			try {
+				//centerPieceButton.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
+			} catch (Exception ex) {
+				// TODO have no idea why this catch block is here, if you come across an
+				// exception getting thrown, feel free to fix.
+				// and don't ask me how do i fix this, just fix it ffs.
+				ex.printStackTrace();
 			}
 		}
-		try {
-			centerPiece.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
-		} catch (Exception ex) {
-			// TODO have no idea why this catch block is here, if you come across an
-			// exception getting thrown, feel free to fix.
-			// and don't ask me how do i fix this, just fix it ffs.
-			ex.printStackTrace();
-		}
+		
 	}
+	
+	private final class Renderer extends DoaRenderer {
 
+		private transient BufferedImage bottomRing	= DoaSprites.getSprite("MainMenuBottomRing");
+
+		private final BufferedImage MIDDLE	= DoaSprites.getSprite("gaugeBig");
+		private final BufferedImage LEFT	= DoaSprites.getSprite("gaugeLeft");
+		private final BufferedImage RIGHT 	= DoaSprites.getSprite("gaugeRight");
+		
+		private transient BufferedImage garrisonBG	= DoaSprites.getSprite("garrisonHolder");
+		private transient BufferedImage ownerBG		= DoaSprites.getSprite("ownerHolder");
+		private transient BufferedImage provinceBG	= DoaSprites.getSprite("provinceNameHolder");
+		private transient BufferedImage continentBG = DoaSprites.getSprite("continentHolder");
+
+		private transient BufferedImage garrisonIcon	= DoaSprites.getSprite("garrisonHolderIcon");
+		private transient BufferedImage ownerIcon		= DoaSprites.getSprite("ownerHolderIcon");
+		private transient BufferedImage provinceIcon	= DoaSprites.getSprite("provinceNameHolderIcon");
+		private transient BufferedImage continentIcon	= DoaSprites.getSprite("continentHolderIcon");
+
+		private final DoaVector GARRISON_BG_POSITION	= new DoaVector(870, 890);
+		private final DoaVector OWNER_BG_POSITION		= new DoaVector(857, 932);
+		private final DoaVector PROVINCE_BG_POSITION	= new DoaVector(837, 974);
+		private final DoaVector CONTINENT_BG_POSITION	= new DoaVector(825, 1016);
+		
+		@Override
+		public void render() {
+			///GameManager gm = GameManager.INSTANCE;
+			//Province clickedProvince = gm.clickedHitArea != null ? gm.clickedHitArea.getProvince() : null;
+
+			String garrisonText = "";
+			String ownerText = "";
+			String nameText = "";
+			String continentText = "";
+
+			/*if (clickedProvince != null) {
+				garrisonText += clickedProvince.getTroops() != -1 ? clickedProvince.getTroops() : "???";
+				ownerText += clickedProvince.getOwner().getName();
+				nameText += clickedProvince.getName().toUpperCase();
+				continentText += clickedProvince.getContinent().getName().toUpperCase();
+			}*/
+			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
+
+			DoaGraphicsFunctions.drawImage(bottomRing, 0, (float) (Main.WINDOW_HEIGHT - bottomRing.getHeight() + 6d));
+
+			DoaGraphicsFunctions.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (float) ((double) Main.WINDOW_HEIGHT - LEFT.getHeight()));
+			DoaGraphicsFunctions.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (float) ((double) Main.WINDOW_HEIGHT - RIGHT.getHeight()));
+
+			//String phaseText = gm.currentPhase.name();
+			//DoaVector phaseArea = new DoaVector(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
+			//DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), phaseArea, phaseText)));
+			//DoaGraphicsFunctions.drawString(gm.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
+
+			DoaGraphicsFunctions.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (float) ((double) Main.WINDOW_HEIGHT - MIDDLE.getHeight()));
+
+			DoaGraphicsFunctions.drawImage(garrisonBG, GARRISON_BG_POSITION.x, GARRISON_BG_POSITION.y);
+			DoaGraphicsFunctions.drawImage(garrisonIcon, GARRISON_BG_POSITION.x + garrisonBG.getWidth() + 6, GARRISON_BG_POSITION.y + 8);
+			
+			DoaGraphicsFunctions.drawImage(ownerBG, OWNER_BG_POSITION.x, OWNER_BG_POSITION.y);
+			DoaGraphicsFunctions.drawImage(ownerIcon, OWNER_BG_POSITION.x + ownerBG.getWidth() + 6, OWNER_BG_POSITION.y + 8);
+			
+			DoaGraphicsFunctions.drawImage(provinceBG, PROVINCE_BG_POSITION.x, PROVINCE_BG_POSITION.y);
+			DoaGraphicsFunctions.drawImage(provinceIcon, PROVINCE_BG_POSITION.x + provinceBG.getWidth() + 6, PROVINCE_BG_POSITION.y + 8);
+			
+			DoaGraphicsFunctions.drawImage(continentBG, CONTINENT_BG_POSITION.x, CONTINENT_BG_POSITION.y);
+			DoaGraphicsFunctions.drawImage(continentIcon, CONTINENT_BG_POSITION.x + continentBG.getWidth() + 6, CONTINENT_BG_POSITION.y + 4);
+
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 25f));
+			FontMetrics fm = DoaGraphicsFunctions.getFontMetrics();
+
+			DoaGraphicsFunctions.drawString(garrisonText, GARRISON_BG_POSITION.x + (garrisonBG.getWidth() - fm.stringWidth(garrisonText)) / 2f, GARRISON_BG_POSITION.y * 1.031f);
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 30f));
+			fm = DoaGraphicsFunctions.getFontMetrics();
+			/*if (clickedProvince != null) {
+				DoaGraphicsFunctions.setColor(gm.clickedHitArea.getProvince().getOwner().getColor());
+			}*/
+			DoaGraphicsFunctions.drawString(ownerText, OWNER_BG_POSITION.x + (ownerBG.getWidth() - fm.stringWidth(ownerText)) / 2f, OWNER_BG_POSITION.y * 1.03f);
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN,
+			        Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(provinceBG.getWidth() * 0.95f, provinceBG.getHeight()), nameText)));
+			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
+			fm = DoaGraphicsFunctions.getFontMetrics();
+			DoaGraphicsFunctions.drawString(nameText, PROVINCE_BG_POSITION.x + (provinceBG.getWidth() - fm.stringWidth(nameText)) / 2f, PROVINCE_BG_POSITION.y * 1.03f);
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN,
+			        Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(continentBG.getWidth() * 0.95f, continentBG.getHeight()), continentText)));
+			fm = DoaGraphicsFunctions.getFontMetrics();
+			DoaGraphicsFunctions.drawString(continentText, CONTINENT_BG_POSITION.x + (continentBG.getWidth() - fm.stringWidth(continentText)) / 2f, CONTINENT_BG_POSITION.y * 1.03f);
+			
+		}
+		
+	}
+	
 	public static void signal() {
-		BottomPanel.nextPhaseButton.enable();
-		BottomPanel.decrementButton.enable();
-		BottomPanel.incrementButton.enable();
-		BottomPanel.centerPiece.enable();
-	}
-
-	@Override
-	public void render(DoaGraphicsContext g) {
-		GameManager gm = GameManager.INSTANCE;
-		Province clickedProvince = gm.clickedHitArea != null ? gm.clickedHitArea.getProvince() : null;
-
-		String garrisonText = "";
-		BufferedImage garrisonSprite = DoaSprites.get("garrisonHolder");
-		DoaVectorF garrisonTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.454f, Main.WINDOW_HEIGHT * 0.836f);
-
-		String ownerText = "";
-		BufferedImage ownerSprite = DoaSprites.get("ownerHolder");
-		DoaVectorF ownerTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.447f, Main.WINDOW_HEIGHT * 0.874f);
-
-		String nameText = "";
-		BufferedImage nameSprite = DoaSprites.get("provinceNameHolder");
-		DoaVectorF nameTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.436f, Main.WINDOW_HEIGHT * 0.912f);
-
-		String continentText = "";
-		BufferedImage continentSprite = DoaSprites.get("continentHolder");
-		DoaVectorF continentTopLeft = new DoaVectorF(Main.WINDOW_WIDTH * 0.430f, Main.WINDOW_HEIGHT * 0.950f);
-
-		if (clickedProvince != null) {
-			garrisonText += clickedProvince.getTroops() != -1 ? clickedProvince.getTroops() : "???";
-			ownerText += clickedProvince.getOwner().getName();
-			nameText += clickedProvince.getName().toUpperCase();
-			continentText += clickedProvince.getContinent().getName().toUpperCase();
-		}
-		g.setColor(UIConstants.FONT_COLOR);
-
-		g.drawImage(DoaSprites.get("MainMenuBottomRing"), 0, Main.WINDOW_HEIGHT - DoaSprites.get("MainMenuBottomRing").getHeight() + 6d);
-
-		g.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (double) Main.WINDOW_HEIGHT - LEFT.getHeight());
-		g.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (double) Main.WINDOW_HEIGHT - RIGHT.getHeight());
-
-		String phaseText = gm.currentPhase.name();
-		DoaVectorF phaseArea = new DoaVectorF(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
-		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT, phaseArea, phaseText)));
-		g.drawString(gm.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
-
-		g.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (double) Main.WINDOW_HEIGHT - MIDDLE.getHeight());
-
-		g.drawImage(garrisonSprite, garrisonTopLeft.x, garrisonTopLeft.y);
-		g.drawImage(DoaSprites.get("garrisonHolderIcon"), Main.WINDOW_WIDTH * 0.527f, Main.WINDOW_HEIGHT * 0.842f);
-		g.drawImage(ownerSprite, ownerTopLeft.x, ownerTopLeft.y);
-		g.drawImage(DoaSprites.get("ownerHolderIcon"), Main.WINDOW_WIDTH * 0.539f, Main.WINDOW_HEIGHT * 0.880f);
-		g.drawImage(nameSprite, nameTopLeft.x, nameTopLeft.y);
-		g.drawImage(DoaSprites.get("provinceNameHolderIcon"), Main.WINDOW_WIDTH * 0.552f, Main.WINDOW_HEIGHT * 0.918f);
-		g.drawImage(continentSprite, continentTopLeft.x, continentTopLeft.y);
-		g.drawImage(DoaSprites.get("continentHolderIcon"), Main.WINDOW_WIDTH * 0.559f, Main.WINDOW_HEIGHT * 0.953f);
-
-		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, 25f));
-		FontMetrics fm = g.getFontMetrics();
-
-		g.drawString(garrisonText, garrisonTopLeft.x + (garrisonSprite.getWidth() - fm.stringWidth(garrisonText)) / 2f, garrisonTopLeft.y * 1.031f);
-		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN, 30f));
-		fm = g.getFontMetrics();
-		if (clickedProvince != null) {
-			g.setColor(gm.clickedHitArea.getProvince().getOwner().getColor());
-		}
-		g.drawString(ownerText, ownerTopLeft.x + (ownerSprite.getWidth() - fm.stringWidth(ownerText)) / 2f, ownerTopLeft.y * 1.03f);
-		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN,
-		        Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT, new DoaVectorF(nameSprite.getWidth() * 0.95f, nameSprite.getHeight()), nameText)));
-		g.setColor(UIConstants.FONT_COLOR);
-		fm = g.getFontMetrics();
-		g.drawString(nameText, nameTopLeft.x + (nameSprite.getWidth() - fm.stringWidth(nameText)) / 2f, nameTopLeft.y * 1.03f);
-		g.setFont(UIConstants.UI_FONT.deriveFont(Font.PLAIN,
-		        Utils.findMaxFontSizeToFitInArea(g, UIConstants.UI_FONT, new DoaVectorF(continentSprite.getWidth() * 0.95f, continentSprite.getHeight()), continentText)));
-		fm = g.getFontMetrics();
-		g.drawString(continentText, continentTopLeft.x + (continentSprite.getWidth() - fm.stringWidth(continentText)) / 2f, continentTopLeft.y * 1.03f);
+		BottomPanel.nextPhaseButton.setVisible(true);
+		BottomPanel.decrementButton.setVisible(true);
+		BottomPanel.incrementButton.setVisible(true);
+		BottomPanel.centerPieceButton.setVisible(true);
 	}
 
 	public static void updateSpinnerValues(int lowerLimit, int upperLimit) {
@@ -180,7 +231,7 @@ public class BottomPanel extends DoaPanel {
 			spinnerValues.add(i);
 		}
 		index = spinnerValues.size() - 1;
-		centerPiece.setText("" + spinnerValues.get(index));
+		//centerPieceButton.setText("" + spinnerValues.get(index));
 	}
 
 	public void incrementIndex() {
@@ -197,6 +248,6 @@ public class BottomPanel extends DoaPanel {
 
 	public static void nullSpinner() {
 		spinnerValues = null;
-		centerPiece.setText("");
+		//centerPieceButton.setText("");
 	}
 }
