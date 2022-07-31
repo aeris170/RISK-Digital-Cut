@@ -27,6 +27,11 @@ public final class DiscordRichPresenceAdapter {
 		
 		isInitialized = true;
 	}
+
+	public static void destroy() {
+		isInitialized = false;
+		DoaDiscordService.destroy();
+	}
 	
 	public static void switchToDefaultActivity() {
 		DoaDiscordService.switchActivity(getDefaultActivity());

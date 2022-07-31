@@ -45,4 +45,9 @@ public class Main extends DoaGame {
 	public void initializeGame(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
 		Globals.initilaizeGlobals();
 	}
+
+	@Override
+	public void onExit() {
+		Globals.destroyGlobals();
+	}
 }

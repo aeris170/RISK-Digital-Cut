@@ -24,5 +24,9 @@ public final class Globals {
 		DiscordRichPresenceAdapter.initialize();
 		UIConstants.initUI();
 	}
+	
+	public static void destroyGlobals() {
+		DiscordRichPresenceAdapter.destroy();
+	}
 
 }
