@@ -43,6 +43,9 @@ public final class RiskGameScreenUI {
 		
 		Water water  = new Water();
 		gameScene.add(water);
+		
+		TopPanel topPanel = new TopPanel();
+		gameScene.add(topPanel);
 	}
 	
 	public static void destroyUI() {
