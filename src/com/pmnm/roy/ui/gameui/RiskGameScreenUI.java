@@ -40,6 +40,9 @@ public final class RiskGameScreenUI {
 		
 		RiskGameScreenUI.context = context;
 		isInitialized = true;
+		
+		Water water  = new Water();
+		gameScene.add(water);
 	}
 	
 	public static void destroyUI() {

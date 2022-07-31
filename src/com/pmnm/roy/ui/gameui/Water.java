@@ -10,20 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
-import com.doa.engine.input.DoaKeyboard;
-import com.doa.engine.scene.DoaObject;
-import com.doa.engine.task.DoaTaskGuard;
-import com.doa.engine.task.DoaTasker;
 import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.ZOrders;
 
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.graphics.DoaSprites;
+import doa.engine.input.DoaKeyboard;
+import doa.engine.scene.DoaObject;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
+import doa.engine.task.DoaTaskGuard;
+import doa.engine.task.DoaTasker;
+
+@SuppressWarnings("serial")
 public class Water extends DoaObject {
-
-	private static final long serialVersionUID = -3289865017771805571L;
-
 	private static final int SEG_X = 16;
 	private static final int SEG_Y = 9;
 
@@ -43,7 +44,6 @@ public class Water extends DoaObject {
 	private transient List<TriangularSurface> mesh = new ArrayList<>();
 
 	public Water() {
-		super(0f, 0f, ZOrders.WATER_Z);
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1f), y * Main.WINDOW_HEIGHT / (SEG_Y - 1f));
@@ -63,10 +63,10 @@ public class Water extends DoaObject {
 				mesh.add(new TriangularSurface(pb1, pb2, pb3));
 			}
 		}
-		BufferedImage winterSpr = DoaSprites.get("winterTex");
-		BufferedImage springSpr = DoaSprites.get("springTex");
-		BufferedImage summerSpr = DoaSprites.get("summerTex");
-		BufferedImage fallSpr = DoaSprites.get("springTex");
+		BufferedImage winterSpr = DoaSprites.getSprite("winterTex");
+		BufferedImage springSpr = DoaSprites.getSprite("springTex");
+		BufferedImage summerSpr = DoaSprites.getSprite("summerTex");
+		BufferedImage fallSpr = DoaSprites.getSprite("springTex");
 		winterSpr.setAccelerationPriority(1);
 		springSpr.setAccelerationPriority(1);
 		summerSpr.setAccelerationPriority(1);
@@ -86,58 +86,67 @@ public class Water extends DoaObject {
 				bigFallRenderer.drawImage(fallSpr, i, j, texW, texH, null);
 			}
 		}
+		
+		setzOrder(ZOrders.WATER_Z);
+		addComponent(new Script());
+		addComponent(new Renderer());
 	}
 
-	@Override
-	public void tick() {
-		if (!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
-			for (int y = 0; y < points[0].length; y++) {
-				for (int x = 0; x < points.length; x++) {
-					Point2D p = points[x][y];
-					double px = x * Main.WINDOW_WIDTH / (SEG_X - 1f) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000173);
-					double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1f) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000091);
-					p.setLocation(px, py);
+	private final class Script extends DoaScript {
+		@Override
+		public void tick() {
+			//if (!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
+				for (int y = 0; y < points[0].length; y++) {
+					for (int x = 0; x < points.length; x++) {
+						Point2D p = points[x][y];
+						double px = x * Main.WINDOW_WIDTH / (SEG_X - 1f) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000173);
+						double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1f) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000091);
+						p.setLocation(px, py);
+					}
 				}
+			//}
+		}
+		
+	}
+	
+	private final class Renderer extends DoaRenderer {
+		@Override
+		public void render() {
+			DoaTasker.guardExecution(() -> {
+				switch (Season.getCurrentSeason()) {
+					case WINTER:
+						tex = bigWinter;
+						break;
+					case SPRING:
+						tex = bigSpring;
+						break;
+					case SUMMER:
+						tex = bigSummer;
+						break;
+					case FALL:
+						tex = bigFall;
+						break;
+					default:
+						throw new RuntimeException("Should not reach here!");
+				}
+				mesh.parallelStream().forEach(TriangularSurface::render);
+			}, renderGuard, 75);
+			if (DoaKeyboard.NUM_1) {
+				Season.currentSeason = Season.FALL;
 			}
+			if (DoaKeyboard.NUM_2) {
+				Season.currentSeason = Season.WINTER;
+			}
+			if (DoaKeyboard.NUM_3) {
+				Season.currentSeason = Season.SPRING;
+			}
+			if (DoaKeyboard.NUM_4) {
+				Season.currentSeason = Season.SUMMER;
+			}
+			DoaGraphicsFunctions.drawImage(currentWaterTexCache, 0, 0);
 		}
 	}
-
-	@Override
-	public void render(DoaGraphicsContext g) {
-		DoaTasker.guardExecution(() -> {
-			switch (Season.getCurrentSeason()) {
-				case WINTER:
-					tex = bigWinter;
-					break;
-				case SPRING:
-					tex = bigSpring;
-					break;
-				case SUMMER:
-					tex = bigSummer;
-					break;
-				case FALL:
-					tex = bigFall;
-					break;
-				default:
-					throw new RuntimeException("Should not reach here!");
-			}
-			mesh.parallelStream().forEach(TriangularSurface::render);
-		}, renderGuard, 75);
-		if (DoaKeyboard.NUM_1) {
-			Season.currentSeason = Season.FALL;
-		}
-		if (DoaKeyboard.NUM_2) {
-			Season.currentSeason = Season.WINTER;
-		}
-		if (DoaKeyboard.NUM_3) {
-			Season.currentSeason = Season.SPRING;
-		}
-		if (DoaKeyboard.NUM_4) {
-			Season.currentSeason = Season.SUMMER;
-		}
-		g.drawImage(currentWaterTexCache, 0, 0);
-	}
-
+	
 	private class TriangularSurface {
 
 		private Point2D[] trianglePoints;
