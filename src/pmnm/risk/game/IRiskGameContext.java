@@ -34,7 +34,7 @@ public interface IRiskGameContext extends Serializable {
 	Iterable<@NonNull IProvince> getProvinces();
 	IContinent continentOf(@NonNull final IProvince province);
 	boolean hasOccupier(@NonNull final IProvince province);
-    IPlayer occupierOf(@NonNull final IProvince province);
+	IPlayer occupierOf(@NonNull final IProvince province);
 	Iterable<@NonNull IProvince> neighborsOf(@NonNull final IProvince province);
 	int numberOfTroopsOn(@NonNull final IProvince province);
 	
