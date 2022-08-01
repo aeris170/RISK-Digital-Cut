@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pmnm.risk.toolkit.Utils;
+import com.pmnm.roy.IRoyAction;
 import com.pmnm.roy.IRoyContainer;
 import com.pmnm.roy.IRoyElement;
+import com.pmnm.roy.IRoyInteractableElement;
 import com.pmnm.roy.RoyMiniButton;
 import com.pmnm.roy.RoyTextField;
 import com.pmnm.roy.ui.UIConstants;
@@ -23,12 +25,16 @@ import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
-public final class InputPopupDouble extends DoaObject implements IRoyContainer, Observer {
+public final class InputPopupDouble extends DoaObject implements IRoyContainer, IRoyInteractableElement, Observer {
 
 	@Getter
 	private boolean isVisible;
+	
+	@Setter
+	private transient IRoyAction action = null;
 
 	private List<IRoyElement> elements;
 	
@@ -56,7 +62,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		
 		RoyMiniButton noButton = RoyMiniButton.builder()
 			.textKey("BACK")
-			.action(() -> {
+			.action((source) -> {
 				setVisible(false);
 			})
 			.build();
@@ -65,8 +71,11 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		
 		yesButton = RoyMiniButton.builder()
 			.textKey("YES")
-			.action(() -> {
+			.action((source) -> {
 				setVisible(false);
+				if (action != null) {
+					action.execute(this);
+				}
 			})
 			.build();
 		yesButton.setPosition(new DoaVector(1070, 570));

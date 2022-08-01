@@ -42,7 +42,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 		
 		RoyMiniButton yesButton = RoyMiniButton.builder()
 			.textKey("YES")
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				ef.setVisible(true);
 			})
@@ -52,7 +52,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 		
 		RoyMiniButton noButton = RoyMiniButton.builder()
 			.textKey("NO")
-			.action(() -> setVisible(false))
+			.action(source -> setVisible(false))
 			.build();
 		noButton.setPosition(new DoaVector(1066, 560));
 		addElement(noButton);

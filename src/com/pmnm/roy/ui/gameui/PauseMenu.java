@@ -78,7 +78,7 @@ public final class PauseMenu extends RoyMenu {
 			RoyButton saveButton = RoyButton
 					.builder()
 					.textKey(SAVE_KEY)
-					.action(() -> {
+					.action(source -> {
 						setVisible(false);
 					})
 					.build();
@@ -90,7 +90,7 @@ public final class PauseMenu extends RoyMenu {
 			RoyButton loadButton = RoyButton
 					.builder()
 					.textKey(LOAD_KEY)
-					.action(() -> {
+					.action(source -> {
 						setVisible(false);
 					})
 					.build();
@@ -103,7 +103,7 @@ public final class PauseMenu extends RoyMenu {
 		RoyButton settingsButton = RoyButton
 				.builder()
 				.textKey(SETTINGS_KEY)
-				.action(() -> {
+				.action(source -> {
 					setVisible(false);
 				})
 				.build();
@@ -115,7 +115,7 @@ public final class PauseMenu extends RoyMenu {
 		RoyButton rulesButton = RoyButton
 			.builder()
 			.textKey(RULES_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 			})
 			.build();
@@ -127,7 +127,7 @@ public final class PauseMenu extends RoyMenu {
 		RoyButton mainMenuButton = RoyButton
 			.builder()
 			.textKey(QUIT_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
 				UIConstants.getMainMenu().setVisible(true);

@@ -167,14 +167,14 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		
 		playButton = RoyButton.builder()
 			.textKey(PLAY_KEY)
-			.action(this::startGame)
+			.action(source -> startGame())
 			.build();
 		playButton.setPosition(PLAY_POSITION);
 		addElement(playButton);
 		
 		RoyButton backButton = RoyButton.builder()
 			.textKey(BACK_KEY)
-			.action(() -> {
+			.action((source) -> {
 				setVisible(false);
 				UIConstants.getPlayOfflineMenu().setVisible(true);
 			})
@@ -186,7 +186,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			.image(UIConstants.getArrowLeftIdleSprite())
 			.hoverImage(UIConstants.getArrowLeftIdleSprite())
 			.pressImage(UIConstants.getArrowLeftPressedSprite())
-			.action(() -> {
+			.action((source) -> {
 				List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 				selectedMapIndex--;
 				selectedMapIndex += configs.size();
@@ -202,7 +202,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			.image(UIConstants.getArrowRightIdleSprite())
 			.hoverImage(UIConstants.getArrowRightIdleSprite())
 			.pressImage(UIConstants.getArrowRightPressedSprite())
-			.action(() -> {
+			.action((source) -> {
 				List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 				selectedMapIndex++;
 				selectedMapIndex %= MapConfig.getConfigs().size();

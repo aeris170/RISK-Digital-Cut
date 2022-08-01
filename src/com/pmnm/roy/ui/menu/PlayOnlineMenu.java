@@ -22,7 +22,7 @@ public class PlayOnlineMenu extends RoyMenu {
 		RoyButton hostGameButton = RoyButton
 			.builder()
 			.textKey("HOST_GAME")
-			.action(() -> hostPopup.setVisible(true))
+			.action(source -> hostPopup.setVisible(true))
 			.build();
 		hostGameButton.setPosition(HOST_GAME_LOCATION);
 		addElement(hostGameButton);
@@ -30,7 +30,7 @@ public class PlayOnlineMenu extends RoyMenu {
 		RoyButton joinGameButton = RoyButton
 			.builder()
 			.textKey("JOIN_GAME")
-			.action(() -> joinPopup.setVisible(true))
+			.action(source -> joinPopup.setVisible(true))
 			.build();
 		joinGameButton.setPosition(JOIN_GAME_LOCATION);
 		addElement(joinGameButton);
@@ -38,7 +38,7 @@ public class PlayOnlineMenu extends RoyMenu {
 		RoyButton backButton = RoyButton
 			.builder()
 			.textKey("BACK")
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getMainMenu().setVisible(true);
 			})
@@ -47,9 +47,17 @@ public class PlayOnlineMenu extends RoyMenu {
 		addElement(backButton);
 		
 		hostPopup = new InputPopup();
+		hostPopup.setAction(source -> {
+			/* create game */
+			
+		});
 		addElement(hostPopup);
 		
 		joinPopup = new InputPopupDouble();
+		joinPopup.setAction(source -> {
+			/* decipher game ID */
+			/* join game */
+		});
 		addElement(joinPopup);
 		
 		setVisible(false);

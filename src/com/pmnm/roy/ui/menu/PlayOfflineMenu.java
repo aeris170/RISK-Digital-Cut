@@ -21,7 +21,7 @@ public class PlayOfflineMenu extends RoyMenu {
 		RoyButton newGameButton = RoyButton
 			.builder()
 			.textKey(NEW_GAME_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getNewGameMenuSP().setVisible(true);
 			})
@@ -32,7 +32,7 @@ public class PlayOfflineMenu extends RoyMenu {
 		RoyButton loadGameButton = RoyButton
 			.builder()
 			.textKey(LOAD_GAME_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getLoadGameMenu().setVisible(true);
 			})
@@ -43,7 +43,7 @@ public class PlayOfflineMenu extends RoyMenu {
 		RoyButton backButton = RoyButton
 			.builder()
 			.textKey(BACK_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getMainMenu().setVisible(true);
 			})

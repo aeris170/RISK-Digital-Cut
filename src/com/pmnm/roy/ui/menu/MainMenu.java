@@ -35,7 +35,7 @@ public class MainMenu extends RoyMenu {
 		RoyButton playOfflineButton = RoyButton
 			.builder()
 			.textKey(PLAY_OFFLINE_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getPlayOfflineMenu().setVisible(true);	
 			})
@@ -48,7 +48,7 @@ public class MainMenu extends RoyMenu {
 		RoyButton playOnlineButton = RoyButton
 			.builder()
 			.textKey(PLAY_ONLINE_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getPlayOnlineMenu().setVisible(true);
 			})
@@ -61,7 +61,7 @@ public class MainMenu extends RoyMenu {
 		RoyButton settingsButton = RoyButton
 			.builder()
 			.textKey(SETTINGS_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getSettingsMenu().setVisible(true);
 			})
@@ -74,7 +74,7 @@ public class MainMenu extends RoyMenu {
 		RoyButton rulesButton = RoyButton
 			.builder()
 			.textKey(RULES_KEY)
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getBackground().setVisible(false);
 				UIConstants.getRulesMenu().setVisible(true);
@@ -91,7 +91,7 @@ public class MainMenu extends RoyMenu {
 		RoyButton exitButton = RoyButton
 			.builder()
 			.textKey(EXIT_KEY)
-			.action(() -> ep.setVisible(true))
+			.action(source -> ep.setVisible(true))
 			.build();
 		exitButton.setPosition(EXIT_LOCATION);
 		addElement(exitButton);

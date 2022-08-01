@@ -55,7 +55,7 @@ public class SettingsMenu extends RoyMenu {
 		
 		backButton = RoyButton.builder()
 			.textKey("BACK")
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getMainMenu().setVisible(true);
 			})

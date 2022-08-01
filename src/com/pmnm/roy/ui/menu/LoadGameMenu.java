@@ -2,7 +2,6 @@ package com.pmnm.roy.ui.menu;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.stream.StreamSupport;
 
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyMenu;
@@ -48,7 +47,7 @@ public class LoadGameMenu extends RoyMenu {
 		RoyButton backButton = RoyButton
 			.builder()
 			.textKey("BACK")
-			.action(() -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getPlayOfflineMenu().setVisible(true);
 			})
@@ -60,7 +59,7 @@ public class LoadGameMenu extends RoyMenu {
 			final int index = i;
 			RoyMiniButton loadButton  = RoyMiniButton.builder()
 				.textKey("LOAD")
-				.action(() -> {
+				.action(source -> {
 					setVisible(false);
 					// load game
 					File loadThisGame = f[index];

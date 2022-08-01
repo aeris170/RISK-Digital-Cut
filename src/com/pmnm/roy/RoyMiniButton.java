@@ -115,7 +115,7 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 			Rectangle area = getContentArea();
 			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
 				if(currentImage == pressImage && DoaMouse.MB1_RELEASE) {
-					action.execute();
+					action.execute(RoyMiniButton.this);
 				} else if(DoaMouse.MB1 || DoaMouse.MB1_HOLD) {
 					currentImage = pressImage;
 				} else {

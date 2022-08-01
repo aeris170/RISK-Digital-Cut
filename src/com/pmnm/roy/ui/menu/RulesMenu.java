@@ -25,7 +25,7 @@ public class RulesMenu extends RoyMenu {
 		
 		backButton = RoyButton.builder()
 			.textKey("BACK")
-			.action(() -> {
+			.action(source -> {
 				index = 0;
 				setVisible(false);
 				UIConstants.getBackground().setVisible(true);
