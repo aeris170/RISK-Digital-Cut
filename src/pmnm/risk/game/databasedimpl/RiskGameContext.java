@@ -47,6 +47,9 @@ public class RiskGameContext implements IRiskGameContext {
 	@Setter
 	private boolean isPaused;
 	
+	@Getter
+	private int elapsedTurns;
+	
 	private boolean isInitialized;
 	
 	/* Data <-> Implementation Association */
@@ -151,6 +154,8 @@ public class RiskGameContext implements IRiskGameContext {
 		currentTurnPhase = TurnPhase.SETUP;
 		
 		areas = new ProvinceHitAreas(this);
+		
+		elapsedTurns = 1;
 	}
 	
 	/* Game API */
@@ -158,7 +163,7 @@ public class RiskGameContext implements IRiskGameContext {
 	public void initiliazeGame(@NonNull final GameConfig gameConfig) {
 		if (isInitialized) return;
 		
-		players = new CircularQueue<>();
+		players = new CircularQueue<>(gameConfig.getData().length);
 		for (Player.Data data : gameConfig.getData()) {
 			Player p = new Player(this, data);
 			players.add(p);
@@ -225,11 +230,18 @@ public class RiskGameContext implements IRiskGameContext {
 			getCurrentPhase() == TurnPhase.ATTACK) { return; }
 		
 		if (getCurrentPhase() == TurnPhase.SETUP) {
-			currentTurnPhase = TurnPhase.SETUP;	
+			if (isInitialPlacementComplete()) {
+				currentTurnPhase = TurnPhase.DRAFT;
+				elapsedTurns = 0;
+			} else {
+				currentTurnPhase = TurnPhase.SETUP;
+				elapsedTurns = -1;
+			}
 		} else {
 			currentTurnPhase = TurnPhase.ATTACK;
 		}
 		currentPlayingPlayer = players.getNext();
+		elapsedTurns++;
 	}
 	@Override
 	public Deploy setUpDeploy(@NonNull IProvince target, int amount) {
@@ -320,6 +332,8 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	
 	/* Player API */
+	@Override
+	public int getNumberOfPlayers() { return players.size(); }
 	@Override
 	public Iterable<IProvince> provincesOf(@NonNull final IPlayer player) { return playerProvinces.get(player); }
 	@Override

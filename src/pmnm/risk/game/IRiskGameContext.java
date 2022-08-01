@@ -14,6 +14,7 @@ public interface IRiskGameContext extends Serializable {
 	TurnPhase getCurrentPhase();
 	void goToNextPhase();
 	void finishCurrentPlayerTurn();
+	int getElapsedTurns();
 	Deploy setUpDeploy(@NonNull final IProvince target, int amount);
 	void applyDeployResult(@NonNull final Deploy.Result result);
 	Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice attackerDice);
@@ -27,6 +28,7 @@ public interface IRiskGameContext extends Serializable {
 	boolean isEveryProvinceOccupied();
 	
 	/* Player API */
+	int getNumberOfPlayers();
 	Iterable<IProvince> provincesOf(@NonNull final IPlayer player);
 	void occupyProvince(@NonNull final IPlayer player, @NonNull IProvince province);
 	
