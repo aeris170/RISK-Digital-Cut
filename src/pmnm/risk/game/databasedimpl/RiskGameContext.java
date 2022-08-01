@@ -73,7 +73,7 @@ public class RiskGameContext implements IRiskGameContext {
 	private TurnPhase currentTurnPhase;
 	
 	/* Visuals */
-	@Getter(value = AccessLevel.PACKAGE)
+	@Getter
 	private ProvinceHitAreas areas;
 	
 	private RiskGameContext(@NonNull final MapData data) {

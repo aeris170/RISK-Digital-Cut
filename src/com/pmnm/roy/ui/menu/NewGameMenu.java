@@ -227,7 +227,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 		MapConfig selectedConfig = configs.get(selectedMapIndex);
 		MapData data = MapLoader.loadMap(selectedConfig);
-		IRiskGameContext context = RiskGameContext.of(data);
+		RiskGameContext context = RiskGameContext.of(data);
 		List<Player.Data> playerDatas = new ArrayList<>(slots.length);
 		for (Slot slot : slots) {
 			if (slot.hasPlayer()) {

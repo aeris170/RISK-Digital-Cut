@@ -6,7 +6,7 @@ import java.util.List;
 import doa.engine.scene.DoaScene;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
-import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @UtilityClass
 public final class RiskGameScreenUI {
@@ -14,7 +14,7 @@ public final class RiskGameScreenUI {
 	@Getter
 	private boolean isInitialized;
 	@Getter
-	private IRiskGameContext context;
+	private RiskGameContext context;
 	
 	public static DicePanel DicePanel;
 	public static GameScreenExitPopup ExitPopup;
@@ -33,7 +33,7 @@ public final class RiskGameScreenUI {
 		*/
 	}
 	
-	public static void initUIFor(final IRiskGameContext context, final DoaScene gameScene, final GameType type) {
+	public static void initUIFor(final RiskGameContext context, final DoaScene gameScene, final GameType type) {
 		if (isInitialized()) { throw new IllegalStateException("Please call destroyUI() first"); }
 		gameScene.clear();
 		gameScene.add(new PauseMenu(context, type));
