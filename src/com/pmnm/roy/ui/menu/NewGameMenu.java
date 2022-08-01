@@ -94,7 +94,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
 	
 	private RoyButton playButton;
-	RoyCheckBox randomPlacementButton;
+	private RoyCheckBox randomPlacementButton;
 	
 	public NewGameMenu(GameType t) {
 		type = t;

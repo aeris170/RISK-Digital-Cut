@@ -59,9 +59,10 @@ public class RoyCheckBox extends DoaObject implements IRoyElement {
 		@Override
 		public void tick() {
 			if(!isVisible()) return;
+			if(!DoaMouse.MB1) { return; }
 			
 			Rectangle area = getContentArea();
-			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y)) && DoaMouse.MB1) {
+			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
 				isChecked = !isChecked;
 			}
 		}
