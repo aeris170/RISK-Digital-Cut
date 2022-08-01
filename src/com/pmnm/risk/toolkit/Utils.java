@@ -10,7 +10,6 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,9 +19,10 @@ import doa.engine.core.DoaCamera;
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.maths.DoaVector;
 import lombok.experimental.UtilityClass;
+import pmnm.risk.game.IProvince;
 import pmnm.risk.map.Vertex2D;
 import pmnm.risk.map.board.ProvinceHitArea;
-import pmnm.risk.map.province.Province;
+import pmnm.risk.map.board.ProvinceHitAreas;
 
 @UtilityClass
 public final class Utils {
@@ -115,43 +115,43 @@ public final class Utils {
 		return fontSize;
 	}
 
-	public static List<ProvinceHitArea> connectedComponents(ProvinceHitArea province) {
+	public static List<ProvinceHitArea> connectedComponents(ProvinceHitAreas provinceHitAreas, ProvinceHitArea province) {
 		List<ProvinceHitArea> connectedComponents = new ArrayList<>();
 		connectedComponents.add(province);
-		explodeFrom(province, connectedComponents);
+		explodeFrom(provinceHitAreas, province, connectedComponents);
 		return connectedComponents;
 	}
 
-	private static void explodeFrom(ProvinceHitArea provinceHitArea, List<ProvinceHitArea> connectedComponents) {
-		Province province = provinceHitArea.getProvince();
-		for (Province p : provinceHitArea.getProvince().getNeighbours()) {
-			if (p.getOwner() == province.getOwner()) {
-				ProvinceHitArea pHitArea = p.getProvinceHitArea();
+	private static void explodeFrom(ProvinceHitAreas provinceHitAreas, ProvinceHitArea provinceHitArea, List<ProvinceHitArea> connectedComponents) {
+		IProvince province = provinceHitArea.getProvince();
+		for (IProvince p : provinceHitArea.getProvince().getNeighbors()) {
+			if (p.isOccupiedBy(province.getOccupier())) {
+				ProvinceHitArea pHitArea = provinceHitAreas.findHitAreaOf(p);
 				if (!connectedComponents.contains(pHitArea)) {
 					connectedComponents.add(pHitArea);
-					explodeFrom(pHitArea, connectedComponents);
+					explodeFrom(provinceHitAreas, pHitArea, connectedComponents);
 				}
 			}
 		}
 	}
 
-	public static ProvinceHitArea[] shortestPath(ProvinceHitArea reinforcingProvince, ProvinceHitArea reinforcedProvince) {
+	public static ProvinceHitArea[] shortestPath(ProvinceHitAreas provinceHitAreas, ProvinceHitArea reinforcingProvince, ProvinceHitArea reinforcedProvince) {
 		List<List<ProvinceHitArea>> paths = new ArrayList<>();
-		doStuff(reinforcingProvince, new ArrayList<>(), paths, reinforcedProvince);
+		doStuff(provinceHitAreas, reinforcingProvince, new ArrayList<>(), paths, reinforcedProvince);
 		List<ProvinceHitArea> shortestPath = paths.stream().min(Comparator.comparingInt(List::size)).orElse(new ArrayList<>());
 		return shortestPath.toArray(new ProvinceHitArea[shortestPath.size()]);
 	}
 
-	private static void doStuff(ProvinceHitArea previous, List<ProvinceHitArea> path, List<List<ProvinceHitArea>> paths, ProvinceHitArea destination) {
+	private static void doStuff(ProvinceHitAreas provinceHitAreas, ProvinceHitArea previous, List<ProvinceHitArea> path, List<List<ProvinceHitArea>> paths, ProvinceHitArea destination) {
 		path.add(previous);
 		if (previous == destination) {
 			paths.add(path);
 			return; // XXX if this function ever behaves buggy, comment the return and test again!
 		}
-		Province province = previous.getProvince();
-		for (Province p : province.getNeighbours()) {
-			if (p.getOwner() == province.getOwner() && !path.contains(p.getProvinceHitArea())) {
-				doStuff(p.getProvinceHitArea(), new ArrayList<>(path), paths, destination);
+		IProvince province = previous.getProvince();
+		for (IProvince p : province.getNeighbors()) {
+			if (p.isOccupiedBy(province.getOccupier()) && !path.contains(provinceHitAreas.findHitAreaOf(p))) {
+				doStuff(provinceHitAreas, provinceHitAreas.findHitAreaOf(p), new ArrayList<>(path), paths, destination);
 			}
 		}
 	}

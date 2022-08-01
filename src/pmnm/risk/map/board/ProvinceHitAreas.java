@@ -128,7 +128,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		}
 	}
 	
-	private ProvinceHitArea findHitAreaOf(IProvince province) {
+	public ProvinceHitArea findHitAreaOf(IProvince province) {
 		if (province == null) return null;
 		return areas.stream().filter(area -> area.getProvince().equals(province)).findFirst().orElseThrow();
 	}
