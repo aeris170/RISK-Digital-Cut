@@ -46,7 +46,7 @@ public class BottomPanel extends RoyMenu {
 				.image(DoaSprites.getSprite("nextPhaseButtonIdle"))
 				.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
 				.pressImage(DoaSprites.getSprite("nextPhaseButtonPressed"))
-				.action(() -> {
+				.action(source -> {
 					new NextPhaseButtonAction();
 				})
 				.build();
@@ -57,7 +57,7 @@ public class BottomPanel extends RoyMenu {
 				.image(DoaSprites.getSprite("arrowDown"))
 				.hoverImage(DoaSprites.getSprite("arrowDownHover"))
 				.pressImage(DoaSprites.getSprite("arrowDownPress"))
-				.action(() -> {
+				.action(source -> {
 					new DecrementButtonAction(this);
 				})
 				.build();
@@ -68,7 +68,7 @@ public class BottomPanel extends RoyMenu {
 				.image(DoaSprites.getSprite("arrowUp"))
 				.hoverImage(DoaSprites.getSprite("arrowUpHover"))
 				.pressImage(DoaSprites.getSprite("arrowUpPress"))
-				.action(() -> {
+				.action(source -> {
 					new IncrementButtonAction(this);
 				})
 				.build();
@@ -79,7 +79,7 @@ public class BottomPanel extends RoyMenu {
 				.image(DoaSprites.getSprite("centerPiece"))
 				.hoverImage(DoaSprites.getSprite("centerPiece"))
 				.pressImage(DoaSprites.getSprite("centerPiece"))
-				.action(() -> {
+				.action(source -> {
 					new CenterPieceButtonAction();
 				})
 				.build();
