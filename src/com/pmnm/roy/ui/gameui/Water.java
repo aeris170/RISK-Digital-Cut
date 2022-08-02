@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.ZOrders;
 
@@ -22,10 +21,11 @@ import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import doa.engine.task.DoaTaskGuard;
 import doa.engine.task.DoaTasker;
-import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
 public class Water extends DoaObject {
+	
 	private static final int SEG_X = 16;
 	private static final int SEG_Y = 9;
 
@@ -44,11 +44,7 @@ public class Water extends DoaObject {
 
 	private transient List<TriangularSurface> mesh = new ArrayList<>();
 
-	final IRiskGameContext context;
-	
-	public Water(final IRiskGameContext context) {
-		this.context = context;
-		
+	public Water(RiskGameContext context) {
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1f), y * Main.WINDOW_HEIGHT / (SEG_Y - 1f));
@@ -91,27 +87,44 @@ public class Water extends DoaObject {
 				bigFallRenderer.drawImage(fallSpr, i, j, texW, texH, null);
 			}
 		}
+		bigWinterRenderer.dispose();
+		bigSpringRenderer.dispose();
+		bigSummerRenderer.dispose();
+		bigFallRenderer.dispose();
 		
 		setzOrder(ZOrders.WATER_Z);
-		addComponent(new Script());
+		addComponent(new Script(context));
 		addComponent(new Renderer());
 	}
 
 	private final class Script extends DoaScript {
-		@Override
-		public void tick() {
-			if(context.isPaused()) {
-				for (int y = 0; y < points[0].length; y++) {
-					for (int x = 0; x < points.length; x++) {
-						Point2D p = points[x][y];
-						double px = x * Main.WINDOW_WIDTH / (SEG_X - 1f) + (intensity[x][y]) * Math.sin((startTime[x][y] + System.nanoTime()) * 0.00000000173);
-						double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1f) + (intensity[x][y]) * Math.cos((startTime[x][y] + System.nanoTime()) * 0.00000000091);
-						p.setLocation(px, py);
-					}
-				}
-			}
+		
+		private RiskGameContext context;
+		private long elapsedTime;
+		private long previousTime;
+		
+		private Script(RiskGameContext context) {
+			this.context = context;
+			elapsedTime = 0;
+			previousTime = System.nanoTime();
 		}
 		
+		@Override
+		public void tick() {
+			if (!context.isPaused()) {
+				elapsedTime +=  System.nanoTime() - previousTime;
+
+				for (int x = 0; x < points.length; x++) {
+					for (int y = 0; y < points[0].length; y++) {
+						Point2D p = points[x][y];
+						double px = x * Main.WINDOW_WIDTH / (SEG_X - 1f) + (intensity[x][y]) * Math.sin((startTime[x][y] + elapsedTime) * 0.00000000173);
+						double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1f) + (intensity[x][y]) * Math.cos((startTime[x][y] + elapsedTime) * 0.00000000091);
+						p.setLocation(px, py);
+					}
+				}	
+			}
+			previousTime = System.nanoTime();
+		}
 	}
 	
 	private final class Renderer extends DoaRenderer {
@@ -175,6 +188,14 @@ public class Water extends DoaObject {
 			for (Point2D p : trianglePoints) {
 				polygon.addPoint((int) p.getX(), (int) p.getY());
 			}
+			/*
+			!!
+			if (debugRender) {
+				g2d.setColor(java.awt.Color.MAGENTA);
+				g2d.setStroke(new java.awt.BasicStroke(2));
+				g2d.draw(polygon);
+			}
+			*/
 			g2d.setClip(polygon);
 			Point2D a = trianglePoints[0];
 			Point2D b = trianglePoints[1];
