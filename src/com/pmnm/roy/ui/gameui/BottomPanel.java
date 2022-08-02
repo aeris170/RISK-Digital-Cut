@@ -71,9 +71,7 @@ public class BottomPanel extends RoyMenu {
 				.image(DoaSprites.getSprite("arrowDown"))
 				.hoverImage(DoaSprites.getSprite("arrowDownHover"))
 				.pressImage(DoaSprites.getSprite("arrowDownPress"))
-				.action(source -> {
-					decrementIndex();
-				})
+				.action(source -> decrementTroopCount())
 				.build();
 		decrementButton.setPosition(DECREMENT_POSITION);
 		addElement(decrementButton);
@@ -82,9 +80,7 @@ public class BottomPanel extends RoyMenu {
 				.image(DoaSprites.getSprite("arrowUp"))
 				.hoverImage(DoaSprites.getSprite("arrowUpHover"))
 				.pressImage(DoaSprites.getSprite("arrowUpPress"))
-				.action(source -> {
-					incrementIndex();
-				})
+				.action(source -> incrementTroopCount())
 				.build();
 		incrementButton.setPosition(INCREMENT_POSITION);
 		addElement(incrementButton);
@@ -227,13 +223,11 @@ public class BottomPanel extends RoyMenu {
 		
 	}
 	
-	public void incrementIndex() {
-		if(selectedTroopCount != maxTroopCount);
-			selectedTroopCount++;
+	private void incrementTroopCount() {
+		selectedTroopCount = Math.min(selectedTroopCount + 1, maxTroopCount);
 	}
 
-	public void decrementIndex() {
-		if(selectedTroopCount != 0);
-			selectedTroopCount--;
+	private void decrementTroopCount() {
+		selectedTroopCount = Math.max(selectedTroopCount - 1, 0);
 	}
 }
