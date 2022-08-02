@@ -1,21 +1,17 @@
 package com.pmnm.roy.ui.gameui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
+import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
-import com.pmnm.roy.ui.gameui.actions.CenterPieceButtonAction;
-import com.pmnm.roy.ui.gameui.actions.DecrementButtonAction;
-import com.pmnm.roy.ui.gameui.actions.IncrementButtonAction;
-import com.pmnm.roy.ui.gameui.actions.NextPhaseButtonAction;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -34,15 +30,24 @@ public class BottomPanel extends RoyMenu {
 	private RoyImageButton incrementButton;
 	private RoyImageButton centerPieceButton;
 
-	private final DoaVector NEXT_PHASE_POSITION		= new DoaVector(950, 1000);
+	private final DoaVector NEXT_PHASE_POSITION		= new DoaVector(1200, 965);
 	private final DoaVector DECREMENT_POSITION		= new DoaVector(660, 1050);
 	private final DoaVector INCREMENT_POSITION		= new DoaVector(660, 960);
 	private final DoaVector CENTER_PIECE_POSITION	= new DoaVector(650, 992);
 	
-	private List<Integer> spinnerValues;
-	private int index = 0;
+	private int maxTroopCount;
+	private int selectedTroopCount;
 	
 	private final RiskGameContext context;
+	
+	private Province clickedProvince = null;
+	
+	private String garrisonText = "";
+	private String ownerText = "";
+	private String nameText = "";
+	private String continentText = "";
+	
+	private String currentPhase = "";
 
 	public BottomPanel(final RiskGameContext context) {
 		this.context = context;
@@ -52,11 +57,14 @@ public class BottomPanel extends RoyMenu {
 				.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
 				.pressImage(DoaSprites.getSprite("nextPhaseButtonPressed"))
 				.action(source -> {
-					new NextPhaseButtonAction();
+					context.goToNextPhase();
+					if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
+						//nextPhaseButton.setVisible(false);
+					}
 				})
 				.build();
 		nextPhaseButton.setPosition(NEXT_PHASE_POSITION);
-		nextPhaseButton.setScale(.8f);
+		nextPhaseButton.setScale(.7f);
 		addElement(nextPhaseButton);
 		
 		decrementButton = RoyImageButton.builder()
@@ -64,7 +72,7 @@ public class BottomPanel extends RoyMenu {
 				.hoverImage(DoaSprites.getSprite("arrowDownHover"))
 				.pressImage(DoaSprites.getSprite("arrowDownPress"))
 				.action(source -> {
-					new DecrementButtonAction(this);
+					decrementIndex();
 				})
 				.build();
 		decrementButton.setPosition(DECREMENT_POSITION);
@@ -75,7 +83,7 @@ public class BottomPanel extends RoyMenu {
 				.hoverImage(DoaSprites.getSprite("arrowUpHover"))
 				.pressImage(DoaSprites.getSprite("arrowUpPress"))
 				.action(source -> {
-					new IncrementButtonAction(this);
+					incrementIndex();
 				})
 				.build();
 		incrementButton.setPosition(INCREMENT_POSITION);
@@ -86,7 +94,18 @@ public class BottomPanel extends RoyMenu {
 				.hoverImage(DoaSprites.getSprite("centerPiece"))
 				.pressImage(DoaSprites.getSprite("centerPiece"))
 				.action(source -> {
-					new CenterPieceButtonAction();
+					if (context.getCurrentPhase() == TurnPhase.DRAFT) {
+						//gm.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+						//nextPhaseButton.setVisible(true);
+					} else if (context.getCurrentPhase() == TurnPhase.ATTACK) {
+						if (maxTroopCount > 0) {
+							//gm.moveTroopsAfterOccupying(spinnerValues.get(index));
+							//nextPhaseButton.setVisible(true);
+							//selectedTroopCount = 0;
+						}
+					} else if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
+						//gm.reinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+					}
 				})
 				.build();
 		centerPieceButton.setPosition(CENTER_PIECE_POSITION);
@@ -101,38 +120,31 @@ public class BottomPanel extends RoyMenu {
 	}
 
 	private final class Script extends DoaScript {
+		
+		int counter = Globals.DEFAULT_TIME_SLICE;
 
 		@Override
 		public void tick() {
 			if(!isVisible()) return;
+
+			if(counter < Globals.DEFAULT_TIME_SLICE) {
+				counter++;
+				return;
+			}
 			
-			if (context.isPaused()) {
-				nextPhaseButton.setVisible(false);
-				decrementButton.setVisible(false);
-				incrementButton.setVisible(false);
-				centerPieceButton.setVisible(false);
+			maxTroopCount = context.calculateTurnReinforcementsFor(context.getCurrentPlayer());
+			
+			currentPhase = context.getCurrentPhase().name();
+			clickedProvince = context.getAreas().getSelectedProvince() != null ? (Province) context.getAreas().getSelectedProvince().getProvince() : null;
+			
+			if (clickedProvince != null) {
+				garrisonText = clickedProvince.getNumberOfTroops() != -1 ? clickedProvince.getNumberOfTroops() + "" : "???";
+				ownerText = clickedProvince.getOccupier().getName();
+				nameText = clickedProvince.getName().toUpperCase();
+				continentText = clickedProvince.getContinent().getName().toUpperCase();
 			}
-			if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
-				/*if (GameManager.INSTANCE.getReinforcedProvince() != null) {
-					decrementButton.setVisible(true);
-					incrementButton.setVisible(true);
-					centerPieceButton.setVisible(true);
-					nextPhaseButton.setVisible(false);
-				} else {
-					decrementButton.setVisible(false);
-					incrementButton.setVisible(false);
-					centerPieceButton.setVisible(false);
-					nextPhaseButton.setVisible(true);
-				}*/
-			}
-			try {
-				//centerPieceButton.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
-			} catch (Exception ex) {
-				// TODO have no idea why this catch block is here, if you come across an
-				// exception getting thrown, feel free to fix.
-				// and don't ask me how do i fix this, just fix it ffs.
-				ex.printStackTrace();
-			}
+			
+			counter = 0;
 		}
 	}
 	
@@ -164,20 +176,6 @@ public class BottomPanel extends RoyMenu {
 		public void render() {
 			if(!isVisible()) return;
 			
-			Province clickedProvince = context.getAreas().getSelectedProvince() != null ? (Province) context.getAreas().getSelectedProvince().getProvince() : null;
-			
-			String garrisonText = "";
-			String ownerText = "";
-			String nameText = "";
-			String continentText = "";
-
-			if (clickedProvince != null) {
-				garrisonText += clickedProvince.getNumberOfTroops() != -1 ? clickedProvince.getNumberOfTroops() : "???";
-				ownerText += clickedProvince.getOccupier().getName();
-				nameText += clickedProvince.getName().toUpperCase();
-				continentText += clickedProvince.getContinent().getName().toUpperCase();
-			}
-			
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
 			DoaGraphicsFunctions.drawImage(bottomRing, 0, (float) (Main.WINDOW_HEIGHT - bottomRing.getHeight() + 6d));
@@ -185,10 +183,9 @@ public class BottomPanel extends RoyMenu {
 			DoaGraphicsFunctions.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (float) ((double) Main.WINDOW_HEIGHT - LEFT.getHeight()));
 			DoaGraphicsFunctions.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (float) ((double) Main.WINDOW_HEIGHT - RIGHT.getHeight()));
 
-			String phaseText = context.getCurrentPhase().name();
 			DoaVector phaseArea = new DoaVector(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
-			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), phaseArea, phaseText)));
-			DoaGraphicsFunctions.drawString(phaseText, Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), phaseArea, currentPhase)));
+			DoaGraphicsFunctions.drawString(currentPhase, Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
 
 			DoaGraphicsFunctions.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (float) ((double) Main.WINDOW_HEIGHT - MIDDLE.getHeight()));
 
@@ -223,29 +220,20 @@ public class BottomPanel extends RoyMenu {
 			        Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(continentBG.getWidth() * 0.95f, continentBG.getHeight()), continentText)));
 			fm = DoaGraphicsFunctions.getFontMetrics();
 			DoaGraphicsFunctions.drawString(continentText, CONTINENT_BG_POSITION.x + (continentBG.getWidth() - fm.stringWidth(continentText)) / 2f, CONTINENT_BG_POSITION.y * 1.03f);
-			
+
+			DoaGraphicsFunctions.setColor(Color.BLACK);
+			DoaGraphicsFunctions.drawString(maxTroopCount + "", CENTER_PIECE_POSITION.x, CENTER_PIECE_POSITION.y);
 		}
 		
 	}
 	
-	public void updateSpinnerValues(int lowerLimit, int upperLimit) {
-		spinnerValues = new ArrayList<>();
-		for (int i = lowerLimit; i <= upperLimit; i++) {
-			spinnerValues.add(i);
-		}
-		index = spinnerValues.size() - 1;
-		//centerPieceButton.setText("" + spinnerValues.get(index));
-	}
-
 	public void incrementIndex() {
-		index++;
-		index += spinnerValues.size();
-		index %= spinnerValues.size();
+		if(selectedTroopCount != maxTroopCount);
+			selectedTroopCount++;
 	}
 
 	public void decrementIndex() {
-		index--;
-		index += spinnerValues.size();
-		index %= spinnerValues.size();
+		if(selectedTroopCount != 0);
+			selectedTroopCount--;
 	}
 }
