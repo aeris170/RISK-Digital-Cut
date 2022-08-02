@@ -28,7 +28,7 @@ public class SeasonEffect extends DoaObject {
 	private double godrayAngle = 0;
 
 	public SeasonEffect() {
-		setzOrder(ZOrders.SEASON_Z);
+		setzOrder(ZOrders.SEASON_EFFECT_Z);
 		INSTANCE = this;
 		addComponent(new Script());
 		addComponent(new Renderer());
@@ -53,9 +53,11 @@ public class SeasonEffect extends DoaObject {
 		@Override
 		public void render() {
 			Composite oldComposite = DoaGraphicsFunctions.getComposite();
-			DoaGraphicsFunctions.setColor(Season.getCurrentSeason().getSeasonColor());
-			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-			DoaGraphicsFunctions.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+			
+			//DoaGraphicsFunctions.setColor(Season.getCurrentSeason().getSeasonColor());
+			//DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
+			//DoaGraphicsFunctions.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+			
 			DoaGraphicsFunctions.setComposite(oldComposite);
 			AffineTransform oldTransform = DoaGraphicsFunctions.getTransform();
 			switch (Season.getCurrentSeason()) {

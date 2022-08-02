@@ -10,7 +10,8 @@ public final class ZOrders {
 	public static final int MUTATING_PROVINCE_Z = 4;
 	public static final int SELECTED_PROVINCE_Z = 5;
 	public static final int PROVINCE_SYMBOL_Z = 9;
-	public static final int SEASON_Z = 100;
+	public static final int SEASON_EFFECT_Z = 99;
+	public static final int GAME_UI_Z = 100;
 	public static final int PAUSE_Z = 1000;
 	
 	public static final int RULES_Z = 2;

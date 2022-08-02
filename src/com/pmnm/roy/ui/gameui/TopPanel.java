@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -29,6 +30,8 @@ public class TopPanel extends DoaObject {
 
 	public TopPanel() {
 		INSTANCE = this;
+		
+		setzOrder(ZOrders.GAME_UI_Z);
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}

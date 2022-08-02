@@ -11,6 +11,7 @@ import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.ZOrders;
 import com.pmnm.roy.ui.gameui.actions.CenterPieceButtonAction;
 import com.pmnm.roy.ui.gameui.actions.DecrementButtonAction;
 import com.pmnm.roy.ui.gameui.actions.IncrementButtonAction;
@@ -90,6 +91,7 @@ public class BottomPanel extends RoyMenu {
 		
 		INSTANCE = this;
 
+		setzOrder(ZOrders.GAME_UI_Z);
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
