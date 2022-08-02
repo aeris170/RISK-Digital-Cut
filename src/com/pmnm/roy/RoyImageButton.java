@@ -16,7 +16,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-public final class RoyImageButton extends DoaObject implements IRoyInteractableElement {
+public final class RoyImageButton extends DoaObject implements IRoyInteractableElement, IRoyScaleableElement {
 	
 	@Getter
 	@Setter
