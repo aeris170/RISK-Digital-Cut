@@ -235,11 +235,10 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				playerDatas.add(playerData);
 			}
 		}
-		
-		Scenes.GAME_SCENE.clear();
+
+		RiskGameScreenUI.initUIFor(context, Scenes.GAME_SCENE, type);
 		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
 		context.initiliazeGame(config);
-		RiskGameScreenUI.initUIFor(context, Scenes.GAME_SCENE, type);
 		// TODO add game stuff to game scene
 		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);
 	}

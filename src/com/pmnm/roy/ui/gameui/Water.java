@@ -177,6 +177,7 @@ public class Water extends DoaObject {
 			t2.setTransform(a.getX() - c.getX(), a.getY() - c.getY(), b.getX() - c.getX(), b.getY() - c.getY(), c.getX(), c.getY());
 			t2.concatenate(t1);
 			g2d.drawImage(tex, t2, null);
+			g2d.dispose();
 		}
 	}
 }

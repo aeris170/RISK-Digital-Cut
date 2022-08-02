@@ -12,6 +12,7 @@ import lombok.NonNull;
 
 @SuppressWarnings("serial")
 public class RoyMenu extends DoaObject implements IRoyContainer {
+	
 	@Getter
 	private boolean isVisible;
 	

@@ -3,6 +3,8 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Color;
 import java.util.List;
 
+import com.pmnm.risk.main.SystemSpecs;
+
 import doa.engine.scene.DoaScene;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -36,6 +38,7 @@ public final class RiskGameScreenUI {
 	public static void initUIFor(final RiskGameContext context, final DoaScene gameScene, final GameType type) {
 		if (isInitialized()) { throw new IllegalStateException("Please call destroyUI() first"); }
 		gameScene.clear();
+		gameScene.add(new SystemSpecs());
 		gameScene.add(new PauseMenu(context, type));
 		
 		RiskGameScreenUI.context = context;
