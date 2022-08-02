@@ -423,7 +423,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			}
 			
 			playButton.setVisible(playerCount >= 2);
-		}		
+		}
 	}
 	
 	@Override

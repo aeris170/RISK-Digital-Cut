@@ -166,12 +166,14 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 	@Override
 	public void setVisible(boolean value) {
 		isVisible = value;
-		if (lockedIndices.contains(selectedIndex)) {
-			for(int i = 0; i < elements.length; i++) {
-				int currentIndex = i;
-				if (!lockedIndices.contains(currentIndex)) {
-					selectedIndex = currentIndex;
-					break;
+		if (isVisible) {
+			if (lockedIndices.contains(selectedIndex)) {
+				for(int i = 0; i < elements.length; i++) {
+					int currentIndex = i;
+					if (!lockedIndices.contains(currentIndex)) {
+						selectedIndex = currentIndex;
+						break;
+					}
 				}
 			}
 		}
