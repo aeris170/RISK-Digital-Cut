@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyImageButton;
@@ -53,57 +54,57 @@ public class BottomPanel extends RoyMenu {
 		this.context = context;
 		
 		nextPhaseButton = RoyImageButton.builder()
-				.image(DoaSprites.getSprite("nextPhaseButtonIdle"))
-				.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
-				.pressImage(DoaSprites.getSprite("nextPhaseButtonPressed"))
-				.action(source -> {
-					context.goToNextPhase();
-					if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
-						//nextPhaseButton.setVisible(false);
-					}
-				})
-				.build();
+			.image(DoaSprites.getSprite("nextPhaseButtonIdle"))
+			.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
+			.pressImage(DoaSprites.getSprite("nextPhaseButtonPressed"))
+			.action(source -> {
+				context.goToNextPhase();
+				if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
+					//nextPhaseButton.setVisible(false);
+				}
+			})
+			.build();
 		nextPhaseButton.setPosition(NEXT_PHASE_POSITION);
 		nextPhaseButton.setScale(.7f);
 		addElement(nextPhaseButton);
 		
 		decrementButton = RoyImageButton.builder()
-				.image(DoaSprites.getSprite("arrowDown"))
-				.hoverImage(DoaSprites.getSprite("arrowDownHover"))
-				.pressImage(DoaSprites.getSprite("arrowDownPress"))
-				.action(source -> decrementTroopCount())
-				.build();
+			.image(DoaSprites.getSprite("arrowDown"))
+			.hoverImage(DoaSprites.getSprite("arrowDownHover"))
+			.pressImage(DoaSprites.getSprite("arrowDownPress"))
+			.action(source -> decrementTroopCount())
+			.build();
 		decrementButton.setPosition(DECREMENT_POSITION);
 		addElement(decrementButton);
 		
 		incrementButton = RoyImageButton.builder()
-				.image(DoaSprites.getSprite("arrowUp"))
-				.hoverImage(DoaSprites.getSprite("arrowUpHover"))
-				.pressImage(DoaSprites.getSprite("arrowUpPress"))
-				.action(source -> incrementTroopCount())
-				.build();
+			.image(DoaSprites.getSprite("arrowUp"))
+			.hoverImage(DoaSprites.getSprite("arrowUpHover"))
+			.pressImage(DoaSprites.getSprite("arrowUpPress"))
+			.action(source -> incrementTroopCount())
+			.build();
 		incrementButton.setPosition(INCREMENT_POSITION);
 		addElement(incrementButton);
 		
 		centerPieceButton = RoyImageButton.builder()
-				.image(DoaSprites.getSprite("centerPiece"))
-				.hoverImage(DoaSprites.getSprite("centerPiece"))
-				.pressImage(DoaSprites.getSprite("centerPiece"))
-				.action(source -> {
-					if (context.getCurrentPhase() == TurnPhase.DRAFT) {
-						//gm.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+			.image(DoaSprites.getSprite("centerPiece"))
+			.hoverImage(DoaSprites.getSprite("centerPiece"))
+			.pressImage(DoaSprites.getSprite("centerPiece"))
+			.action(source -> {
+				if (context.getCurrentPhase() == TurnPhase.DRAFT) {
+					//gm.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+					//nextPhaseButton.setVisible(true);
+				} else if (context.getCurrentPhase() == TurnPhase.ATTACK) {
+					if (maxTroopCount > 0) {
+						//gm.moveTroopsAfterOccupying(spinnerValues.get(index));
 						//nextPhaseButton.setVisible(true);
-					} else if (context.getCurrentPhase() == TurnPhase.ATTACK) {
-						if (maxTroopCount > 0) {
-							//gm.moveTroopsAfterOccupying(spinnerValues.get(index));
-							//nextPhaseButton.setVisible(true);
-							//selectedTroopCount = 0;
-						}
-					} else if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
-						//gm.reinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+						//selectedTroopCount = 0;
 					}
-				})
-				.build();
+				} else if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
+					//gm.reinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+				}
+			})
+			.build();
 		centerPieceButton.setPosition(CENTER_PIECE_POSITION);
 		addElement(centerPieceButton);
 		
@@ -121,9 +122,9 @@ public class BottomPanel extends RoyMenu {
 
 		@Override
 		public void tick() {
-			if(!isVisible()) return;
+			if (!isVisible()) return;
 
-			if(counter < Globals.DEFAULT_TIME_SLICE) {
+			if (counter < Globals.DEFAULT_TIME_SLICE) {
 				counter++;
 				return;
 			}
@@ -134,12 +135,13 @@ public class BottomPanel extends RoyMenu {
 			clickedProvince = context.getAreas().getSelectedProvince() != null ? (Province) context.getAreas().getSelectedProvince().getProvince() : null;
 			
 			if (clickedProvince != null) {
-				garrisonText = clickedProvince.getNumberOfTroops() != -1 ? clickedProvince.getNumberOfTroops() + "" : "???";
+				garrisonText = clickedProvince.getNumberOfTroops() != Globals.UNKNOWN_TROOP_COUNT ?
+					Integer.toString(clickedProvince.getNumberOfTroops())
+					: "???";
 				ownerText = clickedProvince.getOccupier().getName();
-				nameText = clickedProvince.getName().toUpperCase();
-				continentText = clickedProvince.getContinent().getName().toUpperCase();
+				nameText = clickedProvince.getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
+				continentText = clickedProvince.getContinent().getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
 			}
-			
 			counter = 0;
 		}
 	}
