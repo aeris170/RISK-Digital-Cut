@@ -44,7 +44,7 @@ public final class RiskGameScreenUI {
 		RiskGameScreenUI.context = context;
 		isInitialized = true;
 		
-		Water water  = new Water();
+		Water water  = new Water(context);
 		gameScene.add(water);
 		
 		TopPanel topPanel = new TopPanel();
