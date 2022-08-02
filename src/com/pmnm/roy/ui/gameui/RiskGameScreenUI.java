@@ -48,6 +48,7 @@ public final class RiskGameScreenUI {
 		gameScene.add(water);
 		
 		TopPanel topPanel = new TopPanel(context);
+		topPanel.setVisible(true);
 		gameScene.add(topPanel);
 		
 		BottomPanel bottomPanel = new BottomPanel(context);

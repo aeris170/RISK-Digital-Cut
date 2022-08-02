@@ -6,13 +6,14 @@ import java.awt.Composite;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 
+import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.main.Main;
+import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
-import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import doa.engine.task.DoaTaskGuard;
@@ -20,12 +21,16 @@ import doa.engine.task.DoaTasker;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
-public class TopPanel extends DoaObject {
+public class TopPanel extends RoyMenu {
 
 	private DoaTaskGuard threeSecondGuard = new DoaTaskGuard();
 	private float alpha;
 	private float delta = 0.1f;
+
+	private String currentPlayerName;
 	private Color currentPlayerColour;
+	private BufferedImage currentSeasonImage;
+	private int turnCount;
 
 	private final RiskGameContext context;
 	
@@ -39,10 +44,13 @@ public class TopPanel extends DoaObject {
 	}
 
 	private final class Script extends DoaScript {
-
+		
+		int counter = Globals.DEFAULT_TIME_SLICE;
+		
 		@Override
 		public void tick() {
-			currentPlayerColour = context.getCurrentPlayer().getColor();
+			if(!isVisible()) return;
+			
 			if (threeSecondGuard.get()) {
 				threeSecondGuard.set(false);
 				DoaTasker.executeLater(() -> {
@@ -58,6 +66,18 @@ public class TopPanel extends DoaObject {
 				}
 			}
 			Season.updateSeason();
+			
+			if(counter < Globals.DEFAULT_TIME_SLICE) {
+				counter++;
+				return;
+			}
+
+			currentPlayerName = context.getCurrentPlayer().getName();
+			currentPlayerColour = context.getCurrentPlayer().getColor();
+			currentSeasonImage = DoaSprites.getSprite(Season.getCurrentSeason().toString());
+			turnCount = (int) Math.ceil((context.getElapsedTurns() + 1) / (double) context.getNumberOfPlayers());
+			
+			counter = 0;
 		}
 		
 	}
@@ -73,6 +93,8 @@ public class TopPanel extends DoaObject {
 		
 		@Override
 		public void render() {
+			if(!isVisible()) return;
+			
 			// timer block
 			if (currentPlayerColour != null) {
 				float timer = 10f;
@@ -86,18 +108,18 @@ public class TopPanel extends DoaObject {
 			DoaGraphicsFunctions.drawImage(topRing, 0, -6);
 			DoaGraphicsFunctions.drawImage(bottomRing, 0, 51);
 			DoaGraphicsFunctions.drawImage(seasonCircle, (windowWidth - seasonCircle.getWidth()) / 2f, 0);
-			DoaGraphicsFunctions.drawImage(DoaSprites.getSprite(Season.getCurrentSeason().toString()), (windowWidth - DoaSprites.getSprite(Season.getCurrentSeason().toString()).getWidth()) / 2f, 0);
+			DoaGraphicsFunctions.drawImage(currentSeasonImage, (windowWidth - currentSeasonImage.getWidth()) / 2f, 0);
 			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 26f));
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
-			String turn = "TURN: " + (int) Math.ceil((context.getElapsedTurns() + 1) / (double) context.getNumberOfPlayers());
-			DoaGraphicsFunctions.drawString(turn, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(turn)) / 2f, 110);
+			String turn = "TURN: " + turnCount;
+			DoaGraphicsFunctions.drawString("TURN: " + turnCount, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(turn)) / 2f, 110);
 
 			DoaGraphicsFunctions.setColor(currentPlayerColour);
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(1 - alpha, 0)));
-			String player = "PLAYER " + context.getCurrentPlayer().getName();
-			DoaGraphicsFunctions.drawString(player, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(player)) / 2f, 110);
+			
+			DoaGraphicsFunctions.drawString(currentPlayerName, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(currentPlayerName)) / 2f, 110);
 			DoaGraphicsFunctions.setComposite(oldComposite);
 		}
 	}
