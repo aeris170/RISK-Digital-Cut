@@ -17,21 +17,23 @@ import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import doa.engine.task.DoaTaskGuard;
 import doa.engine.task.DoaTasker;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
 public class TopPanel extends DoaObject {
 
-	public static TopPanel INSTANCE;
-
 	private DoaTaskGuard threeSecondGuard = new DoaTaskGuard();
 	private float alpha;
 	private float delta = 0.1f;
-	private Color timerColour;
+	private Color currentPlayerColour;
 
-	public TopPanel() {
-		INSTANCE = this;
-		
+	private final RiskGameContext context;
+	
+	public TopPanel(final RiskGameContext context) {
+		this.context = context;
+
 		setzOrder(ZOrders.GAME_UI_Z);
+		
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
@@ -40,7 +42,7 @@ public class TopPanel extends DoaObject {
 
 		@Override
 		public void tick() {
-			timerColour = Color.RED;	// GameManager.INSTANCE.currentPlayer.getColor();
+			currentPlayerColour = context.getCurrentPlayer().getColor();
 			if (threeSecondGuard.get()) {
 				threeSecondGuard.set(false);
 				DoaTasker.executeLater(() -> {
@@ -71,13 +73,12 @@ public class TopPanel extends DoaObject {
 		
 		@Override
 		public void render() {
-			//GameManager gm = GameManager.INSTANCE;
 			// timer block
-			if (timerColour != null) {
-				float timer = 10f;	// GameManager.INSTANCE.timer;
+			if (currentPlayerColour != null) {
+				float timer = 10f;
 				DoaGraphicsFunctions.setColor(Color.BLACK);
 				DoaGraphicsFunctions.fillRect(0f, windowHeight * 0.027f, windowWidth, windowHeight * 0.021f);
-				DoaGraphicsFunctions.setColor(timerColour);
+				DoaGraphicsFunctions.setColor(currentPlayerColour);
 				DoaGraphicsFunctions.fillRect(timer, windowHeight * 0.027f, windowWidth - timer * 2, windowHeight * 0.021f);
 			}
 
@@ -90,12 +91,12 @@ public class TopPanel extends DoaObject {
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
-			String turn = "TURN: ???";	// "TURN: " + (int) Math.ceil((gm.turnCount + 1) / (double) gm.numberOfPlayers);
+			String turn = "TURN: " + (int) Math.ceil((context.getElapsedTurns() + 1) / (double) context.getNumberOfPlayers());
 			DoaGraphicsFunctions.drawString(turn, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(turn)) / 2f, 110);
 
-			//DoaGraphicsFunctions.setColor(gm.currentPlayer.getColor());
+			DoaGraphicsFunctions.setColor(currentPlayerColour);
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(1 - alpha, 0)));
-			String player = "PLAYER ???";	// gm.currentPlayer.getName();
+			String player = "PLAYER " + context.getCurrentPlayer().getName();
 			DoaGraphicsFunctions.drawString(player, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(player)) / 2f, 110);
 			DoaGraphicsFunctions.setComposite(oldComposite);
 		}

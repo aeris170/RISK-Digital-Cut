@@ -22,27 +22,31 @@ import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
+import pmnm.risk.game.IRiskGameContext.TurnPhase;
+import pmnm.risk.game.databasedimpl.Province;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
 public class BottomPanel extends RoyMenu {
 
-	public static BottomPanel INSTANCE;
+	private RoyImageButton nextPhaseButton;
+	private RoyImageButton decrementButton;
+	private RoyImageButton incrementButton;
+	private RoyImageButton centerPieceButton;
 
-	public static RoyImageButton nextPhaseButton;
-	public static RoyImageButton decrementButton;
-	public static RoyImageButton incrementButton;
-	public static RoyImageButton centerPieceButton;
-
+	private final DoaVector NEXT_PHASE_POSITION		= new DoaVector(950, 1000);
+	private final DoaVector DECREMENT_POSITION		= new DoaVector(660, 1050);
+	private final DoaVector INCREMENT_POSITION		= new DoaVector(660, 960);
+	private final DoaVector CENTER_PIECE_POSITION	= new DoaVector(650, 992);
 	
-	private static final DoaVector NEXT_PHASE_POSITION		= new DoaVector(0, 300);
-	private static final DoaVector DECREMENT_POSITION		= new DoaVector(0, 300);
-	private static final DoaVector INCREMENT_POSITION		= new DoaVector(0, 300);
-	private static final DoaVector CENTER_PIECE_POSITION	= new DoaVector(0, 0);
+	private List<Integer> spinnerValues;
+	private int index = 0;
 	
-	public static List<Integer> spinnerValues;
-	public static int index = 0;
+	private final RiskGameContext context;
 
-	public BottomPanel() {
+	public BottomPanel(final RiskGameContext context) {
+		this.context = context;
+		
 		nextPhaseButton = RoyImageButton.builder()
 				.image(DoaSprites.getSprite("nextPhaseButtonIdle"))
 				.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
@@ -52,6 +56,7 @@ public class BottomPanel extends RoyMenu {
 				})
 				.build();
 		nextPhaseButton.setPosition(NEXT_PHASE_POSITION);
+		nextPhaseButton.setScale(.8f);
 		addElement(nextPhaseButton);
 		
 		decrementButton = RoyImageButton.builder()
@@ -89,9 +94,8 @@ public class BottomPanel extends RoyMenu {
 		
 		nextPhaseButton.setVisible(false);
 		
-		INSTANCE = this;
-
 		setzOrder(ZOrders.GAME_UI_Z);
+		
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
@@ -100,14 +104,16 @@ public class BottomPanel extends RoyMenu {
 
 		@Override
 		public void tick() {
-			/*if (GameManager.INSTANCE.isPaused) {
+			if(!isVisible()) return;
+			
+			if (context.isPaused()) {
 				nextPhaseButton.setVisible(false);
 				decrementButton.setVisible(false);
 				incrementButton.setVisible(false);
 				centerPieceButton.setVisible(false);
 			}
-			if (GameManager.INSTANCE.currentPhase == TurnPhase.REINFORCE) {
-				if (GameManager.INSTANCE.getReinforcedProvince() != null) {
+			if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
+				/*if (GameManager.INSTANCE.getReinforcedProvince() != null) {
 					decrementButton.setVisible(true);
 					incrementButton.setVisible(true);
 					centerPieceButton.setVisible(true);
@@ -117,8 +123,8 @@ public class BottomPanel extends RoyMenu {
 					incrementButton.setVisible(false);
 					centerPieceButton.setVisible(false);
 					nextPhaseButton.setVisible(true);
-				}
-			}*/
+				}*/
+			}
 			try {
 				//centerPieceButton.setText(spinnerValues != null ? "" + spinnerValues.get(index) : "");
 			} catch (Exception ex) {
@@ -128,7 +134,6 @@ public class BottomPanel extends RoyMenu {
 				ex.printStackTrace();
 			}
 		}
-		
 	}
 	
 	private final class Renderer extends DoaRenderer {
@@ -154,22 +159,25 @@ public class BottomPanel extends RoyMenu {
 		private final DoaVector PROVINCE_BG_POSITION	= new DoaVector(837, 974);
 		private final DoaVector CONTINENT_BG_POSITION	= new DoaVector(825, 1016);
 		
+		
 		@Override
 		public void render() {
-			///GameManager gm = GameManager.INSTANCE;
-			//Province clickedProvince = gm.clickedHitArea != null ? gm.clickedHitArea.getProvince() : null;
-
+			if(!isVisible()) return;
+			
+			Province clickedProvince = context.getAreas().getSelectedProvince() != null ? (Province) context.getAreas().getSelectedProvince().getProvince() : null;
+			
 			String garrisonText = "";
 			String ownerText = "";
 			String nameText = "";
 			String continentText = "";
 
-			/*if (clickedProvince != null) {
-				garrisonText += clickedProvince.getTroops() != -1 ? clickedProvince.getTroops() : "???";
-				ownerText += clickedProvince.getOwner().getName();
+			if (clickedProvince != null) {
+				garrisonText += clickedProvince.getNumberOfTroops() != -1 ? clickedProvince.getNumberOfTroops() : "???";
+				ownerText += clickedProvince.getOccupier().getName();
 				nameText += clickedProvince.getName().toUpperCase();
 				continentText += clickedProvince.getContinent().getName().toUpperCase();
-			}*/
+			}
+			
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
 			DoaGraphicsFunctions.drawImage(bottomRing, 0, (float) (Main.WINDOW_HEIGHT - bottomRing.getHeight() + 6d));
@@ -177,10 +185,10 @@ public class BottomPanel extends RoyMenu {
 			DoaGraphicsFunctions.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (float) ((double) Main.WINDOW_HEIGHT - LEFT.getHeight()));
 			DoaGraphicsFunctions.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (float) ((double) Main.WINDOW_HEIGHT - RIGHT.getHeight()));
 
-			//String phaseText = gm.currentPhase.name();
-			//DoaVector phaseArea = new DoaVector(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
-			//DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), phaseArea, phaseText)));
-			//DoaGraphicsFunctions.drawString(gm.currentPhase.name(), Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
+			String phaseText = context.getCurrentPhase().name();
+			DoaVector phaseArea = new DoaVector(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
+			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), phaseArea, phaseText)));
+			DoaGraphicsFunctions.drawString(phaseText, Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
 
 			DoaGraphicsFunctions.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (float) ((double) Main.WINDOW_HEIGHT - MIDDLE.getHeight()));
 
@@ -202,9 +210,9 @@ public class BottomPanel extends RoyMenu {
 			DoaGraphicsFunctions.drawString(garrisonText, GARRISON_BG_POSITION.x + (garrisonBG.getWidth() - fm.stringWidth(garrisonText)) / 2f, GARRISON_BG_POSITION.y * 1.031f);
 			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 30f));
 			fm = DoaGraphicsFunctions.getFontMetrics();
-			/*if (clickedProvince != null) {
-				DoaGraphicsFunctions.setColor(gm.clickedHitArea.getProvince().getOwner().getColor());
-			}*/
+			if (clickedProvince != null) {
+				DoaGraphicsFunctions.setColor(clickedProvince.getOccupier().getColor());
+			}
 			DoaGraphicsFunctions.drawString(ownerText, OWNER_BG_POSITION.x + (ownerBG.getWidth() - fm.stringWidth(ownerText)) / 2f, OWNER_BG_POSITION.y * 1.03f);
 			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN,
 			        Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(provinceBG.getWidth() * 0.95f, provinceBG.getHeight()), nameText)));
@@ -220,14 +228,7 @@ public class BottomPanel extends RoyMenu {
 		
 	}
 	
-	public static void signal() {
-		BottomPanel.nextPhaseButton.setVisible(true);
-		BottomPanel.decrementButton.setVisible(true);
-		BottomPanel.incrementButton.setVisible(true);
-		BottomPanel.centerPieceButton.setVisible(true);
-	}
-
-	public static void updateSpinnerValues(int lowerLimit, int upperLimit) {
+	public void updateSpinnerValues(int lowerLimit, int upperLimit) {
 		spinnerValues = new ArrayList<>();
 		for (int i = lowerLimit; i <= upperLimit; i++) {
 			spinnerValues.add(i);
@@ -246,10 +247,5 @@ public class BottomPanel extends RoyMenu {
 		index--;
 		index += spinnerValues.size();
 		index %= spinnerValues.size();
-	}
-
-	public static void nullSpinner() {
-		spinnerValues = null;
-		//centerPieceButton.setText("");
 	}
 }

@@ -44,13 +44,14 @@ public final class RiskGameScreenUI {
 		RiskGameScreenUI.context = context;
 		isInitialized = true;
 		
-		Water water  = new Water();
+		Water water  = new Water(context);
 		gameScene.add(water);
 		
-		TopPanel topPanel = new TopPanel();
+		TopPanel topPanel = new TopPanel(context);
 		gameScene.add(topPanel);
 		
-		BottomPanel bottomPanel = new BottomPanel();
+		BottomPanel bottomPanel = new BottomPanel(context);
+		bottomPanel.setVisible(true);
 		gameScene.add(bottomPanel);
 		
 		SeasonEffect seasonEffect = new SeasonEffect();

@@ -36,6 +36,9 @@ public final class RoyImageButton extends DoaObject implements IRoyInteractableE
 	
 	private transient BufferedImage currentImage;
 	
+	private int width = 0;
+	private int height = 0;
+	
 	@Builder
 	RoyImageButton(@NonNull BufferedImage image, @NonNull BufferedImage hoverImage, @NonNull BufferedImage pressImage, @NonNull IRoyAction action) {
 		this.image = image;
@@ -44,6 +47,9 @@ public final class RoyImageButton extends DoaObject implements IRoyInteractableE
 		this.action = action;
 		
 		currentImage = image;
+		
+		width = image.getWidth();
+		height = image.getHeight();
 		
 		addComponent(new Script());
 		addComponent(new Renderer());
@@ -55,10 +61,15 @@ public final class RoyImageButton extends DoaObject implements IRoyInteractableE
 		transform.position.y = position.y;
 	}
 
+	public void setScale(float f) {
+		width = (int) (currentImage.getWidth() * f);
+		height = (int) (currentImage.getHeight() * f);
+	}
+
 	@Override
 	public Rectangle getContentArea() {
 		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(image.getWidth(), image.getHeight());
+		int[] size = DoaGraphicsFunctions.warp(width, height);
 		return new Rectangle(
 			pos[0],
 			pos[1],
@@ -93,7 +104,7 @@ public final class RoyImageButton extends DoaObject implements IRoyInteractableE
 		@Override
 		public void render() {
 			if (!isVisible) return;
-			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, image.getWidth(), image.getHeight());
+			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, width, height);
 		}
 	}
 }

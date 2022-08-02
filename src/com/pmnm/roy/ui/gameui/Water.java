@@ -22,6 +22,7 @@ import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import doa.engine.task.DoaTaskGuard;
 import doa.engine.task.DoaTasker;
+import pmnm.risk.game.IRiskGameContext;
 
 @SuppressWarnings("serial")
 public class Water extends DoaObject {
@@ -43,7 +44,11 @@ public class Water extends DoaObject {
 
 	private transient List<TriangularSurface> mesh = new ArrayList<>();
 
-	public Water() {
+	final IRiskGameContext context;
+	
+	public Water(final IRiskGameContext context) {
+		this.context = context;
+		
 		for (int y = 0; y < points[0].length; y++) {
 			for (int x = 0; x < points.length; x++) {
 				points[x][y] = new Point2D.Double(x * Main.WINDOW_WIDTH / (SEG_X - 1f), y * Main.WINDOW_HEIGHT / (SEG_Y - 1f));
@@ -95,7 +100,7 @@ public class Water extends DoaObject {
 	private final class Script extends DoaScript {
 		@Override
 		public void tick() {
-			//if (!GameManager.INSTANCE.isPaused && GameManager.INSTANCE.isSinglePlayer) {
+			if(context.isPaused()) {
 				for (int y = 0; y < points[0].length; y++) {
 					for (int x = 0; x < points.length; x++) {
 						Point2D p = points[x][y];
@@ -104,7 +109,7 @@ public class Water extends DoaObject {
 						p.setLocation(px, py);
 					}
 				}
-			//}
+			}
 		}
 		
 	}
