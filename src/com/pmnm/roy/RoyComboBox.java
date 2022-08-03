@@ -15,7 +15,6 @@ import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
-import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaMouse;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;

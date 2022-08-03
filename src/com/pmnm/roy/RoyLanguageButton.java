@@ -5,7 +5,6 @@ import java.awt.Composite;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.prefs.Preferences;
 
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.globals.localization.Translator.Language;
