@@ -101,13 +101,13 @@ public class ProvinceHitArea extends DoaObject {
 	@Override
 	public void onAddToScene(DoaScene scene) {
 		super.onAddToScene(scene);
-		Scenes.GAME_SCENE.add(symbol);
+		scene.add(symbol);
 	}
 	
 	@Override
 	public void onRemoveFromScene(DoaScene scene) {
 		super.onRemoveFromScene(scene);
-		Scenes.GAME_SCENE.remove(symbol);
+		scene.remove(symbol);
 	}
 
 	public class ZOrderAndAlphaSetter extends DoaScript {

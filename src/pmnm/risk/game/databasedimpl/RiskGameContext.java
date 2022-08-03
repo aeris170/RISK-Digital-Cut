@@ -12,6 +12,7 @@ import com.pmnm.risk.globals.Scenes;
 import com.pmnm.util.CircularQueue;
 
 import doa.engine.maths.DoaMath;
+import doa.engine.scene.DoaScene;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -162,16 +163,17 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public void initiliazeGame(@NonNull final GameConfig gameConfig) {
 		if (isInitialized) return;
+		DoaScene gameScene = Scenes.getGameScene();
 		
 		players = new CircularQueue<>(gameConfig.getData().length);
 		for (Player.Data data : gameConfig.getData()) {
 			Player p = new Player(this, data);
 			players.add(p);
 			playerProvinces.put(p, new ArrayList<>());
-			Scenes.GAME_SCENE.add(p);
+			gameScene.add(p);
 		}
-		Scenes.GAME_SCENE.add(new GameBoard(map));
-		Scenes.GAME_SCENE.add(areas);
+		gameScene.add(new GameBoard(map));
+		gameScene.add(areas);
 		currentPlayingPlayer = players.getNext();
 		
 		if (gameConfig.isRandomPlacementEnabled()) {

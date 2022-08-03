@@ -185,7 +185,10 @@ public final class UIConstants {
 		
 		font = DoaFonts.getFont("BookAntiqua");
 		
-		DoaScene menuScene = Scenes.MENU_SCENE;
+		Scenes.getLoadingScene().add(new LoadingScreen());
+		
+		DoaScene menuScene = Scenes.getMenuScene();
+		menuScene.clear();
 		background = new FadingBackground(fleurDeLis, topRing, bottomRing, backgrounds);
 		mainMenu = new MainMenu();
 		mainMenu.setVisible(true);
@@ -211,6 +214,6 @@ public final class UIConstants {
 		menuScene.add(loadGameMenu);
 		menuScene.add(newGameMenuMP);
 		menuScene.add(new SystemSpecs());
-		DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
+		Scenes.loadMenuScene();
 	}
 }

@@ -129,7 +129,7 @@ public final class PauseMenu extends RoyMenu {
 			.textKey(QUIT_KEY)
 			.action(source -> {
 				setVisible(false);
-				DoaSceneHandler.loadScene(Scenes.MENU_SCENE);
+				Scenes.loadMenuScene();
 				UIConstants.getMainMenu().setVisible(true);
 			})
 			.build();
