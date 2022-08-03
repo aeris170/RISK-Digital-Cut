@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;

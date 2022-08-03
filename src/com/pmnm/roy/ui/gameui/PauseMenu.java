@@ -6,10 +6,10 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import com.pmnm.risk.globals.Scenes;
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
-import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;

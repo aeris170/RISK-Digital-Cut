@@ -6,8 +6,8 @@ import java.awt.Color;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaMath;
 import com.doa.ui.panel.DoaPanel;
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.main.Main;
-import com.pmnm.roy.ui.ZOrders;
 
 public class GameScreenExitFadeToBlack extends DoaPanel {
 

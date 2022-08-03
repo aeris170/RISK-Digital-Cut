@@ -6,8 +6,8 @@ import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.roy.ui.UIConstants;
-import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;

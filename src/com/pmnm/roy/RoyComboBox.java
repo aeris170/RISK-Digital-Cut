@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.UIUtils;
-import com.pmnm.roy.ui.ZOrders;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 

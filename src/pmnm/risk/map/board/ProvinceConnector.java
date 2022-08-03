@@ -3,6 +3,8 @@ package pmnm.risk.map.board;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
+import com.pmnm.risk.globals.ZOrders;
+
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
@@ -19,7 +21,7 @@ public final class ProvinceConnector extends DoaObject {
 
 	ProvinceConnector(IRiskGameContext context) {
 		this.context = context;
-		setzOrder(10);
+		setzOrder(ZOrders.PROVINCE_CONNECTOR_Z);
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}

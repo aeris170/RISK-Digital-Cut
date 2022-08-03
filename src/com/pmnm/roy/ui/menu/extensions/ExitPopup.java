@@ -6,13 +6,13 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.IRoyContainer;
 import com.pmnm.roy.IRoyElement;
 import com.pmnm.roy.RoyMiniButton;
 import com.pmnm.roy.ui.UIConstants;
-import com.pmnm.roy.ui.ZOrders;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 

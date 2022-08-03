@@ -6,13 +6,13 @@ import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.Globals;
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
-import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;

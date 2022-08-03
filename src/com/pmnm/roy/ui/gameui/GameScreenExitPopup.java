@@ -7,12 +7,12 @@ import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Builders;
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIConstants;
-import com.pmnm.roy.ui.ZOrders;
 
 public final class GameScreenExitPopup extends DoaPanel {
 

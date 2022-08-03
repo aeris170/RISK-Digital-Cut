@@ -4,8 +4,8 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Rectangle;
 
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.roy.IRoyElement;
-import com.pmnm.roy.ui.ZOrders;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.maths.DoaMath;
