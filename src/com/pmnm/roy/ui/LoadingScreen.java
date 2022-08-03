@@ -24,7 +24,6 @@ public final class LoadingScreen extends RoyMenu implements Observer {
 		private Font font;
 		private String text;
 		private String loadingStringKey = "LOADING";
-		private DoaVector desiredTextSize;
 		private int textWidth;
 		private int textHeight;
 		
@@ -37,8 +36,7 @@ public final class LoadingScreen extends RoyMenu implements Observer {
 			if (font == null) {
 				text = "LOADING"; // TODO REMOVE THIS WHEN "LOADING" is added to external strings
 				int[] size = DoaGraphicsFunctions.warp(1920 * .70f, 1080 * .70f);
-				desiredTextSize = new DoaVector(size[0], size[1]);
-				font = UIUtils.adjustFontToFitInArea(text, desiredTextSize);
+				font = UIUtils.adjustFontToFitInArea(text, new DoaVector(size[0], size[1]));
 				textWidth = UIUtils.textWidth(font, text);
 				textHeight = UIUtils.textHeight(font);
 			}
