@@ -63,6 +63,7 @@ public final class ProvinceConnector extends DoaObject {
 				DoaGraphicsFunctions.drawLine(first.centerX, first.centerY, second.centerX, second.centerY + 1);
 				DoaGraphicsFunctions.setColor(ownerColor);
 				DoaGraphicsFunctions.drawLine(first.centerX, first.centerY, second.centerX, second.centerY);
+				// TODO add points to a polyline and render polyline
 			}
 		}
 	}
