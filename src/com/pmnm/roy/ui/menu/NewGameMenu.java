@@ -224,23 +224,26 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	
 	private void startGame() {
 		setVisible(false);
-		List<@NonNull MapConfig> configs = MapConfig.getConfigs();
-		MapConfig selectedConfig = configs.get(selectedMapIndex);
-		MapData data = MapLoader.loadMap(selectedConfig);
-		RiskGameContext context = RiskGameContext.of(data);
-		List<Player.Data> playerDatas = new ArrayList<>(slots.length);
-		for (Slot slot : slots) {
-			if (slot.hasPlayer()) {
-				Player.Data playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
-				playerDatas.add(playerData);
+		Scenes.switchToLoadingScreen();
+		new Thread(()->{
+			List<@NonNull MapConfig> configs = MapConfig.getConfigs();
+			MapConfig selectedConfig = configs.get(selectedMapIndex);
+			MapData data = MapLoader.loadMap(selectedConfig);
+			RiskGameContext context = RiskGameContext.of(data);
+			List<Player.Data> playerDatas = new ArrayList<>(slots.length);
+			for (Slot slot : slots) {
+				if (slot.hasPlayer()) {
+					Player.Data playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+					playerDatas.add(playerData);
+				}
 			}
-		}
 
-		RiskGameScreenUI.initUIFor(context, Scenes.GAME_SCENE, type);
-		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
-		context.initiliazeGame(config);
-		// TODO add game stuff to game scene
-		DoaSceneHandler.loadScene(Scenes.GAME_SCENE);
+			RiskGameScreenUI.initUIFor(context, Scenes.getGameScene(), type);
+			GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
+			context.initiliazeGame(config);
+			// TODO add game stuff to game scene
+			Scenes.loadGameScene();
+		}).start();
 	}
 	
 	private final class Renderer extends DoaRenderer {
