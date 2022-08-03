@@ -49,6 +49,13 @@ public final class UIConstants {
 	private static final String ARROW_RIGHT_PRESSED = "ArrowRightPressed";
 	private static final String ARROW_DOWN_IDLE = "ArrowDownIdle";
 	private static final String ARROW_DOWN_PRESSED = "ArrowDownPressed";
+	private static final String READY_CIRCLE = "ReadyCircle";
+	private static final String READY_BLIP = "Ready";
+	private static final String PLAYER_TYPE_BORDER = "PlayerTypeBorder";
+	private static final String DROPDOWN_TEX_TYPE = "DropDownTexType";
+	private static final String COLOR_BORDER = "ColorBorder";
+	private static final String DROPDOWN_COLOR = "DropDownColor";
+	private static final String COLOR_BORDER_SELECTED = "ColorBorderSelected";
 	
 	private static final String SAVE_SCROLL = "SaveScroll";
 	private static final String SAVE_MAP_CONTAINER = "SaveMapContainer";
@@ -103,6 +110,14 @@ public final class UIConstants {
 	@Getter @NonNull private static BufferedImage arrowRightPressedSprite;
 	@Getter @NonNull private static BufferedImage arrowDownIdleSprite;
 	@Getter @NonNull private static BufferedImage arrowDownPressedSprite;
+	@Getter @NonNull private static BufferedImage readyCircleSprite;
+	@Getter @NonNull private static BufferedImage readyBlipSprite;
+	@Getter @NonNull private static BufferedImage playerTypeBorderSprite;
+	@Getter @NonNull private static BufferedImage playerTypeDropdownBgSprite;
+	@Getter @NonNull private static BufferedImage colorBorderSprite;
+	@Getter @NonNull private static BufferedImage colorDropdownBgSprite;
+	@Getter @NonNull private static BufferedImage colorBorderSelectedSprite;
+	
 	@Getter @NonNull private static BufferedImage saveScrollSprite;
 	@Getter @NonNull private static BufferedImage saveMapContainerSprite;
 	@Getter @NonNull private static BufferedImage[] rulesImages;
@@ -136,6 +151,13 @@ public final class UIConstants {
 		arrowRightPressedSprite = DoaSprites.getSprite(ARROW_RIGHT_PRESSED);
 		arrowDownIdleSprite = DoaSprites.getSprite(ARROW_DOWN_IDLE);
 		arrowDownPressedSprite = DoaSprites.getSprite(ARROW_DOWN_PRESSED);
+		readyCircleSprite = DoaSprites.getSprite(READY_CIRCLE);
+		readyBlipSprite = DoaSprites.getSprite(READY_BLIP);
+		playerTypeBorderSprite = DoaSprites.getSprite(PLAYER_TYPE_BORDER);
+		playerTypeDropdownBgSprite = DoaSprites.getSprite(DROPDOWN_TEX_TYPE);
+		colorBorderSprite = DoaSprites.getSprite(COLOR_BORDER);
+		colorDropdownBgSprite = DoaSprites.getSprite(DROPDOWN_COLOR);
+		colorBorderSelectedSprite = DoaSprites.getSprite(COLOR_BORDER_SELECTED);
 		
 		saveScrollSprite = DoaSprites.getSprite(SAVE_SCROLL);
 		saveMapContainerSprite = DoaSprites.getSprite(SAVE_MAP_CONTAINER);

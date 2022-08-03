@@ -32,16 +32,23 @@ public class RoyTextField extends DoaObject implements IRoyElement, Observable {
 	@Getter
 	@Setter
 	private boolean isVisible;
-	private boolean clicked = false;
+	
+	private boolean clicked;
+	
+	@Getter
+	@Setter
 	private String marker = "|";
+	
 	@Getter
 	private String text = "";
 	
 	private int width;
 	private int height;
+	
 	@Setter
 	@NonNull
 	private String placeholder = "";
+	
 	@Getter
 	@Setter
 	private int maxCharacters = Integer.MAX_VALUE;

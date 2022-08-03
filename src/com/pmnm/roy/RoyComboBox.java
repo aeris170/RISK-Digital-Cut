@@ -76,8 +76,8 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			elements[i].name = names[i];
 		}
 		
-		mainBg = DoaSprites.getSprite("PlayerTypeBorder");
-		dropDownBg = DoaSprites.getSprite("DropDownTexType");
+		mainBg = UIConstants.getPlayerTypeBorderSprite();
+		dropDownBg = UIConstants.getPlayerTypeDropdownBgSprite();
 		
 		addComponent(new Script());
 		addComponent(new StringComboRenderer());
@@ -92,10 +92,10 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			elements[i].color = colors[i];
 		}
 
-		mainBg = DoaSprites.getSprite("ColorBorder");
-		dropDownBg = DoaSprites.getSprite("DropDownColor");
-		colorBorder = DoaSprites.getSprite("ColorBorder");
-		colorBorderSelected = DoaSprites.getSprite("ColorBorderSelected");
+		mainBg = UIConstants.getColorBorderSprite();
+		dropDownBg = UIConstants.getColorDropdownBgSprite();
+		colorBorder = UIConstants.getColorBorderSprite();
+		colorBorderSelected = UIConstants.getColorBorderSelectedSprite();
 		
 		addComponent(new Script());
 		addComponent(new ColorComboRenderer());
@@ -110,10 +110,10 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			elements[i].image = images[i];
 		}
 
-		mainBg = DoaSprites.getSprite("ColorBorder");
-		dropDownBg = DoaSprites.getSprite("DropDownColor");
-		colorBorder = DoaSprites.getSprite("ColorBorder");
-		colorBorderSelected = DoaSprites.getSprite("ColorBorderSelected");
+		mainBg = UIConstants.getColorBorderSprite();
+		dropDownBg = UIConstants.getColorDropdownBgSprite();
+		colorBorder = UIConstants.getColorBorderSprite();
+		colorBorderSelected = UIConstants.getColorBorderSelectedSprite();
 		
 		addComponent(new Script());
 		addComponent(new SpriteComboRenderer());
