@@ -1,5 +1,8 @@
 package com.pmnm.roy.ui;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public final class ZOrders {
 	
 	public static final int WATER_Z = -2;
@@ -20,7 +23,4 @@ public final class ZOrders {
 
 	public static final int COMBOBOX_CLOSE = 0;
 	public static final int COMBOBOX_OPEN = 1;
-
-	private ZOrders() {}
-
 }
