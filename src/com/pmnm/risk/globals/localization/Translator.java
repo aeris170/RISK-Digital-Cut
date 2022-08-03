@@ -76,8 +76,13 @@ public class Translator implements Observable {
 	}
 
 	public String getTranslatedString(String key) {
-		String rv = languages.get(currentLanguage).get(key).toUpperCase(currentLanguage.locale);
-		return (rv != null && rv.length() != 0) ? rv : "ROY::UNMAPPED_STR";
+		String rv = languages.get(currentLanguage).get(key);
+		if(rv == null || rv.length() == 0) {
+			rv = "ROY::UNMAPPED_STR";
+		} else {
+			rv = rv.toUpperCase(currentLanguage.locale);
+		}
+		return rv;
 	}
 	
 	public String getTranslatedStringAsIs(String key) {
