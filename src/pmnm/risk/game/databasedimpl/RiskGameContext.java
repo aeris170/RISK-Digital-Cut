@@ -75,7 +75,11 @@ public class RiskGameContext implements IRiskGameContext {
 	private boolean isInitialPlacementComplete;
 	private IPlayer currentPlayingPlayer;
 	private TurnPhase currentTurnPhase;
-	@Getter private int usedDeploys, remainingDeploys;
+	
+	@Getter
+	private int usedDeploys;
+	@Getter
+	private int remainingDeploys;
 	
 	/* Visuals */
 	@Getter
