@@ -259,12 +259,17 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public void applyDeployResult(@NonNull final Deploy.Result result) {
 		Deploy deploy = result.getDeploy();
-		if(deploy.getAmount() > getRemainingDeploys()) { return; }
+		if (getCurrentPhase() == TurnPhase.SETUP) {
+			IProvince target = deploy.getTarget();
+			numberOfTroops.put(target, result.getRemainingTargetTroops());
+		} else {
+			if (deploy.getAmount() > getRemainingDeploys()) { return; }
 		
-		IProvince target = deploy.getTarget();
-		numberOfTroops.put(target, result.getRemainingTargetTroops());
-		usedDeploys += deploy.getAmount();
-		remainingDeploys -= deploy.getAmount();
+			IProvince target = deploy.getTarget();
+			numberOfTroops.put(target, result.getRemainingTargetTroops());
+			usedDeploys += deploy.getAmount();
+			remainingDeploys -= deploy.getAmount();
+		}
 	}
 	@Override
 	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice method) {
