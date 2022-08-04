@@ -15,7 +15,6 @@ import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaKeyboard;
 import doa.engine.maths.DoaVector;
-import doa.engine.scene.DoaSceneHandler;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import pmnm.risk.game.IRiskGameContext;
@@ -38,7 +37,7 @@ public final class PauseMenu extends RoyMenu {
 	private DoaVector RULES_LOCATION;
 	private DoaVector QUIT_LOCATION;
 	
-	public PauseMenu(IRiskGameContext context, GameType type) {		
+	public PauseMenu(IRiskGameContext context, GameType type) {
 		float buttonsY = 0;
 		float distanceBetweenButtons = 0;
 		
@@ -51,8 +50,7 @@ public final class PauseMenu extends RoyMenu {
 			SETTINGS_LOCATION 	= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons * 2);
 			RULES_LOCATION 		= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons * 3);
 			QUIT_LOCATION 		= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons * 4);
-		}
-		else if (type == GameType.MULTI_PLAYER) {
+		} else if (type == GameType.MULTI_PLAYER) {
 			buttonsY = 70f;
 			distanceBetweenButtons = 125f;
 			
