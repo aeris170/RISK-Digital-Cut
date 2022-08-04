@@ -75,6 +75,7 @@ public class RiskGameContext implements IRiskGameContext {
 	private boolean isInitialPlacementComplete;
 	private IPlayer currentPlayingPlayer;
 	private TurnPhase currentTurnPhase;
+	@Getter private int usedDeploys, remainingDeploys;
 	
 	/* Visuals */
 	@Getter
@@ -243,6 +244,8 @@ public class RiskGameContext implements IRiskGameContext {
 			currentTurnPhase = TurnPhase.ATTACK;
 		}
 		currentPlayingPlayer = players.getNext();
+		usedDeploys = 0;
+		remainingDeploys = calculateTurnReinforcementsFor(currentPlayingPlayer);
 		elapsedTurns++;
 	}
 	@Override
@@ -252,9 +255,12 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public void applyDeployResult(@NonNull final Deploy.Result result) {
 		Deploy deploy = result.getDeploy();
+		if(deploy.getAmount() > getRemainingDeploys()) { return; }
 		
 		IProvince target = deploy.getTarget();
 		numberOfTroops.put(target, result.getRemainingTargetTroops());
+		usedDeploys += deploy.getAmount();
+		remainingDeploys -= deploy.getAmount();
 	}
 	@Override
 	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice method) {

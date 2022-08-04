@@ -31,6 +31,8 @@ public interface IRiskGameContext extends Serializable {
 	int getNumberOfPlayers();
 	Iterable<IProvince> provincesOf(@NonNull final IPlayer player);
 	void occupyProvince(@NonNull final IPlayer player, @NonNull IProvince province);
+	int getUsedDeploys();
+	int getRemainingDeploys();
 	
 	/* Province API */
 	Iterable<@NonNull IProvince> getProvinces();
