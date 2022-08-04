@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-import com.pmnm.risk.globals.Scenes;
-
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;

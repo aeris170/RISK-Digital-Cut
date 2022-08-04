@@ -44,7 +44,7 @@ public final class MapLoader {
 			bgImg = loadBackgroundImage(map.getName(), map.getBackgroundImageFile());
 			return new MapData(map, bgImg, ImmutableList.copyOf(CONTINENTS));
 		} catch (JDOMException | IOException ex) {
-			DoaGame.getInstance().exit();
+			DoaGame.exit();
 			JOptionPane.showConfirmDialog(null,
 			    ex.getMessage(),
 			    "Map loader error",

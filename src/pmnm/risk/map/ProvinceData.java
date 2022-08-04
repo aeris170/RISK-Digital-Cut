@@ -5,7 +5,6 @@ import java.io.Serializable;
 import com.google.common.collect.ImmutableList;
 
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;

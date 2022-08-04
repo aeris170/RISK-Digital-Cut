@@ -2,7 +2,6 @@ package pmnm.risk.map;
 
 import java.io.Serializable;
 
-import doa.engine.maths.DoaVector;
 import lombok.Getter;
 import lombok.Value;
 

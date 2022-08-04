@@ -1,37 +1,15 @@
 package pmnm.risk.map.board;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Path2D;
-import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.pmnm.risk.globals.Builders;
-import com.pmnm.risk.globals.Globals;
-import com.pmnm.risk.globals.PlayerColorBank;
-import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.ZOrders;
-import com.pmnm.risk.main.GameManager;
 import com.pmnm.risk.toolkit.Utils;
-import com.pmnm.roy.ui.UIConstants;
 
 import doa.engine.core.DoaGraphicsFunctions;
-import doa.engine.graphics.DoaSprites;
-import doa.engine.input.DoaMouse;
-import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;

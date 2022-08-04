@@ -1,6 +1,6 @@
 package pmnm.risk.game;
 
-import java.util.concurrent.ThreadLocalRandom;
+import doa.engine.maths.DoaMath;
 
 public class Dice {
 
@@ -33,12 +33,12 @@ public class Dice {
 	}
 
 	public void rollOne(int diceIndex) {
-		values[diceIndex] = ThreadLocalRandom.current().nextInt(6) + 1;
+		values[diceIndex] = DoaMath.randomIntBetween(1, 7);
 	}
 
 	public void rollAll() {
 		for (int i = 0; i < values.length; i++) {
-			values[i] = ThreadLocalRandom.current().nextInt(6) + 1;
+			values[i] = DoaMath.randomIntBetween(1, 7);
 		}
 	}
 

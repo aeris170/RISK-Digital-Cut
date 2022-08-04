@@ -2,8 +2,6 @@ package pmnm.risk.game.databasedimpl;
 
 import java.awt.Color;
 
-import com.google.common.collect.UnmodifiableIterator;
-
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

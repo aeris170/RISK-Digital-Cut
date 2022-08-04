@@ -24,7 +24,6 @@ import com.pmnm.roy.ui.menu.SettingsMenu;
 import doa.engine.graphics.DoaFonts;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.scene.DoaScene;
-import doa.engine.scene.DoaSceneHandler;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;

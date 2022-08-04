@@ -5,10 +5,8 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.Locale;
 
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.UIUtils;
 import com.pmnm.util.Observable;
