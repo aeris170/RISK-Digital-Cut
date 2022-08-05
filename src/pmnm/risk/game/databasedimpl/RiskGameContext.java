@@ -42,6 +42,9 @@ public class RiskGameContext implements IRiskGameContext {
 		return gameContext;
 	}
 	
+	@Getter
+	private GameType gameType;
+	
 	private MapData map;
 	private CircularQueue<IPlayer> players;
 	
@@ -173,6 +176,7 @@ public class RiskGameContext implements IRiskGameContext {
 		if (isInitialized) return;
 		DoaScene gameScene = Scenes.getGameScene();
 		
+		gameType = gameConfig.getGameType();
 		players = new CircularQueue<>(gameConfig.getData().length);
 		for (Player.Data data : gameConfig.getData()) {
 			Player p = new Player(this, data);

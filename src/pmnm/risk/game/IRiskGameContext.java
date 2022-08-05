@@ -7,6 +7,7 @@ import lombok.NonNull;
 public interface IRiskGameContext extends Serializable {
 	
 	/* Game API */
+	GameType getGameType();
 	String getMapName();
 	void initiliazeGame(@NonNull final GameConfig gameConfig);
 	boolean isPaused();
@@ -48,4 +49,7 @@ public interface IRiskGameContext extends Serializable {
 	Iterable<@NonNull IProvince> provincesOf(@NonNull final IContinent continent);
 	
 	public enum TurnPhase { SETUP, DRAFT, ATTACK, REINFORCE; }
+	
+	public enum GameType { SINGLE_PLAYER, MULTI_PLAYER }
+
 }

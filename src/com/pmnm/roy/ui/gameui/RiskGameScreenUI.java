@@ -8,6 +8,7 @@ import com.pmnm.risk.main.SystemSpecs;
 import doa.engine.scene.DoaScene;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import pmnm.risk.game.IRiskGameContext.GameType;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @UtilityClass
@@ -41,9 +42,6 @@ public final class RiskGameScreenUI {
 		gameScene.add(new SystemSpecs());
 		gameScene.add(new PauseMenu(context, type));
 		
-		RiskGameScreenUI.context = context;
-		isInitialized = true;
-		
 		Water water  = new Water(context);
 		gameScene.add(water);
 		
@@ -57,6 +55,9 @@ public final class RiskGameScreenUI {
 		
 		SeasonEffect seasonEffect = new SeasonEffect();
 		gameScene.add(seasonEffect);
+		
+		RiskGameScreenUI.context = context;
+		isInitialized = true;
 	}
 	
 	public static void destroyUI() {

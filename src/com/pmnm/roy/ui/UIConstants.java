@@ -9,7 +9,6 @@ import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.localization.Translator.Language;
 import com.pmnm.risk.main.SystemSpecs;
-import com.pmnm.roy.ui.gameui.GameType;
 import com.pmnm.roy.ui.menu.FadingBackground;
 import com.pmnm.roy.ui.menu.HostGameMenu;
 import com.pmnm.roy.ui.menu.JoinGameMenu;
@@ -27,6 +26,7 @@ import doa.engine.scene.DoaScene;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
+import pmnm.risk.game.IRiskGameContext.GameType;
 
 @UtilityClass
 public final class UIConstants {

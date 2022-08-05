@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.ZOrders;
-import com.pmnm.risk.main.GameInstance;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
@@ -21,6 +20,9 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.IRiskGameContext.GameType;
+import pmnm.risk.game.databasedimpl.GameInstance;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
 public final class PauseMenu extends RoyMenu {
@@ -40,7 +42,7 @@ public final class PauseMenu extends RoyMenu {
 	private DoaVector RULES_LOCATION;
 	private DoaVector QUIT_LOCATION;
 	
-	public PauseMenu(IRiskGameContext context, GameType type) {
+	public PauseMenu(RiskGameContext context, GameType type) {
 		float buttonsY = 0;
 		float distanceBetweenButtons = 0;
 		
@@ -73,7 +75,7 @@ public final class PauseMenu extends RoyMenu {
 		addComponent(new Renderer());
 	}
 
-	private void addButtons(IRiskGameContext context, GameType type) {
+	private void addButtons(RiskGameContext context, GameType type) {
 		if (type == GameType.SINGLE_PLAYER) {
 			/* Save Button */	
 			RoyButton saveButton = RoyButton

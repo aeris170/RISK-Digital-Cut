@@ -1,8 +1,8 @@
-package com.pmnm.risk.main;
+package pmnm.risk.game.databasedimpl;
 
 import java.awt.image.BufferedImage;
-import java.io.File; 
-import java.io.FileInputStream; 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,13 +15,14 @@ import javax.imageio.ImageIO;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
-import com.pmnm.roy.ui.gameui.GameType;
+import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 import doa.engine.core.DoaWindow;
 import doa.engine.scene.DoaScene;
 import lombok.Getter;
 import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.IRiskGameContext.GameType;
 
 public final class GameInstance {
 
@@ -29,7 +30,7 @@ public final class GameInstance {
 		DoaScene scene = Scenes.getGameScene();
 		scene.clear();
 		RiskGameScreenUI.destroyUI();
-		pmnm.risk.game.databasedimpl.RiskGameContext context = (pmnm.risk.game.databasedimpl.RiskGameContext)instance.context;
+		RiskGameContext context = (RiskGameContext)instance.context;
 		RiskGameScreenUI.initUIFor(context, scene, GameType.SINGLE_PLAYER);
 		context.addToScene(scene);
 	}

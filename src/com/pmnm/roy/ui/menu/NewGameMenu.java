@@ -22,7 +22,6 @@ import com.pmnm.roy.RoyComboBox;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
-import com.pmnm.roy.ui.gameui.GameType;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
@@ -41,6 +40,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import pmnm.risk.game.GameConfig;
+import pmnm.risk.game.IRiskGameContext.GameType;
 import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.map.MapConfig;
@@ -236,7 +236,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			}
 
 			RiskGameScreenUI.initUIFor(context, Scenes.getGameScene(), type);
-			GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked());
+			GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked(), type);
 			context.initiliazeGame(config);
 			// TODO add game stuff to game scene
 			Scenes.loadGameScene();
