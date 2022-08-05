@@ -23,8 +23,8 @@ public final class ProvinceHitAreas extends DoaObject {
 	private IRiskGameContext context;
 	private Iterable<@NonNull IProvince> provinces;
 	
-	@Getter	private ProvinceHitArea highlightedProvince;
-	@Getter	private ProvinceHitArea selectedProvince;
+	@Getter private ProvinceHitArea highlightedProvince;
+	@Getter private ProvinceHitArea selectedProvince;
 	
 	@Getter private ProvinceHitArea attackerProvince;
 	@Getter private ProvinceHitArea defenderProvince;
@@ -32,7 +32,7 @@ public final class ProvinceHitAreas extends DoaObject {
 	@Getter private ProvinceHitArea reinforcingProvince;
 	@Getter private ProvinceHitArea reinforceeProvince;
 	
-	@Getter	private List<ProvinceHitArea> areas;
+	@Getter private List<ProvinceHitArea> areas;
 	private ProvinceConnector connector;
 	
 	public ProvinceHitAreas(IRiskGameContext context) {

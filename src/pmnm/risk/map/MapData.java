@@ -28,7 +28,7 @@ public final class MapData implements Serializable {
 	
 	@Getter
 	@NonNull
-	private final transient BufferedImage backgroundImage;
+	private transient BufferedImage backgroundImage;
 	
 	@NonNull
 	private final ImmutableList<ContinentData> continents;
@@ -36,16 +36,13 @@ public final class MapData implements Serializable {
 		return continents;
 	}
 
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        ImageIO.write(backgroundImage, "png", out);
-    }
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		ImageIO.write(backgroundImage, "png", out);
+	}
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        in.defaultReadObject();
-        Field f = MapData.class.getDeclaredField("backgroundImage");
-        f.setAccessible(true);
-        f.set(this, ImageIO.read(in));
-        f.setAccessible(false);
-    }
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		in.defaultReadObject();
+		backgroundImage = ImageIO.read(in);
+	}
 }

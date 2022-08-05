@@ -1,5 +1,7 @@
 package pmnm.risk.game;
 
+import java.io.Serializable;
+
 import com.pmnm.risk.globals.Globals;
 
 import lombok.Data;
@@ -10,18 +12,22 @@ import lombok.Value;
 
 @Data
 @ToString(includeFieldNames = true)
-public final class Deploy {
+public final class Deploy implements Serializable {
+
+	private static final long serialVersionUID = 4136304648761194882L;
 
 	@Value
 	@ToString(includeFieldNames = true)
-	public static final class Result {
+	public static final class Result implements Serializable {
 		
+		private static final long serialVersionUID = -7679290613346465900L;
+
 		@Getter
 		@NonNull
 		private final Deploy deploy;
 
 		@Getter
-		private final int remainingTargetTroops;		
+		private final int remainingTargetTroops;
 	}
 	
 	@NonNull

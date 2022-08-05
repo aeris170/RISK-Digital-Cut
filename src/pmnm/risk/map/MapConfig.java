@@ -3,21 +3,25 @@ package pmnm.risk.map;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import com.google.common.collect.ImmutableList;
 
 import doa.engine.graphics.DoaSprites;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
-import lombok.Value;
 import lombok.experimental.StandardException;
 
-@Value
+@Data
 @ToString(includeFieldNames = true)
 public final class MapConfig implements Serializable {
 	
@@ -58,18 +62,18 @@ public final class MapConfig implements Serializable {
 	}
 
 	@Getter	private final String name;
-	@Getter private final Path path;
+	@Getter private final File path;
 	@Getter private final File provincesFile;
 	@Getter private final File continentsFile;
 	@Getter private final File neighborsFile;
 	@Getter private final File verticesFile;
 	@Getter private final File backgroundImageFile;
-	@Getter private final transient BufferedImage backgroundImagePreview;
+	@Getter private transient BufferedImage backgroundImagePreview;
 	
 	public MapConfig(String mapName) throws MapValidationException, IOException {
 		name = mapName;
-		path = Path.of("res/maps", mapName);
-		check(path.toFile());
+		path = Path.of("res/maps", mapName).toFile();
+		check(path);
 		
 		provincesFile = new File(path + "/provinces.xml");
 		check(provincesFile);
@@ -86,13 +90,13 @@ public final class MapConfig implements Serializable {
 		backgroundImageFile = new File(path + "/map.png");
 		check(backgroundImageFile);
 		
-		String p = path.toFile().getPath();
+		String p = path.getPath();
 		p = p.substring(p.indexOf(File.separator)).replace(File.separator, "/");
 		backgroundImagePreview = DoaSprites.createSprite(name + "preview", p + "/preview.png");
 	}
 	
 	public void validate() throws MapValidationException {
-		check(path.toFile());
+		check(path);
 		check(provincesFile);
 		check(continentsFile);
 		check(neighborsFile);
@@ -104,6 +108,16 @@ public final class MapConfig implements Serializable {
 		if (!f.exists()) {
 			throw new MapValidationException(f.getParentFile().getName() + " " + f.getName() + " not found");
 		}
+	}
+	
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		ImageIO.write(backgroundImagePreview, "png", out);
+	}
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		in.defaultReadObject();
+		backgroundImagePreview = ImageIO.read(in);
 	}
 	
 	@StandardException

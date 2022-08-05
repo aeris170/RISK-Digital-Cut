@@ -3,10 +3,13 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.ZOrders;
+import com.pmnm.risk.main.GameInstance;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
@@ -59,7 +62,7 @@ public final class PauseMenu extends RoyMenu {
 			QUIT_LOCATION 		= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons * 2);
 		}
 		
-		addButtons(type);
+		addButtons(context, type);
 		
 		setzOrder(ZOrders.PAUSE_Z);
 		if (type == GameType.SINGLE_PLAYER) {
@@ -70,7 +73,7 @@ public final class PauseMenu extends RoyMenu {
 		addComponent(new Renderer());
 	}
 
-	private void addButtons(GameType type) {
+	private void addButtons(IRiskGameContext context, GameType type) {
 		if (type == GameType.SINGLE_PLAYER) {
 			/* Save Button */	
 			RoyButton saveButton = RoyButton
@@ -78,6 +81,11 @@ public final class PauseMenu extends RoyMenu {
 					.textKey(SAVE_KEY)
 					.action(source -> {
 						setVisible(false);
+						try {
+							GameInstance.from(context, 0).saveToDisk();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					})
 					.build();
 			saveButton.setPosition(SAVE_LOCATION);
@@ -90,6 +98,14 @@ public final class PauseMenu extends RoyMenu {
 					.textKey(LOAD_KEY)
 					.action(source -> {
 						setVisible(false);
+						try {
+							GameInstance loaded = GameInstance.loadGame(new File("C:\\Users\\DOA\\Documents\\My Games\\Risk Digital Cut\\Saves\\save_Fri Aug 05 20_55_32 TRT 2022_ALPHA1_classic.sav"));
+							GameInstance.instantiateGameFromWithUI(loaded);
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					})
 					.build();
 			loadButton.setPosition(LOAD_LOCATION);

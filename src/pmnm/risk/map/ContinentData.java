@@ -35,8 +35,8 @@ public final class ContinentData implements Serializable {
 	
 	@NonNull
 	@EqualsAndHashCode.Exclude
-	private final ImmutableList<pmnm.risk.map.ProvinceData> provinces;
-	public Iterable<pmnm.risk.map.ProvinceData> getProvinces() {
+	private final ImmutableList<ProvinceData> provinces;
+	public Iterable<ProvinceData> getProvinces() {
 		return provinces;
 	}
 }

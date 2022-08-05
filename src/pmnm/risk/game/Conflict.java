@@ -1,4 +1,5 @@
 package pmnm.risk.game;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -13,12 +14,16 @@ import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @Data
 @ToString(includeFieldNames = true)
-public final class Conflict {
+public final class Conflict implements Serializable {
 	
+	private static final long serialVersionUID = -4261217185340912826L;
+
 	@Value
 	@ToString(includeFieldNames = true)
-	public static final class Result {
-		
+	public static final class Result implements Serializable  {
+
+		private static final long serialVersionUID = -2491016186457306137L;
+
 		@Getter
 		@NonNull
 		private final Conflict conflict;

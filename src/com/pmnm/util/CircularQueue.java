@@ -11,7 +11,7 @@ public final class CircularQueue<E extends Serializable> implements Deque<E>, Se
 
 	private static final long serialVersionUID = 341944174576430374L;
 	
-	private  ArrayList<E> elements;
+	private ArrayList<E> elements;
 	private int index;
 	
 	public CircularQueue() { this(6); }

@@ -1,5 +1,7 @@
 package pmnm.risk.game.databasedimpl;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +84,7 @@ public class RiskGameContext implements IRiskGameContext {
 	
 	/* Visuals */
 	@Getter
-	private ProvinceHitAreas areas;
+	private transient ProvinceHitAreas areas;
 	
 	private RiskGameContext(@NonNull final MapData data) {
 		map = data;
@@ -165,6 +167,8 @@ public class RiskGameContext implements IRiskGameContext {
 	
 	/* Game API */
 	@Override
+	public String getMapName() { return map.getConfig().getName(); }
+	@Override
 	public void initiliazeGame(@NonNull final GameConfig gameConfig) {
 		if (isInitialized) return;
 		DoaScene gameScene = Scenes.getGameScene();
@@ -174,10 +178,8 @@ public class RiskGameContext implements IRiskGameContext {
 			Player p = new Player(this, data);
 			players.add(p);
 			playerProvinces.put(p, new ArrayList<>());
-			gameScene.add(p);
 		}
-		gameScene.add(new GameBoard(map));
-		gameScene.add(areas);
+		addToScene(gameScene);
 		currentPlayingPlayer = players.getNext();
 		
 		if (gameConfig.isRandomPlacementEnabled()) {
@@ -412,5 +414,18 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	private IContinent objectOf(@NonNull final ContinentData data) {
 		return dataContinent.get(data);
+	}
+	
+	/* DoaScene interop */
+	public void addToScene(DoaScene scene) {
+		scene.add(areas);
+		scene.add(new GameBoard(map));
+		players.forEach(player -> scene.add((Player)player));
+	}
+	
+	/* Deserialization */
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		in.defaultReadObject();
+		areas = new ProvinceHitAreas(this);
 	}
 }

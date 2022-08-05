@@ -7,6 +7,7 @@ import lombok.NonNull;
 public interface IRiskGameContext extends Serializable {
 	
 	/* Game API */
+	String getMapName();
 	void initiliazeGame(@NonNull final GameConfig gameConfig);
 	boolean isPaused();
 	void setPaused(boolean value);

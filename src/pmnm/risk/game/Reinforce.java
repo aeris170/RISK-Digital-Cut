@@ -1,5 +1,7 @@
 package pmnm.risk.game;
 
+import java.io.Serializable;
+
 import com.pmnm.risk.globals.Globals;
 
 import lombok.Data;
@@ -10,12 +12,16 @@ import lombok.Value;
 
 @Data
 @ToString(includeFieldNames = true)
-public final class Reinforce {
+public final class Reinforce implements Serializable {
+
+	private static final long serialVersionUID = -5458358186198824410L;
 
 	@Value
 	@ToString(includeFieldNames = true)
-	public static final class Result {
+	public static final class Result implements Serializable {
 		
+		private static final long serialVersionUID = 4740270248050671596L;
+
 		@Getter
 		@NonNull
 		private final Reinforce reinforce;

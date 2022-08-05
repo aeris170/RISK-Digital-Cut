@@ -25,8 +25,8 @@ public final class ProvinceData implements Serializable {
 
 	@Setter(value = AccessLevel.PACKAGE)
 	@EqualsAndHashCode.Exclude
-	private ImmutableList<pmnm.risk.map.ProvinceData> neighbors;
-	public Iterable<pmnm.risk.map.ProvinceData> getNeighbors() {
+	private ImmutableList<ProvinceData> neighbors;
+	public Iterable<ProvinceData> getNeighbors() {
 		return neighbors;
 	}
 	
