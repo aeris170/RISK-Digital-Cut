@@ -34,7 +34,7 @@ public class Main extends DoaGame {
 		wSettings.DEFAULT_CURSOR = Toolkit.getDefaultToolkit().createCustomCursor(
 			new ImageIcon(Main.class.getResource("/ui/cursor1.png")).getImage(),
 			new Point(0, 0),
-	        "Kaan's Cursor"
+			"Risk Cursor"
 		);
 		wSettings.ICON = new ImageIcon(Main.class.getResource("/ui/icon.png")).getImage();
 		wSettings.RESOLUTION_OD = new DoaVector(WINDOW_WIDTH, WINDOW_HEIGHT);

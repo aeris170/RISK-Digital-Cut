@@ -27,10 +27,9 @@ import pmnm.risk.game.IRiskGameContext.GameType;
 public final class GameInstance {
 
 	public static void instantiateGameFromWithUI(GameInstance instance) {
-		DoaScene scene = Scenes.getGameScene();
-		scene.clear();
 		RiskGameScreenUI.destroyUI();
 		RiskGameContext context = (RiskGameContext)instance.context;
+		DoaScene scene = Scenes.getGameScene();
 		RiskGameScreenUI.initUIFor(context, scene, GameType.SINGLE_PLAYER);
 		context.addToScene(scene);
 	}
@@ -98,7 +97,7 @@ public final class GameInstance {
 		}
 	}
 
-	public static String sanitizeFileName(String input) {
+	private static String sanitizeFileName(String input) {
 		return input.replaceAll("[:\\\\/*\"?|<>']", "_");
 	}
 }
