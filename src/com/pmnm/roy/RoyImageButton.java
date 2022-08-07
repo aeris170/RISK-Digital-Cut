@@ -16,7 +16,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-public final class RoyImageButton extends DoaObject implements IRoyInteractableElement, IRoyScaleableElement {
+public class RoyImageButton extends DoaObject implements IRoyInteractableElement, IRoyScaleableElement {
 	
 	@Getter
 	@Setter
@@ -40,7 +40,7 @@ public final class RoyImageButton extends DoaObject implements IRoyInteractableE
 	private int height = 0;
 	
 	@Builder
-	RoyImageButton(@NonNull BufferedImage image, @NonNull BufferedImage hoverImage, @NonNull BufferedImage pressImage, @NonNull IRoyAction action) {
+	protected RoyImageButton(@NonNull BufferedImage image, @NonNull BufferedImage hoverImage, @NonNull BufferedImage pressImage, @NonNull IRoyAction action) {
 		this.image = image;
 		this.hoverImage = hoverImage;
 		this.pressImage = pressImage;
