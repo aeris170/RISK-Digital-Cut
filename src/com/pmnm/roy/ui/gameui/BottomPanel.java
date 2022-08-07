@@ -32,9 +32,9 @@ public class BottomPanel extends RoyMenu {
 	private RoyImageButton centerPieceButton;
 
 	private final DoaVector NEXT_PHASE_POSITION		= new DoaVector(1200, 965);
-	private final DoaVector DECREMENT_POSITION		= new DoaVector(660, 1050);
-	private final DoaVector INCREMENT_POSITION		= new DoaVector(660, 960);
-	private final DoaVector CENTER_PIECE_POSITION	= new DoaVector(650, 992);
+	private final DoaVector DECREMENT_POSITION		= new DoaVector(700, 1035);
+	private final DoaVector INCREMENT_POSITION		= new DoaVector(700, 985);
+	private final DoaVector CENTER_PIECE_POSITION	= new DoaVector(615, 1000);
 	
 	private int maxTroopCount;
 	private int selectedTroopCount;
