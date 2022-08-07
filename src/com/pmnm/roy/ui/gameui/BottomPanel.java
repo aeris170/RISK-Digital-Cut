@@ -130,14 +130,17 @@ public class BottomPanel extends RoyMenu {
 			}
 			
 			maxTroopCount = context.calculateTurnReinforcementsFor(context.getCurrentPlayer());
+			if (selectedTroopCount <= 0 || selectedTroopCount > maxTroopCount) {
+				selectedTroopCount = maxTroopCount;
+			}
 			
 			currentPhase = context.getCurrentPhase().name();
 			clickedProvince = context.getAreas().getSelectedProvince() != null ? (Province) context.getAreas().getSelectedProvince().getProvince() : null;
 			
 			if (clickedProvince != null) {
-				garrisonText = clickedProvince.getNumberOfTroops() != Globals.UNKNOWN_TROOP_COUNT ?
-					Integer.toString(clickedProvince.getNumberOfTroops())
-					: "???";
+				garrisonText = clickedProvince.getNumberOfTroops() == Globals.UNKNOWN_TROOP_COUNT ?
+					"???" :
+					Integer.toString(clickedProvince.getNumberOfTroops());
 				ownerText = clickedProvince.getOccupier().getName();
 				nameText = clickedProvince.getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
 				continentText = clickedProvince.getContinent().getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
@@ -172,7 +175,7 @@ public class BottomPanel extends RoyMenu {
 		
 		@Override
 		public void render() {
-			if(!isVisible()) return;
+			if (!isVisible()) return;
 			
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
@@ -220,7 +223,7 @@ public class BottomPanel extends RoyMenu {
 			DoaGraphicsFunctions.drawString(continentText, CONTINENT_BG_POSITION.x + (continentBG.getWidth() - fm.stringWidth(continentText)) / 2f, CONTINENT_BG_POSITION.y * 1.03f);
 
 			DoaGraphicsFunctions.setColor(Color.BLACK);
-			DoaGraphicsFunctions.drawString(maxTroopCount + "", CENTER_PIECE_POSITION.x, CENTER_PIECE_POSITION.y);
+			DoaGraphicsFunctions.drawString(Integer.toString(selectedTroopCount), CENTER_PIECE_POSITION.x, CENTER_PIECE_POSITION.y);
 		}
 		
 	}
@@ -230,6 +233,6 @@ public class BottomPanel extends RoyMenu {
 	}
 
 	private void decrementTroopCount() {
-		selectedTroopCount = Math.max(selectedTroopCount - 1, 0);
+		selectedTroopCount = Math.max(selectedTroopCount - 1, 1);
 	}
 }
