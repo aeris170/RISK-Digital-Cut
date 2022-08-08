@@ -214,6 +214,7 @@ public class RiskGameContext implements IRiskGameContext {
 					currentPlayingPlayer = players.getNext();
 				}
 			}
+			currentTurnPhase = TurnPhase.DRAFT;
 		}
 		isInitialized = true;
 	}
@@ -250,7 +251,7 @@ public class RiskGameContext implements IRiskGameContext {
 				elapsedTurns = -1;
 			}
 		} else {
-			currentTurnPhase = TurnPhase.ATTACK;
+			currentTurnPhase = TurnPhase.DRAFT;
 		}
 		currentPlayingPlayer = players.getNext();
 		usedDeploys = 0;
