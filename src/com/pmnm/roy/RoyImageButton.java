@@ -1,8 +1,12 @@
 package com.pmnm.roy;
 
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.UIUtils;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaMouse;
@@ -23,18 +27,26 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	private boolean isVisible;
 	
 	@NonNull
-	private transient BufferedImage image;
+	protected transient BufferedImage image;
 
 	@NonNull
-	private transient BufferedImage hoverImage;
+	protected transient BufferedImage hoverImage;
 	
 	@NonNull
-	private transient BufferedImage pressImage;
+	protected transient BufferedImage pressImage;
 	
 	@Setter
-	private transient IRoyAction action = null;
+	protected transient IRoyAction action = null;
 	
-	private transient BufferedImage currentImage;
+	@Getter
+	@Setter
+	protected String text;
+	
+	@Getter
+	@Setter
+	protected DoaVector textMargin = new DoaVector(0.60f, 0.60f);
+	
+	protected transient BufferedImage currentImage;
 	
 	private int width = 0;
 	private int height = 0;
@@ -101,10 +113,37 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	
 	private final class Renderer extends DoaRenderer {
 
+		private Font font;
+		private int textWidth;
+		private int textHeight;
+		
 		@Override
 		public void render() {
 			if (!isVisible) return;
+			
 			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, width, height);
+			
+			if (text == null || text.isEmpty()) { return; }
+			if (font == null) {
+				int[] size = DoaGraphicsFunctions.warp(image.getWidth() * textMargin.x, image.getHeight() * textMargin.y);
+				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				font = UIUtils.adjustFontToFitInArea(text, contentSize);
+				textWidth = UIUtils.textWidth(font, text);
+				textHeight = UIUtils.textHeight(font);
+			}
+			
+			DoaGraphicsFunctions.setFont(font);
+			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
+			if (currentImage == hoverImage) {
+				DoaGraphicsFunctions.setColor(UIConstants.getHoverTextColor());
+			}
+			
+			DoaGraphicsFunctions.drawString(
+				text,
+				image.getWidth() / 2 - textWidth / 2f,
+				image.getHeight() / 2f + textHeight / 4f
+			);
+			
 		}
 	}
 }
