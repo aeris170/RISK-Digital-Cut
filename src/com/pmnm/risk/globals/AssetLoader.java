@@ -147,6 +147,8 @@ public final class AssetLoader {
 				DoaSprites.createSprite("arrowDownHover", "/ui/gameScreenElements/bottomInfo/arrowDownHovered.png");
 				DoaSprites.createSprite("arrowDownPress", "/ui/gameScreenElements/bottomInfo/arrowDownPressed.png");
 				DoaSprites.createSprite("centerPiece", "/ui/gameScreenElements/bottomInfo/ArmySelector.png");
+				DoaSprites.createSprite("centerPieceHover", "/ui/gameScreenElements/bottomInfo/ArmySelector.png");
+				DoaSprites.createSprite("centerPiecePress", "/ui/gameScreenElements/bottomInfo/ArmySelector.png");
 			}
 
 			{// CONTINENT SYMBOLS

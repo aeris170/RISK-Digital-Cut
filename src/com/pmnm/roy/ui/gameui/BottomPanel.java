@@ -88,8 +88,8 @@ public class BottomPanel extends RoyMenu {
 		
 		centerPieceButton = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("centerPiece"))
-			.hoverImage(DoaSprites.getSprite("centerPiece"))
-			.pressImage(DoaSprites.getSprite("centerPiece"))
+			.hoverImage(DoaSprites.getSprite("centerPieceHover"))
+			.pressImage(DoaSprites.getSprite("centerPiecePress"))
 			.action(source -> {
 				if (context.getCurrentPhase() == TurnPhase.DRAFT) {
 					//gm.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
