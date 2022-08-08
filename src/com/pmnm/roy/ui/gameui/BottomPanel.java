@@ -19,9 +19,13 @@ import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
+import pmnm.risk.game.Deploy;
+import pmnm.risk.game.IProvince;
 import pmnm.risk.game.IRiskGameContext.TurnPhase;
+import pmnm.risk.game.Reinforce;
 import pmnm.risk.game.databasedimpl.Province;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
+import pmnm.risk.map.board.ProvinceHitAreas;
 
 @SuppressWarnings("serial")
 public class BottomPanel extends RoyMenu {
@@ -58,9 +62,10 @@ public class BottomPanel extends RoyMenu {
 			.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
 			.pressImage(DoaSprites.getSprite("nextPhaseButtonPressed"))
 			.action(source -> {
-				context.goToNextPhase();
 				if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
-					//nextPhaseButton.setVisible(false);
+					context.finishCurrentPlayerTurn();
+				} else {
+					context.goToNextPhase();
 				}
 			})
 			.build();
@@ -92,16 +97,25 @@ public class BottomPanel extends RoyMenu {
 			.pressImage(DoaSprites.getSprite("centerPiecePress"))
 			.action(source -> {
 				if (context.getCurrentPhase() == TurnPhase.DRAFT) {
-					//gm.draftReinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
-					//nextPhaseButton.setVisible(true);
-				} else if (context.getCurrentPhase() == TurnPhase.ATTACK) {
-					if (maxTroopCount > 0) {
-						//gm.moveTroopsAfterOccupying(spinnerValues.get(index));
-						//nextPhaseButton.setVisible(true);
-						//selectedTroopCount = 0;
+					Deploy deploy = context.setUpDeploy(clickedProvince, selectedTroopCount);
+					context.applyDeployResult(deploy.calculateResult());
+					maxTroopCount -= selectedTroopCount;
+					if (maxTroopCount == 0) {
+						context.goToNextPhase();
 					}
+					/* TODO */
+					// nextPhaseButton.setEnabled(false);
+				} else if (context.getCurrentPhase() == TurnPhase.ATTACK) {
+					/* don't do anything */
 				} else if (context.getCurrentPhase() == TurnPhase.REINFORCE) {
-					//gm.reinforce(BottomPanel.spinnerValues.get(BottomPanel.index));
+					ProvinceHitAreas areas = context.getAreas();
+					IProvince reinforcer = areas.getReinforcingProvince().getProvince();
+					IProvince reinforcee = areas.getReinforceeProvince().getProvince();
+					if (reinforcer == null || !reinforcer.canReinforceAnotherProvince() || reinforcee == null) { return; }
+					
+					Reinforce reinforce = context.setUpReinforce(reinforcer, reinforcee, selectedTroopCount);
+					context.applyReinforceResult(reinforce.calculateResult());
+					context.finishCurrentPlayerTurn();
 				}
 			})
 			.build();
@@ -230,9 +244,11 @@ public class BottomPanel extends RoyMenu {
 	
 	private void incrementTroopCount() {
 		selectedTroopCount = Math.min(selectedTroopCount + 1, maxTroopCount);
+		centerPieceButton.setText(Integer.toString(selectedTroopCount));
 	}
 
 	private void decrementTroopCount() {
 		selectedTroopCount = Math.max(selectedTroopCount - 1, 1);
+		centerPieceButton.setText(Integer.toString(selectedTroopCount));
 	}
 }
