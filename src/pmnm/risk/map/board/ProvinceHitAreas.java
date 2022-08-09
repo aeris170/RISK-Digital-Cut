@@ -184,8 +184,8 @@ public final class ProvinceHitAreas extends DoaObject {
 		@Override
 		public void tick() {
 			if (context.isPaused()) return;
-			
-			if (DoaMouse.MB1) {
+
+			if (DoaMouse.MB1_RELEASE) {
 				deselectSelectedProvince();
 				if (highlightedProvince == null) {
 					deselectSelectedProvince();
