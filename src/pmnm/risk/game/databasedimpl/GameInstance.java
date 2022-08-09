@@ -27,9 +27,9 @@ import pmnm.risk.game.IRiskGameContext.GameType;
 public final class GameInstance {
 
 	public static void instantiateGameFromWithUI(GameInstance instance) {
-		RiskGameScreenUI.destroyUI();
-		RiskGameContext context = (RiskGameContext)instance.context;
 		DoaScene scene = Scenes.getGameScene();
+		RiskGameScreenUI.destroyUI(scene);
+		RiskGameContext context = (RiskGameContext)instance.context;
 		RiskGameScreenUI.initUIFor(context, scene, GameType.SINGLE_PLAYER);
 		context.addToScene(scene);
 	}
