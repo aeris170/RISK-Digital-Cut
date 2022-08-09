@@ -234,6 +234,7 @@ public class RiskGameContext implements IRiskGameContext {
 				currentTurnPhase = TurnPhase.REINFORCE;
 				break;
 			case REINFORCE:
+				finishCurrentPlayerTurn();
 				break;
 		}
 	}
