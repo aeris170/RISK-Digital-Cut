@@ -216,6 +216,8 @@ public class RiskGameContext implements IRiskGameContext {
 				}
 			}
 			currentTurnPhase = TurnPhase.DRAFT;
+			usedDeploys = 0;
+			remainingDeploys = calculateTurnReinforcementsFor(currentPlayingPlayer);
 		}
 		isInitialized = true;
 	}
@@ -288,7 +290,7 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public boolean applyConflictResult(@NonNull final Conflict.Result result) {
 		Conflict conflict = result.getConflict();
-		
+
 		IProvince attacker = conflict.getAttacker();
 		if (!occupierOf(attacker).equals(currentPlayingPlayer)) { return false; }
 		numberOfTroops.put(attacker, result.getRemainingAttackerTroops());
@@ -327,6 +329,8 @@ public class RiskGameContext implements IRiskGameContext {
 	public int calculateStartingTroopCount() { return 50 - 5 * players.size(); }
 	@Override
 	public int calculateTurnReinforcementsFor(@NonNull IPlayer player) {
+		if (getCurrentPhase() == TurnPhase.SETUP) { return 0; }
+		
 		List<@NonNull IProvince> playerProvincesList = StreamSupport.stream(provincesOf(player).spliterator(), false).toList();
 		int provinceCount = playerProvincesList.size();
 		int reinforcementsForThisTurn = Math.max(provinceCount / 3, 3);
