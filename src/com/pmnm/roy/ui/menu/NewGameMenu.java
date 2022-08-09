@@ -30,6 +30,7 @@ import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
+import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.utils.discordapi.DoaDiscordActivity;
 import doa.engine.utils.discordapi.DoaDiscordService;
@@ -235,9 +236,11 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				}
 			}
 
-			RiskGameScreenUI.initUIFor(context, Scenes.getGameScene(), type);
+			DoaScene gameScene = Scenes.getGameScene();
+			gameScene.clear();
 			GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked(), type);
 			context.initiliazeGame(config);
+			RiskGameScreenUI.initUIFor(context, gameScene, type);
 			// TODO add game stuff to game scene
 			Scenes.loadGameScene();
 		}).start();
