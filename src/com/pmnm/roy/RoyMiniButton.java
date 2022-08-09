@@ -52,12 +52,16 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 	private transient BufferedImage disabledImage;
 
 	private transient Font font = null;
-	
+
+	@Getter
+	@Setter
 	@NonNull
-	private Color textColor = Color.BLACK;
-	
+	private Color textColor = UIConstants.getTextColor();
+
+	@Getter
+	@Setter
 	@NonNull
-	private Color hoverTextColor = Color.BLACK;
+	private Color hoverTextColor = UIConstants.getHoverTextColor();
 
 	@Setter
 	private transient IRoyAction action = null;
@@ -76,9 +80,6 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 		this.hoverImage = UIConstants.getMiniButtonHoverSprite();
 		this.pressImage = UIConstants.getMiniButtonPressedSprite();
 		this.disabledImage = image;
-
-		this.textColor = UIConstants.getTextColor();
-		this.hoverTextColor = UIConstants.getHoverTextColor();
 		
 		currentImage = image;
 

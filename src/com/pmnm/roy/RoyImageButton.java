@@ -1,5 +1,6 @@
 package com.pmnm.roy;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -15,7 +16,6 @@ import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -48,6 +48,16 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	@Getter
 	@Setter
 	protected String text;
+
+	@Getter
+	@Setter
+	@NonNull
+	private Color textColor = UIConstants.getTextColor();
+
+	@Getter
+	@Setter
+	@NonNull
+	private Color hoverTextColor = UIConstants.getHoverTextColor();
 	
 	@Getter
 	@Setter
@@ -151,9 +161,9 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			}
 			
 			DoaGraphicsFunctions.setFont(font);
-			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
-			if (currentImage == hoverImage) {
-				DoaGraphicsFunctions.setColor(UIConstants.getHoverTextColor());
+			DoaGraphicsFunctions.setColor(textColor);
+			if (currentImage == hoverImage || currentImage == pressImage) {
+				DoaGraphicsFunctions.setColor(hoverTextColor);
 			}
 			
 			DoaGraphicsFunctions.drawString(
