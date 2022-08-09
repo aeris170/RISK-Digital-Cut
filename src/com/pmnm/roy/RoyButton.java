@@ -1,3 +1,4 @@
+
 package com.pmnm.roy;
 
 import java.awt.Color;
@@ -30,6 +31,10 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	@Setter
 	private boolean isVisible;
 	
+	@Getter
+	@Setter
+	private boolean isEnabled = true;
+	
 	private String textKey;
 	@NonNull
 	private String text = "";
@@ -42,6 +47,9 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	
 	@NonNull
 	private transient BufferedImage pressImage;
+	
+	@NonNull
+	private transient BufferedImage disabledImage;
 
 	private transient Font font = null;
 	
@@ -66,6 +74,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 		this.image = UIConstants.getButtonIdleSprite();
 		this.hoverImage = UIConstants.getButtonHoverSprite();
 		this.pressImage = UIConstants.getButtonPressedSprite();
+		this.disabledImage = image;
 		
 		this.textColor = UIConstants.getTextColor();
 		this.hoverTextColor = UIConstants.getHoverTextColor();
@@ -106,7 +115,12 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 
 		@Override
 		public void tick() {
-			if (!isVisible) return;
+			if (!isVisible()) { return; }
+
+			if (!RoyButton.this.isEnabled()) {
+				currentImage = disabledImage;
+				return;
+			}
 			
 			Rectangle area = getContentArea();
 			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {

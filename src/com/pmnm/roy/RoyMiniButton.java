@@ -30,6 +30,10 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 	@Getter
 	@Setter
 	private boolean isVisible = true;
+
+	@Getter
+	@Setter
+	private boolean isEnabled = true;
 	
 	private String textKey;
 	@NonNull
@@ -43,6 +47,9 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 	
 	@NonNull
 	private transient BufferedImage pressImage;
+	
+	@NonNull
+	private transient BufferedImage disabledImage;
 
 	private transient Font font = null;
 	
@@ -68,6 +75,7 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 		this.image = UIConstants.getMiniButtonIdleSprite();
 		this.hoverImage = UIConstants.getMiniButtonHoverSprite();
 		this.pressImage = UIConstants.getMiniButtonPressedSprite();
+		this.disabledImage = image;
 
 		this.textColor = UIConstants.getTextColor();
 		this.hoverTextColor = UIConstants.getHoverTextColor();
@@ -108,7 +116,12 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 
 		@Override
 		public void tick() {
-			if (!isVisible) return;
+			if (!isVisible()) { return; }
+			
+			if (!RoyMiniButton.this.isEnabled()) {
+				currentImage = disabledImage;
+				return;
+			}
 			
 			Rectangle area = getContentArea();
 			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {

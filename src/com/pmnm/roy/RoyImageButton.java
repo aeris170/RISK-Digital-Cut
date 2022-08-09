@@ -15,6 +15,7 @@ import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -25,6 +26,10 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	@Getter
 	@Setter
 	private boolean isVisible;
+
+	@Getter
+	@Setter
+	private boolean isEnabled = true;
 	
 	@NonNull
 	protected transient BufferedImage image;
@@ -34,6 +39,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	
 	@NonNull
 	protected transient BufferedImage pressImage;
+	
+	protected transient BufferedImage disabledImage = null;
 	
 	@Setter
 	protected transient IRoyAction action = null;
@@ -52,10 +59,14 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	private int height = 0;
 	
 	@Builder
-	protected RoyImageButton(@NonNull BufferedImage image, @NonNull BufferedImage hoverImage, @NonNull BufferedImage pressImage, @NonNull IRoyAction action) {
+	protected RoyImageButton(@NonNull BufferedImage image, @NonNull BufferedImage hoverImage, @NonNull BufferedImage pressImage, BufferedImage disabledImage, @NonNull IRoyAction action) {
 		this.image = image;
 		this.hoverImage = hoverImage;
 		this.pressImage = pressImage;
+		this.disabledImage = disabledImage;
+		if (this.disabledImage == null) {
+			this.disabledImage = image;
+		}
 		this.action = action;
 		
 		currentImage = image;
@@ -94,7 +105,12 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 
 		@Override
 		public void tick() {
-			if (!isVisible) return;
+			if (!isVisible) { return; }
+			
+			if (!RoyImageButton.this.isEnabled()) {
+				currentImage = disabledImage;
+				return;
+			}
 			
 			Rectangle area = getContentArea();
 			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
@@ -108,6 +124,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			} else {
 				currentImage = image;
 			}
+
+			if (!RoyImageButton.this.isEnabled()) { currentImage = disabledImage; }
 		}
 	}
 	
