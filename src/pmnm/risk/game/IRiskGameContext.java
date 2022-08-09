@@ -9,6 +9,7 @@ public interface IRiskGameContext extends Serializable {
 	/* Game API */
 	GameType getGameType();
 	String getMapName();
+	boolean isInitialized();
 	void initiliazeGame(@NonNull final GameConfig gameConfig);
 	boolean isPaused();
 	void setPaused(boolean value);
@@ -18,11 +19,11 @@ public interface IRiskGameContext extends Serializable {
 	void finishCurrentPlayerTurn();
 	int getElapsedTurns();
 	Deploy setUpDeploy(@NonNull final IProvince target, int amount);
-	void applyDeployResult(@NonNull final Deploy.Result result);
+	boolean applyDeployResult(@NonNull final Deploy.Result result);
 	Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice attackerDice);
-	void applyConflictResult(@NonNull final Conflict.Result result);
+	boolean applyConflictResult(@NonNull final Conflict.Result result);
 	Reinforce setUpReinforce(@NonNull final IProvince source, @NonNull final IProvince defender, int amount);
-	void applyReinforceResult(@NonNull final Reinforce.Result result);
+	boolean applyReinforceResult(@NonNull final Reinforce.Result result);
 	int calculateStartingTroopCount();
 	int calculateTurnReinforcementsFor(@NonNull IPlayer player);
 	

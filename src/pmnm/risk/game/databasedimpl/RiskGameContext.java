@@ -55,6 +55,7 @@ public class RiskGameContext implements IRiskGameContext {
 	@Getter
 	private int elapsedTurns;
 	
+	@Getter
 	private boolean isInitialized;
 	
 	/* Data <-> Implementation Association */
@@ -264,29 +265,32 @@ public class RiskGameContext implements IRiskGameContext {
 		return new Deploy(this, target, amount);
 	}
 	@Override
-	public void applyDeployResult(@NonNull final Deploy.Result result) {
+	public boolean applyDeployResult(@NonNull final Deploy.Result result) {
 		Deploy deploy = result.getDeploy();
+		IProvince target = deploy.getTarget();
+		if (!occupierOf(target).equals(currentPlayingPlayer)) { return false; }
+		
 		if (getCurrentPhase() == TurnPhase.SETUP) {
-			IProvince target = deploy.getTarget();
 			numberOfTroops.put(target, result.getRemainingTargetTroops());
 		} else {
-			if (deploy.getAmount() > getRemainingDeploys()) { return; }
+			if (deploy.getAmount() > getRemainingDeploys()) { return false; }
 		
-			IProvince target = deploy.getTarget();
 			numberOfTroops.put(target, result.getRemainingTargetTroops());
 			usedDeploys += deploy.getAmount();
 			remainingDeploys -= deploy.getAmount();
 		}
+		return true;
 	}
 	@Override
 	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice method) {
 		return new Conflict(this, attacker, defender, method);
 	}
 	@Override
-	public void applyConflictResult(@NonNull final Conflict.Result result) {
+	public boolean applyConflictResult(@NonNull final Conflict.Result result) {
 		Conflict conflict = result.getConflict();
 		
 		IProvince attacker = conflict.getAttacker();
+		if (!occupierOf(attacker).equals(currentPlayingPlayer)) { return false; }
 		numberOfTroops.put(attacker, result.getRemainingAttackerTroops());
 		
 		IProvince defender = conflict.getDefender();
@@ -301,20 +305,23 @@ public class RiskGameContext implements IRiskGameContext {
 			
 			numberOfTroops.put(defender, Globals.UNKNOWN_TROOP_COUNT);
 		}
+		return true;
 	}
 	@Override
 	public Reinforce setUpReinforce(@NonNull final IProvince source, @NonNull final IProvince destination, int amount) {
 		return new Reinforce(this, source, destination, amount);
 	}
 	@Override
-	public void applyReinforceResult(@NonNull final Reinforce.Result result) {
+	public boolean applyReinforceResult(@NonNull final Reinforce.Result result) {
 		Reinforce reinforce = result.getReinforce();
 		
 		IProvince reinforcer = reinforce.getSource();
+		if (!occupierOf(reinforcer).equals(currentPlayingPlayer)) { return false; }
 		numberOfTroops.put(reinforcer, result.getRemainingSourceTroops());
 
 		IProvince reinforcee = reinforce.getDestination();
 		numberOfTroops.put(reinforcee, result.getRemainingDestinationTroops());
+		return true;
 	}
 	@Override
 	public int calculateStartingTroopCount() { return 50 - 5 * players.size(); }
