@@ -3,7 +3,6 @@ package pmnm.risk.game.databasedimpl;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -33,7 +32,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import pmnm.risk.game.IRiskGameContext;
-import pmnm.risk.game.IRiskGameContext.GameType;
 
 public final class GameInstance {
 	

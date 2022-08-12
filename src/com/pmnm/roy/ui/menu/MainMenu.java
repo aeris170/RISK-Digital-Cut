@@ -1,17 +1,17 @@
 package com.pmnm.roy.ui.menu;
 
-import doa.engine.core.DoaGraphicsFunctions;
-import doa.engine.graphics.DoaAnimation;
-import doa.engine.graphics.DoaAnimations;
-import doa.engine.scene.elements.renderers.DoaRenderer;
-import doa.engine.utils.discordapi.DoaDiscordActivity;
-import doa.engine.utils.discordapi.DoaDiscordService;
-import doa.engine.maths.DoaVector;
-
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.menu.extensions.ExitPopup;
+
+import doa.engine.core.DoaGraphicsFunctions;
+import doa.engine.graphics.DoaAnimation;
+import doa.engine.graphics.DoaAnimations;
+import doa.engine.maths.DoaVector;
+import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.utils.discordapi.DoaDiscordActivity;
+import doa.engine.utils.discordapi.DoaDiscordService;
 
 @SuppressWarnings("serial")
 public class MainMenu extends RoyMenu {

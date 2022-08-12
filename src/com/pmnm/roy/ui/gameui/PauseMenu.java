@@ -3,8 +3,6 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import com.pmnm.risk.globals.Scenes;
@@ -21,7 +19,6 @@ import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import pmnm.risk.game.IRiskGameContext;
 import pmnm.risk.game.IRiskGameContext.GameType;
-import pmnm.risk.game.databasedimpl.GameInstance;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
