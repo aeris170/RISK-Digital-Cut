@@ -3,15 +3,21 @@ package pmnm.risk.game.databasedimpl;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
+import org.javatuples.Quintet;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
@@ -20,84 +26,223 @@ import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 
 import doa.engine.core.DoaWindow;
 import doa.engine.scene.DoaScene;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
 import pmnm.risk.game.IRiskGameContext;
 import pmnm.risk.game.IRiskGameContext.GameType;
 
 public final class GameInstance {
+	
+	private static final String SAVE_FILE = "save";
+	private static final String METADATA_FILE = "metadata";
+	private static final File SAVE_LOC = Path.of(System.getProperty("user.home"), "Documents", "My Games", "Risk Digital Cut", "Saves").toFile();
 
-	public static void instantiateGameFromWithUI(GameInstance instance) {
+	public static Quintet<Metadata, Metadata, Metadata, Metadata, Metadata> readMetadataFromDisk() {
+		if (!SAVE_LOC.exists()) { return Quintet.with(null, null, null, null, null); }
+		
+		final int count = 5;
+		Metadata[] metas = new Metadata[count];
+		
+		for (int i = 0; i < count; i++) {
+			File saveFolder = new File(SAVE_LOC, Integer.toString(i));
+			if (!saveFolder.exists()) { continue; }
+			
+			File metaFile = new File(saveFolder, METADATA_FILE);
+			try (FileInputStream metaFIS = new FileInputStream(metaFile);
+				ObjectInputStream metaOIS = new ObjectInputStream(metaFIS);) {
+				metas[i] = (Metadata) metaOIS.readObject();
+			} catch (ClassCastException | StreamCorruptedException ex) {
+				ex.printStackTrace();
+				metas[i] = null;
+			} catch (IOException | ClassNotFoundException ex) {
+				/* swallow */
+				ex.printStackTrace();
+			}
+		}
+		return Quintet.fromArray(metas);
+	}
+	
+	public static void instantiateGameWithUI(GameInstance instance) {
 		DoaScene scene = Scenes.getGameScene();
 		RiskGameScreenUI.destroyUI(scene);
 		RiskGameContext context = (RiskGameContext)instance.context;
 		RiskGameScreenUI.initUIFor(context, scene, GameType.SINGLE_PLAYER);
 		context.addToScene(scene);
 	}
-	
-	public static GameInstance from(IRiskGameContext context, int order) {
-		GameInstance instance = new GameInstance(context, order);
-		return instance;
-	}
 
 	@Getter private IRiskGameContext context;
-	@Getter private Date timestamp;
-	@Getter private String version;
-	@Getter private BufferedImage snapshotImage;
-	@Getter private int order;
-	
-	private GameInstance(IRiskGameContext context, int order) {
+	@Getter private Metadata metadata;
+
+	public GameInstance(IRiskGameContext context) {
 		this.context = context;
-		timestamp = Date.from(Instant.now());
-		version = Globals.GAME_VERSION;
-		snapshotImage = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-		this.order = order;
-		DoaWindow.dumpFrameBufferTo(snapshotImage); 
+		
+		BufferedImage snapshot = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		DoaWindow.dumpFrameBufferTo(snapshot); 
+		metadata = new Metadata(
+			context.getMapName(),
+			Date.from(Instant.now()),
+			Globals.GAME_VERSION,
+			snapshot,
+			-1
+		);
 	}
 	
-	private GameInstance(ObjectInputStream ctxIn, ObjectInputStream savIn) throws ClassNotFoundException, IOException {
-		context = (IRiskGameContext) ctxIn.readObject();
-		timestamp = (Date) savIn.readObject();
-		version = (String) savIn.readObject();
-		order = savIn.readInt();
-		snapshotImage = ImageIO.read(savIn);
+	private GameInstance(ObjectInputStream ctxIn, ObjectInputStream metaIn) throws IOException {
+		try {
+			context = (IRiskGameContext) ctxIn.readObject();
+		} catch(ClassCastException | StreamCorruptedException ex) {
+			JOptionPane.showConfirmDialog(
+				null,
+				"CORRUPT SAVE DETECTED! Data is corrupt!",
+				"ERROR",
+				JOptionPane.OK_OPTION,
+				JOptionPane.ERROR_MESSAGE
+			);
+		} catch(ClassNotFoundException ex) {
+			/* swallow */
+			ex.printStackTrace();
+		}
+		
+		try {
+			metadata = (Metadata) metaIn.readObject();
+		} catch(ClassCastException | StreamCorruptedException ex) {
+			JOptionPane.showConfirmDialog(
+				null,
+				"CORRUPT SAVE DETECTED! Metadata is corrupt!",
+				"ERROR",
+				JOptionPane.OK_OPTION,
+				JOptionPane.ERROR_MESSAGE
+			);
+		} catch(ClassNotFoundException ex) {
+			/* swallow */
+			ex.printStackTrace();
+		}
 	}
 	
-	public void saveToDisk() throws IOException {
-		String mapName = context.getMapName();
-		File dir = Path.of(System.getProperty("user.home"), "Documents", "My Games", "Risk Digital Cut", "Saves").toFile();
-		dir.mkdirs();
-		File ctxFile = new File(dir, sanitizeFileName("save_" + timestamp + "_" + version + "_" + mapName + ".ctx"));
-		File savFile = new File(dir, sanitizeFileName("save_" + timestamp + "_" + version + "_" + mapName + ".sav"));
+	public void saveToDisk(int order) {
+		/* STEP 0: Create the save folder if does not exist */
+		File saveFolder = new File(SAVE_LOC, Integer.toString(order));
+		saveFolder.mkdirs();
+		
+		/* STEP 1: Set-up files */
+		File ctxFile = new File(saveFolder, SAVE_FILE);
+		File metaFile = new File(saveFolder, METADATA_FILE);
+		
+		/* STEP 2: Delete old save data */
+		ctxFile.delete();
+		metaFile.delete();
+		
+		/* STEP 3: Set up streams */
 		try (
 			FileOutputStream ctxFOS = new FileOutputStream(ctxFile); 
 			ObjectOutputStream ctxOOS = new ObjectOutputStream(ctxFOS);
-			FileOutputStream savFOS = new FileOutputStream(savFile);
-			ObjectOutputStream savOOS = new ObjectOutputStream(savFOS);) {
+			FileOutputStream metaFOS = new FileOutputStream(metaFile);
+			ObjectOutputStream metaOOS = new ObjectOutputStream(metaFOS);) {
+			/* STEP 4: Write to disk */
 			ctxOOS.writeObject(context);
-			savOOS.writeObject(timestamp);
-			savOOS.writeObject(version);
-			savOOS.writeInt(order);
-			ImageIO.write(snapshotImage, "PNG", savOOS);
+			metadata.order = order;
+			metaOOS.writeObject(metadata);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 	
-	public static GameInstance loadGame(File savFile) throws IOException, ClassNotFoundException {
-		String ctxPath = savFile.getPath();
-		ctxPath = ctxPath.substring(0, ctxPath.lastIndexOf("."));
-		ctxPath += ".ctx";
-
+	public static GameInstance loadGame(int order) {
+		/* STEP 0: Check if save folder exists */
+		File saveFolder = new File(SAVE_LOC, Integer.toString(order));
+		if (!saveFolder.exists()) {
+			JOptionPane.showConfirmDialog(
+				null,
+				"CORRUPT SAVE DETECTED! Save folder is absent for order: " + order,
+				"ERROR",
+				JOptionPane.OK_OPTION,
+				JOptionPane.ERROR_MESSAGE
+			);
+			return null;
+		}
+		
+		/* STEP 1: Find and verify files */
+		File ctxFile = new File(saveFolder, SAVE_FILE);
+		File metaFile = new File(saveFolder, METADATA_FILE);
+		if (!ctxFile.exists()) { 
+			JOptionPane.showConfirmDialog(
+				null,
+				"CORRUPT SAVE DETECTED! Save file is absent order: " + order,
+				"ERROR",
+				JOptionPane.OK_OPTION,
+				JOptionPane.ERROR_MESSAGE
+			);
+			return null;
+		}
+		if (!metaFile.exists()) {
+			JOptionPane.showConfirmDialog(
+				null,
+				"CORRUPT SAVE DETECTED! Meta file is absent! Bugs may happen order: " + order,
+				"WARNING",
+				JOptionPane.OK_OPTION,
+				JOptionPane.WARNING_MESSAGE
+			);
+			return null;
+		}
+		
 		try (
-			FileInputStream ctxFIS = new FileInputStream(ctxPath);
+			FileInputStream ctxFIS = new FileInputStream(ctxFile);
 			ObjectInputStream ctxOIS = new ObjectInputStream(ctxFIS);
-			FileInputStream savFIS = new FileInputStream(savFile);
-			ObjectInputStream savOIS = new ObjectInputStream(savFIS);) {
-			return new GameInstance(ctxOIS, savOIS);
+			FileInputStream metaFIS = new FileInputStream(metaFile);
+			ObjectInputStream metaOIS = new ObjectInputStream(metaFIS);) {
+			return new GameInstance(ctxOIS, metaOIS);
+		} catch (IOException ex) {
+			/* swallow */ 
+			ex.printStackTrace();
+			return null;
 		}
 	}
 
-	private static String sanitizeFileName(String input) {
-		return input.replaceAll("[:\\\\/*\"?|<>']", "_");
+	@Data
+	@EqualsAndHashCode
+	@AllArgsConstructor
+	@ToString(includeFieldNames = true)
+	public static final class Metadata implements Serializable {
+		
+		private static final long serialVersionUID = 3750370033085075148L;
+		
+		@Getter
+		@NonNull
+		private String mapName;
+		
+		@Getter
+		@NonNull
+		private Date timestamp;
+		
+		@Getter
+		@NonNull
+		private String version;
+		
+		@Getter
+		@NonNull
+		private transient BufferedImage snapshotImage;
+		
+		@Getter
+		private int order; 
+				
+		private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+			stream.writeObject(mapName);
+			stream.writeObject(timestamp);
+			stream.writeObject(version);
+			stream.writeInt(order);
+			ImageIO.write(snapshotImage, "PNG", stream);
+		}
+		
+		private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+			mapName = (String) stream.readObject();
+			timestamp = (Date) stream.readObject();
+			version = (String) stream.readObject();
+			order = stream.readInt();
+			snapshotImage = ImageIO.read(stream);
+		}
 	}
 }
