@@ -79,17 +79,10 @@ public final class PauseMenu extends RoyMenu {
 		if (type == GameType.SINGLE_PLAYER) {
 			/* Save Button */	
 			RoyButton saveButton = RoyButton
-					.builder()
-					.textKey(SAVE_KEY)
-					.action(source -> {
-						setVisible(false);
-						try {
-							GameInstance.from(context, 0).saveToDisk();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					})
-					.build();
+				.builder()
+				.textKey(SAVE_KEY)
+				.action(source -> RiskGameScreenUI.setSaveMenuVisibility(true))
+				.build();
 			saveButton.setPosition(SAVE_LOCATION);
 			addElement(saveButton);
 			/* --------------- */
@@ -118,12 +111,12 @@ public final class PauseMenu extends RoyMenu {
 		
 		/* Settings Button */	
 		RoyButton settingsButton = RoyButton
-				.builder()
-				.textKey(SETTINGS_KEY)
-				.action(source -> {
-					setVisible(false);
-				})
-				.build();
+			.builder()
+			.textKey(SETTINGS_KEY)
+			.action(source -> {
+				setVisible(false);
+			})
+			.build();
 		settingsButton.setPosition(SETTINGS_LOCATION);
 		addElement(settingsButton);
 		/* --------------- */
