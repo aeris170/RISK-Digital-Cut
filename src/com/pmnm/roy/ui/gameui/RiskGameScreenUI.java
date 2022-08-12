@@ -3,7 +3,11 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Color;
 import java.util.List;
 
+import com.pmnm.risk.globals.Scenes;
+import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.main.SystemSpecs;
+import com.pmnm.roy.ui.menu.FadingBackground;
+import com.pmnm.roy.ui.menu.SaveGameMenu;
 
 import doa.engine.scene.DoaScene;
 import lombok.Getter;
@@ -18,6 +22,9 @@ public final class RiskGameScreenUI {
 	private boolean isInitialized;
 	@Getter
 	private RiskGameContext context;
+	
+	private FadingBackground background;
+	private SaveGameMenu saveGameMenu;
 	
 	public static DicePanel DicePanel;
 	public static GameScreenExitPopup ExitPopup;
@@ -56,6 +63,14 @@ public final class RiskGameScreenUI {
 		
 		SeasonEffect seasonEffect = new SeasonEffect();
 		gameScene.add(seasonEffect);
+
+		DoaScene menus = Scenes.getGameMenuScene();
+		
+		background = new FadingBackground();
+		menus.add(background);
+		
+		saveGameMenu = new SaveGameMenu(context);
+		menus.add(saveGameMenu);
 		
 		RiskGameScreenUI.context = context;
 		isInitialized = true;
@@ -64,5 +79,15 @@ public final class RiskGameScreenUI {
 	public static void destroyUI(final DoaScene gameScene) {
 		context = null;
 		isInitialized = false;
+	}
+
+	public static void setSaveMenuVisibility(boolean value) {
+		if (value) {
+			Scenes.loadGameMenuScene();
+			saveGameMenu.setVisible(true);
+		} else {
+			Scenes.loadGameScene();
+			saveGameMenu.setVisible(false);
+		}
 	}
 }
