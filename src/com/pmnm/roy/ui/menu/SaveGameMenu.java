@@ -15,6 +15,7 @@ import com.pmnm.roy.RoyMiniButton;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.UIUtils;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
+import com.pmnm.roy.ui.menu.extensions.Popup;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -51,6 +52,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 	};
 	private static final DoaVector BACK_LOCATION = new DoaVector(1377f, 803f);
 	
+	private Popup savingPopup;
 	private Quintet<Metadata, Metadata, Metadata, Metadata, Metadata> metas = Quintet.with(null, null, null, null, null);
 
 	public SaveGameMenu(RiskGameContext context) {
@@ -67,16 +69,22 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 			RoyMiniButton saveButton  = RoyMiniButton.builder()
 				.textKey("SAVE")
 				.action(source -> {
-					RiskGameScreenUI.setSaveMenuVisibility(false);
-					new GameInstance(context).saveToDisk(order);
+					savingPopup.setVisible(true);
+					doAfterTicks(() -> {
+						RiskGameScreenUI.setSaveMenuVisibility(false);
+						new GameInstance(context).saveToDisk(order);
+					}, 1);
 				}).build();
 			saveButton.setPosition(SAVE_BUTTON_LOCATIONS[i]);
 			saveButton.setVisible(false);
 			addElement(saveButton);
 		}
 		
-		Translator.getInstance().registerObserver(this);
+		savingPopup = new Popup("SAVING");
+		addElement(savingPopup);
 		
+		Translator.getInstance().registerObserver(this);
+
 		addComponent(new Renderer());
 	}
 
@@ -89,6 +97,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 		} else {
 			metas = Quintet.with(null, null, null, null, null);
 		}
+		savingPopup.setVisible(false);
 	}
 	
 	private final class Renderer extends DoaRenderer {
