@@ -96,20 +96,21 @@ public final class PauseMenu extends RoyMenu {
 
 			/* Load Button */
 			RoyButton loadButton = RoyButton
-					.builder()
-					.textKey(LOAD_KEY)
-					.action(source -> {
-						setVisible(false);
-						try {
-							GameInstance loaded = GameInstance.loadGame(new File("C:\\Users\\DOA\\Documents\\My Games\\Risk Digital Cut\\Saves\\save_Fri Aug 05 20_55_32 TRT 2022_ALPHA1_classic.sav"));
-							GameInstance.instantiateGameFromWithUI(loaded);
-						} catch (ClassNotFoundException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					})
-					.build();
+				.builder()
+				.textKey(LOAD_KEY)
+				.action(source -> {
+					/*
+					try {
+						GameInstance loaded = GameInstance.loadGame(new File("C:\\Users\\DOA\\Documents\\My Games\\Risk Digital Cut\\Saves\\save_Fri Aug 05 20_55_32 TRT 2022_ALPHA1_classic.sav"));
+						GameInstance.instantiateGameFromWithUI(loaded);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					*/
+				})
+				.build();
 			loadButton.setPosition(LOAD_LOCATION);
 			addElement(loadButton);
 			/* --------------- */
