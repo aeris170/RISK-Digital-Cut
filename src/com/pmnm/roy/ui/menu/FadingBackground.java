@@ -36,11 +36,11 @@ public class FadingBackground extends DoaObject {
 	private transient BufferedImage bottomRing;
 	private transient BufferedImage[] backgrounds;
 
-	public FadingBackground(@NonNull BufferedImage fleurDeLis, @NonNull BufferedImage topRing, @NonNull BufferedImage bottomRing, @NonNull BufferedImage[] backgrounds) {
-		this.fleurDeLis = fleurDeLis;
-		this.topRing = topRing;
-		this.bottomRing = bottomRing;
-		this.backgrounds = backgrounds;
+	public FadingBackground() {
+		this.fleurDeLis = UIConstants.getFleurDeLis();
+		this.topRing = UIConstants.getTopRing();
+		this.bottomRing = UIConstants.getBottomRing();
+		this.backgrounds = UIConstants.getBackgrounds();
 		
 		addComponent(new FadeScript());
 		addComponent(new Renderer());

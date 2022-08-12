@@ -91,10 +91,10 @@ public final class UIConstants {
 	public static HostGameMenu hgm;
 	public static JoinGameMenu jgm;
 
-	@NonNull private static BufferedImage fleurDeLis;
-	@NonNull private static BufferedImage topRing;
-	@NonNull private static BufferedImage bottomRing;
-	@NonNull private static final BufferedImage[] backgrounds = new BufferedImage[6];
+	@Getter @NonNull private static BufferedImage fleurDeLis;
+	@Getter @NonNull private static BufferedImage topRing;
+	@Getter @NonNull private static BufferedImage bottomRing;
+	@Getter @NonNull private static final BufferedImage[] backgrounds = new BufferedImage[6];
 	
 	@Getter @NonNull private static BufferedImage exitPopupBackground;
 	@Getter @NonNull private static BufferedImage buttonIdleSprite;
@@ -188,7 +188,7 @@ public final class UIConstants {
 		
 		DoaScene menuScene = Scenes.getMenuScene();
 		menuScene.clear();
-		background = new FadingBackground(fleurDeLis, topRing, bottomRing, backgrounds);
+		background = new FadingBackground();
 		mainMenu = new MainMenu();
 		mainMenu.setVisible(true);
 		playOfflineMenu = new PlayOfflineMenu();
