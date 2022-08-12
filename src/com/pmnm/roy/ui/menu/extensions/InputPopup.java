@@ -57,16 +57,14 @@ public final class InputPopup extends DoaObject implements IRoyContainer, IRoyIn
 		
 		RoyMiniButton noButton = RoyMiniButton.builder()
 			.textKey("BACK")
-			.action((source) -> {
-				setVisible(false);
-			})
+			.action(source -> setVisible(false))
 			.build();
 		noButton.setPosition(new DoaVector(650, 550));
 		addElement(noButton);
 		
 		yesButton = RoyMiniButton.builder()
 			.textKey("YES")
-			.action((source) -> {
+			.action(source -> {
 				setVisible(false);
 				if (action != null) {
 					action.execute(this);
@@ -175,4 +173,9 @@ public final class InputPopup extends DoaObject implements IRoyContainer, IRoyIn
 			yesButton.setVisible(textLength != 0);
 		}
 	}
+
+	@Override
+	public boolean isEnabled() { return true; }
+	@Override
+	public void setEnabled(boolean value) {}
 }
