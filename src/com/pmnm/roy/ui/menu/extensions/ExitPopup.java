@@ -89,7 +89,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 				stringWidth = strSize[0];
 			}
 			
-			DoaGraphicsFunctions.drawImage(UIConstants.getExitPopupBackground(), 0, 0, 712, 240);
+			DoaGraphicsFunctions.drawImage(UIConstants.getPopupBackground(), 0, 0, 712, 240);
 			
 			DoaGraphicsFunctions.setFont(font);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());

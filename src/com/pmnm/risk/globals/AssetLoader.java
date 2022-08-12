@@ -95,7 +95,7 @@ public final class AssetLoader {
 			}
 
 			{// EXIT POPUP
-				DoaSprites.createSprite("ExitPopupBackground", "/ui/popupBox.png");
+				DoaSprites.createSprite("PopupBackground", "/ui/popupBox.png");
 				DoaSprites.createSprite("MiniButtonIdle", "/ui/MiniButtonIdle.png");
 				DoaSprites.createSprite("MiniButtonHover", "/ui/MiniButtonHover.png");
 				DoaSprites.createSprite("MiniButtonPressed", "/ui/MiniButtonPressed.png");
