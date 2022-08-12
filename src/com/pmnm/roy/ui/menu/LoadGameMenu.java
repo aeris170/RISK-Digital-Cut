@@ -86,8 +86,11 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 						RiskGameScreenUI.setLoadMenuVisibility(false);
 					}
 					
-					GameInstance instance = GameInstance.loadGame(order);
-					GameInstance.instantiateGameWithUI(instance);
+					Scenes.switchToLoadingScreen();
+					new Thread(()-> { 
+						GameInstance instance = GameInstance.loadGame(order);
+						GameInstance.instantiateGameWithUI(instance);
+					}).start();
 				}).build();
 			loadButton.setPosition(LOAD_BUTTON_LOCATIONS[i]);
 			loadButton.setVisible(false);
