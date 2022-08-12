@@ -62,7 +62,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 		backButton.setPosition(BACK_LOCATION);
 		addElement(backButton);
 		
-		for(int i = 0; i < SAVE_BUTTON_LOCATIONS.length; i++) {
+		for(int i = 0; i < metas.getSize(); i++) {
 			final int order = i;
 			RoyMiniButton saveButton  = RoyMiniButton.builder()
 				.textKey("SAVE")
@@ -133,7 +133,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 		
 		@Override
 		public void render() {
-			if(!isVisible()) { return; }
+			if (!isVisible()) { return; }
 			if (emptyStringFont == null) {
 				int[] size = DoaGraphicsFunctions.warp(saveMapContainer.getWidth() * 0.70f, saveMapContainer.getHeight() * 0.70f);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
@@ -245,7 +245,6 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 						scrollPos.y + versionOffset.y + versionSize.y / 2f + area.y / 4f 
 					);
 				}
-				
 			}
 		}
 	

@@ -2,6 +2,7 @@ package pmnm.risk.game.databasedimpl;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -438,6 +439,14 @@ public class RiskGameContext implements IRiskGameContext {
 		scene.add(areas);
 		scene.add(new GameBoard(map));
 		players.forEach(player -> scene.add((Player)player));
+	}
+	
+	/* Serialization */
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		boolean pause = isPaused;
+		isPaused = false;
+		out.defaultWriteObject();
+		isPaused = pause;
 	}
 	
 	/* Deserialization */

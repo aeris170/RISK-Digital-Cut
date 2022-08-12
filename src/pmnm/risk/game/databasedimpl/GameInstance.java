@@ -70,8 +70,9 @@ public final class GameInstance {
 		DoaScene scene = Scenes.getGameScene();
 		RiskGameScreenUI.destroyUI(scene);
 		RiskGameContext context = (RiskGameContext)instance.context;
-		RiskGameScreenUI.initUIFor(context, scene, GameType.SINGLE_PLAYER);
+		RiskGameScreenUI.initUIFor(context, scene, context.getGameType());
 		context.addToScene(scene);
+		Scenes.loadGameScene();
 	}
 
 	@Getter private IRiskGameContext context;

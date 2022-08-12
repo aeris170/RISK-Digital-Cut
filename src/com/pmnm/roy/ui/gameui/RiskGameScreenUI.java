@@ -7,6 +7,7 @@ import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.main.SystemSpecs;
 import com.pmnm.roy.ui.menu.FadingBackground;
+import com.pmnm.roy.ui.menu.LoadGameMenu;
 import com.pmnm.roy.ui.menu.SaveGameMenu;
 
 import doa.engine.scene.DoaScene;
@@ -25,6 +26,7 @@ public final class RiskGameScreenUI {
 	
 	private FadingBackground background;
 	private SaveGameMenu saveGameMenu;
+	private LoadGameMenu loadGameMenu;
 	
 	public static DicePanel DicePanel;
 	public static GameScreenExitPopup ExitPopup;
@@ -72,6 +74,9 @@ public final class RiskGameScreenUI {
 		saveGameMenu = new SaveGameMenu(context);
 		menus.add(saveGameMenu);
 		
+		loadGameMenu = new LoadGameMenu();
+		menus.add(loadGameMenu);
+		
 		RiskGameScreenUI.context = context;
 		isInitialized = true;
 	}
@@ -79,6 +84,8 @@ public final class RiskGameScreenUI {
 	public static void destroyUI(final DoaScene gameScene) {
 		context = null;
 		isInitialized = false;
+		
+		gameScene.clear();
 	}
 
 	public static void setSaveMenuVisibility(boolean value) {
@@ -88,6 +95,16 @@ public final class RiskGameScreenUI {
 		} else {
 			Scenes.loadGameScene();
 			saveGameMenu.setVisible(false);
+		}
+	}
+
+	public static void setLoadMenuVisibility(boolean value) {
+		if (value) {
+			Scenes.loadGameMenuScene();
+			loadGameMenu.setVisible(true);
+		} else {
+			Scenes.loadGameScene();
+			loadGameMenu.setVisible(false);
 		}
 	}
 }
