@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
-import com.pmnm.roy.ui.gameui.actions.BlitzButtonAction;
-import com.pmnm.roy.ui.gameui.actions.DiceButtonAction;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -166,7 +164,7 @@ public class DicePanel extends RoyMenu {
 		}
 		
 		private void setNewPosition(RoyImageButton button) {
-			DoaVector v = new DoaVector(button.getContentArea().x + velocity, (float)button.getContentArea().y);
+			DoaVector v = new DoaVector(button.getContentArea().x + velocity, button.getContentArea().y);
 			button.setPosition(v);
 		}
 	}
