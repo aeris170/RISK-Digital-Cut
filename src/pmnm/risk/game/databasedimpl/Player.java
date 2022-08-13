@@ -108,7 +108,11 @@ public class Player extends DoaObject implements IPlayer {
 			
 			ProvinceHitAreas areas = context.getAreas();
 			ProvinceHitArea selected = areas.getSelectedProvince();
-			if(selected == null) { 
+			if(selected == null) {
+				areas.selectAttackerProvinceAs(null);
+				areas.selectDefenderProvinceAs(null);
+				areas.selectReinforcingProvinceAs(null);
+				areas.selectReinforceeProvinceAs(null);
 				attackerProvince = null;
 				reinforcingProvince = null;
 				return;
@@ -134,7 +138,10 @@ public class Player extends DoaObject implements IPlayer {
 			/* Step 2, playing the game */
 			TurnPhase currentPhase = context.getCurrentPhase();
 			if (currentPhase == TurnPhase.ATTACK) {
-				if (province.isOccupiedBy(Player.this) && province.canLaunchAttack() && attackerProvince == null) {
+				if (province.isOccupiedBy(Player.this) && province.canLaunchAttack() && selected != attackerProvince) {
+					if (attackerProvince != null) {
+						areas.selectAttackerProvinceAs(null);
+					}
 					attackerProvince = province;
 					areas.selectAttackerProvinceAs(province);
 					areas.selectDefenderProvinceAs(null);

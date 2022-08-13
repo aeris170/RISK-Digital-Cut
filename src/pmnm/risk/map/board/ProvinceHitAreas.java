@@ -187,10 +187,7 @@ public final class ProvinceHitAreas extends DoaObject {
 
 			if (DoaMouse.MB1_RELEASE) {
 				deselectSelectedProvince();
-				if (highlightedProvince == null) {
-					deselectSelectedProvince();
-				} else if (highlightedProvince != selectedProvince) {
-					deselectSelectedProvince();
+				if (highlightedProvince != null && highlightedProvince != selectedProvince) {
 					selectedProvince = highlightedProvince;
 					selectedProvince.setSelected(true);
 				}
