@@ -64,6 +64,10 @@ public final class RiskGameScreenUI {
 		
 		SeasonEffect seasonEffect = new SeasonEffect();
 		gameScene.add(seasonEffect);
+		
+		DicePanel dicePanel = new DicePanel(context);
+		dicePanel.setVisible(true);
+		gameScene.add(dicePanel);
 
 		DoaScene menus = Scenes.getGameMenuScene();
 		
