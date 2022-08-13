@@ -150,6 +150,12 @@ public class DicePanel extends RoyMenu {
 		}
 		
 		private void show() {
+			int numOfTroops = context.getAreas().getAttackerProvince().getProvince().getNumberOfTroops();
+			one.setEnabled(numOfTroops > 1);
+			two.setEnabled(numOfTroops > 2);
+			three.setEnabled(numOfTroops > 3);
+			blitz.setEnabled(numOfTroops > 4);
+			
 			if (panelPosition.x != MAX.x) {
 				moving = true;
 				velocity = 1;
