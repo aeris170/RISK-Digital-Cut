@@ -135,7 +135,7 @@ public final class PauseMenu extends RoyMenu {
 			.builder()
 			.textKey(QUIT_KEY)
 			.action(source -> {
-				setVisible(false);
+				RiskGameScreenUI.destroyUI(Scenes.getGameScene());
 				Scenes.loadMenuScene();
 				UIConstants.getMainMenu().setVisible(true);
 			})
