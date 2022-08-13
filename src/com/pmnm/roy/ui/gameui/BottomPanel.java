@@ -174,9 +174,18 @@ public class BottomPanel extends RoyMenu {
 				garrisonText = clickedProvince.getNumberOfTroops() == Globals.UNKNOWN_TROOP_COUNT ?
 					"???" :
 					Integer.toString(clickedProvince.getNumberOfTroops());
-				ownerText = clickedProvince.getOccupier().getName();
+				if (clickedProvince.isOccupied()) {
+					ownerText = clickedProvince.getOccupier().getName();
+				} else {
+					ownerText = "";
+				}
 				nameText = clickedProvince.getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
 				continentText = clickedProvince.getContinent().getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
+			} else {
+				garrisonText = "";
+				ownerText = "";
+				nameText = "";
+				continentText = "";
 			}
 			counter = 0;
 		}
