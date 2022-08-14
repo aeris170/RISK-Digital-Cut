@@ -19,12 +19,12 @@ import pmnm.risk.game.databasedimpl.RiskGameContext;
 @SuppressWarnings("serial")
 public class DicePanel extends RoyMenu {
 
-	private DoaVector panelPosition	= new DoaVector(-160f, 258f);
+	private DoaVector panelPosition = new DoaVector(-160f, 258f);
 	
-	private final DoaVector ONE_POSITION = new DoaVector(-111f, 367f);
-	private final DoaVector TWO_POSITION = new DoaVector(-138f, 441f);
-	private final DoaVector THREE_POSITION = new DoaVector(-139f, 524f);
-	private final DoaVector BLITZ_POSITION = new DoaVector(-130f, 563f);
+	private final DoaVector ONE_POSITION = new DoaVector(49f, 109f);
+	private final DoaVector TWO_POSITION = new DoaVector(22f, 183f);
+	private final DoaVector THREE_POSITION = new DoaVector(32f, 266f);
+	private final DoaVector BLITZ_POSITION = new DoaVector(30f, 305f);
 
 	private RoyImageButton one;
 	private RoyImageButton two;
@@ -40,7 +40,6 @@ public class DicePanel extends RoyMenu {
 			.image(DoaSprites.getSprite("dice1Idle"))
 			.hoverImage(DoaSprites.getSprite("dice1Hover"))
 			.pressImage(DoaSprites.getSprite("dice1Hover"))
-			.disabledImage(DoaSprites.getSprite("dice1Hover"))
 			.action(source -> {
 				Conflict conflict = context.setUpConflict(
 					context.getAreas().getAttackerProvince().getProvince(),
@@ -49,14 +48,13 @@ public class DicePanel extends RoyMenu {
 				context.applyConflictResult(conflict.calculateResult());
 			})
 			.build();
-		one.setPosition(ONE_POSITION);
+		one.setPosition(DoaVector.add(panelPosition, ONE_POSITION));
 		addElement(one);
 		
 		two = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("dice2Idle"))
 			.hoverImage(DoaSprites.getSprite("dice2Hover"))
 			.pressImage(DoaSprites.getSprite("dice2Hover"))
-			.disabledImage(DoaSprites.getSprite("dice2Hover"))
 			.action(source -> {
 				Conflict conflict = context.setUpConflict(
 					context.getAreas().getAttackerProvince().getProvince(),
@@ -65,14 +63,13 @@ public class DicePanel extends RoyMenu {
 				context.applyConflictResult(conflict.calculateResult());
 			})
 			.build();
-		two.setPosition(TWO_POSITION);
+		two.setPosition(DoaVector.add(panelPosition, TWO_POSITION));
 		addElement(two);
 		
 		three = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("dice3Idle"))
 			.hoverImage(DoaSprites.getSprite("dice3Hover"))
 			.pressImage(DoaSprites.getSprite("dice3Hover"))
-			.disabledImage(DoaSprites.getSprite("dice3Hover"))
 			.action(source -> {
 				Conflict conflict = context.setUpConflict(
 					context.getAreas().getAttackerProvince().getProvince(),
@@ -81,19 +78,18 @@ public class DicePanel extends RoyMenu {
 				context.applyConflictResult(conflict.calculateResult());
 			})
 			.build();
-		three.setPosition(THREE_POSITION);
+		three.setPosition(DoaVector.add(panelPosition, THREE_POSITION));
 		addElement(three);
 		
 		blitz = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("blitzIdle"))
 			.hoverImage(DoaSprites.getSprite("blitzHover"))
 			.pressImage(DoaSprites.getSprite("blitzHover"))
-			.disabledImage(DoaSprites.getSprite("blitzHover"))
 			.action(source -> {
 				
 			})
 			.build();
-		blitz.setPosition(BLITZ_POSITION);
+		blitz.setPosition(DoaVector.add(panelPosition, BLITZ_POSITION));
 		addElement(blitz);
 		
 		setzOrder(ZOrders.GAME_UI_Z);
@@ -104,8 +100,8 @@ public class DicePanel extends RoyMenu {
 
 	private final class Script extends DoaScript {
 
-		private final DoaVector MIN = new DoaVector(-160f, 258f);
-		private final DoaVector MAX = new DoaVector(0f, 823f);
+		private final float MIN = -160f;
+		private final float MAX = 0f;
 		
 		private final float ACCELERATION = 0.064f;
 		
@@ -119,8 +115,8 @@ public class DicePanel extends RoyMenu {
 			if (context.getCurrentPhase() == TurnPhase.ATTACK
 				&& context.getAreas().getAttackerProvince() != null
 				&& context.getAreas().getDefenderProvince() != null) {
-					show();
-			}  else {
+				show();
+			} else {
 				hide();
 			}
 			
@@ -130,42 +126,37 @@ public class DicePanel extends RoyMenu {
 				} else if (velocity < 0) {
 					velocity -= ACCELERATION;
 				}
-				if (panelPosition.x > MAX.x) {
-					panelPosition.x = MAX.x;
+				if (panelPosition.x > MAX) {
+					panelPosition.x = MAX;
 					velocity = 0;
 					moving = false;
 				}
-				if (panelPosition.x < MIN.x) {
-					panelPosition.x = MIN.x;
+				if (panelPosition.x < MIN) {
+					panelPosition.x = MIN;
 					velocity = 0;
 					moving = false;
 				}
 				
 				panelPosition.x += velocity;
-				setNewPosition(one);
-				setNewPosition(two);
-				setNewPosition(three);
-				setNewPosition(blitz);
+				one.setPosition(new DoaVector(panelPosition.x + ONE_POSITION.x, panelPosition.y + ONE_POSITION.y));
+				two.setPosition(new DoaVector(panelPosition.x + TWO_POSITION.x, panelPosition.y + TWO_POSITION.y));
+				three.setPosition(new DoaVector(panelPosition.x + THREE_POSITION.x, panelPosition.y + THREE_POSITION.y));
+				blitz.setPosition(new DoaVector(panelPosition.x + BLITZ_POSITION.x, panelPosition.y + BLITZ_POSITION.y));
 			}
 		}
 		
 		private void show() {
-			if (panelPosition.x != MAX.x) {
+			if (panelPosition.x != MAX) {
 				moving = true;
 				velocity = 1;
 			}
 		}
 		
 		private void hide() {
-			if (panelPosition.x != MIN.x) {
+			if (panelPosition.x != MIN) {
 				moving = true;
 				velocity = -1;
 			}
-		}
-		
-		private void setNewPosition(RoyImageButton button) {
-			DoaVector v = new DoaVector(button.getContentArea().x + velocity, button.getContentArea().y);
-			button.setPosition(v);
 		}
 	}
 
