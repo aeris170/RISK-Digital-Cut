@@ -15,6 +15,8 @@ import pmnm.risk.game.Conflict;
 import pmnm.risk.game.Dice;
 import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
+import pmnm.risk.map.board.ProvinceHitArea;
+import pmnm.risk.map.board.ProvinceHitAreas;
 
 @SuppressWarnings("serial")
 public class DicePanel extends RoyMenu {
@@ -143,6 +145,8 @@ public class DicePanel extends RoyMenu {
 		}
 		
 		private void show() {
+			if (moving) { return; }
+			
 			boolean canAttack = context.getAreas().getAttackerProvince().getProvince().canLaunchAttack();
 			int numOfTroops = context.getAreas().getAttackerProvince().getProvince().getNumberOfTroops();
 			one.setEnabled(canAttack);
@@ -152,7 +156,7 @@ public class DicePanel extends RoyMenu {
 			
 			if (panelPosition.x != MAX) {
 				moving = true;
-				velocity = 1;
+				velocity = Float.MIN_VALUE;
 			}
 		}
 		
@@ -166,7 +170,7 @@ public class DicePanel extends RoyMenu {
 			
 			if (panelPosition.x != MIN) {
 				moving = true;
-				velocity = -1;
+				velocity = -Float.MIN_VALUE;
 			}
 		}
 	}
