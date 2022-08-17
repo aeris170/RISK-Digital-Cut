@@ -33,7 +33,7 @@ public final class ProvinceHitAreas extends DoaObject {
 	@Getter private ProvinceHitArea reinforceeProvince;
 	
 	@Getter private List<ProvinceHitArea> areas;
-	private ProvinceConnector connector;
+	@Getter private ProvinceConnector connector;
 	
 	public ProvinceHitAreas(IRiskGameContext context) {
 		this.context = context;
@@ -124,6 +124,14 @@ public final class ProvinceHitAreas extends DoaObject {
 		if(reinforceeProvince != null) {
 			reinforceeProvince.selectAsReinforced();
 		}
+	}
+	
+	public void resetAll() {
+		selectAttackerProvinceAs(null);
+		selectDefenderProvinceAs(null);
+		selectReinforcingProvinceAs(null);
+		selectReinforceeProvinceAs(null);
+		connector.setPath((ProvinceHitArea[])null);
 	}
 	
 	public ProvinceHitArea findHitAreaOf(IProvince province) {
