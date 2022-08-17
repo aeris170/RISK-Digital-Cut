@@ -1,4 +1,5 @@
 package pmnm.risk.game;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public final class Conflict implements Serializable {
 
 	@Value
 	@ToString(includeFieldNames = true)
-	public static final class Result implements Serializable  {
+	public static final class Result implements Serializable {
 
 		private static final long serialVersionUID = -2491016186457306137L;
 
