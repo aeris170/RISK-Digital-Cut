@@ -1,6 +1,7 @@
 package pmnm.risk.game;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import lombok.NonNull;
 
@@ -49,7 +50,22 @@ public interface IRiskGameContext extends Serializable {
 	Iterable<@NonNull IContinent> getContinents();
 	Iterable<@NonNull IProvince> provincesOf(@NonNull final IContinent continent);
 	
-	public enum TurnPhase { SETUP, DRAFT, ATTACK, REINFORCE; }
+	public enum TurnPhase {
+		SETUP,
+		DRAFT,
+		ATTACK,
+		ATTACK_DEPLOY("Attack -> Deploy"),
+		REINFORCE;
+		
+		private Optional<String> str;
+		private TurnPhase() { str = Optional.empty(); }
+		private TurnPhase(String str) { this.str = Optional.of(str); }
+		@Override
+		public String toString() {
+			if(str.isPresent()) { return str.get(); }
+			else { return super.toString(); }
+		}
+	}
 	
 	public enum GameType { SINGLE_PLAYER, MULTI_PLAYER }
 
