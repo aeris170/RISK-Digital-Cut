@@ -40,14 +40,8 @@ public class DicePanel extends RoyMenu {
 			.image(DoaSprites.getSprite("dice1Idle"))
 			.hoverImage(DoaSprites.getSprite("dice1Hover"))
 			.pressImage(DoaSprites.getSprite("dice1Hover"))
-			.action(source -> {
-				Conflict conflict = context.setUpConflict(
-					context.getAreas().getAttackerProvince().getProvince(),
-					context.getAreas().getDefenderProvince().getProvince(),
-					Dice.ATTACK_DICE_1);
-				context.applyConflictResult(conflict.calculateResult());
-			})
 			.disabledImage(DoaSprites.getSprite("dice1Disabled"))
+			.action(source -> doConflict(Dice.ATTACK_DICE_1))
 			.build();
 		one.setPosition(DoaVector.add(panelPosition, ONE_POSITION));
 		addElement(one);
@@ -56,14 +50,8 @@ public class DicePanel extends RoyMenu {
 			.image(DoaSprites.getSprite("dice2Idle"))
 			.hoverImage(DoaSprites.getSprite("dice2Hover"))
 			.pressImage(DoaSprites.getSprite("dice2Hover"))
-			.action(source -> {
-				Conflict conflict = context.setUpConflict(
-					context.getAreas().getAttackerProvince().getProvince(),
-					context.getAreas().getDefenderProvince().getProvince(),
-					Dice.ATTACK_DICE_2);
-				context.applyConflictResult(conflict.calculateResult());
-			})
 			.disabledImage(DoaSprites.getSprite("dice2Disabled"))
+			.action(source -> doConflict(Dice.ATTACK_DICE_2))
 			.build();
 		two.setPosition(DoaVector.add(panelPosition, TWO_POSITION));
 		addElement(two);
@@ -72,14 +60,8 @@ public class DicePanel extends RoyMenu {
 			.image(DoaSprites.getSprite("dice3Idle"))
 			.hoverImage(DoaSprites.getSprite("dice3Hover"))
 			.pressImage(DoaSprites.getSprite("dice3Hover"))
-			.action(source -> {
-				Conflict conflict = context.setUpConflict(
-					context.getAreas().getAttackerProvince().getProvince(),
-					context.getAreas().getDefenderProvince().getProvince(),
-					Dice.ATTACK_DICE_3);
-				context.applyConflictResult(conflict.calculateResult());
-			})
 			.disabledImage(DoaSprites.getSprite("dice3Disabled"))
+			.action(source -> doConflict(Dice.ATTACK_DICE_3))
 			.build();
 		three.setPosition(DoaVector.add(panelPosition, THREE_POSITION));
 		addElement(three);
@@ -88,10 +70,8 @@ public class DicePanel extends RoyMenu {
 			.image(DoaSprites.getSprite("blitzIdle"))
 			.hoverImage(DoaSprites.getSprite("blitzHover"))
 			.pressImage(DoaSprites.getSprite("blitzHover"))
-			.action(source -> {
-				
-			})
 			.disabledImage(DoaSprites.getSprite("blitzDisabled"))
+			.action(source -> {})
 			.build();
 		blitz.setPosition(DoaVector.add(panelPosition, BLITZ_POSITION));
 		addElement(blitz);
@@ -100,6 +80,19 @@ public class DicePanel extends RoyMenu {
 		
 		addComponent(new Script());
 		addComponent(new Renderer());
+	}
+	
+	private void doConflict(Dice dice) {
+		ProvinceHitAreas areas = context.getAreas();
+		ProvinceHitArea attackerArea = areas.getAttackerProvince();
+		ProvinceHitArea defenderArea = areas.getDefenderProvince();
+		if (attackerArea == null || defenderArea == null) { return; }
+		Conflict conflict = context.setUpConflict(
+			attackerArea.getProvince(),
+			defenderArea.getProvince(),
+			Dice.ATTACK_DICE_1);
+		Conflict.Result result = conflict.calculateResult();
+		context.applyConflictResult(result);
 	}
 
 	private final class Script extends DoaScript {
