@@ -2,7 +2,9 @@ package pmnm.risk.game;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.javatuples.Pair;
 
@@ -66,7 +68,7 @@ public final class Conflict implements Serializable {
 	public Result calculateResult() {
 		if (result != null) return result;
 		
-		Pair<int[], int[]> diceResult = rollAppropriateDice();
+		Pair<Integer[], Integer[]> diceResult = rollAppropriateDice();
 		Pair<Integer, Integer> casualtyResult = calculateCasualties(diceResult.getValue0(), diceResult.getValue1());
 		
 		int attackerCasualties = casualtyResult.getValue0();
@@ -74,15 +76,16 @@ public final class Conflict implements Serializable {
 		
 		int attackerTroopsAfterConflict = context.numberOfTroopsOn(attacker) - attackerCasualties;
 		int defenderTroopsAfterConflict = context.numberOfTroopsOn(defender) - defenderCasualties;
-		boolean isDecisive = attackerTroopsAfterConflict == 0 || defenderTroopsAfterConflict == 0;
+		boolean isDecisive = attackerTroopsAfterConflict == 1 || defenderTroopsAfterConflict == 0;
 		IProvince winner = null;
 		if (isDecisive) {
-			if (attackerTroopsAfterConflict == 0) {
+			if (attackerTroopsAfterConflict == 1) {
 				winner = defender;
 			}
-			if(defenderTroopsAfterConflict == 0) {
+			if (defenderTroopsAfterConflict == 0) {
 				winner = attacker;
 			}
+			if (winner == null) DoaLogger.getInstance().severe("something is horribly wrong! @conflict line:86");
 		}
 		
 		Result rv = new Result(
@@ -96,22 +99,22 @@ public final class Conflict implements Serializable {
 		return rv;
 	}
 	
-	private Pair<int[], int[]> rollAppropriateDice() {
+	private Pair<Integer[], Integer[]> rollAppropriateDice() {
 		Dice defenderDice;
 		if (context.numberOfTroopsOn(defender) >= 2) {
 			defenderDice = Dice.DEFENCE_DICE_2;
 		} else {
 			defenderDice = Dice.DEFENCE_DICE_1;
 		}
-		int[] defenders = defenderDice.rollAllAndGetAll();
-		int[] attackers = attackerDice.rollAllAndGetAll();
-		
+		Integer[] defenders = IntStream.of(defenderDice.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+		Integer[] attackers = IntStream.of(attackerDice.rollAllAndGetAll()).boxed().toArray(Integer[]::new);
+
 		return new Pair<>(attackers, defenders);
 	}
 	
-	private Pair<Integer, Integer> calculateCasualties(int[] attackers, int[] defenders) {
-		Arrays.sort(attackers);
-		Arrays.sort(defenders);
+	private Pair<Integer, Integer> calculateCasualties(Integer[] attackers, Integer[] defenders) {
+		Arrays.sort(attackers, Collections.reverseOrder());
+		Arrays.sort(defenders, Collections.reverseOrder());
 		
 		int attackerCasualties = 0;
 		int defenderCasualties = 0;
