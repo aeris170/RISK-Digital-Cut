@@ -174,12 +174,16 @@ public final class AssetLoader {
 				DoaSprites.createSprite("diceScroll", "/ui/gameScreenElements/diceScroll/diceScroll.png");
 				DoaSprites.createSprite("dice1Idle", "/ui/gameScreenElements/diceScroll/oneDieNormal.png");
 				DoaSprites.createSprite("dice1Hover", "/ui/gameScreenElements/diceScroll/oneDieHover.png");
+				DoaSprites.createSprite("dice1Disabled", "/ui/gameScreenElements/diceScroll/oneDieDisabled.png");
 				DoaSprites.createSprite("dice2Idle", "/ui/gameScreenElements/diceScroll/twoDiceNormal.png");
 				DoaSprites.createSprite("dice2Hover", "/ui/gameScreenElements/diceScroll/twoDiceHover.png");
+				DoaSprites.createSprite("dice2Disabled", "/ui/gameScreenElements/diceScroll/twoDiceDisabled.png");
 				DoaSprites.createSprite("dice3Idle", "/ui/gameScreenElements/diceScroll/threeDiceNormal.png");
 				DoaSprites.createSprite("dice3Hover", "/ui/gameScreenElements/diceScroll/threeDiceHover.png");
+				DoaSprites.createSprite("dice3Disabled", "/ui/gameScreenElements/diceScroll/threeDiceDisabled.png");
 				DoaSprites.createSprite("blitzIdle", "/ui/gameScreenElements/diceScroll/blitzNormal.png");
 				DoaSprites.createSprite("blitzHover", "/ui/gameScreenElements/diceScroll/blitzHover.png");
+				DoaSprites.createSprite("blitzDisabled", "/ui/gameScreenElements/diceScroll/blitzDisabled.png");
 			}
 
 			{// CARD PANEL

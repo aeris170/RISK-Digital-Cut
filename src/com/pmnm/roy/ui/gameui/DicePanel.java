@@ -47,6 +47,7 @@ public class DicePanel extends RoyMenu {
 					Dice.ATTACK_DICE_1);
 				context.applyConflictResult(conflict.calculateResult());
 			})
+			.disabledImage(DoaSprites.getSprite("dice1Disabled"))
 			.build();
 		one.setPosition(DoaVector.add(panelPosition, ONE_POSITION));
 		addElement(one);
@@ -62,6 +63,7 @@ public class DicePanel extends RoyMenu {
 					Dice.ATTACK_DICE_2);
 				context.applyConflictResult(conflict.calculateResult());
 			})
+			.disabledImage(DoaSprites.getSprite("dice2Disabled"))
 			.build();
 		two.setPosition(DoaVector.add(panelPosition, TWO_POSITION));
 		addElement(two);
@@ -77,6 +79,7 @@ public class DicePanel extends RoyMenu {
 					Dice.ATTACK_DICE_3);
 				context.applyConflictResult(conflict.calculateResult());
 			})
+			.disabledImage(DoaSprites.getSprite("dice3Disabled"))
 			.build();
 		three.setPosition(DoaVector.add(panelPosition, THREE_POSITION));
 		addElement(three);
@@ -88,6 +91,7 @@ public class DicePanel extends RoyMenu {
 			.action(source -> {
 				
 			})
+			.disabledImage(DoaSprites.getSprite("blitzDisabled"))
 			.build();
 		blitz.setPosition(DoaVector.add(panelPosition, BLITZ_POSITION));
 		addElement(blitz);
@@ -160,6 +164,13 @@ public class DicePanel extends RoyMenu {
 		}
 		
 		private void hide() {
+			if (moving) { return; }
+			
+			one.setEnabled(false);
+			two.setEnabled(false);
+			three.setEnabled(false);
+			blitz.setEnabled(false);
+			
 			if (panelPosition.x != MIN) {
 				moving = true;
 				velocity = -1;
