@@ -228,36 +228,44 @@ public class RiskGameContext implements IRiskGameContext {
 	public TurnPhase getCurrentPhase() { return currentTurnPhase; }
 	@Override
 	public void goToNextPhase() { 
-		switch(getCurrentPhase()) {
-			case SETUP:
-				break;
+		switch (getCurrentPhase()) {
 			case DRAFT:
 				currentTurnPhase = TurnPhase.ATTACK;
 				break;
 			case ATTACK:
 				currentTurnPhase = TurnPhase.REINFORCE;
 				break;
+			case ATTACK_DEPLOY:
+				currentTurnPhase = TurnPhase.ATTACK;
+				break;
 			case REINFORCE:
 				finishCurrentPlayerTurn();
+				break;
+			default:
 				break;
 		}
 	}
 	@Override
 	public void finishCurrentPlayerTurn() {
-		if (getCurrentPhase() == TurnPhase.DRAFT ||
-			getCurrentPhase() == TurnPhase.ATTACK) { return; }
-		
-		if (getCurrentPhase() == TurnPhase.SETUP) {
-			if (isInitialPlacementComplete()) {
+		switch (getCurrentPhase()) {
+			case DRAFT:
+			case ATTACK:
+			case ATTACK_DEPLOY:
+				return;
+			case SETUP:
+				if (isInitialPlacementComplete()) {
+					currentTurnPhase = TurnPhase.DRAFT;
+					elapsedTurns = 0;
+				} else {
+					currentTurnPhase = TurnPhase.SETUP;
+					elapsedTurns = -1;
+				}
+				break;
+			case REINFORCE:
 				currentTurnPhase = TurnPhase.DRAFT;
-				elapsedTurns = 0;
-			} else {
-				currentTurnPhase = TurnPhase.SETUP;
-				elapsedTurns = -1;
-			}
-		} else {
-			currentTurnPhase = TurnPhase.DRAFT;
+				break;
 		}
+
 		currentPlayingPlayer = players.getNext();
 		usedDeploys = 0;
 		remainingDeploys = calculateTurnReinforcementsFor(currentPlayingPlayer);
@@ -272,17 +280,27 @@ public class RiskGameContext implements IRiskGameContext {
 		Deploy deploy = result.getDeploy();
 		IProvince target = deploy.getTarget();
 		if (!occupierOf(target).equals(currentPlayingPlayer)) { return false; }
-		
-		if (getCurrentPhase() == TurnPhase.SETUP) {
-			numberOfTroops.put(target, result.getRemainingTargetTroops());
-		} else {
-			if (deploy.getAmount() > getRemainingDeploys()) { return false; }
-		
-			numberOfTroops.put(target, result.getRemainingTargetTroops());
-			usedDeploys += deploy.getAmount();
-			remainingDeploys -= deploy.getAmount();
+		switch (getCurrentPhase()) {
+			case SETUP:
+				numberOfTroops.put(target, result.getRemainingTargetTroops());
+				areas.deselectSelectedProvince();
+				finishCurrentPlayerTurn();
+				return true;
+			case DRAFT:
+				if (deploy.getAmount() > getRemainingDeploys()) { return false; }
+				numberOfTroops.put(target, result.getRemainingTargetTroops());
+				usedDeploys += deploy.getAmount();
+				remainingDeploys -= deploy.getAmount();
+				if (remainingDeploys == 0) {
+					goToNextPhase();
+				}
+				return true;
+			case ATTACK:
+			case ATTACK_DEPLOY:
+			case REINFORCE:
+			default:
+				return false;
 		}
-		return true;
 	}
 	@Override
 	public Conflict setUpConflict(@NonNull final IProvince attacker, @NonNull final IProvince defender, @NonNull final Dice method) {
@@ -290,6 +308,8 @@ public class RiskGameContext implements IRiskGameContext {
 	}
 	@Override
 	public boolean applyConflictResult(@NonNull final Conflict.Result result) {
+		if (getCurrentPhase() != TurnPhase.ATTACK) { return false; }
+		
 		Conflict conflict = result.getConflict();
 
 		IProvince attacker = conflict.getAttacker();
@@ -299,7 +319,7 @@ public class RiskGameContext implements IRiskGameContext {
 		IProvince defender = conflict.getDefender();
 		numberOfTroops.put(defender, result.getRemainingDefenderTroops());
 		
-		if(numberOfTroops.get(defender) <= 0) {
+		if (numberOfTroops.get(defender) <= 0) {
 			IPlayer attackerPlayer = provincePlayers.get(attacker);
 			IPlayer defenderPlayer = provincePlayers.get(defender);
 			
@@ -307,6 +327,11 @@ public class RiskGameContext implements IRiskGameContext {
 			provincePlayers.put(defender, attackerPlayer);
 			
 			numberOfTroops.put(defender, Globals.UNKNOWN_TROOP_COUNT);
+			
+			currentTurnPhase = TurnPhase.ATTACK_DEPLOY;
+			usedDeploys = 0;
+			remainingDeploys = result.getRemainingAttackerTroops() - 1;
+			areas.getConnector().setPath(areas.findHitAreaOf(attacker), areas.findHitAreaOf(defender));
 		}
 		return true;
 	}
@@ -317,14 +342,25 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public boolean applyReinforceResult(@NonNull final Reinforce.Result result) {
 		Reinforce reinforce = result.getReinforce();
-		
 		IProvince reinforcer = reinforce.getSource();
-		if (!occupierOf(reinforcer).equals(currentPlayingPlayer)) { return false; }
-		numberOfTroops.put(reinforcer, result.getRemainingSourceTroops());
-
 		IProvince reinforcee = reinforce.getDestination();
-		numberOfTroops.put(reinforcee, result.getRemainingDestinationTroops());
-		return true;
+		switch (getCurrentPhase()) {
+			case SETUP:
+			case DRAFT:
+			case ATTACK:
+				return false;
+			case ATTACK_DEPLOY:
+			case REINFORCE:
+				if (!occupierOf(reinforcer).equals(currentPlayingPlayer) || 
+					!occupierOf(reinforcee).equals(currentPlayingPlayer)) { return false; }
+				numberOfTroops.put(reinforcer, result.getRemainingSourceTroops());
+				numberOfTroops.put(reinforcee, result.getRemainingDestinationTroops());
+				areas.resetAll();
+				goToNextPhase();
+				return true;
+			default:
+				return false;
+		}
 	}
 	@Override
 	public int calculateStartingTroopCount() { return 50 - 5 * players.size(); }
@@ -342,6 +378,20 @@ public class RiskGameContext implements IRiskGameContext {
 			}
 		}
 		return reinforcementsForThisTurn;
+	}
+	@Override
+	public int calculateMaxDeployTroopsForAttackDeploy() {
+		switch (getCurrentPhase()) {
+			case ATTACK_DEPLOY:
+				return remainingDeploys;
+			case SETUP:
+			case DRAFT:
+			case ATTACK:
+			case REINFORCE:
+			default:
+				return 0;
+			
+		}
 	}
 	@Override
 	public boolean isInitialPlacementComplete() {

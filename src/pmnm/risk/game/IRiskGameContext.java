@@ -27,6 +27,7 @@ public interface IRiskGameContext extends Serializable {
 	boolean applyReinforceResult(@NonNull final Reinforce.Result result);
 	int calculateStartingTroopCount();
 	int calculateTurnReinforcementsFor(@NonNull IPlayer player);
+	int calculateMaxDeployTroopsForAttackDeploy();
 	
 	boolean isInitialPlacementComplete();
 	boolean isEveryProvinceOccupied();

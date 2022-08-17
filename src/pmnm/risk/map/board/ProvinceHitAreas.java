@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.game.IRiskGameContext;
+import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.map.Mesh2D;
 import pmnm.risk.map.Vertex2D;
 
@@ -192,6 +193,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		@Override
 		public void tick() {
 			if (context.isPaused()) return;
+			if (context.getCurrentPhase() == TurnPhase.ATTACK_DEPLOY) { return; }
 
 			if (DoaMouse.MB1_RELEASE) {
 				deselectSelectedProvince();
