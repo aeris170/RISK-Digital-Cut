@@ -21,6 +21,7 @@ import com.pmnm.roy.RoyCheckBox;
 import com.pmnm.roy.RoyComboBox;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
+import com.pmnm.roy.ui.LoadingScreen;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 import com.pmnm.util.Observable;
@@ -221,27 +222,29 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	}
 	
 	private void startGame() {
+		List<Player.Data> playerDatas = new ArrayList<>(slots.length);
+		for (Slot slot : slots) {
+			if (slot.hasPlayer()) {
+				Player.Data playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+				playerDatas.add(playerData);
+			}
+		}
+		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked(), type, selectedMapIndex);
+		
+		UIConstants.getLoadingScreen().setGameConfig(config);
 		setVisible(false);
 		Scenes.switchToLoadingScreen();
-		new Thread(()->{
+		
+		new Thread(() -> {
 			List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 			MapConfig selectedConfig = configs.get(selectedMapIndex);
 			MapData data = MapLoader.loadMap(selectedConfig);
 			RiskGameContext context = RiskGameContext.of(data);
-			List<Player.Data> playerDatas = new ArrayList<>(slots.length);
-			for (Slot slot : slots) {
-				if (slot.hasPlayer()) {
-					Player.Data playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
-					playerDatas.add(playerData);
-				}
-			}
 
 			DoaScene gameScene = Scenes.getGameScene();
 			gameScene.clear();
-			GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked(), type);
 			context.initiliazeGame(config);
 			RiskGameScreenUI.initUIFor(context, gameScene, type);
-			// TODO add game stuff to game scene
 			Scenes.loadGameScene();
 		}).start();
 	}
@@ -357,7 +360,11 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			} else { throw new IllegalStateException("wtf?"); }
 		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
-		private String getPawn() { return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]); }
+		private String getPawn() {
+			/* FIXME DoaSprites function */
+			return "p_Pawn".replace('_', (char)('1' + pawnBox.getSelectedIndex()));
+			// return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]);
+		}
 		private boolean isLocalPlayer() { return type == GameType.SINGLE_PLAYER; } /* TODO  */
 	}
 	

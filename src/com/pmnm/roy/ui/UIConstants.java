@@ -88,6 +88,8 @@ public final class UIConstants {
 	@Getter @NonNull private static NewGameMenu newGameMenuSP;
 	@Getter @NonNull private static LoadGameMenu loadGameMenu;
 	@Getter @NonNull private static NewGameMenu newGameMenuMP;
+	
+	@Getter @NonNull private static LoadingScreen loadingScreen;
 	public static HostGameMenu hgm;
 	public static JoinGameMenu jgm;
 
@@ -184,7 +186,8 @@ public final class UIConstants {
 		
 		font = DoaFonts.getFont("BookAntiqua");
 		
-		Scenes.getLoadingScene().add(new LoadingScreen());
+		loadingScreen = new LoadingScreen();
+		Scenes.getLoadingScene().add(loadingScreen);
 		
 		DoaScene menuScene = Scenes.getMenuScene();
 		menuScene.clear();
