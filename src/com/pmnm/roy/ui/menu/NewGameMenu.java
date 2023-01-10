@@ -229,15 +229,16 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				playerDatas.add(playerData);
 			}
 		}
-		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked(), type, selectedMapIndex);
+		List<@NonNull MapConfig> configs = MapConfig.getConfigs();
+		MapConfig selectedConfig = configs.get(selectedMapIndex);
+		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked(), type, selectedConfig);
 		
 		UIConstants.getLoadingScreen().setGameConfig(config);
 		setVisible(false);
 		Scenes.switchToLoadingScreen();
 		
 		new Thread(() -> {
-			List<@NonNull MapConfig> configs = MapConfig.getConfigs();
-			MapConfig selectedConfig = configs.get(selectedMapIndex);
+			
 			MapData data = MapLoader.loadMap(selectedConfig);
 			RiskGameContext context = RiskGameContext.of(data);
 

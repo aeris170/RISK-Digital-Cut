@@ -50,7 +50,7 @@ public final class LoadingScreen extends RoyMenu implements Observer {
 			pawns.add(data.getPawn());
 		}
 		
-		MapConfig mapConfig = MapConfig.getConfigs().get(config.getMapIndex());
+		MapConfig mapConfig = config.getMapConfig();
 		selectedMapName = mapConfig.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = mapConfig.getBackgroundImagePreview();
 	}
