@@ -200,7 +200,6 @@ public class RiskGameContext implements IRiskGameContext {
 					applyDeployResult(deploy.calculateResult());
 					
 					unoccupiedProvinces.remove(randomIndex);
-					currentPlayingPlayer = players.getNext();
 				}
 			}
 			/* deploy to all provinces */ {
@@ -212,8 +211,6 @@ public class RiskGameContext implements IRiskGameContext {
 
 					Deploy deploy = setUpDeploy(randomProvince, 1);
 					applyDeployResult(deploy.calculateResult());
-					
-					currentPlayingPlayer = players.getNext();
 				}
 			}
 			currentTurnPhase = TurnPhase.DRAFT;
