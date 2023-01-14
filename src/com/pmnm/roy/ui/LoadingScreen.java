@@ -8,36 +8,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyMenu;
-import com.pmnm.util.Observable;
-import com.pmnm.util.Observer;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.NonNull;
+import lombok.Setter;
 import pmnm.risk.game.GameConfig;
 import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.map.MapConfig;
 
 @SuppressWarnings("serial")
-public final class LoadingScreen extends RoyMenu implements Observer {
+public final class LoadingScreen extends RoyMenu{
 
 	private BufferedImage selectedMapPreview;
 	private String selectedMapName;
+	private String hintText = "";
+	private String loadingText = "";
+	private boolean hintTextChanged = false;
+	private boolean loadingTextChanged = false;
+	
+	@Setter
+	private float loadingBarProgress = 0f;
 	
 	private List<String> names = new ArrayList<String>();
 	private List<Color> colors = new ArrayList<Color>();
 	private List<BufferedImage> pawns = new ArrayList<BufferedImage>();
 	
 	public LoadingScreen() {
-		Translator.getInstance().registerObserver(this);
+		addComponent(new Script());
 		addComponent(new Renderer());
-		
-		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.font = null);
+		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.mapNameFont = null);
 	}
 	
 	public void setGameConfig(@NonNull final GameConfig config) {
@@ -55,19 +60,60 @@ public final class LoadingScreen extends RoyMenu implements Observer {
 		selectedMapPreview = mapConfig.getBackgroundImagePreview();
 	}
 	
+	public void setHintText(String hintText) {
+		this.hintText = hintText;
+		hintTextChanged = true;
+	}
+	
+	public void setLoadingText(String loadingText) {
+		this.loadingText = loadingText;
+		loadingTextChanged = true;
+	}
+	
+	private final class Script extends DoaScript {
+		private String[] hints = new String[] {"hint1", "hint2", "hint3 tehe ;P"};
+		private int hintIndex = 0;
+		private int timer = 0;
+		private int timerMax = 600;
+		
+		public Script() {
+			setHintText(hints[hintIndex]);
+		}
+		
+		@Override
+		public void tick() {
+			timer++;
+
+			if(loadingBarProgress < 1f)
+				setLoadingBarProgress(loadingBarProgress + 0.0005f);
+			
+			if(timer >= timerMax) {
+				timer = 0;
+				
+				if(hintIndex >= hints.length - 1) {
+					hintIndex = 0;
+				} else {
+					hintIndex++;
+				}
+
+				setHintText(hints[hintIndex]);
+			}
+		}
+	}
+	
 	private final class Renderer extends DoaRenderer {
 
-		private Font font;
+		private Font mapNameFont;
+		private DoaVector mapNamePosition;
+		private DoaVector mapNameDimensions;
+		
+		private Font hintFont;
+		private DoaVector hintPosition;
+		private DoaVector hintTextDimensions;
+		
 		private Font loadingFont;
-		private int stringWidth;
-		private DoaVector textDimensions;
-		private DoaVector textPosition;
-		private String text;
-		private String loadingStringKey = "LOADING";
-		private int mapTextWidth;
-		private int mapTextHeight;
-		private int loadingTextWidth;
-		private int loadingTextHeight;
+		private DoaVector loadingPosition;
+		private DoaVector loadingTextDimensions;
 
 		private transient BufferedImage mapChooserBg;
 		private transient BufferedImage mapBorder;
@@ -78,7 +124,6 @@ public final class LoadingScreen extends RoyMenu implements Observer {
 		
 		public Renderer() {
 			mainScroll = DoaSprites.getSprite("MainScroll");
-			text = Translator.getInstance().getTranslatedString(loadingStringKey);
 			mapChooserBg = DoaSprites.getSprite("MapChooserBackground");
 			mapBorder = DoaSprites.getSprite("MapBorder");
 			playerNameBg = UIConstants.getPlayerTypeBorderSprite();
@@ -88,38 +133,53 @@ public final class LoadingScreen extends RoyMenu implements Observer {
 		
 		@Override
 		public void render() {
-			if (font == null) {
-				text = "LOADING"; // TODO REMOVE THIS WHEN "LOADING" is added to external strings
-				textDimensions = new DoaVector(300f, 50f);
-					
-				font = UIConstants.getFont().deriveFont(
+			if (mapNameFont == null) {
+				mapNameDimensions = new DoaVector(300f, 50f);
+				mapNameFont = UIConstants.getFont().deriveFont(
 					Font.PLAIN,
-					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, "GAME OF THRONES"), 0)[0]
+					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), mapNameDimensions, "GAME OF THRONES"), 0)[0]
 				);
+
+				mapNameDimensions = new DoaVector(UIUtils.textWidth(mapNameFont, selectedMapName), UIUtils.textHeight(mapNameFont));
+				mapNamePosition = new DoaVector(195 + (mapBorder.getWidth() - mapNameDimensions.x) / 2f, 325);
+			}
+			
+			if(hintFont == null || hintTextChanged) {
+				hintTextDimensions = new DoaVector(1000f, 50f);
+				
+				hintFont = UIConstants.getFont().deriveFont(
+					Font.PLAIN,
+					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), hintTextDimensions, hintText), 0)[0]
+				);
+
+				hintTextDimensions = new DoaVector(UIUtils.textWidth(hintFont, hintText), UIUtils.textHeight(hintFont));
+				hintPosition = new DoaVector((1920 - hintTextDimensions.x) / 2f, 950 - hintTextDimensions.y / 4f);
+				
+				hintTextChanged = false;
+			}
+			
+			if(loadingFont == null || loadingTextChanged) {
+				loadingText = "LOADING";
+				loadingTextDimensions = new DoaVector(1000f, 50f);
 				
 				loadingFont = UIConstants.getFont().deriveFont(
 					Font.PLAIN,
-					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, text), 0)[0]
+					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), loadingTextDimensions, loadingText), 0)[0]
 				);
-				
-				mapTextWidth = UIUtils.textWidth(font, selectedMapName);
-				mapTextHeight = UIUtils.textHeight(font);
 
-				loadingTextWidth = UIUtils.textWidth(font, text);
-				loadingTextHeight = UIUtils.textHeight(font);
+				loadingTextDimensions = new DoaVector(UIUtils.textWidth(loadingFont, loadingText), UIUtils.textHeight(loadingFont));
+				loadingPosition = new DoaVector((1920 - loadingTextDimensions.x) / 2f, 950 - loadingTextDimensions.y / 4f + 55);
 				
-				textPosition = new DoaVector(45 + (mapBorder.getWidth() - mapTextWidth) / 2, 325);
+				loadingTextChanged = false;
 			}
-			DoaGraphicsFunctions.setFont(font);
 			
+			// MAP SECTION
 			DoaGraphicsFunctions.drawImage(mapChooserBg, 153, 259, mapChooserBg.getWidth(), mapChooserBg.getHeight());
 			
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
-			DoaGraphicsFunctions.drawString(
-				selectedMapName,
-				textPosition.x + (textDimensions.x - stringWidth) / 2f,
-				textPosition.y
-			);
+			
+			DoaGraphicsFunctions.setFont(mapNameFont);
+			DoaGraphicsFunctions.drawString(selectedMapName, mapNamePosition.x, mapNamePosition.y);
 		
 			DoaGraphicsFunctions.drawImage(
 				selectedMapPreview,
@@ -152,33 +212,34 @@ public final class LoadingScreen extends RoyMenu implements Observer {
 				
 				DoaGraphicsFunctions.drawImage(pawns.get(i), 1122, 286 + 55 * i, pawnBg.getHeight() - 10, pawnBg.getHeight() - 10);
 			}
-			
-			float x = (1920 - loadingTextWidth) / 2f;
-			float y = 950 - loadingTextHeight / 4f;
 
+			// HINT
+			DoaGraphicsFunctions.setColor(Color.DARK_GRAY);
+			DoaGraphicsFunctions.setFont(hintFont);
+			DoaGraphicsFunctions.drawString(hintText, hintPosition.x, hintPosition.y);
+
+			// LOADING BAR
+			DoaGraphicsFunctions.setColor(Color.GRAY);
+			DoaGraphicsFunctions.fillRect(350, 950, 1220, 50);
+
+			DoaGraphicsFunctions.setColor(Color.ORANGE);
+			DoaGraphicsFunctions.fillRect(353, 953, 1214 * loadingBarProgress, 44);
+			
 			DoaGraphicsFunctions.setFont(loadingFont);
 			/* outline */
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor().brighter());
-			DoaGraphicsFunctions.drawString(text, x - 1, y);
-			DoaGraphicsFunctions.drawString(text, x + 1, y);
-			DoaGraphicsFunctions.drawString(text, x, y - 1);
-			DoaGraphicsFunctions.drawString(text, x, y + 1);
-			DoaGraphicsFunctions.drawString(text, x - 2, y);
-			DoaGraphicsFunctions.drawString(text, x + 2, y);
-			DoaGraphicsFunctions.drawString(text, x, y - 2);
-			DoaGraphicsFunctions.drawString(text, x, y + 2);	
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 1);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 1);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 2, loadingPosition.y);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 2, loadingPosition.y);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 2);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);	
 			
 			/* text itself */
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
-			DoaGraphicsFunctions.drawString(text, x, y);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y);
 		}
-	}
-
-	@Override
-	public void onNotify(Observable b) {
-		getComponentByType(Renderer.class).ifPresent(r -> {
-			r.text = Translator.getInstance().getTranslatedString(r.loadingStringKey);
-			r.font = null;
-		});
 	}
 }
