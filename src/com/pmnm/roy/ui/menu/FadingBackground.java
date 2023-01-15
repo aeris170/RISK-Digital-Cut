@@ -14,6 +14,7 @@ import doa.engine.scene.elements.scripts.DoaScript;
 import doa.engine.task.DoaTaskGuard;
 import doa.engine.task.DoaTasker;
 import lombok.NonNull;
+import lombok.Setter;
 
 public class FadingBackground extends DoaObject {
 
@@ -21,7 +22,7 @@ public class FadingBackground extends DoaObject {
 
 	private static final int TIME_BETWEEN_FADES = 10000; // 10 seconds
 	
-	private boolean isVisible = true;
+	@Setter private boolean isVisible = true;
 
 	private float alpha = 1f;
 	private float alphaDelta = 0.01f;
@@ -100,5 +101,4 @@ public class FadingBackground extends DoaObject {
 		}
 	}
 
-	public void setVisible(boolean value) { isVisible = value; }
 }
