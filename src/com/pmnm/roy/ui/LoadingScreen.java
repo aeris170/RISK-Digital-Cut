@@ -13,6 +13,7 @@ import com.pmnm.roy.RoyMenu;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
+import doa.engine.maths.DoaMath;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
@@ -34,6 +35,7 @@ public final class LoadingScreen extends RoyMenu{
 	
 	@Setter
 	private float loadingBarProgress = 0f;
+	private float currentBarProgress = 0f;
 	
 	private List<String> names = new ArrayList<String>();
 	private List<Color> colors = new ArrayList<Color>();
@@ -84,8 +86,9 @@ public final class LoadingScreen extends RoyMenu{
 		public void tick() {
 			timer++;
 
-			if(loadingBarProgress < 1f)
-				setLoadingBarProgress(loadingBarProgress + 0.0005f);
+			if (currentBarProgress < loadingBarProgress && DoaMath.randomBetween(0, 1) < 0.15f) {
+				currentBarProgress = DoaMath.clamp(currentBarProgress + 0.005f, 0, loadingBarProgress);
+			}
 			
 			if(timer >= timerMax) {
 				timer = 0;
@@ -144,8 +147,8 @@ public final class LoadingScreen extends RoyMenu{
 				mapNamePosition = new DoaVector(195 + (mapBorder.getWidth() - mapNameDimensions.x) / 2f, 325);
 			}
 			
-			if(hintFont == null || hintTextChanged) {
-				hintTextDimensions = new DoaVector(1000f, 50f);
+			if (hintFont == null || hintTextChanged) {
+				hintTextDimensions = new DoaVector(1000f, 35f);
 				
 				hintFont = UIConstants.getFont().deriveFont(
 					Font.PLAIN,
@@ -158,8 +161,7 @@ public final class LoadingScreen extends RoyMenu{
 				hintTextChanged = false;
 			}
 			
-			if(loadingFont == null || loadingTextChanged) {
-				loadingText = "LOADING";
+			if (loadingFont == null || loadingTextChanged) {
 				loadingTextDimensions = new DoaVector(1000f, 50f);
 				
 				loadingFont = UIConstants.getFont().deriveFont(
@@ -192,14 +194,14 @@ public final class LoadingScreen extends RoyMenu{
 			DoaGraphicsFunctions.drawImage(mainScroll, 600, 170, mainScroll.getWidth(), mainScroll.getHeight());
 			
 			// names
-			for(int i = 0; i < names.size(); i++) {
+			for (int i = 0; i < names.size(); i++) {
 				DoaGraphicsFunctions.drawImage(playerNameBg, 725, 282 + i * 55, playerNameBg.getWidth(), playerNameBg.getHeight());
 				
 				DoaGraphicsFunctions.drawString(names.get(i), 735, 314 + i * 55);
 			}
 
 			// colors
-			for(int i = 0; i < colors.size(); i++) {
+			for (int i = 0; i < colors.size(); i++) {
 				DoaGraphicsFunctions.setColor(colors.get(i));
 				DoaGraphicsFunctions.fill(new Rectangle(983, 285 + 55 * i, colorBg.getWidth() - 6, colorBg.getHeight() - 6));
 				
@@ -207,7 +209,7 @@ public final class LoadingScreen extends RoyMenu{
 			}
 
 			// pawns
-			for(int i = 0; i < pawns.size(); i++) {
+			for (int i = 0; i < pawns.size(); i++) {
 				DoaGraphicsFunctions.drawImage(pawnBg, 1092, 282 + 55 * i, pawnBg.getWidth(), pawnBg.getHeight());
 				
 				DoaGraphicsFunctions.drawImage(pawns.get(i), 1122, 286 + 55 * i, pawnBg.getHeight() - 10, pawnBg.getHeight() - 10);
@@ -223,7 +225,7 @@ public final class LoadingScreen extends RoyMenu{
 			DoaGraphicsFunctions.fillRect(350, 950, 1220, 50);
 
 			DoaGraphicsFunctions.setColor(Color.ORANGE);
-			DoaGraphicsFunctions.fillRect(353, 953, 1214 * loadingBarProgress, 44);
+			DoaGraphicsFunctions.fillRect(353, 953, 1214 * currentBarProgress, 44);
 			
 			DoaGraphicsFunctions.setFont(loadingFont);
 			/* outline */
@@ -232,10 +234,17 @@ public final class LoadingScreen extends RoyMenu{
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 1);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 1);
-			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 2, loadingPosition.y);
-			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 2, loadingPosition.y);
-			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 2);
-			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);	
+			
+
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y - 1);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y + 1);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y + 1);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y - 1);
+			
+			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 2, loadingPosition.y);
+			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 2, loadingPosition.y);
+			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 2);
+			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);	
 			
 			/* text itself */
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());

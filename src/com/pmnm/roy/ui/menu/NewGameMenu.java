@@ -32,6 +32,7 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.utils.DoaUtils;
 import doa.engine.utils.discordapi.DoaDiscordActivity;
 import doa.engine.utils.discordapi.DoaDiscordService;
 import lombok.Data;
@@ -237,14 +238,34 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		Scenes.switchToLoadingScreen();
 		
 		new Thread(() -> {
-			
+			UIConstants.getLoadingScreen().setLoadingText("Loading Map Data...");
+			DoaUtils.sleepFor(500L);
+			UIConstants.getLoadingScreen().setLoadingBarProgress(0.10f);
+			DoaUtils.sleepFor(500L);
 			MapData data = MapLoader.loadMap(selectedConfig);
+			UIConstants.getLoadingScreen().setLoadingBarProgress(0.30f);
+			
+			UIConstants.getLoadingScreen().setLoadingText("Creating Game Context...");
+			DoaUtils.sleepFor(2500L);
+			UIConstants.getLoadingScreen().setLoadingBarProgress(0.40f);
 			RiskGameContext context = RiskGameContext.of(data);
-
+			UIConstants.getLoadingScreen().setLoadingBarProgress(0.60f);
+			
+			UIConstants.getLoadingScreen().setLoadingText("Initializing Game...");
+			DoaUtils.sleepFor(2500L);
+			UIConstants.getLoadingScreen().setLoadingBarProgress(0.70f);
 			DoaScene gameScene = Scenes.getGameScene();
+			UIConstants.getLoadingScreen().setLoadingBarProgress(0.85f);
 			gameScene.clear();
 			context.initiliazeGame(config);
+			
+			UIConstants.getLoadingScreen().setLoadingText("Initializing UI...");
+			DoaUtils.sleepFor(2500L);
+			UIConstants.getLoadingScreen().setLoadingBarProgress(0.95f);
 			RiskGameScreenUI.initUIFor(context, gameScene, type);
+			UIConstants.getLoadingScreen().setLoadingBarProgress(1.0f);
+			UIConstants.getLoadingScreen().setLoadingText("Get Ready!!");
+			DoaUtils.sleepFor(2000L);
 			Scenes.loadGameScene();
 		}).start();
 	}
