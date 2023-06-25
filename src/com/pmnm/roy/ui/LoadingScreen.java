@@ -1,5 +1,6 @@
 package com.pmnm.roy.ui;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -84,6 +85,8 @@ public final class LoadingScreen extends RoyMenu{
 
 		@Override
 		public void tick() {
+			if (!isVisible()) { return; }
+			
 			timer++;
 
 			if (currentBarProgress < loadingBarProgress && DoaMath.randomBetween(0, 1) < 0.15f) {
@@ -151,6 +154,8 @@ public final class LoadingScreen extends RoyMenu{
 
 		@Override
 		public void render() {
+			if (!isVisible()) { return; }
+			
 			if (mapNameFont == null) {
 				mapNameDimensions = new DoaVector(300f, 50f);
 				mapNameFont = UIConstants.getFont().deriveFont(
