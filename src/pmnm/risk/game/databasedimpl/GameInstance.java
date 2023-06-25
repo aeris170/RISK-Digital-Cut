@@ -41,10 +41,10 @@ public final class GameInstance {
 
 	public static Quintet<Metadata, Metadata, Metadata, Metadata, Metadata> readMetadataFromDisk() {
 		if (!SAVE_LOC.exists()) { return Quintet.with(null, null, null, null, null); }
-		
+
 		final int count = 5;
 		Metadata[] metas = new Metadata[count];
-		
+
 		for (int i = 0; i < count; i++) {
 			File saveFolder = new File(SAVE_LOC, Integer.toString(i));
 			if (!saveFolder.exists()) { continue; }
@@ -63,7 +63,7 @@ public final class GameInstance {
 		}
 		return Quintet.fromArray(metas);
 	}
-	
+
 	public static void instantiateGameWithUI(GameInstance instance) {
 		DoaScene scene = Scenes.getGameScene();
 		RiskGameScreenUI.destroyUI(scene);
@@ -206,28 +206,28 @@ public final class GameInstance {
 	@AllArgsConstructor
 	@ToString(includeFieldNames = true)
 	public static final class Metadata implements Serializable {
-		
+
 		private static final long serialVersionUID = 3750370033085075148L;
-		
+
 		@Getter
 		@NonNull
 		private String mapName;
-		
+
 		@Getter
 		@NonNull
 		private Date timestamp;
-		
+
 		@Getter
 		@NonNull
 		private String version;
-		
+
 		@Getter
 		@NonNull
 		private transient BufferedImage snapshotImage;
-		
+
 		@Getter
 		private int order; 
-				
+
 		private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 			stream.writeObject(mapName);
 			stream.writeObject(timestamp);
@@ -235,7 +235,7 @@ public final class GameInstance {
 			stream.writeInt(order);
 			ImageIO.write(snapshotImage, "PNG", stream);
 		}
-		
+
 		private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 			mapName = (String) stream.readObject();
 			timestamp = (Date) stream.readObject();

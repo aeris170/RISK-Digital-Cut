@@ -42,55 +42,55 @@ public class RiskGameContext implements IRiskGameContext {
 		RiskGameContext gameContext = new RiskGameContext(data);
 		return gameContext;
 	}
-	
+
 	@Getter
 	private GameConfig config;
 
 	private MapData map;
 	private CircularQueue<IPlayer> players;
-	
+
 	@Getter
 	@Setter
 	private boolean isPaused;
-	
+
 	@Getter
 	private int elapsedTurns;
-	
+
 	@Getter
 	private boolean isInitialized;
-	
+
 	/* Data <-> Implementation Association */
 	private Map<IContinent, ContinentData> continentData;
 	private Map<ContinentData, IContinent> dataContinent;
 	private Map<IProvince, ProvinceData> provinceData;
 	private Map<ProvinceData, IProvince> dataProvince;
-	
+
 	/* Continent <-> Province Association */
 	private Map<IContinent, @NonNull ImmutableList<@NonNull IProvince>> continentProvinces;
 	private Map<IProvince, IContinent> provinceContinents;
-	
+
 	/* Player <-> Province Association */
 	private Map<IPlayer, @NonNull ArrayList<@NonNull IProvince>> playerProvinces;
 	private Map<IProvince, IPlayer> provincePlayers;
-	
+
 	/* Province Runtime info */
 	private Map<IProvince, @NonNull ImmutableList<@NonNull IProvince>> neighbors;
 	private Map<IProvince, @NonNull Integer> numberOfTroops;
-	
+
 	/* Game Runtime info */
 	private boolean isInitialPlacementComplete;
 	private IPlayer currentPlayingPlayer;
 	private TurnPhase currentTurnPhase;
-	
+
 	@Getter
 	private int usedDeploys;
 	@Getter
 	private int remainingDeploys;
-	
+
 	/* Visuals */
 	@Getter
 	private transient ProvinceHitAreas areas;
-	
+
 	private RiskGameContext(@NonNull final MapData data) {
 		map = data;
 
@@ -111,7 +111,7 @@ public class RiskGameContext implements IRiskGameContext {
 		continentDatas = map.getContinents();
 		for (@NonNull ContinentData cData : continentDatas) {
 			Iterable<ProvinceData> provinceDatas = cData.getProvinces();
-			
+
 			for (@NonNull ProvinceData pData : provinceDatas) {
 				IProvince province = new Province(this, pData);
 				provinceData.put(province, pData);
@@ -131,7 +131,7 @@ public class RiskGameContext implements IRiskGameContext {
 				provinces.add(objectOf(pData));
 				provinceContinents.put(objectOf(pData), objectOf(cData));
 			}
-			
+
 			continentProvinces.put(objectOf(cData), ImmutableList.copyOf(provinces));
 		});
 		/* --------------------------------------------------------------------- */ 
@@ -151,7 +151,7 @@ public class RiskGameContext implements IRiskGameContext {
 			for (@NonNull ProvinceData nData : neighborDatas) {
 				provinces.add(objectOf(nData));
 			}
-			
+
 			neighbors.put(objectOf(pData), ImmutableList.copyOf(provinces));
 		});
 		/* --------------------------------------------------------------------- */ 
@@ -162,14 +162,14 @@ public class RiskGameContext implements IRiskGameContext {
 			.keySet()
 			.forEach(province -> numberOfTroops.put(province, Globals.UNKNOWN_TROOP_COUNT));
 		/* --------------------------------------------------------------------- */ 
-		
+
 		currentTurnPhase = TurnPhase.SETUP;
-		
+
 		areas = new ProvinceHitAreas(this);
-		
+
 		elapsedTurns = 1;
 	}
-	
+
 	/* Game API */
 	@Override
 	public GameType getGameType() { return config.getGameType(); }
@@ -189,7 +189,7 @@ public class RiskGameContext implements IRiskGameContext {
 		}
 		addToScene(gameScene);
 		currentPlayingPlayer = players.getNext();
-		
+
 		if (gameConfig.isRandomPlacementEnabled()) {
 			/* occupy all provinces */ { 
 				List<IProvince> unoccupiedProvinces = new ArrayList<>(provinceData.keySet());
