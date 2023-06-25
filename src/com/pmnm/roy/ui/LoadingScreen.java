@@ -32,21 +32,21 @@ public final class LoadingScreen extends RoyMenu{
 	private String loadingText = "";
 	private boolean hintTextChanged = false;
 	private boolean loadingTextChanged = false;
-	
+
 	@Setter
 	private float loadingBarProgress = 0f;
 	private float currentBarProgress = 0f;
-	
+
 	private List<String> names = new ArrayList<String>();
 	private List<Color> colors = new ArrayList<Color>();
 	private List<BufferedImage> pawns = new ArrayList<BufferedImage>();
-	
+
 	public LoadingScreen() {
 		addComponent(new Script());
 		addComponent(new Renderer());
 		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.mapNameFont = null);
 	}
-	
+
 	public void setGameConfig(@NonNull final GameConfig config) {
 		names.clear();
 		colors.clear();
@@ -61,27 +61,27 @@ public final class LoadingScreen extends RoyMenu{
 		selectedMapName = mapConfig.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = mapConfig.getBackgroundImagePreview();
 	}
-	
+
 	public void setHintText(String hintText) {
 		this.hintText = hintText;
 		hintTextChanged = true;
 	}
-	
+
 	public void setLoadingText(String loadingText) {
 		this.loadingText = loadingText;
 		loadingTextChanged = true;
 	}
-	
+
 	private final class Script extends DoaScript {
 		private String[] hints = new String[] {"hint1", "hint2", "hint3 tehe ;P"};
 		private int hintIndex = 0;
 		private int timer = 0;
 		private int timerMax = 600;
-		
+
 		public Script() {
 			setHintText(hints[hintIndex]);
 		}
-		
+
 		@Override
 		public void tick() {
 			timer++;
@@ -92,7 +92,7 @@ public final class LoadingScreen extends RoyMenu{
 			
 			if(timer >= timerMax) {
 				timer = 0;
-				
+
 				if(hintIndex >= hints.length - 1) {
 					hintIndex = 0;
 				} else {
@@ -103,17 +103,17 @@ public final class LoadingScreen extends RoyMenu{
 			}
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 
 		private Font mapNameFont;
 		private DoaVector mapNamePosition;
 		private DoaVector mapNameDimensions;
-		
+
 		private Font hintFont;
 		private DoaVector hintPosition;
 		private DoaVector hintTextDimensions;
-		
+
 		private Font loadingFont;
 		private DoaVector loadingPosition;
 		private DoaVector loadingTextDimensions;
@@ -124,14 +124,14 @@ public final class LoadingScreen extends RoyMenu{
 		private transient BufferedImage playerNameBg;
 		private transient BufferedImage colorBg;
 		private transient BufferedImage pawnBg;
-		
+
 		private transient BufferedImage loadingLeft;
 		private transient BufferedImage loadingMiddle;
 		private transient BufferedImage loadingRight;
 		private transient BufferedImage loadingLeftUnsaturated;
 		private transient BufferedImage loadingMiddleUnsaturated;
 		private transient BufferedImage loadingRightUnsaturated;
-		
+
 		public Renderer() {
 			mainScroll = DoaSprites.getSprite("MainScroll");
 			mapChooserBg = DoaSprites.getSprite("MapChooserBackground");
@@ -148,7 +148,7 @@ public final class LoadingScreen extends RoyMenu{
 			loadingMiddleUnsaturated = DoaSprites.getSprite("loadingProgressMiddleUnsaturated");
 			loadingRightUnsaturated = DoaSprites.getSprite("loadingProgressRightUnsaturated");
 		}
-		
+
 		@Override
 		public void render() {
 			if (mapNameFont == null) {
@@ -175,7 +175,7 @@ public final class LoadingScreen extends RoyMenu{
 				
 				hintTextChanged = false;
 			}
-			
+
 			if (loadingFont == null || loadingTextChanged) {
 				loadingTextDimensions = new DoaVector(1000f, 50f);
 				
@@ -189,7 +189,7 @@ public final class LoadingScreen extends RoyMenu{
 				
 				loadingTextChanged = false;
 			}
-			
+
 			// MAP SECTION
 			DoaGraphicsFunctions.drawImage(mapChooserBg, 153, 259, mapChooserBg.getWidth(), mapChooserBg.getHeight());
 			
@@ -197,7 +197,7 @@ public final class LoadingScreen extends RoyMenu{
 			
 			DoaGraphicsFunctions.setFont(mapNameFont);
 			DoaGraphicsFunctions.drawString(selectedMapName, mapNamePosition.x, mapNamePosition.y);
-		
+
 			DoaGraphicsFunctions.drawImage(
 				selectedMapPreview,
 				200,
@@ -205,9 +205,9 @@ public final class LoadingScreen extends RoyMenu{
 				mapBorder.getWidth() - 5f,
 				mapBorder.getHeight() - 3f);
 			DoaGraphicsFunctions.drawImage(mapBorder, 195, 357);
-			
+
 			DoaGraphicsFunctions.drawImage(mainScroll, 600, 170, mainScroll.getWidth(), mainScroll.getHeight());
-			
+
 			// names
 			for (int i = 0; i < names.size(); i++) {
 				DoaGraphicsFunctions.drawImage(playerNameBg, 725, 282 + i * 55, playerNameBg.getWidth(), playerNameBg.getHeight());
@@ -251,7 +251,7 @@ public final class LoadingScreen extends RoyMenu{
 				1570 - loadingRightUnsaturated.getWidth(), 950,
 				loadingRightUnsaturated.getWidth(), 50
 			);
-			
+
 			DoaGraphicsFunctions.setClip(350, 950, 1220 * currentBarProgress, 50);
 			DoaGraphicsFunctions.drawImage(
 				loadingLeft,
@@ -278,18 +278,17 @@ public final class LoadingScreen extends RoyMenu{
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 1);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 1);
-			
 
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y - 1);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y + 1);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y + 1);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y - 1);
-			
+
 			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 2, loadingPosition.y);
 			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 2, loadingPosition.y);
 			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 2);
 			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);	
-			
+
 			/* text itself */
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y);
