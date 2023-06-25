@@ -235,8 +235,9 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		
 		UIConstants.getLoadingScreen().setGameConfig(config);
 		setVisible(false);
-		Scenes.switchToLoadingScreen();
-		
+		UIConstants.getEmbroidments().setVisible(false);
+		UIConstants.getLoadingScreen().setVisible(true);
+
 		new Thread(() -> {
 			UIConstants.getLoadingScreen().setLoadingText("Loading Map Data...");
 			DoaUtils.sleepFor(500L);
@@ -267,6 +268,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			UIConstants.getLoadingScreen().setLoadingText("Get Ready!!");
 			DoaUtils.sleepFor(2000L);
 			Scenes.loadGameScene();
+			UIConstants.getLoadingScreen().setVisible(false);
+			UIConstants.getEmbroidments().setVisible(true);
 		}).start();
 	}
 	

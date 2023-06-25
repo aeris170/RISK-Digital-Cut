@@ -73,6 +73,13 @@ public final class LoadingScreen extends RoyMenu{
 		loadingTextChanged = true;
 	}
 
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		loadingBarProgress = 0;
+		currentBarProgress = 0;
+	}
+	
 	private final class Script extends DoaScript {
 		private String[] hints = new String[] {"hint1", "hint2", "hint3 tehe ;P"};
 		private int hintIndex = 0;
