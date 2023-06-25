@@ -25,8 +25,12 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.DoaSceneHandler;
 import doa.engine.scene.elements.renderers.DoaRenderer;
+import doa.engine.utils.DoaUtils;
 import pmnm.risk.game.databasedimpl.GameInstance;
+import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.game.databasedimpl.GameInstance.Metadata;
+import pmnm.risk.map.MapData;
+import pmnm.risk.map.MapLoader;
 
 @SuppressWarnings("serial")
 public class LoadGameMenu extends RoyMenu implements Observer {
@@ -79,6 +83,14 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 			RoyMiniButton loadButton  = RoyMiniButton.builder()
 				.textKey("LOAD")
 				.action(source -> {
+					/* 
+					 * this.setVisible(false) will null
+					 * metas, therefore we need to set the
+					 * config of loading screen before that.
+					 */
+					Metadata meta = (Metadata) metas.getValue(order);
+					UIConstants.getLoadingScreen().setGameConfig(meta.getConfig());
+					
 					DoaScene scene = DoaSceneHandler.getLoadedScene();
 					if (scene == Scenes.getMenuScene()) {
 						UIConstants.getLoadGameMenu().setVisible(false);
@@ -86,10 +98,30 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 						RiskGameScreenUI.setLoadMenuVisibility(false);
 					}
 
+					UIConstants.getEmbroidments().setVisible(false);
 					UIConstants.getLoadingScreen().setVisible(true);
-					new Thread(()-> { 
+					new Thread(()-> {
+						UIConstants.getLoadingScreen().setLoadingText("Loading Game Context...");
+						DoaUtils.sleepFor(2500L);
+						UIConstants.getLoadingScreen().setLoadingBarProgress(0.40f);
 						GameInstance instance = GameInstance.loadGame(order);
+						UIConstants.getLoadingScreen().setLoadingBarProgress(0.60f);
+						
+						UIConstants.getLoadingScreen().setLoadingText("Initializing UI...");
+						DoaUtils.sleepFor(2500L);
+						UIConstants.getLoadingScreen().setLoadingBarProgress(0.70f);
+						DoaScene gameScene = Scenes.getGameScene();
+						UIConstants.getLoadingScreen().setLoadingBarProgress(0.85f);
+						gameScene.clear();
+						DoaUtils.sleepFor(2500L);
+						UIConstants.getLoadingScreen().setLoadingBarProgress(0.95f);
 						GameInstance.instantiateGameWithUI(instance);
+						UIConstants.getLoadingScreen().setLoadingBarProgress(1.0f);
+						UIConstants.getLoadingScreen().setLoadingText("Get Ready!!");
+						DoaUtils.sleepFor(2000L);
+						Scenes.loadGameScene();
+						UIConstants.getLoadingScreen().setVisible(false);
+						UIConstants.getEmbroidments().setVisible(true);
 					}).start();
 				}).build();
 			loadButton.setPosition(LOAD_BUTTON_LOCATIONS[i]);
