@@ -56,13 +56,13 @@ public final class UIConstants {
 	private static final String COLOR_BORDER = "ColorBorder";
 	private static final String DROPDOWN_COLOR = "DropDownColor";
 	private static final String COLOR_BORDER_SELECTED = "ColorBorderSelected";
-	
+
 	private static final String SAVE_SCROLL = "SaveScroll";
 	private static final String SAVE_MAP_CONTAINER = "SaveMapContainer";
 
 	private static final String RULES_IMAGES = "pt";
 	private static final int RULES_IMAGES_COUNT = 6;
-	
+
 	private static final String LENS = "Lens";
 	private static final String LENS_HOVER = "LensHover";
 	private static final String LENS_SELECTED = "LensSelect";
@@ -73,7 +73,7 @@ public final class UIConstants {
 	private static final String IT = "Italian";
 	private static final String RU = "Russian";
 	private static final String TR = "Turkish";
-	
+
 	private static final String PLAYER_PAWN = "p_Pawn";
 
 	public static final int FLEUR_WIDTH = DoaSprites.getSprite(FLEUR_DE_LIS).getWidth() / 6;
@@ -90,7 +90,7 @@ public final class UIConstants {
 	@Getter @NonNull private static NewGameMenu newGameMenuSP;
 	@Getter @NonNull private static LoadGameMenu loadGameMenu;
 	@Getter @NonNull private static NewGameMenu newGameMenuMP;
-	
+
 	@Getter @NonNull private static LoadingScreen loadingScreen;
 	public static HostGameMenu hgm;
 	public static JoinGameMenu jgm;
@@ -99,7 +99,7 @@ public final class UIConstants {
 	@Getter @NonNull private static BufferedImage topRing;
 	@Getter @NonNull private static BufferedImage bottomRing;
 	@Getter @NonNull private static final BufferedImage[] backgrounds = new BufferedImage[6];
-	
+
 	@Getter @NonNull private static BufferedImage popupBackground;
 	@Getter @NonNull private static BufferedImage buttonIdleSprite;
 	@Getter @NonNull private static BufferedImage buttonHoverSprite;
@@ -120,7 +120,7 @@ public final class UIConstants {
 	@Getter @NonNull private static BufferedImage colorBorderSprite;
 	@Getter @NonNull private static BufferedImage colorDropdownBgSprite;
 	@Getter @NonNull private static BufferedImage colorBorderSelectedSprite;
-	
+
 	@Getter @NonNull private static BufferedImage saveScrollSprite;
 	@Getter @NonNull private static BufferedImage saveMapContainerSprite;
 	@Getter @NonNull private static BufferedImage[] rulesImages;
@@ -141,7 +141,7 @@ public final class UIConstants {
 			backgrounds[i] = DoaSprites.getSprite(BG.concat(Integer.toString(i)));
 		}
 		popupBackground = DoaSprites.getSprite(POPUP_BG);
-		
+
 		buttonIdleSprite = DoaSprites.getSprite(BUTTON_IDLE);
 		buttonHoverSprite = DoaSprites.getSprite(BUTTON_HOVER);
 		buttonPressedSprite = DoaSprites.getSprite(BUTTON_PRESSED);
@@ -161,19 +161,19 @@ public final class UIConstants {
 		colorBorderSprite = DoaSprites.getSprite(COLOR_BORDER);
 		colorDropdownBgSprite = DoaSprites.getSprite(DROPDOWN_COLOR);
 		colorBorderSelectedSprite = DoaSprites.getSprite(COLOR_BORDER_SELECTED);
-		
+
 		saveScrollSprite = DoaSprites.getSprite(SAVE_SCROLL);
 		saveMapContainerSprite = DoaSprites.getSprite(SAVE_MAP_CONTAINER);
-		
+
 		rulesImages = new BufferedImage[RULES_IMAGES_COUNT];
 		for (int i = 0; i < RULES_IMAGES_COUNT; i++) {
 			rulesImages[i] = DoaSprites.getSprite(RULES_IMAGES + i);
 		}
-		
+
 		lensImage = DoaSprites.getSprite(LENS);
 		lensHoverImage = DoaSprites.getSprite(LENS_HOVER);
 		lensSelectedImage = DoaSprites.getSprite(LENS_SELECTED);
-		
+
 		languageImages.put(Language.EN, DoaSprites.getSprite(EN));
 		languageImages.put(Language.DE, DoaSprites.getSprite(DE));
 		languageImages.put(Language.ES, DoaSprites.getSprite(ES));
@@ -181,11 +181,11 @@ public final class UIConstants {
 		languageImages.put(Language.IT, DoaSprites.getSprite(IT));
 		languageImages.put(Language.RU, DoaSprites.getSprite(RU));
 		languageImages.put(Language.TR, DoaSprites.getSprite(TR));
-		
+
 		for(int i = 0; i < playerPawnSprites.length; i++) {
 			playerPawnSprites[i] = DoaSprites.getSprite(PLAYER_PAWN.replace('_', (char)('1' + i)));
 		}
-		
+
 		font = DoaFonts.getFont("BookAntiqua");
 
 		DoaScene menuScene = Scenes.getMenuScene();
@@ -206,7 +206,7 @@ public final class UIConstants {
 		//jgm = Builders.JGMB.scene(menuScene).instantiate();
 		//ep = Builders.EPB.scene(menuScene).instantiate();
 		//ef = Builders.EFTBB.scene(menuScene).instantiate();
-		
+
 		menuScene.add(background);
 		menuScene.add(embroidments);
 		menuScene.add(mainMenu);
