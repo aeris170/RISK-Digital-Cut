@@ -31,6 +31,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
+import pmnm.risk.game.GameConfig;
 import pmnm.risk.game.IRiskGameContext;
 
 public final class GameInstance {
@@ -70,18 +71,18 @@ public final class GameInstance {
 		RiskGameContext context = (RiskGameContext)instance.context;
 		RiskGameScreenUI.initUIFor(context, scene, context.getGameType());
 		context.addToScene(scene);
-		Scenes.loadGameScene();
 	}
 
-	@Getter private IRiskGameContext context;
+	@Getter private RiskGameContext context;
 	@Getter private Metadata metadata;
 
-	public GameInstance(IRiskGameContext context) {
+	public GameInstance(RiskGameContext context) {
 		this.context = context;
 		
 		BufferedImage snapshot = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-		DoaWindow.dumpFrameBufferTo(snapshot); 
+		DoaWindow.dumpFrameBufferTo(snapshot);
 		metadata = new Metadata(
+			context.getConfig(),
 			context.getMapName(),
 			Date.from(Instant.now()),
 			Globals.GAME_VERSION,
@@ -92,7 +93,7 @@ public final class GameInstance {
 	
 	private GameInstance(ObjectInputStream ctxIn, ObjectInputStream metaIn) throws IOException {
 		try {
-			context = (IRiskGameContext) ctxIn.readObject();
+			context = (RiskGameContext) ctxIn.readObject();
 		} catch(ClassCastException | StreamCorruptedException ex) {
 			JOptionPane.showConfirmDialog(
 				null,
@@ -211,6 +212,10 @@ public final class GameInstance {
 
 		@Getter
 		@NonNull
+		private GameConfig config;
+
+		@Getter
+		@NonNull
 		private String mapName;
 
 		@Getter
@@ -229,6 +234,7 @@ public final class GameInstance {
 		private int order; 
 
 		private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+			stream.writeObject(config);
 			stream.writeObject(mapName);
 			stream.writeObject(timestamp);
 			stream.writeObject(version);
@@ -237,6 +243,7 @@ public final class GameInstance {
 		}
 
 		private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+			config = (GameConfig) stream.readObject();
 			mapName = (String) stream.readObject();
 			timestamp = (Date) stream.readObject();
 			version = (String) stream.readObject();
