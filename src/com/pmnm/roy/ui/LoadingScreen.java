@@ -271,6 +271,7 @@ public final class LoadingScreen extends RoyMenu{
 			DoaGraphicsFunctions.setClip(0, 0, 1920, 1080);
 			
 			DoaGraphicsFunctions.setFont(loadingFont);
+			
 			/* outline */
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor().brighter());
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y);
