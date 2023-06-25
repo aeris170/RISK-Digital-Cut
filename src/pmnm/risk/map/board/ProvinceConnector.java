@@ -25,13 +25,12 @@ public final class ProvinceConnector extends DoaObject {
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
-	
 
 	public void setPath(ProvinceHitArea... provinceHitAreas) {
 		this.provinceHitAreas = provinceHitAreas;
 		dashPhase = 0;
 	}
-	
+
 	private class Script extends DoaScript {
 		@Override
 		public void tick() {
@@ -45,7 +44,7 @@ public final class ProvinceConnector extends DoaObject {
 		public void render() {
 			if (provinceHitAreas == null) { return; }
 			if (provinceHitAreas.length <= 0) { return; }
-			
+
 			DoaGraphicsFunctions.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0, dashArray, dashPhase));
 			Color ownerColor = provinceHitAreas[0].getProvince().getOccupier().getColor();
 			ownerColor = new Color(255 - ownerColor.getRed(), 255 - ownerColor.getGreen(), 255 - ownerColor.getBlue());
