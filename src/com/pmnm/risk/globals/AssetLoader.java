@@ -109,6 +109,20 @@ public final class AssetLoader {
 				DoaSprites.createSprite("fall", "/ui/gameScreenElements/topInfo/fall.png");
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
 			}
+			
+			{// LOADING SCREEN
+				DoaSprites.createSprite("loadingButton", "/ui/loadingScreen/loadingButton.png");
+				DoaSprites.createSprite("loadingButtonLowContrast", "/ui/loadingScreen/loadingButtonLowContrast.png");
+				DoaSprites.createSprite("loadingInfoBox", "/ui/loadingScreen/loadingInfoBox.png");
+				DoaSprites.createSprite("loadingProgress", "/ui/loadingScreen/loadingProgress.png");
+				DoaSprites.createSprite("loadingProgressLeft", "/ui/loadingScreen/loadingProgressLeft.png");
+				DoaSprites.createSprite("loadingProgressMiddle", "/ui/loadingScreen/loadingProgressMiddle.png");
+				DoaSprites.createSprite("loadingProgressRight", "/ui/loadingScreen/loadingProgressRight.png");
+				DoaSprites.createSprite("loadingProgressLeftUnsaturated", "/ui/loadingScreen/loadingProgressLeftUnsaturated.png");
+				DoaSprites.createSprite("loadingProgressMiddleUnsaturated", "/ui/loadingScreen/loadingProgressMiddleUnsaturated.png");
+				DoaSprites.createSprite("loadingProgressRightUnsaturated", "/ui/loadingScreen/loadingProgressRightUnsaturated.png");
+				DoaSprites.createSprite("loadingRelief", "/ui/loadingScreen/loadingRelief.png");
+			}
 
 			{// WEATHER EFFECTS
 				DoaSprites.createSprite("godray", "/ui/gameScreenElements/topInfo/godray.png");
