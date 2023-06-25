@@ -125,6 +125,13 @@ public final class LoadingScreen extends RoyMenu{
 		private transient BufferedImage colorBg;
 		private transient BufferedImage pawnBg;
 		
+		private transient BufferedImage loadingLeft;
+		private transient BufferedImage loadingMiddle;
+		private transient BufferedImage loadingRight;
+		private transient BufferedImage loadingLeftUnsaturated;
+		private transient BufferedImage loadingMiddleUnsaturated;
+		private transient BufferedImage loadingRightUnsaturated;
+		
 		public Renderer() {
 			mainScroll = DoaSprites.getSprite("MainScroll");
 			mapChooserBg = DoaSprites.getSprite("MapChooserBackground");
@@ -132,6 +139,14 @@ public final class LoadingScreen extends RoyMenu{
 			playerNameBg = UIConstants.getPlayerTypeBorderSprite();
 			colorBg = UIConstants.getColorBorderSprite();
 			pawnBg = UIConstants.getColorBorderSprite();
+			
+			loadingLeft = DoaSprites.getSprite("loadingProgressLeft");
+			loadingMiddle = DoaSprites.getSprite("loadingProgressMiddle");
+			loadingRight = DoaSprites.getSprite("loadingProgressRight");
+			
+			loadingLeftUnsaturated = DoaSprites.getSprite("loadingProgressLeftUnsaturated");
+			loadingMiddleUnsaturated = DoaSprites.getSprite("loadingProgressMiddleUnsaturated");
+			loadingRightUnsaturated = DoaSprites.getSprite("loadingProgressRightUnsaturated");
 		}
 		
 		@Override
@@ -221,11 +236,39 @@ public final class LoadingScreen extends RoyMenu{
 			DoaGraphicsFunctions.drawString(hintText, hintPosition.x, hintPosition.y);
 
 			// LOADING BAR
-			DoaGraphicsFunctions.setColor(Color.GRAY);
-			DoaGraphicsFunctions.fillRect(350, 950, 1220, 50);
-
-			DoaGraphicsFunctions.setColor(Color.ORANGE);
-			DoaGraphicsFunctions.fillRect(353, 953, 1214 * currentBarProgress, 44);
+			DoaGraphicsFunctions.drawImage(
+				loadingLeftUnsaturated,
+				350, 950,
+				loadingLeftUnsaturated.getWidth(), 50
+			);
+			DoaGraphicsFunctions.drawImage(
+				loadingMiddleUnsaturated,
+				350 + loadingLeftUnsaturated.getWidth(), 950,
+				1220 - loadingRightUnsaturated.getWidth() * 2, 50
+			);
+			DoaGraphicsFunctions.drawImage(
+				loadingRightUnsaturated,
+				1570 - loadingRightUnsaturated.getWidth(), 950,
+				loadingRightUnsaturated.getWidth(), 50
+			);
+			
+			DoaGraphicsFunctions.setClip(350, 950, 1220 * currentBarProgress, 50);
+			DoaGraphicsFunctions.drawImage(
+				loadingLeft,
+				350, 950,
+				loadingLeft.getWidth(), 50
+			);
+			DoaGraphicsFunctions.drawImage(
+				loadingMiddle,
+				350 + loadingLeft.getWidth(), 950,
+				1220 - loadingRight.getWidth() * 2, 50
+			);
+			DoaGraphicsFunctions.drawImage(
+				loadingRight,
+				1570 - loadingRight.getWidth(), 950,
+				loadingRight.getWidth(), 50
+			);
+			DoaGraphicsFunctions.setClip(0, 0, 1920, 1080);
 			
 			DoaGraphicsFunctions.setFont(loadingFont);
 			/* outline */
