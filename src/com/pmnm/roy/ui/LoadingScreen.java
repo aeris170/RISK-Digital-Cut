@@ -156,6 +156,12 @@ public final class LoadingScreen extends RoyMenu{
 		public void render() {
 			if (!isVisible()) { return; }
 			
+			DoaGraphicsFunctions.setColor(new Color(0, 0, 0));
+			DoaGraphicsFunctions.pushComposite();
+			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.60f));
+			DoaGraphicsFunctions.fillRect(0, 0, 1920, 1080);
+			DoaGraphicsFunctions.popComposite();
+			
 			if (mapNameFont == null) {
 				mapNameDimensions = new DoaVector(300f, 50f);
 				mapNameFont = UIConstants.getFont().deriveFont(
