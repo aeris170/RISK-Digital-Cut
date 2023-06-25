@@ -9,6 +9,7 @@ import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.localization.Translator.Language;
 import com.pmnm.risk.main.SystemSpecs;
+import com.pmnm.roy.ui.menu.Embroidments;
 import com.pmnm.roy.ui.menu.FadingBackground;
 import com.pmnm.roy.ui.menu.HostGameMenu;
 import com.pmnm.roy.ui.menu.JoinGameMenu;
@@ -79,6 +80,7 @@ public final class UIConstants {
 	public static final int FLEUR_HEIGHT = DoaSprites.getSprite(FLEUR_DE_LIS).getHeight() / 6;
 
 	@Getter @NonNull private static FadingBackground background;
+	@Getter @NonNull private static Embroidments embroidments;
 	@Getter @NonNull private static MainMenu mainMenu;
 	@Getter @NonNull private static PlayOfflineMenu playOfflineMenu;
 	@Getter @NonNull private static PlayOnlineMenu playOnlineMenu;
@@ -185,13 +187,12 @@ public final class UIConstants {
 		}
 		
 		font = DoaFonts.getFont("BookAntiqua");
-		
-		loadingScreen = new LoadingScreen();
-		Scenes.getLoadingScene().add(loadingScreen);
-		
+
 		DoaScene menuScene = Scenes.getMenuScene();
 		menuScene.clear();
 		background = new FadingBackground();
+		embroidments = new Embroidments();
+		loadingScreen = new LoadingScreen();
 		mainMenu = new MainMenu();
 		mainMenu.setVisible(true);
 		playOfflineMenu = new PlayOfflineMenu();
@@ -207,7 +208,9 @@ public final class UIConstants {
 		//ef = Builders.EFTBB.scene(menuScene).instantiate();
 		
 		menuScene.add(background);
+		menuScene.add(embroidments);
 		menuScene.add(mainMenu);
+		menuScene.add(loadingScreen);
 		menuScene.add(playOfflineMenu);
 		menuScene.add(playOnlineMenu);
 		menuScene.add(settingsMenu);
