@@ -118,6 +118,7 @@ public class Player extends DoaObject implements IPlayer {
 				attackerProvince = null;
 				defenderProvince = null;
 				reinforcingProvince = null;
+				areas.getConnector().setPath((ProvinceHitArea[])null);
 				return;
 			}
 
@@ -145,11 +146,12 @@ public class Player extends DoaObject implements IPlayer {
 					attackerProvince = province;
 					areas.selectAttackerProvinceAs(province);
 					areas.selectDefenderProvinceAs(null);
+					areas.getConnector().setPath((ProvinceHitArea[])null);
 				} else if (
 					attackerProvince != null &&
 					!province.isOccupiedBy(Player.this) &&
 					province.isNeighborOf(attackerProvince) &&
-					defenderProvince == null) {
+					defenderProvince != province) {
 					defenderProvince = province;
 					areas.selectDefenderProvinceAs(province);
 					areas.getConnector().setPath(
