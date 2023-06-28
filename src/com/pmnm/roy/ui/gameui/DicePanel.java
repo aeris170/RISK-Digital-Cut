@@ -23,10 +23,10 @@ public class DicePanel extends RoyMenu {
 
 	private DoaVector panelPosition = new DoaVector(-160f, 258f);
 	
-	private final DoaVector ONE_POSITION = new DoaVector(49f, 109f);
-	private final DoaVector TWO_POSITION = new DoaVector(22f, 183f);
-	private final DoaVector THREE_POSITION = new DoaVector(32f, 266f);
-	private final DoaVector BLITZ_POSITION = new DoaVector(30f, 305f);
+	private DoaVector ONE_POSITION = new DoaVector(51f, 109f);
+	private DoaVector TWO_POSITION = new DoaVector(24f, 183f);
+	private DoaVector THREE_POSITION = new DoaVector(24f, 266f);
+	private DoaVector BLITZ_POSITION = new DoaVector(37f, 305f);
 
 	private RoyImageButton one;
 	private RoyImageButton two;
