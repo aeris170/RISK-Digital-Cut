@@ -4,7 +4,7 @@ import lombok.NonNull;
 
 public interface IRoyContainer extends IRoyElement {
 
-	Iterable<IRoyElement> getElements();
+	Iterable<@NonNull IRoyElement> getElements();
 	void addElement(@NonNull IRoyElement element);
 	boolean removeElement(@NonNull IRoyElement element);
 

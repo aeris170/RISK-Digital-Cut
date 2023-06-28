@@ -61,7 +61,7 @@ public class RoyMenu extends DoaObject implements IRoyContainer {
 	public Rectangle getContentArea() { return new Rectangle(0, 0, 1920, 1080); }
 
 	@Override
-	public Iterable<IRoyElement> getElements() { return elements; }
+	public Iterable<@NonNull IRoyElement> getElements() { return elements; }
 
 	@Override
 	public void addElement(@NonNull IRoyElement element) { elements.add(element); }
