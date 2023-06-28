@@ -46,7 +46,6 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	protected transient IRoyAction action = null;
 	
 	@Getter
-	@Setter
 	protected String text;
 
 	@Getter
@@ -68,6 +67,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	private int width = 0;
 	private int height = 0;
 	
+	private Renderer renderer;
+	
 	@Builder
 	protected RoyImageButton(@NonNull BufferedImage image, @NonNull BufferedImage hoverImage, @NonNull BufferedImage pressImage, BufferedImage disabledImage, @NonNull IRoyAction action) {
 		this.image = image;
@@ -84,14 +85,20 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 		width = image.getWidth();
 		height = image.getHeight();
 		
+		renderer = new Renderer();
 		addComponent(new Script());
-		addComponent(new Renderer());
+		addComponent(renderer);
 	}
 
 	@Override
 	public void setPosition(DoaVector position) {
 		transform.position.x = position.x;
 		transform.position.y = position.y;
+	}
+	
+	public void setText(@NonNull String text) {
+		this.text = text;
+		renderer.font = null;
 	}
 
 	public void setScale(float f) {
