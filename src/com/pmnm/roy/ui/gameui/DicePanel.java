@@ -118,7 +118,7 @@ public class DicePanel extends RoyMenu {
 			} else {
 				hide();
 			}
-			
+
 			if (moving) {
 				if (velocity > 0) {
 					velocity += ACCELERATION;
@@ -135,7 +135,7 @@ public class DicePanel extends RoyMenu {
 					velocity = 0;
 					moving = false;
 				}
-				
+
 				panelPosition.x += velocity;
 				one.setPosition(new DoaVector(panelPosition.x + ONE_POSITION.x, panelPosition.y + ONE_POSITION.y));
 				two.setPosition(new DoaVector(panelPosition.x + TWO_POSITION.x, panelPosition.y + TWO_POSITION.y));
