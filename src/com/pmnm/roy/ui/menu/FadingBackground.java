@@ -68,14 +68,11 @@ public class FadingBackground extends DoaObject {
 		public void render() {
 			if (!isVisible) { return; }
 
-			int width = Main.WINDOW_WIDTH;
-			int height = Main.WINDOW_HEIGHT;
-
 			DoaGraphicsFunctions.pushComposite();
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, DoaMath.clamp(alpha, 0, 1)));
-			DoaGraphicsFunctions.drawImage(get(index), 0, 0, width, height);
+			DoaGraphicsFunctions.drawImage(get(index), 0, 0, 1920, 1080);
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, DoaMath.clamp(1 - alpha, 0, 1)));
-			DoaGraphicsFunctions.drawImage(get(index + 1), 0, 0, width, height);
+			DoaGraphicsFunctions.drawImage(get(index + 1), 0, 0, 1920, 1080);
 			DoaGraphicsFunctions.popComposite();
 		}
 

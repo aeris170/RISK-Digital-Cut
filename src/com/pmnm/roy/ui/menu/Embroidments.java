@@ -37,14 +37,22 @@ public class Embroidments extends DoaObject {
 			if (!isVisible) { return; }
 
 			for (int i = 0; i < Main.WINDOW_WIDTH; i += UIConstants.FLEUR_WIDTH - 1) { // on big displays, fleur has gaps between. -1 fixes that
-				DoaGraphicsFunctions.drawImage(fleurDeLis, i, 0,													UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
-				DoaGraphicsFunctions.drawImage(fleurDeLis, i, UIConstants.FLEUR_HEIGHT, 							UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
-				DoaGraphicsFunctions.drawImage(fleurDeLis, i, Main.WINDOW_HEIGHT - UIConstants.FLEUR_HEIGHT * 2f,	UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
-				DoaGraphicsFunctions.drawImage(fleurDeLis, i, Main.WINDOW_HEIGHT - UIConstants.FLEUR_HEIGHT, 		UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
+				DoaGraphicsFunctions.drawImage(fleurDeLis, i, 0,									UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
+				DoaGraphicsFunctions.drawImage(fleurDeLis, i, UIConstants.FLEUR_HEIGHT, 			UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
+				DoaGraphicsFunctions.drawImage(fleurDeLis, i, 1080 - UIConstants.FLEUR_HEIGHT * 2f,	UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
+				DoaGraphicsFunctions.drawImage(fleurDeLis, i, 1080 - UIConstants.FLEUR_HEIGHT, 		UIConstants.FLEUR_WIDTH, UIConstants.FLEUR_HEIGHT);
 			}
 
-			DoaGraphicsFunctions.drawImage(topRing,		0, UIConstants.FLEUR_HEIGHT * 1.5f, 1920, bottomRing.getHeight());
-			DoaGraphicsFunctions.drawImage(bottomRing,	0, Main.WINDOW_HEIGHT - UIConstants.FLEUR_HEIGHT * 1.5f - bottomRing.getHeight(), 1920, bottomRing.getHeight());
+			DoaGraphicsFunctions.drawImage(
+				topRing,
+				0, UIConstants.FLEUR_HEIGHT * 1.5f,
+				1920, bottomRing.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(
+				bottomRing,
+				0, 1080 - UIConstants.FLEUR_HEIGHT * 1.5f - bottomRing.getHeight(),
+				1920, bottomRing.getHeight()
+			);
 		}
 	}
 }
