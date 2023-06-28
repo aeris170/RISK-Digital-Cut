@@ -16,6 +16,7 @@ import com.pmnm.roy.ui.UIConstants;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
+import doa.engine.maths.DoaMath;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
@@ -99,7 +100,6 @@ public class BottomPanel extends RoyMenu {
 			.pressImage(DoaSprites.getSprite("centerPiecePress"))
 			.disabledImage(DoaSprites.getSprite("centerPieceDisabled"))
 			.action(source -> {
-				updateSpinnerValues();
 				ProvinceHitAreas areas = context.getAreas();
 				switch(context.getCurrentPhase()) {
 					case DRAFT:
@@ -112,6 +112,7 @@ public class BottomPanel extends RoyMenu {
 							if (maxTroopCount == 0) {
 								nextPhaseButton.setEnabled(true);
 							}
+							selectedTroopCount = (int) DoaMath.clamp(selectedTroopCount, 0, maxTroopCount);
 						}
 						break;
 					case ATTACK_DEPLOY:
@@ -125,6 +126,7 @@ public class BottomPanel extends RoyMenu {
 						{ /* to avoid local variable bleeding */
 							Reinforce reinforce = context.setUpReinforce(attacker, defender, selectedTroopCount);
 							if (context.applyReinforceResult(reinforce.calculateResult())) {
+								areas.resetAll();
 								nextPhaseButton.setEnabled(true);
 							}
 						}
