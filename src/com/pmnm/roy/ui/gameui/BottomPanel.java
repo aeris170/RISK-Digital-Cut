@@ -109,10 +109,11 @@ public class BottomPanel extends RoyMenu {
 						Deploy deploy = context.setUpDeploy(selectedProvince, selectedTroopCount);
 						if (context.applyDeployResult(deploy.calculateResult())) {
 							maxTroopCount -= selectedTroopCount;
+							selectedTroopCount = (int) DoaMath.clamp(selectedTroopCount, 0, maxTroopCount);
+							centerPieceButton.setText(Integer.toString(selectedTroopCount));
 							if (maxTroopCount == 0) {
 								nextPhaseButton.setEnabled(true);
 							}
-							selectedTroopCount = (int) DoaMath.clamp(selectedTroopCount, 0, maxTroopCount);
 						}
 						break;
 					case ATTACK_DEPLOY:
