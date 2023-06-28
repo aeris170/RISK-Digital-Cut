@@ -32,6 +32,7 @@ import pmnm.risk.map.ContinentData;
 import pmnm.risk.map.MapData;
 import pmnm.risk.map.ProvinceData;
 import pmnm.risk.map.board.GameBoard;
+import pmnm.risk.map.board.ProvinceConnector;
 import pmnm.risk.map.board.ProvinceHitAreas;
 
 public class RiskGameContext implements IRiskGameContext {
@@ -331,6 +332,7 @@ public class RiskGameContext implements IRiskGameContext {
 			usedDeploys = 0;
 			remainingDeploys = result.getRemainingAttackerTroops() - 1;
 			areas.getConnector().setPath(areas.findHitAreaOf(attacker), areas.findHitAreaOf(defender));
+			areas.getConnector().setMode(ProvinceConnector.Mode.REINFORCE);
 		}
 		return true;
 	}

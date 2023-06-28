@@ -17,6 +17,7 @@ import pmnm.risk.game.IPlayer;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.game.Reinforce;
+import pmnm.risk.map.board.ProvinceConnector;
 import pmnm.risk.map.board.ProvinceHitArea;
 import pmnm.risk.map.board.ProvinceHitAreas;
 
@@ -98,6 +99,7 @@ public class Player extends DoaObject implements IPlayer {
 		private static final long serialVersionUID = 5822331332308267554L;
 
 		private IProvince attackerProvince;
+		private IProvince defenderProvince;
 
 		private IProvince reinforcingProvince;
 
@@ -114,6 +116,7 @@ public class Player extends DoaObject implements IPlayer {
 				areas.selectReinforcingProvinceAs(null);
 				areas.selectReinforceeProvinceAs(null);
 				attackerProvince = null;
+				defenderProvince = null;
 				reinforcingProvince = null;
 				return;
 			}
@@ -142,8 +145,18 @@ public class Player extends DoaObject implements IPlayer {
 					attackerProvince = province;
 					areas.selectAttackerProvinceAs(province);
 					areas.selectDefenderProvinceAs(null);
-				} else if (attackerProvince != null && !province.isOccupiedBy(Player.this) && province.isNeighborOf(attackerProvince)) {
+				} else if (
+					attackerProvince != null &&
+					!province.isOccupiedBy(Player.this) &&
+					province.isNeighborOf(attackerProvince) &&
+					defenderProvince == null) {
+					defenderProvince = province;
 					areas.selectDefenderProvinceAs(province);
+					areas.getConnector().setPath(
+						areas.findHitAreaOf(attackerProvince),
+						areas.findHitAreaOf(province)
+					);
+					areas.getConnector().setMode(ProvinceConnector.Mode.ATTACK);
 				}
 				return;
 			}
