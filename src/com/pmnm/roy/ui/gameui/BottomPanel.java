@@ -312,11 +312,15 @@ public class BottomPanel extends RoyMenu {
 	
 	private void incrementTroopCount() {
 		selectedTroopCount = Math.min(selectedTroopCount + 1, maxTroopCount);
-		centerPieceButton.setText(Integer.toString(selectedTroopCount));
+		if (centerPieceButton.isEnabled()) {
+			centerPieceButton.setText(Integer.toString(selectedTroopCount));
+		}
 	}
 
 	private void decrementTroopCount() {
 		selectedTroopCount = Math.max(selectedTroopCount - 1, 1);
-		centerPieceButton.setText(Integer.toString(selectedTroopCount));
+		if (centerPieceButton.isEnabled()) {
+			centerPieceButton.setText(Integer.toString(selectedTroopCount));
+		}
 	}
 }
