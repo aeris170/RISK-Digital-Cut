@@ -68,7 +68,7 @@ public final class GameInstance {
 	public static void instantiateGameWithUI(GameInstance instance) {
 		DoaScene scene = Scenes.getGameScene();
 		RiskGameScreenUI.destroyUI(scene);
-		RiskGameContext context = (RiskGameContext)instance.context;
+		RiskGameContext context = instance.context;
 		RiskGameScreenUI.initUIFor(context, scene, context.getGameType());
 		context.addToScene(scene);
 	}
