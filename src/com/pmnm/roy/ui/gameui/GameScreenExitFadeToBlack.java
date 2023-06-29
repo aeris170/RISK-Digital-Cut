@@ -4,10 +4,11 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.maths.DoaMath;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.main.Main;
+
+import doa.engine.maths.DoaMath;
 
 public class GameScreenExitFadeToBlack extends DoaPanel {
 

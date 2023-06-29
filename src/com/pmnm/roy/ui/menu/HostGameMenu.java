@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.button.DoaImageButton;
 import com.doa.ui.panel.DoaPanel;
@@ -22,6 +21,8 @@ import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.TypeComboButton;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
+
+import doa.engine.graphics.DoaSprites;
 
 public class HostGameMenu extends DoaPanel {
 

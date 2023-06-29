@@ -3,7 +3,6 @@ package com.pmnm.roy.ui.menu;
 import java.awt.AlphaComposite;
 import java.awt.image.BufferedImage;
 
-import com.pmnm.risk.main.Main;
 import com.pmnm.roy.ui.UIConstants;
 
 import doa.engine.core.DoaGraphicsFunctions;

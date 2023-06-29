@@ -6,7 +6,13 @@ import java.awt.Font;
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaRenderer;
-import doa.engine.utils.hardwareinfo.*;
+import doa.engine.utils.hardwareinfo.DoaCPUInfo;
+import doa.engine.utils.hardwareinfo.DoaDisplay;
+import doa.engine.utils.hardwareinfo.DoaEngineInfo;
+import doa.engine.utils.hardwareinfo.DoaGPU;
+import doa.engine.utils.hardwareinfo.DoaMemoryInfo;
+import doa.engine.utils.hardwareinfo.DoaOSInfo;
+import doa.engine.utils.hardwareinfo.DoaRuntimeInfo;
 
 @SuppressWarnings("serial")
 public final class SystemSpecs extends DoaObject {

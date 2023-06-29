@@ -1,10 +1,9 @@
 package pmnm.risk.map;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 import com.google.common.collect.ImmutableList;
-
-import java.awt.Color;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

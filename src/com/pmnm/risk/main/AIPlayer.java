@@ -7,8 +7,9 @@ import java.util.stream.Collectors;
 
 import doa.engine.task.DoaTaskGuard;
 import doa.engine.task.DoaTasker;
+import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.game.databasedimpl.Player;
-import pmnm.risk.map.province.Province;
+import pmnm.risk.game.databasedimpl.Province;
 
 public class AIPlayer extends Player {
 

@@ -22,10 +22,11 @@ import doa.engine.graphics.DoaSprites;
 import doa.engine.input.DoaMouse;
 import doa.engine.scene.DoaObject;
 import pmnm.risk.game.Dice;
+import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.game.databasedimpl.Player;
+import pmnm.risk.game.databasedimpl.Province;
 import pmnm.risk.map.board.ProvinceConnector;
 import pmnm.risk.map.board.ProvinceHitArea;
-import pmnm.risk.map.province.Province;
 
 public class GameManager extends DoaObject {
 

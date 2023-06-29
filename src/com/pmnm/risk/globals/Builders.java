@@ -1,6 +1,5 @@
 package com.pmnm.risk.globals;
 
-import com.doa.engine.scene.DoaObjectBuilder;
 import com.doa.ui.button.DoaImageButton;
 import com.pmnm.risk.main.AIPlayer;
 import com.pmnm.risk.main.GameManager;
@@ -20,8 +19,6 @@ import com.pmnm.roy.ui.gameui.SeasonEffect;
 import com.pmnm.roy.ui.gameui.SpinnerCenterPiece;
 import com.pmnm.roy.ui.gameui.TopPanel;
 import com.pmnm.roy.ui.gameui.Water;
-import com.pmnm.roy.ui.menu.ExitFadeToBlack;
-import com.pmnm.roy.ui.menu.ExitPopup;
 import com.pmnm.roy.ui.menu.FadingBackground;
 import com.pmnm.roy.ui.menu.HostGameMenu;
 import com.pmnm.roy.ui.menu.JoinGameMenu;
@@ -32,12 +29,15 @@ import com.pmnm.roy.ui.menu.PlayOfflineMenu;
 import com.pmnm.roy.ui.menu.PlayOnlineMenu;
 import com.pmnm.roy.ui.menu.RulesMenu;
 import com.pmnm.roy.ui.menu.SettingsMenu;
+import com.pmnm.roy.ui.menu.extensions.ExitFadeToBlack;
+import com.pmnm.roy.ui.menu.extensions.ExitPopup;
 
+import doa.engine.scene.DoaObjectBuilder;
 import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.map.board.GameBoard;
 import pmnm.risk.map.board.ProvinceConnector;
 import pmnm.risk.map.board.ProvinceHitArea;
-import pmnm.risk.map.province.ProvinceHitArea.ProvinceSymbol;
+import pmnm.risk.map.board.ProvinceSymbol;
 
 public final class Builders {
 

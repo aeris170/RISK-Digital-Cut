@@ -3,7 +3,6 @@ package com.pmnm.roy.ui.gameui;
 import java.awt.Font;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
-import com.doa.engine.graphics.DoaSprites;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.panel.DoaPanel;
 import com.pmnm.risk.globals.Builders;
@@ -13,6 +12,8 @@ import com.pmnm.risk.main.Main;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.ui.TextImageButton;
 import com.pmnm.roy.ui.UIConstants;
+
+import doa.engine.graphics.DoaSprites;
 
 public final class GameScreenExitPopup extends DoaPanel {
 

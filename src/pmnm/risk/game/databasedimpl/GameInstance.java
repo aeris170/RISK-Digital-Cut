@@ -32,7 +32,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import pmnm.risk.game.GameConfig;
-import pmnm.risk.game.IRiskGameContext;
 
 public final class GameInstance {
 	
