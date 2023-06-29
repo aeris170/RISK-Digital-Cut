@@ -128,11 +128,16 @@ public final class ProvinceHitAreas extends DoaObject {
 	}
 	
 	public void resetAll() {
+		deselectSelectedProvince();
 		selectAttackerProvinceAs(null);
 		selectDefenderProvinceAs(null);
 		selectReinforcingProvinceAs(null);
 		selectReinforceeProvinceAs(null);
 		connector.setPath((ProvinceHitArea[])null);
+		areas.forEach(area -> {
+			area.deemphasizeForAttack();
+			area.deemphasizeForReinforcement();
+		});
 	}
 	
 	public ProvinceHitArea findHitAreaOf(IProvince province) {
