@@ -46,19 +46,19 @@ public class BottomPanel extends RoyMenu {
 	private int selectedTroopCount;
 	
 	private final RiskGameContext context;
-	
+
 	private Province clickedProvince = null;
-	
+
 	private String garrisonText = "";
 	private String ownerText = "";
 	private String nameText = "";
 	private String continentText = "";
-	
+
 	private String currentPhaseText = "";
 
 	public BottomPanel(final RiskGameContext context) {
 		this.context = context;
-		
+
 		nextPhaseButton = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("nextPhaseButtonIdle"))
 			.hoverImage(DoaSprites.getSprite("nextPhaseButtonHover"))
@@ -75,7 +75,7 @@ public class BottomPanel extends RoyMenu {
 		nextPhaseButton.setEnabled(false);
 		nextPhaseButton.setScale(.7f);
 		addElement(nextPhaseButton);
-		
+
 		decrementButton = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("arrowDown"))
 			.hoverImage(DoaSprites.getSprite("arrowDownHover"))
@@ -84,7 +84,7 @@ public class BottomPanel extends RoyMenu {
 			.build();
 		decrementButton.setPosition(DECREMENT_POSITION);
 		addElement(decrementButton);
-		
+
 		incrementButton = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("arrowUp"))
 			.hoverImage(DoaSprites.getSprite("arrowUpHover"))
@@ -93,7 +93,7 @@ public class BottomPanel extends RoyMenu {
 			.build();
 		incrementButton.setPosition(INCREMENT_POSITION);
 		addElement(incrementButton);
-		
+
 		centerPieceButton = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("centerPiece"))
 			.hoverImage(DoaSprites.getSprite("centerPieceHover"))
@@ -120,10 +120,10 @@ public class BottomPanel extends RoyMenu {
 						ProvinceHitArea attackerProvinceHitArea = areas.getAttackerProvince();
 						ProvinceHitArea defenderProvinceHitArea = areas.getDefenderProvince();
 						if (attackerProvinceHitArea == null  || defenderProvinceHitArea == null) { return; }
-						
+
 						IProvince attacker = attackerProvinceHitArea.getProvince();
 						IProvince defender = defenderProvinceHitArea.getProvince();
-						
+
 						{ /* to avoid local variable bleeding */
 							Reinforce reinforce = context.setUpReinforce(attacker, defender, selectedTroopCount);
 							if (context.applyReinforceResult(reinforce.calculateResult())) {
@@ -136,11 +136,11 @@ public class BottomPanel extends RoyMenu {
 						ProvinceHitArea reinforcerProvinceHitArea = areas.getReinforcingProvince();
 						ProvinceHitArea reinforceeProvinceHitArea = areas.getReinforceeProvince();
 						if (reinforcerProvinceHitArea == null  || reinforceeProvinceHitArea == null) { return; }
-						
+
 						IProvince reinforcer = reinforcerProvinceHitArea.getProvince();
 						IProvince reinforcee = reinforceeProvinceHitArea.getProvince();
 						if (!reinforcer.canReinforceAnotherProvince()) { return; }
-						
+
 						{ /* to avoid local variable bleeding */
 							Reinforce reinforce = context.setUpReinforce(reinforcer, reinforcee, selectedTroopCount);
 							if (context.applyReinforceResult(reinforce.calculateResult())) {
@@ -157,7 +157,7 @@ public class BottomPanel extends RoyMenu {
 		centerPieceButton.setTextColor(Color.BLACK);
 		centerPieceButton.setHoverTextColor(UIConstants.getTextColor());
 		addElement(centerPieceButton);
-		
+	
 		updateSpinnerValues();
 		if (context.getCurrentPhase() == TurnPhase.SETUP) {
 			centerPieceButton.setEnabled(false);
@@ -165,9 +165,9 @@ public class BottomPanel extends RoyMenu {
 			centerPieceButton.setEnabled(true);
 		}
 		nextPhaseButton.setEnabled(false);
-		
+	
 		setzOrder(ZOrders.GAME_UI_Z);
-		
+	
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
@@ -215,7 +215,7 @@ public class BottomPanel extends RoyMenu {
 			counter = 0;
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 
 		private transient BufferedImage bottomRing	= DoaSprites.getSprite("MainMenuBottomRing");
@@ -291,7 +291,7 @@ public class BottomPanel extends RoyMenu {
 		}
 		
 	}
-	
+
 	private void updateSpinnerValues() {
 		maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
 		TurnPhase phase = context.getCurrentPhase();
@@ -310,7 +310,7 @@ public class BottomPanel extends RoyMenu {
 			centerPieceButton.setText("");
 		}
 	}
-	
+
 	private void incrementTroopCount() {
 		selectedTroopCount = Math.min(selectedTroopCount + 1, maxTroopCount);
 		if (centerPieceButton.isEnabled()) {
