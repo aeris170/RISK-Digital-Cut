@@ -97,7 +97,7 @@ public class TopPanel extends RoyMenu {
 			
 			// timer block
 			if (currentPlayerColour != null) {
-				float timer = 10f;
+				float timer = 0.0f;
 				DoaGraphicsFunctions.setColor(Color.BLACK);
 				DoaGraphicsFunctions.fillRect(0f, windowHeight * 0.027f, windowWidth, windowHeight * 0.021f);
 				DoaGraphicsFunctions.setColor(currentPlayerColour);
