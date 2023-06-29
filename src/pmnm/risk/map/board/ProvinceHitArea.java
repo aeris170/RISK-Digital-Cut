@@ -66,6 +66,7 @@ public class ProvinceHitArea extends DoaObject {
 
 	private ProvinceHitArea(IProvince province) {
 		this.province = province;
+		name = province.getName() + " HitArea";
 		
 		bounds = ProvinceHitAreaBounds.of(this);
 		ProvinceHitAreaCacher.cache(this);
