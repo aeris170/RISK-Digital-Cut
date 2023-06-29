@@ -63,7 +63,7 @@ public interface IRiskGameContext extends Serializable {
 		private TurnPhase(String str) { this.str = Optional.of(str); }
 		@Override
 		public String toString() {
-			if(str.isPresent()) { return str.get(); }
+			if (str.isPresent()) { return str.get(); }
 			else { return super.toString(); }
 		}
 	}
