@@ -41,10 +41,10 @@ public class BottomPanel extends RoyMenu {
 	private final DoaVector DECREMENT_POSITION		= new DoaVector(700, 1035);
 	private final DoaVector INCREMENT_POSITION		= new DoaVector(700, 985);
 	private final DoaVector CENTER_PIECE_POSITION	= new DoaVector(615, 1000);
-	
-	private int maxTroopCount;
-	private int selectedTroopCount;
-	
+
+	private int maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
+	private int selectedTroopCount = Globals.UNKNOWN_TROOP_COUNT;
+
 	private final RiskGameContext context;
 
 	private Province clickedProvince = null;
@@ -66,6 +66,8 @@ public class BottomPanel extends RoyMenu {
 			.disabledImage(DoaSprites.getSprite("nextPhaseButtonDisabled"))
 			.action(source -> {
 				context.goToNextPhase();
+				maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
+				selectedTroopCount = Globals.UNKNOWN_TROOP_COUNT;
 				if (context.getCurrentPhase() == TurnPhase.DRAFT) {
 					nextPhaseButton.setEnabled(false);
 				}
@@ -100,6 +102,7 @@ public class BottomPanel extends RoyMenu {
 			.pressImage(DoaSprites.getSprite("centerPiecePress"))
 			.disabledImage(DoaSprites.getSprite("centerPieceDisabled"))
 			.action(source -> {
+				updateSpinnerValues();
 				ProvinceHitAreas areas = context.getAreas();
 				switch(context.getCurrentPhase()) {
 					case DRAFT:
@@ -108,10 +111,7 @@ public class BottomPanel extends RoyMenu {
 						IProvince selectedProvince = selectedProvinceHitArea.getProvince();
 						Deploy deploy = context.setUpDeploy(selectedProvince, selectedTroopCount);
 						if (context.applyDeployResult(deploy.calculateResult())) {
-							maxTroopCount -= selectedTroopCount;
-							selectedTroopCount = (int) DoaMath.clamp(selectedTroopCount, 0, maxTroopCount);
-							centerPieceButton.setText(Integer.toString(selectedTroopCount));
-							if (maxTroopCount == 0) {
+							if (context.getRemainingDeploys() == 0) {
 								nextPhaseButton.setEnabled(true);
 							}
 						}
@@ -127,7 +127,8 @@ public class BottomPanel extends RoyMenu {
 						{ /* to avoid local variable bleeding */
 							Reinforce reinforce = context.setUpReinforce(attacker, defender, selectedTroopCount);
 							if (context.applyReinforceResult(reinforce.calculateResult())) {
-								areas.resetAll();
+								maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
+								selectedTroopCount = Globals.UNKNOWN_TROOP_COUNT;
 								nextPhaseButton.setEnabled(true);
 							}
 						}
@@ -144,6 +145,8 @@ public class BottomPanel extends RoyMenu {
 						{ /* to avoid local variable bleeding */
 							Reinforce reinforce = context.setUpReinforce(reinforcer, reinforcee, selectedTroopCount);
 							if (context.applyReinforceResult(reinforce.calculateResult())) {
+								maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
+								selectedTroopCount = Globals.UNKNOWN_TROOP_COUNT;
 								nextPhaseButton.setEnabled(false);
 							}
 						}
@@ -151,6 +154,7 @@ public class BottomPanel extends RoyMenu {
 					default:
 						break;
 				}
+				updateSpinnerValues();
 			})
 			.build();
 		centerPieceButton.setPosition(CENTER_PIECE_POSITION);
@@ -191,7 +195,8 @@ public class BottomPanel extends RoyMenu {
 				previousPhase = currentPhase;
 				updateSpinnerValues();
 
-				currentPhaseText = Translator.getInstance().getTranslatedString(currentPhase.toString());
+				//currentPhaseText = Translator.getInstance().getTranslatedString(currentPhase.toString());
+				currentPhaseText = currentPhase.toString();
 			}
 			
 			clickedProvince = context.getAreas().getSelectedProvince() != null ? (Province) context.getAreas().getSelectedProvince().getProvince() : null;
@@ -293,15 +298,13 @@ public class BottomPanel extends RoyMenu {
 	}
 
 	private void updateSpinnerValues() {
-		maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
-		TurnPhase phase = context.getCurrentPhase();
-		if (phase == TurnPhase.DRAFT) {
-			maxTroopCount = context.calculateTurnReinforcementsFor(context.getCurrentPlayer());
-		} else if (phase == TurnPhase.ATTACK_DEPLOY) {
-			maxTroopCount = context.calculateMaxDeployTroopsForAttackDeploy();
+		maxTroopCount = context.getRemainingDeploys();
+		if (selectedTroopCount == Globals.UNKNOWN_TROOP_COUNT || selectedTroopCount == 0) {
+			selectedTroopCount = maxTroopCount;
+		} else {
+			selectedTroopCount = (int) DoaMath.clamp(selectedTroopCount, 0, maxTroopCount);
 		}
-		selectedTroopCount = maxTroopCount;
-		if (selectedTroopCount != Globals.UNKNOWN_TROOP_COUNT) {
+		if (maxTroopCount != Globals.UNKNOWN_TROOP_COUNT && maxTroopCount != 0) {
 			centerPieceButton.setEnabled(true);
 			centerPieceButton.setText(Integer.toString(selectedTroopCount));
 			nextPhaseButton.setEnabled(false);
