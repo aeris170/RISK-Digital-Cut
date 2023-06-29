@@ -290,8 +290,9 @@ public final class LoadingScreen extends RoyMenu{
 			
 			DoaGraphicsFunctions.setFont(loadingFont);
 			
+
 			/* outline */
-			DoaGraphicsFunctions.setColor(UIConstants.getTextColor().brighter());
+			DoaGraphicsFunctions.setColor(Color.BLACK);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 1);
@@ -302,10 +303,10 @@ public final class LoadingScreen extends RoyMenu{
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 1, loadingPosition.y + 1);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 1, loadingPosition.y - 1);
 
-			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 2, loadingPosition.y);
-			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 2, loadingPosition.y);
-			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 2);
-			//DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);	
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 2, loadingPosition.y);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 2, loadingPosition.y);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 2);
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);	
 
 			/* text itself */
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
