@@ -44,7 +44,7 @@ public final class ProvinceConnector extends DoaObject {
 			if (context.isPaused()) { return; }
 			
 			if (mode == Mode.ATTACK) {
-				dashPhase += 0.01f;
+				dashPhase += 0.02f;
 			} else {
 				dashPhase += 0.09f;
 			}
