@@ -10,8 +10,8 @@ public class AIPlayer extends Player {
 
 	public int difficulty;
 
-	public AIPlayer(String playerName, Color playerColor, int difficulty) {
-		super(playerName, playerColor, false);
+	public AIPlayer(@NonNull final RiskGameContext context, @NonNull final Player.Data data, int difficulty) {
+		super(context, data);
 		this.difficulty = difficulty;
 	}
 
