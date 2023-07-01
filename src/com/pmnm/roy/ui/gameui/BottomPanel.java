@@ -20,6 +20,7 @@ import doa.engine.maths.DoaMath;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
+import lombok.NonNull;
 import pmnm.risk.game.Deploy;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.game.IRiskGameContext.TurnPhase;
@@ -198,7 +199,22 @@ public class BottomPanel extends RoyMenu {
 				//currentPhaseText = Translator.getInstance().getTranslatedString(currentPhase.toString());
 				currentPhaseText = currentPhase.toString();
 			}
-			
+
+			/* Reinforce logic */
+			IProvince reinforcer = null;
+			if (currentPhase == TurnPhase.REINFORCE) {
+				ProvinceHitAreas areas = context.getAreas();
+				ProvinceHitArea reinforcerProvinceHitArea = areas.getReinforcingProvince();
+				ProvinceHitArea reinforceeProvinceHitArea = areas.getReinforceeProvince();
+				if (reinforcerProvinceHitArea != null &&
+					reinforceeProvinceHitArea != null &&
+					reinforcerProvinceHitArea.getProvince().canReinforceAnotherProvince()) { 
+					reinforcer = reinforcerProvinceHitArea.getProvince();
+				}
+				updateSpinnerValuesForReinfocing(reinforcer);
+			}
+			/* Reinforce logic */
+
 			clickedProvince = context.getAreas().getSelectedProvince() != null ? (Province) context.getAreas().getSelectedProvince().getProvince() : null;
 			if (clickedProvince != null) {
 				garrisonText = clickedProvince.getNumberOfTroops() == Globals.UNKNOWN_TROOP_COUNT ?
@@ -311,6 +327,20 @@ public class BottomPanel extends RoyMenu {
 		} else {
 			centerPieceButton.setEnabled(false);
 			centerPieceButton.setText("");
+		}
+	}
+	
+	private void updateSpinnerValuesForReinfocing(IProvince reinforcer) {
+		if (reinforcer == null) {
+			maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
+			selectedTroopCount = Globals.UNKNOWN_TROOP_COUNT;
+			centerPieceButton.setEnabled(false);
+			centerPieceButton.setText("");
+		} else {
+			maxTroopCount = reinforcer.getNumberOfTroops() - 1;
+			selectedTroopCount = maxTroopCount;
+			centerPieceButton.setEnabled(true);
+			centerPieceButton.setText(Integer.toString(selectedTroopCount));
 		}
 	}
 
