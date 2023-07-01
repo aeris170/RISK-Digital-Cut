@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.roy.ui.UIConstants;
@@ -129,7 +130,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 				return;
 			}
 			
-			Rectangle area = getContentArea();
+			Shape area = getContentArea();
 			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
 				if(currentImage == pressImage && DoaMouse.MB1_RELEASE) {
 					action.execute(RoyImageButton.this);
