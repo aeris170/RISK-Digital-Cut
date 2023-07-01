@@ -202,7 +202,7 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 			if (!isVisible) { return; }
 			if (!isEditable) { return; }
 			boolean isOpen = RoyComboBox.this.isOpen;
-			if(DoaMouse.MB1_RELEASE) {
+			if (DoaMouse.MB1_RELEASE) {
 				if (buttonArea().contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
 					setOpen(!isOpen);
 				} else {
@@ -210,13 +210,18 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				}
 			}
 			
-			if(!isOpen) { return; }
-			for(int i = 0; i < elements.length; i++) {
-				if(elementIsPressed(elements[i].elementArea) && !RoyComboBox.this.lockedIndices.contains(i)) {
-					selectedIndex = i;
-					setOpen(false);
-					notifyObservers();
+			if (!isOpen) { return; }
+			for (int i = 0; i < elements.length; i++) {
+				if (elementIsPressed(elements[i].elementArea)) {
+					DoaMouse.MB1 = false;
+					DoaMouse.MB1_HOLD = false;
 					DoaMouse.MB1_RELEASE = false;
+
+					if(!RoyComboBox.this.lockedIndices.contains(i)) {
+						selectedIndex = i;
+						setOpen(false);
+						notifyObservers();
+					}
 				}
 			}
 		}
