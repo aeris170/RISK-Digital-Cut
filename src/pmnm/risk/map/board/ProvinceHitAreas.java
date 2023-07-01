@@ -21,22 +21,22 @@ import pmnm.risk.map.Vertex2D;
 public final class ProvinceHitAreas extends DoaObject {
 
 	private static final long serialVersionUID = -2012137488480810514L;
-	
+
 	private IRiskGameContext context;
 	private Iterable<@NonNull IProvince> provinces;
-	
+
 	@Getter private ProvinceHitArea highlightedProvince;
 	@Getter private ProvinceHitArea selectedProvince;
-	
+
 	@Getter private ProvinceHitArea attackerProvince;
 	@Getter private ProvinceHitArea defenderProvince;
-	
+
 	@Getter private ProvinceHitArea reinforcingProvince;
 	@Getter private ProvinceHitArea reinforceeProvince;
-	
+
 	@Getter private List<ProvinceHitArea> areas;
 	@Getter private ProvinceConnector connector;
-	
+
 	public ProvinceHitAreas(IRiskGameContext context) {
 		this.context = context;
 		provinces = context.getProvinces();
@@ -51,7 +51,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		addComponent(new ProvinceHitAreaHighlighter());
 		addComponent(new ProvinceHitAreaSelector());
 	}
-	
+
 	@Override
 	public void onAddToScene(DoaScene scene) {
 		super.onAddToScene(scene);
@@ -60,7 +60,7 @@ public final class ProvinceHitAreas extends DoaObject {
 		}
 		scene.add(connector);
 	}
-	
+
 	@Override
 	public void onRemoveFromScene(DoaScene scene) {
 		super.onRemoveFromScene(scene);
@@ -69,21 +69,21 @@ public final class ProvinceHitAreas extends DoaObject {
 		}
 		scene.remove(connector);
 	}
-	
+
 	public void dehighlightHighlightedProvince() {
 		if (highlightedProvince != null) {
 			highlightedProvince.setHighlighted(false);
 			highlightedProvince = null;
 		}
 	}
-	
+
 	public void deselectSelectedProvince() {
 		if (selectedProvince != null) {
 			selectedProvince.setSelected(false);
 			selectedProvince = null;
 		}
 	}
-	
+
 	public void selectAttackerProvinceAs(IProvince province) {
 		if(attackerProvince != null) {
 			attackerProvince.deselectAsAttacker();
@@ -95,7 +95,7 @@ public final class ProvinceHitAreas extends DoaObject {
 			findAllNeighborsWithDifferentOccupier(attackerProvince).forEach(ProvinceHitArea::emphasizeForAttack);
 		}
 	}
-	
+
 	public void selectDefenderProvinceAs(IProvince province) {
 		if(defenderProvince != null) {
 			defenderProvince.deselectAsDefender();
@@ -105,7 +105,7 @@ public final class ProvinceHitAreas extends DoaObject {
 			defenderProvince.selectAsDefender();
 		}
 	}
-	
+
 	public void selectReinforcingProvinceAs(IProvince province) {
 		if(reinforcingProvince != null) {
 			reinforcingProvince.deselectAsReinforcing();
@@ -117,7 +117,7 @@ public final class ProvinceHitAreas extends DoaObject {
 			findAllNeighborsWithSameOccupier(reinforcingProvince).forEach(ProvinceHitArea::emphasizeForReinforcement);
 		}
 	}
-	
+
 	public void selectReinforceeProvinceAs(IProvince province) {
 		if(reinforceeProvince != null) {
 			reinforceeProvince.deselectAsReinforced();
@@ -127,7 +127,7 @@ public final class ProvinceHitAreas extends DoaObject {
 			reinforceeProvince.selectAsReinforced();
 		}
 	}
-	
+
 	public void resetAll() {
 		deselectSelectedProvince();
 		selectAttackerProvinceAs(null);
@@ -140,7 +140,7 @@ public final class ProvinceHitAreas extends DoaObject {
 			area.deemphasizeForReinforcement();
 		});
 	}
-	
+
 	public ProvinceHitArea findHitAreaOf(IProvince province) {
 		if (province == null) return null;
 		return areas.stream().filter(area -> area.getProvince().equals(province)).findFirst().orElseThrow();
