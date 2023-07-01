@@ -205,21 +205,30 @@ public final class ProvinceHitAreas extends DoaObject {
 	 		}
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	private final class ProvinceHitAreaSelector extends DoaScript {
-
+		
+		ProvinceHitArea candidate = null;
+		
 		@Override
 		public void tick() {
 			if (context.isPaused()) return;
 			if (context.getCurrentPhase() == TurnPhase.ATTACK_DEPLOY) { return; }
 
+			if (DoaMouse.MB1) {
+				candidate = highlightedProvince;
+				return;
+			}
 			if (DoaMouse.MB1_RELEASE) {
 				deselectSelectedProvince();
-				if (highlightedProvince != null && highlightedProvince != selectedProvince) {
+				if (highlightedProvince != null &&
+					highlightedProvince != selectedProvince &&
+					candidate == highlightedProvince) {
 					selectedProvince = highlightedProvince;
 					selectedProvince.setSelected(true);
 				}
+				return;
 			}
 		}
 	}
