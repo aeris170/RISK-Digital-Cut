@@ -382,11 +382,11 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		
 		private Slot(int index) {
 			this.index = index;
-			playerName = "Player" + index;
 		}
 		
 		private void updateSlotData(int selectedPlayerIndex) {
 			isHuman = selectedPlayerIndex != 2 ? true : false;
+			playerName = (isHuman ? "Player" : "AI") + index;
 		}
 
 		private boolean hasPlayer() { 
