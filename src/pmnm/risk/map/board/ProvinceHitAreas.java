@@ -87,12 +87,12 @@ public final class ProvinceHitAreas extends DoaObject {
 	public void selectAttackerProvinceAs(IProvince province) {
 		if(attackerProvince != null) {
 			attackerProvince.deselectAsAttacker();
-			findNeighborsWithDifferentOccupier(attackerProvince).forEach(ProvinceHitArea::deemphasizeForAttack);
+			findAllNeighborsWithDifferentOccupier(attackerProvince).forEach(ProvinceHitArea::deemphasizeForAttack);
 		}
 		attackerProvince = findHitAreaOf(province);
 		if(attackerProvince != null) {
 			attackerProvince.selectAsAttacker();
-			findNeighborsWithDifferentOccupier(attackerProvince).forEach(ProvinceHitArea::emphasizeForAttack);
+			findAllNeighborsWithDifferentOccupier(attackerProvince).forEach(ProvinceHitArea::emphasizeForAttack);
 		}
 	}
 	
