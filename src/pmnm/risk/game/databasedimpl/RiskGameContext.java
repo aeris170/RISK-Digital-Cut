@@ -12,6 +12,7 @@ import java.util.stream.StreamSupport;
 import com.google.common.collect.ImmutableList;
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.Scenes;
+import com.pmnm.risk.main.AIPlayer;
 import com.pmnm.util.CircularQueue;
 
 import doa.engine.maths.DoaMath;
@@ -184,7 +185,13 @@ public class RiskGameContext implements IRiskGameContext {
 		config = gameConfig;
 		players = new CircularQueue<>(gameConfig.getData().length);
 		for (Player.Data data : gameConfig.getData()) {
-			Player p = new Player(this, data);
+			Player p;
+			if(data.isHumanPlayer()) {
+				p = new Player(this, data);
+			}else {
+				p = new AIPlayer(this, data);
+			}
+			
 			players.add(p);
 			playerProvinces.put(p, new ArrayList<>());
 		}

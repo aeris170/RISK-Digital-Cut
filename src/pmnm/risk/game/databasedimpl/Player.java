@@ -29,7 +29,8 @@ public class Player extends DoaObject implements IPlayer {
 
 	private RiskGameContext context;
 	@Getter private int id;
-	@NonNull private Player.Data data;
+	@NonNull
+	protected Player.Data data;
 
 	private Deploy lastDeploy;
 	private Conflict lastConflict;
@@ -86,7 +87,7 @@ public class Player extends DoaObject implements IPlayer {
 	}
 
 	@Override
-	public boolean isHumanPlayer() { return true; }
+	public boolean isHumanPlayer() { return data.isHumanPlayer; }
 	
 	@Override
 	public void finishTurn() {
@@ -186,6 +187,7 @@ public class Player extends DoaObject implements IPlayer {
 		@Getter @NonNull private final Color color;
 		@NonNull private final String pawnKey;
 		@Getter private final boolean isLocalPlayer;
+		@Getter private final boolean isHumanPlayer;
 		private transient BufferedImage pawn;
 		
 		public BufferedImage getPawn() {

@@ -228,9 +228,9 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			if (slot.hasPlayer()) {
 				Player.Data playerData;
 				if(slot.isHuman) {
-					playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+					playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer(), slot.isHuman());
 				} else {
-					playerData = new AIPlayer.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+					playerData = new AIPlayer.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer(), slot.isHuman(), 0); // TODO: AI difficulty
 				}
 				
 				playerDatas.add(playerData);
