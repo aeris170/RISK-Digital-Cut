@@ -15,6 +15,7 @@ import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.discordrichpresence.DiscordRichPresenceAdapter;
 import com.pmnm.risk.globals.discordrichpresence.IDiscordActivityMutator;
+import com.pmnm.risk.main.AIPlayer;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyCheckBox;
@@ -225,7 +226,13 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		List<Player.Data> playerDatas = new ArrayList<>(slots.length);
 		for (Slot slot : slots) {
 			if (slot.hasPlayer()) {
-				Player.Data playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+				Player.Data playerData;
+				if(slot.isHuman) {
+					playerData = new Player.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+				} else {
+					playerData = new AIPlayer.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer());
+				}
+				
 				playerDatas.add(playerData);
 			}
 		}
@@ -366,7 +373,9 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		private RoyComboBox colorBox;
 		private RoyComboBox pawnBox;
 		// private RoyToggleButton readyButton;
-		
+
+		@Getter
+		private boolean isHuman;
 		@Getter
 		@Setter
 		private String playerName;
@@ -374,6 +383,10 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		private Slot(int index) {
 			this.index = index;
 			playerName = "Player" + index;
+		}
+		
+		private void updateSlotData(int selectedPlayerIndex) {
+			isHuman = selectedPlayerIndex != 2 ? true : false;
 		}
 
 		private boolean hasPlayer() { 
@@ -427,16 +440,22 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			
 			selectedColorIndices.clear();
 			selectedPawnIndices.clear();
-			for(int i = 0; i < slots.length; i++) {
+			for (int i = 0; i < slots.length; i++) {
 				Slot slot = slots[i];
-				if (slot != changedSlot && slot.hasPlayer()) {
-					selectedColorIndices.add(slot.colorBox.getSelectedIndex());
-					selectedPawnIndices.add(slot.pawnBox.getSelectedIndex());
+				int selectedPlayerIndex = slot.playerBox.getSelectedIndex();
+				if (slot != changedSlot){
+					if (slot.hasPlayer()) {
+						selectedColorIndices.add(slot.colorBox.getSelectedIndex());
+						selectedPawnIndices.add(slot.pawnBox.getSelectedIndex());
+					}
+				} else {
+					slot.updateSlotData(selectedPlayerIndex);
 				}
 			}
+			
 			colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
 			pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
-			
+
 			changedSlot.colorBox.setVisible(changedSlot.hasPlayer());
 			changedSlot.pawnBox.setVisible(changedSlot.hasPlayer());
 			
