@@ -1,8 +1,9 @@
 package pmnm.risk.map.board;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.StreamSupport;
+import java.util.function.Predicate;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.input.DoaMouse;
@@ -108,12 +109,12 @@ public final class ProvinceHitAreas extends DoaObject {
 	public void selectReinforcingProvinceAs(IProvince province) {
 		if(reinforcingProvince != null) {
 			reinforcingProvince.deselectAsReinforcing();
-			findNeighborsWithSameOccupier(reinforcingProvince).forEach(ProvinceHitArea::deemphasizeForReinforcement);
+			findAllNeighborsWithSameOccupier(reinforcingProvince).forEach(ProvinceHitArea::deemphasizeForReinforcement);
 		}
 		reinforcingProvince = findHitAreaOf(province);
 		if(reinforcingProvince != null) {
 			reinforcingProvince.deselectAsReinforcing();
-			findNeighborsWithSameOccupier(reinforcingProvince).forEach(ProvinceHitArea::emphasizeForReinforcement);
+			findAllNeighborsWithSameOccupier(reinforcingProvince).forEach(ProvinceHitArea::emphasizeForReinforcement);
 		}
 	}
 	
@@ -144,22 +145,35 @@ public final class ProvinceHitAreas extends DoaObject {
 		if (province == null) return null;
 		return areas.stream().filter(area -> area.getProvince().equals(province)).findFirst().orElseThrow();
 	}
-	
-	private Iterable<ProvinceHitArea> findNeighborsWithSameOccupier(ProvinceHitArea province) {
-		if (province == null) return null;
-		return StreamSupport.stream(province.getProvince().getNeighbors().spliterator(), false)
-			.filter(p -> p.isOccupiedBy(province.getProvince().getOccupier()))
-			.map(this::findHitAreaOf)
-			.toList();
+
+	// Functions regarding neighbor queries
+	private Iterable<ProvinceHitArea> findAllNeighborsWithSameOccupier(ProvinceHitArea province) {
+		if (province == null) return Collections.emptyList();
+		return connectedComponents(province, p -> p.isOccupiedBy(province.getProvince().getOccupier()));
 	}
-	
-	private Iterable<ProvinceHitArea> findNeighborsWithDifferentOccupier(ProvinceHitArea province) {
-		if (province == null) return null;
-		return StreamSupport.stream(province.getProvince().getNeighbors().spliterator(), false)
-			.filter(p -> !p.isOccupiedBy(province.getProvince().getOccupier()))
-			.map(this::findHitAreaOf)
-			.toList();
+	private Iterable<ProvinceHitArea> findAllNeighborsWithDifferentOccupier(ProvinceHitArea province) {
+		if (province == null) return Collections.emptyList();
+		return connectedComponents(province, p -> !p.isOccupiedBy(province.getProvince().getOccupier()));
 	}
+	private Iterable<ProvinceHitArea> connectedComponents(ProvinceHitArea province, Predicate<IProvince> filter) {
+		List<ProvinceHitArea> connectedComponents = new ArrayList<>();
+		connectedComponents.add(province);
+		explodeFrom(province, connectedComponents, filter);
+		return connectedComponents;
+	}
+	private void explodeFrom(ProvinceHitArea provinceHitArea, List<ProvinceHitArea> connectedComponents, Predicate<IProvince> filter) {
+		IProvince province = provinceHitArea.getProvince();
+		for (IProvince p : province.getNeighbors()) {
+			if (filter.test(p)) {
+				ProvinceHitArea pHitArea = findHitAreaOf(p);
+				if (!connectedComponents.contains(pHitArea)) {
+					connectedComponents.add(pHitArea);
+					explodeFrom(pHitArea, connectedComponents, filter);
+				}
+			}
+		}
+	}
+	// Functions regarding neighbor queries
 
 	@SuppressWarnings("serial")
 	private final class ProvinceHitAreaHighlighter extends DoaScript {
