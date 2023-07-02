@@ -168,7 +168,7 @@ public class Player extends DoaObject implements IPlayer {
 				if (province.canReinforceAnotherProvince() && reinforcingProvince == null) {
 					reinforcingProvince = province;
 					areas.selectReinforcingProvinceAs(province);
-				} else if (reinforcingProvince != null) {
+				} else if (reinforcingProvince != null && province != reinforcingProvince) {
 					areas.selectReinforceeProvinceAs(province);
 				}
 				return;
