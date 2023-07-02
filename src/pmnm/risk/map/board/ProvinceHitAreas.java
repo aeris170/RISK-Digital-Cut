@@ -183,8 +183,8 @@ public final class ProvinceHitAreas extends DoaObject {
 			if (context.isPaused()) return;
 
 			Vertex2D mousePoint = new Vertex2D(
-				DoaGraphicsFunctions.warpX(DoaMouse.X),
-				DoaGraphicsFunctions.warpY(DoaMouse.Y)
+				DoaGraphicsFunctions.unwarpX(DoaMouse.X),
+				DoaGraphicsFunctions.unwarpY(DoaMouse.Y)
 			);
 			ProvinceHitArea candidate = null;
 	 outer: for (ProvinceHitArea area : areas) {

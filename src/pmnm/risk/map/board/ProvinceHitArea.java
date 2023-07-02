@@ -135,28 +135,29 @@ public class ProvinceHitArea extends DoaObject {
 			if (isPathVisible) {
 				DoaGraphicsFunctions.translate(translateX, translateY);
 				if (province.isOccupied()) {
-					DoaGraphicsFunctions.drawImage(playerOwnedMeshes.get(province.getOccupier().getColor()), 0, 0);
+					BufferedImage prov = playerOwnedMeshes.get(province.getOccupier().getColor());
+					DoaGraphicsFunctions.drawImage(prov, 0, 0, prov.getWidth(), prov.getHeight());
 					if (isEmphasized) {
-						DoaGraphicsFunctions.drawImage(emphasizedBorder, 0, 0);
+						DoaGraphicsFunctions.drawImage(emphasizedBorder, 0, 0, emphasizedBorder.getWidth(), emphasizedBorder.getHeight());
 					}
 					if (isHighlighted) {
-						DoaGraphicsFunctions.drawImage(highlightBorder, 0, 0);
+						DoaGraphicsFunctions.drawImage(highlightBorder, 0, 0, highlightBorder.getWidth(), highlightBorder.getHeight());
 					}
 					if (isAttacker) {
-						DoaGraphicsFunctions.drawImage(selectedBorder, 0, 0);
+						DoaGraphicsFunctions.drawImage(selectedBorder, 0, 0, selectedBorder.getWidth(), selectedBorder.getHeight());
 					}
 					if (isDefender) {
-						DoaGraphicsFunctions.drawImage(selectedBorder, 0, 0);
+						DoaGraphicsFunctions.drawImage(selectedBorder, 0, 0, selectedBorder.getWidth(), selectedBorder.getHeight());
 					}
 					if (isSelected) {
 						DoaGraphicsFunctions.pushComposite();
 						DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, meshAlpha));
-						DoaGraphicsFunctions.drawImage(selectedMesh, 0, 0);
+						DoaGraphicsFunctions.drawImage(selectedMesh, 0, 0, selectedMesh.getWidth(), selectedMesh.getHeight());
 						DoaGraphicsFunctions.popComposite();
-						DoaGraphicsFunctions.drawImage(highlightBorder, 0, 0);
+						DoaGraphicsFunctions.drawImage(highlightBorder, 0, 0, highlightBorder.getWidth(), highlightBorder.getHeight());
 					}
 				} else {
-					DoaGraphicsFunctions.drawImage(unoccupiedMesh, 0, 0);
+					DoaGraphicsFunctions.drawImage(unoccupiedMesh, 0, 0, unoccupiedMesh.getWidth(), unoccupiedMesh.getHeight());
 				}
 				DoaGraphicsFunctions.translate(-translateX, -translateY);
 			}

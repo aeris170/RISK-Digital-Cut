@@ -183,7 +183,7 @@ public class DicePanel extends RoyMenu {
 		public void render() {
 			if (!isVisible()) return;
 			
-			DoaGraphicsFunctions.drawImage(BG, panelPosition.x, panelPosition.y);
+			DoaGraphicsFunctions.drawImage(BG, panelPosition.x, panelPosition.y, BG.getWidth(), BG.getHeight());
 		}
 	}
 }

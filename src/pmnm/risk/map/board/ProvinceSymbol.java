@@ -97,7 +97,7 @@ public final class ProvinceSymbol extends DoaObject {
 			DoaGraphicsFunctions.drawString(
 				troops, 
 				tx - fm.stringWidth(troops) / 2f, 
-				ty + (fm.getHeight() - fm.getAscent()) / 2f
+				ty + (fm.getHeight() - fm.getAscent())
 			);
 		}
 	}		

@@ -53,51 +53,60 @@ public class SeasonEffect extends DoaObject {
 		@Override
 		public void render() {
 			Composite oldComposite = DoaGraphicsFunctions.getComposite();
-			
-			//DoaGraphicsFunctions.setColor(Season.getCurrentSeason().getSeasonColor());
-			//DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-			//DoaGraphicsFunctions.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-			
+
 			DoaGraphicsFunctions.setComposite(oldComposite);
 			AffineTransform oldTransform = DoaGraphicsFunctions.getTransform();
+
 			switch (Season.getCurrentSeason()) {
 				case WINTER:
 					DoaAnimation snowfall = DoaAnimations.getAnimation("Snowfall");
-					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, 0);
-					// g.setClip(new Ellipse2D.Float(-200, -200, 400, 400)); same as below, made
-					// resolution friendly
-					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+					DoaGraphicsFunctions.translate(960, 0);
+					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-200, -200, 400, 400));
 					DoaGraphicsFunctions.scale(1.5f, 1.5f);
-					DoaGraphicsFunctions.drawAnimation(snowfall, -snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f);
+					DoaGraphicsFunctions.drawAnimation(
+						snowfall,
+						-snowfall.getFrames().get(0).getWidth() / 2f, -snowfall.getFrames().get(0).getHeight() / 2f,
+						snowfall.getFrames().get(0).getWidth(), snowfall.getFrames().get(0).getHeight()
+					);
 					break;
 				case SPRING:
 					DoaAnimation petals = DoaAnimations.getAnimation("CherryPetals");
-					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, Main.WINDOW_HEIGHT * 0.05f);
-					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
+					DoaGraphicsFunctions.translate(960, 50);
+					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-200, -200, 400, 400));
 					DoaGraphicsFunctions.scale(1.5f, 1.5f);
 					DoaGraphicsFunctions.rotate(45f);
-					DoaGraphicsFunctions.drawAnimation(petals, -petals.getFrames().get(0).getWidth() / 2f, -petals.getFrames().get(0).getHeight() / 2f);
+					DoaGraphicsFunctions.drawAnimation(
+						petals,
+						-petals.getFrames().get(0).getWidth() / 2f, -petals.getFrames().get(0).getHeight() / 2f,
+						petals.getFrames().get(0).getWidth(), petals.getFrames().get(0).getHeight()
+					);
 					break;
 				case SUMMER:
 					BufferedImage godray = DoaSprites.getSprite("godray");
-					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, 0);
+					DoaGraphicsFunctions.translate(960, 0);
 					DoaGraphicsFunctions.rotate((float) Math.toRadians(godrayAngle));
 					DoaGraphicsFunctions.scale(1.2f, 1.2f);
 					DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, godrayAlpha));
-					DoaGraphicsFunctions.drawImage(godray, -godray.getWidth() / 2f, -godray.getHeight() / 2f);
+					DoaGraphicsFunctions.drawImage(godray,
+						-godray.getWidth() / 2f, -godray.getHeight() / 2f,
+						godray.getWidth(), godray.getHeight()
+					);
 					break;
 				case FALL:
 					DoaAnimation rain = DoaAnimations.getAnimation("FloatingLeaves");
-					DoaGraphicsFunctions.translate(Main.WINDOW_WIDTH / 2f, 0);
-					DoaGraphicsFunctions.setClip(new Ellipse2D.Float(-Main.WINDOW_WIDTH * 0.104f, -Main.WINDOW_HEIGHT * 0.185f, Main.WINDOW_WIDTH * 0.208f, Main.WINDOW_HEIGHT * 0.370f));
-					DoaGraphicsFunctions.scale(1.8f, 1.8f);
+					DoaGraphicsFunctions.translate(960, 50);
+					DoaGraphicsFunctions.scale(1.6f, 1.6f);
 					DoaGraphicsFunctions.rotate(22.5f);
-					DoaGraphicsFunctions.drawAnimation(rain, -rain.getFrames().get(0).getWidth() / 2f, -rain.getFrames().get(0).getHeight() / 2f);
+					DoaGraphicsFunctions.drawAnimation(
+						rain,
+						-rain.getFrames().get(0).getWidth() / 2f, -rain.getFrames().get(0).getHeight() / 2,
+						rain.getFrames().get(0).getWidth(), rain.getFrames().get(0).getHeight()
+					);
 					break;
 			}
 			DoaGraphicsFunctions.setComposite(oldComposite);
 			DoaGraphicsFunctions.setTransform(oldTransform);
-			DoaGraphicsFunctions.setClip(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+			DoaGraphicsFunctions.setClip(0, 0, 1920, 1080);
 		}
 		
 	}

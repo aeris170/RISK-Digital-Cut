@@ -87,10 +87,7 @@ public class TopPanel extends RoyMenu {
 		private transient BufferedImage topRing = DoaSprites.getSprite("MainMenuTopRing");
 		private transient BufferedImage bottomRing = DoaSprites.getSprite("MainMenuBottomRing");
 		private transient BufferedImage seasonCircle = DoaSprites.getSprite("seasonCircle");
-		
-		private float windowWidth = Main.WINDOW_WIDTH;
-		private float windowHeight = Main.WINDOW_HEIGHT;
-		
+
 		@Override
 		public void render() {
 			if(!isVisible()) return;
@@ -99,27 +96,39 @@ public class TopPanel extends RoyMenu {
 			if (currentPlayerColour != null) {
 				float timer = 0.0f;
 				DoaGraphicsFunctions.setColor(Color.BLACK);
-				DoaGraphicsFunctions.fillRect(0f, windowHeight * 0.027f, windowWidth, windowHeight * 0.021f);
+				DoaGraphicsFunctions.fillRect(0f, 1080 * 0.027f, 1920, 1080 * 0.021f);
 				DoaGraphicsFunctions.setColor(currentPlayerColour);
-				DoaGraphicsFunctions.fillRect(timer, windowHeight * 0.027f, windowWidth - timer * 2, windowHeight * 0.021f);
+				DoaGraphicsFunctions.fillRect(timer, 1080 * 0.027f, 1920 - timer * 2, 1080 * 0.021f);
 			}
 
 			Composite oldComposite = DoaGraphicsFunctions.getComposite();
-			DoaGraphicsFunctions.drawImage(topRing, 0, -6);
-			DoaGraphicsFunctions.drawImage(bottomRing, 0, 51);
-			DoaGraphicsFunctions.drawImage(seasonCircle, (windowWidth - seasonCircle.getWidth()) / 2f, 0);
-			DoaGraphicsFunctions.drawImage(currentSeasonImage, (windowWidth - currentSeasonImage.getWidth()) / 2f, 0);
+			DoaGraphicsFunctions.drawImage(topRing,
+				0, -6,
+				topRing.getWidth(), topRing.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(bottomRing,
+				0, 51,
+				bottomRing.getWidth(), bottomRing.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(seasonCircle,
+				(1920 - seasonCircle.getWidth()) / 2f, 0,
+				seasonCircle.getWidth(), seasonCircle.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(currentSeasonImage,
+				(1920 - currentSeasonImage.getWidth()) / 2f, 0,
+				currentSeasonImage.getWidth(), currentSeasonImage.getHeight()
+			);
 			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 26f));
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.min(alpha, 1)));
 			String turn = "TURN: " + turnCount;
-			DoaGraphicsFunctions.drawString("TURN: " + turnCount, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(turn)) / 2f, 110);
+			DoaGraphicsFunctions.drawString("TURN: " + turnCount, (1920 - DoaGraphicsFunctions.getFontMetrics().stringWidth(turn)) / 2f, 110);
 
 			DoaGraphicsFunctions.setColor(currentPlayerColour);
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(1 - alpha, 0)));
 			
-			DoaGraphicsFunctions.drawString(currentPlayerName, (windowWidth - DoaGraphicsFunctions.getFontMetrics().stringWidth(currentPlayerName)) / 2f, 110);
+			DoaGraphicsFunctions.drawString(currentPlayerName, (1920 - DoaGraphicsFunctions.getFontMetrics().stringWidth(currentPlayerName)) / 2f, 110);
 			DoaGraphicsFunctions.setComposite(oldComposite);
 		}
 	}

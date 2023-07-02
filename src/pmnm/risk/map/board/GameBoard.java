@@ -1,7 +1,5 @@
 package pmnm.risk.map.board;
 
-import com.pmnm.risk.main.Main;
-
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.renderers.DoaSpriteRenderer;
@@ -16,7 +14,7 @@ public final class GameBoard extends DoaObject {
 		DoaSpriteRenderer r = new DoaSpriteRenderer();
 		r.setSprite(data.getBackgroundImage(), false);
 		r.setOffset(new DoaVector(0, 0));
-		r.setDimensions(new DoaVector(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT));
+		r.setDimensions(new DoaVector(1920, 1080));
 		addComponent(r);
 	}
 }

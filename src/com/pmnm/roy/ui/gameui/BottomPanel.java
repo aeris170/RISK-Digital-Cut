@@ -267,33 +267,72 @@ public class BottomPanel extends RoyMenu {
 			
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
-			DoaGraphicsFunctions.drawImage(bottomRing, 0, (float) (Main.WINDOW_HEIGHT - bottomRing.getHeight() + 6d));
+			DoaGraphicsFunctions.drawImage(bottomRing,
+				0, 1080 - bottomRing.getHeight(),
+				bottomRing.getWidth(), bottomRing.getHeight()
+			);
 
-			DoaGraphicsFunctions.drawImage(LEFT, Main.WINDOW_WIDTH * 0.304f, (float) ((double) Main.WINDOW_HEIGHT - LEFT.getHeight()));
-			DoaGraphicsFunctions.drawImage(RIGHT, Main.WINDOW_WIDTH * 0.585f, (float) ((double) Main.WINDOW_HEIGHT - RIGHT.getHeight()));
+			DoaGraphicsFunctions.drawImage(LEFT,
+				1920 * 0.304f, 1080 - LEFT.getHeight(),
+				LEFT.getWidth(), LEFT.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(RIGHT,
+				1920 * 0.585f, 1080 - RIGHT.getHeight(),
+				RIGHT.getWidth(), RIGHT.getHeight()
+			);
 
-			DoaVector phaseArea = new DoaVector(Main.WINDOW_WIDTH * 0.070f, Main.WINDOW_HEIGHT * 0.046f);
+			DoaVector phaseArea = new DoaVector(1920 * 0.070f, 1080 * 0.046f);
 			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), phaseArea, currentPhaseText)));
-			DoaGraphicsFunctions.drawString(currentPhaseText, Main.WINDOW_WIDTH * 0.615f, Main.WINDOW_HEIGHT * 0.993f);
+			DoaGraphicsFunctions.drawString(currentPhaseText, 1920 * 0.615f, 1080 * 0.993f);
 
-			DoaGraphicsFunctions.drawImage(MIDDLE, (Main.WINDOW_WIDTH - MIDDLE.getWidth()) / 2f, (float) ((double) Main.WINDOW_HEIGHT - MIDDLE.getHeight()));
+			DoaGraphicsFunctions.drawImage(MIDDLE,
+				(1920 - MIDDLE.getWidth()) / 2f, 1080 - MIDDLE.getHeight(),
+				MIDDLE.getWidth(), MIDDLE.getHeight()
+			);
 
-			DoaGraphicsFunctions.drawImage(garrisonBG, GARRISON_BG_POSITION.x, GARRISON_BG_POSITION.y);
-			DoaGraphicsFunctions.drawImage(garrisonIcon, GARRISON_BG_POSITION.x + garrisonBG.getWidth() + 6, GARRISON_BG_POSITION.y + 8);
+			DoaGraphicsFunctions.drawImage(garrisonBG,
+				GARRISON_BG_POSITION.x, GARRISON_BG_POSITION.y,
+				garrisonBG.getWidth(), garrisonBG.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(garrisonIcon,
+				GARRISON_BG_POSITION.x + garrisonBG.getWidth() + 6, GARRISON_BG_POSITION.y + 8,
+				garrisonIcon.getWidth(), garrisonIcon.getHeight()
+			);
 			
-			DoaGraphicsFunctions.drawImage(ownerBG, OWNER_BG_POSITION.x, OWNER_BG_POSITION.y);
-			DoaGraphicsFunctions.drawImage(ownerIcon, OWNER_BG_POSITION.x + ownerBG.getWidth() + 6, OWNER_BG_POSITION.y + 8);
+			DoaGraphicsFunctions.drawImage(ownerBG,
+				OWNER_BG_POSITION.x, OWNER_BG_POSITION.y,
+				ownerBG.getWidth(), ownerBG.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(ownerIcon,
+				OWNER_BG_POSITION.x + ownerBG.getWidth() + 6, OWNER_BG_POSITION.y + 8,
+				ownerIcon.getWidth(), ownerIcon.getHeight()
+			);
 			
-			DoaGraphicsFunctions.drawImage(provinceBG, PROVINCE_BG_POSITION.x, PROVINCE_BG_POSITION.y);
-			DoaGraphicsFunctions.drawImage(provinceIcon, PROVINCE_BG_POSITION.x + provinceBG.getWidth() + 6, PROVINCE_BG_POSITION.y + 8);
+			DoaGraphicsFunctions.drawImage(provinceBG,
+				PROVINCE_BG_POSITION.x, PROVINCE_BG_POSITION.y,
+				provinceBG.getWidth(), provinceBG.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(provinceIcon,
+				PROVINCE_BG_POSITION.x + provinceBG.getWidth() + 6, PROVINCE_BG_POSITION.y + 8,
+				provinceIcon.getWidth(), provinceIcon.getHeight()
+			);
 			
-			DoaGraphicsFunctions.drawImage(continentBG, CONTINENT_BG_POSITION.x, CONTINENT_BG_POSITION.y);
-			DoaGraphicsFunctions.drawImage(continentIcon, CONTINENT_BG_POSITION.x + continentBG.getWidth() + 6, CONTINENT_BG_POSITION.y + 4);
+			DoaGraphicsFunctions.drawImage(continentBG,
+				CONTINENT_BG_POSITION.x, CONTINENT_BG_POSITION.y,
+				continentBG.getWidth(), continentBG.getHeight()
+			);
+			DoaGraphicsFunctions.drawImage(continentIcon,
+				CONTINENT_BG_POSITION.x + continentBG.getWidth() + 6, CONTINENT_BG_POSITION.y + 4,
+				continentIcon.getWidth(), continentIcon.getHeight()
+			);
 
 			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 25f));
 			FontMetrics fm = DoaGraphicsFunctions.getFontMetrics();
 
-			DoaGraphicsFunctions.drawString(garrisonText, GARRISON_BG_POSITION.x + (garrisonBG.getWidth() - fm.stringWidth(garrisonText)) / 2f, GARRISON_BG_POSITION.y * 1.031f);
+			DoaGraphicsFunctions.drawString(garrisonText,
+				GARRISON_BG_POSITION.x + (garrisonBG.getWidth() - fm.stringWidth(garrisonText)) / 2f,
+				GARRISON_BG_POSITION.y * 1.031f
+			);
 			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 30f));
 			fm = DoaGraphicsFunctions.getFontMetrics();
 			if (clickedProvince != null) {
