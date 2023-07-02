@@ -12,7 +12,6 @@ import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.map.board.ProvinceHitArea;
-import pmnm.risk.map.board.ProvinceHitAreas;
 
 public class AIPlayer extends Player {
 
@@ -34,6 +33,10 @@ public class AIPlayer extends Player {
 			return context.getAreas().getAreas();
 		}
 		
+		private List<ProvinceHitArea> getUnoccupiedProvinceHitAreas() {
+			return getProvinceHitAreas().stream().filter(p -> p.getProvince().getOccupier() == null).toList();
+		}
+		
 		private List<ProvinceHitArea> getMyProvinceHitAreas() {
 			return getProvinceHitAreas().stream().filter(p -> p.getProvince().isOccupiedBy(AIPlayer.this)).toList();
 		}
@@ -48,8 +51,6 @@ public class AIPlayer extends Player {
 			if (context.isPaused()) return;
 			if (itIsNotMyTurn()) return;
 
-			List<ProvinceHitArea> areas = context.getAreas().getAreas();
-
 			IProvince province = null;
 
 			/* Step 1, initial placement */
@@ -58,14 +59,12 @@ public class AIPlayer extends Player {
 				 * Otherwise, deploy 1 troop to a random province which is occupied by me.
 				 */
 				if(!context.isEveryProvinceOccupied()) {
-					List<ProvinceHitArea> unoccupiedProvinces = areas.stream().filter(p -> p.getProvince().getOccupier() == null).toList();
-					int randomIndex = DoaMath.randomIntBetween(0, unoccupiedProvinces.size());
-					province = unoccupiedProvinces.get(randomIndex).getProvince();
+					List<ProvinceHitArea> unoccupiedProvinces = getUnoccupiedProvinceHitAreas();
+					province = chooseRandomProvince(unoccupiedProvinces);
 					occupyProvince(province);
 				} else {
-					List<ProvinceHitArea> myProvinces = areas.stream().filter(p -> p.getProvince().isOccupiedBy(AIPlayer.this)).toList();
-					int randomIndex = DoaMath.randomIntBetween(0, myProvinces.size());
-					province = (IProvince) myProvinces.get(randomIndex).getProvince();
+					List<ProvinceHitArea> myProvinces = getMyProvinceHitAreas();
+					province = chooseRandomProvince(myProvinces);
 					deployToProvince(province, 1);
 				}
 				
