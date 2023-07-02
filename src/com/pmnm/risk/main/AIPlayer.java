@@ -8,6 +8,7 @@ import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
 import lombok.NonNull;
 import pmnm.risk.game.IProvince;
+import pmnm.risk.game.IRiskGameContext.TurnPhase;
 import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.map.board.ProvinceHitArea;
@@ -28,6 +29,19 @@ public class AIPlayer extends Player {
 	public class AIController extends DoaScript {
 
 		private static final long serialVersionUID = -4006899545069105835L;
+
+		private List<ProvinceHitArea> getProvinceHitAreas() {
+			return context.getAreas().getAreas();
+		}
+		
+		private List<ProvinceHitArea> getMyProvinceHitAreas() {
+			return getProvinceHitAreas().stream().filter(p -> p.getProvince().isOccupiedBy(AIPlayer.this)).toList();
+		}
+		
+		private IProvince chooseRandomProvince(List<ProvinceHitArea> provinces) {
+			int randomIndex = DoaMath.randomIntBetween(0, provinces.size());
+			return provinces.get(randomIndex).getProvince();
+		}
 		
 		@Override
 		public void tick() {
@@ -56,6 +70,15 @@ public class AIPlayer extends Player {
 				}
 				
 				return;
+			}
+			
+			/* Step 2, playing the game */
+			TurnPhase currentPhase = context.getCurrentPhase();
+			
+			if(currentPhase == TurnPhase.DRAFT) {
+				List<ProvinceHitArea> myProvinces = getMyProvinceHitAreas();
+				province = chooseRandomProvince(myProvinces);
+				deployToProvince(province, context.getRemainingDeploys());
 			}
 		}
 	}
