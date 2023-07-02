@@ -27,7 +27,7 @@ public class Player extends DoaObject implements IPlayer {
 
 	private static int ID = 1;
 
-	private RiskGameContext context;
+	protected RiskGameContext context;
 	@Getter private int id;
 	@NonNull
 	protected Player.Data data;
@@ -176,7 +176,7 @@ public class Player extends DoaObject implements IPlayer {
 		}
 	}
 	
-	private boolean itIsNotMyTurn() { return !equals(context.getCurrentPlayer()); }
+	protected boolean itIsNotMyTurn() { return !equals(context.getCurrentPlayer()); }
 	
 	@RequiredArgsConstructor
 	public static class Data implements Serializable {

@@ -2,6 +2,7 @@ package com.pmnm.risk.main;
 
 import java.awt.Color;
 
+import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
 import lombok.NonNull;
 import pmnm.risk.game.databasedimpl.Player;
@@ -13,9 +14,22 @@ public class AIPlayer extends Player {
 
 	public AIPlayer(@NonNull final RiskGameContext context, @NonNull final Player.Data data) {
 		super(context, data);
+		
+		addComponent(new AIController());
 	}
 	
 	private int getDifficulty() { return ((AIPlayer.Data) data).difficulty; }
+	
+	public class AIController extends DoaScript {
+
+		private static final long serialVersionUID = -4006899545069105835L;
+		
+		@Override
+		public void tick() {
+			if (context.isPaused()) return;
+			if (itIsNotMyTurn()) return;
+		}
+	}
 	
 	public static class Data extends Player.Data {
 
