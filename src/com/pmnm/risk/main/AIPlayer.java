@@ -3,7 +3,10 @@ package com.pmnm.risk.main;
 import java.awt.Color;
 import java.util.List;
 
+import com.pmnm.risk.globals.Globals;
+
 import doa.engine.maths.DoaMath;
+import doa.engine.scene.DoaRoutine;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.Getter;
 import lombok.NonNull;
@@ -28,6 +31,8 @@ public class AIPlayer extends Player {
 	public class AIController extends DoaScript {
 
 		private static final long serialVersionUID = -4006899545069105835L;
+		
+		private boolean wait = false;
 
 		private List<ProvinceHitArea> getProvinceHitAreas() {
 			return context.getAreas().getAreas();
@@ -46,26 +51,37 @@ public class AIPlayer extends Player {
 			return provinces.get(randomIndex).getProvince();
 		}
 		
+		private void delayedMove(DoaRoutine r) {
+			wait = true;
+			float randomFloat = DoaMath.randomBetween(.3f, .8f);
+			doAfterTicks(() -> {
+				r.doJob();
+				wait = false;
+			}, (int) (Globals.TICK_RATE * randomFloat));
+		}
+
 		@Override
 		public void tick() {
 			if (context.isPaused()) return;
 			if (itIsNotMyTurn()) return;
-
-			IProvince province = null;
+			if (wait) return;
 
 			/* Step 1, initial placement */
 			if (!context.isInitialPlacementComplete()) {
 				/* If every province is not occupied, occupy a random unoccupied province.
 				 * Otherwise, deploy 1 troop to a random province which is occupied by me.
 				 */
-				if(!context.isEveryProvinceOccupied()) {
+				
+				if (!context.isEveryProvinceOccupied()) {
 					List<ProvinceHitArea> unoccupiedProvinces = getUnoccupiedProvinceHitAreas();
-					province = chooseRandomProvince(unoccupiedProvinces);
-					occupyProvince(province);
+					IProvince province = chooseRandomProvince(unoccupiedProvinces);
+
+					delayedMove(() -> { occupyProvince(province); });
 				} else {
 					List<ProvinceHitArea> myProvinces = getMyProvinceHitAreas();
-					province = chooseRandomProvince(myProvinces);
-					deployToProvince(province, 1);
+					IProvince province = chooseRandomProvince(myProvinces);
+					
+					delayedMove(() -> { deployToProvince(province, 1); });
 				}
 				
 				return;
@@ -74,19 +90,21 @@ public class AIPlayer extends Player {
 			/* Step 2, playing the game */
 			TurnPhase currentPhase = context.getCurrentPhase();
 			
-			if(currentPhase == TurnPhase.DRAFT) {
+			if (currentPhase == TurnPhase.DRAFT) {
 				List<ProvinceHitArea> myProvinces = getMyProvinceHitAreas();
-				province = chooseRandomProvince(myProvinces);
-				deployToProvince(province, context.getRemainingDeploys());
+				IProvince province = chooseRandomProvince(myProvinces);
+				
+				delayedMove(() -> { deployToProvince(province, context.getRemainingDeploys()); });
+				return;
 			}
 			
 			if (currentPhase == TurnPhase.ATTACK) {
-				context.goToNextPhase();
+				delayedMove(() -> { context.goToNextPhase(); });
 				return;
 			}
 			
 			if (currentPhase == TurnPhase.REINFORCE) {
-				context.goToNextPhase();
+				delayedMove(() -> { context.goToNextPhase(); });
 				return;
 			}
 		}
