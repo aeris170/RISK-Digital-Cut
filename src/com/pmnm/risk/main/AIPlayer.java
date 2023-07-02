@@ -79,6 +79,16 @@ public class AIPlayer extends Player {
 				province = chooseRandomProvince(myProvinces);
 				deployToProvince(province, context.getRemainingDeploys());
 			}
+			
+			if (currentPhase == TurnPhase.ATTACK) {
+				context.goToNextPhase();
+				return;
+			}
+			
+			if (currentPhase == TurnPhase.REINFORCE) {
+				context.goToNextPhase();
+				return;
+			}
 		}
 	}
 	
