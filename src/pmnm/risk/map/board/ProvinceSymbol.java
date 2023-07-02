@@ -50,7 +50,6 @@ public final class ProvinceSymbol extends DoaObject {
 				continentLogoUnoccupied.setRGB(xx, yy, newPixel.getRGB());
 			}
 		}
-		
 		setzOrder(ZOrders.PROVINCE_SYMBOL_Z);
 		addComponent(new Renderer());
 	}
