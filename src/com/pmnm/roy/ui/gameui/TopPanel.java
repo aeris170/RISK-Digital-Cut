@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.ZOrders;
-import com.pmnm.risk.main.Main;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
 import com.pmnm.roy.ui.UIUtils;

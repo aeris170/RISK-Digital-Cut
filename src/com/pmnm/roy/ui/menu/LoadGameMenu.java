@@ -27,10 +27,7 @@ import doa.engine.scene.DoaSceneHandler;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.utils.DoaUtils;
 import pmnm.risk.game.databasedimpl.GameInstance;
-import pmnm.risk.game.databasedimpl.RiskGameContext;
 import pmnm.risk.game.databasedimpl.GameInstance.Metadata;
-import pmnm.risk.map.MapData;
-import pmnm.risk.map.MapLoader;
 
 @SuppressWarnings("serial")
 public class LoadGameMenu extends RoyMenu implements Observer {

@@ -7,7 +7,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.ZOrders;
-import com.pmnm.risk.main.Main;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaAnimation;
