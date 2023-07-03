@@ -2,17 +2,15 @@ package com.pmnm.roy.ui.gameui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.Globals;
 import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.main.Main;
-import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.UIUtils;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.graphics.DoaSprites;
@@ -21,6 +19,7 @@ import doa.engine.maths.DoaVector;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import pmnm.risk.game.Deploy;
 import pmnm.risk.game.IProvince;
 import pmnm.risk.game.IRiskGameContext.TurnPhase;
@@ -172,15 +171,19 @@ public class BottomPanel extends RoyMenu {
 		nextPhaseButton.setEnabled(false);
 
 		setzOrder(ZOrders.GAME_UI_Z);
-	
-		addComponent(new Script());
-		addComponent(new Renderer());
+
+		Renderer r = new Renderer();
+		addComponent(new Script(r));
+		addComponent(r);
 	}
 
+	@RequiredArgsConstructor
 	private final class Script extends DoaScript {
 
 		int counter = Globals.DEFAULT_TIME_SLICE;
 		private TurnPhase previousPhase;
+
+		@NonNull private Renderer renderer;
 
 		@Override
 		public void tick() {
@@ -198,6 +201,7 @@ public class BottomPanel extends RoyMenu {
 
 				//currentPhaseText = Translator.getInstance().getTranslatedString(currentPhase.toString());
 				currentPhaseText = currentPhase.toString();
+				renderer.recalculateFonts();
 			}
 
 			/* Reinforce logic */
@@ -227,6 +231,7 @@ public class BottomPanel extends RoyMenu {
 				}
 				nameText = clickedProvince.getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
 				continentText = clickedProvince.getContinent().getName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
+				renderer.recalculateFonts();
 			} else {
 				garrisonText = "";
 				ownerText = "";
@@ -238,33 +243,88 @@ public class BottomPanel extends RoyMenu {
 	}
 
 	private final class Renderer extends DoaRenderer {
+		
+		private float paddingMultiplier					= 0.99f;
 
-		private transient BufferedImage bottomRing	= DoaSprites.getSprite("MainMenuBottomRing");
+		private transient BufferedImage bottomRing		= DoaSprites.getSprite("MainMenuBottomRing");
 
-		private final BufferedImage MIDDLE	= DoaSprites.getSprite("gaugeBig");
-		private final BufferedImage LEFT	= DoaSprites.getSprite("gaugeLeft");
-		private final BufferedImage RIGHT 	= DoaSprites.getSprite("gaugeRight");
+		private final BufferedImage MIDDLE				= DoaSprites.getSprite("gaugeBig");
+		private final BufferedImage LEFT				= DoaSprites.getSprite("gaugeLeft");
+		private final BufferedImage RIGHT				= DoaSprites.getSprite("gaugeRight");
 
-		private transient BufferedImage garrisonBG	= DoaSprites.getSprite("garrisonHolder");
-		private transient BufferedImage ownerBG		= DoaSprites.getSprite("ownerHolder");
-		private transient BufferedImage provinceBG	= DoaSprites.getSprite("provinceNameHolder");
-		private transient BufferedImage continentBG = DoaSprites.getSprite("continentHolder");
+		private transient BufferedImage garrisonBG		= DoaSprites.getSprite("garrisonHolder");
+		private transient BufferedImage ownerBG			= DoaSprites.getSprite("ownerHolder");
+		private transient BufferedImage provinceBG		= DoaSprites.getSprite("provinceNameHolder");
+		private transient BufferedImage continentBG		= DoaSprites.getSprite("continentHolder");
 
 		private transient BufferedImage garrisonIcon	= DoaSprites.getSprite("garrisonHolderIcon");
 		private transient BufferedImage ownerIcon		= DoaSprites.getSprite("ownerHolderIcon");
 		private transient BufferedImage provinceIcon	= DoaSprites.getSprite("provinceNameHolderIcon");
 		private transient BufferedImage continentIcon	= DoaSprites.getSprite("continentHolderIcon");
-
+		
 		private final DoaVector GARRISON_BG_POSITION	= new DoaVector(870, 890);
 		private final DoaVector OWNER_BG_POSITION		= new DoaVector(857, 932);
 		private final DoaVector PROVINCE_BG_POSITION	= new DoaVector(837, 974);
 		private final DoaVector CONTINENT_BG_POSITION	= new DoaVector(825, 1016);
 		
-		
+		private final DoaVector PHASE_AREA				= new DoaVector(170, 1400);
+
+		private Font garrisonFont;
+		private int garrisonTextWidth;
+		private int garrisonTextHeight;
+
+		private Font ownerFont;
+		private int ownerTextWidth;
+		private int ownerTextHeight;
+
+		private Font provinceNameFont;
+		private int provinceTextWidth;
+		private int provinceTextHeight;
+
+		private Font continentNameFont;
+		private int continentTextWidth;
+		private int continentTextHeight;
+
+		private Font turnPhaseFont;
+
 		@Override
 		public void render() {
 			if (!isVisible()) return;
-			
+			if (garrisonFont == null) {
+				int[] size = DoaGraphicsFunctions.warp(garrisonBG.getWidth() * paddingMultiplier, garrisonBG.getHeight() * paddingMultiplier);
+				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				garrisonFont = UIUtils.adjustFontToFitInArea(garrisonText, contentSize);
+				garrisonTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(garrisonFont, garrisonText));
+				garrisonTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(garrisonFont));
+			}
+			if (ownerFont == null) {
+				int[] size = DoaGraphicsFunctions.warp(ownerBG.getWidth() * paddingMultiplier, ownerBG.getHeight() * paddingMultiplier);
+				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				ownerFont = UIUtils.adjustFontToFitInArea(ownerText, contentSize);
+				ownerTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(ownerFont, ownerText));
+				ownerTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(ownerFont));
+			}
+			if (provinceNameFont == null) {
+				int[] size = DoaGraphicsFunctions.warp(provinceBG.getWidth() * paddingMultiplier, provinceBG.getHeight() * paddingMultiplier);
+				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				provinceNameFont = UIUtils.adjustFontToFitInArea(nameText, contentSize);
+				provinceTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(provinceNameFont, nameText));
+				provinceTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(provinceNameFont));
+			}
+			if (continentNameFont == null) {
+				int[] size = DoaGraphicsFunctions.warp(continentBG.getWidth() * paddingMultiplier, continentBG.getHeight() * paddingMultiplier);
+				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				continentNameFont = UIUtils.adjustFontToFitInArea(continentText, contentSize);
+				continentTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(continentNameFont, continentText));
+				continentTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(continentNameFont));
+			}
+			turnPhaseFont = null;
+			if (turnPhaseFont == null) {
+				int[] size = DoaGraphicsFunctions.warp(PHASE_AREA.x, PHASE_AREA.y);
+				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				turnPhaseFont = UIUtils.adjustFontToFitInArea(currentPhaseText, contentSize);
+			}
+
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 
 			DoaGraphicsFunctions.drawImage(bottomRing,
@@ -281,9 +341,12 @@ public class BottomPanel extends RoyMenu {
 				RIGHT.getWidth(), RIGHT.getHeight()
 			);
 
-			DoaVector phaseArea = new DoaVector(1920 * 0.070f, 1080 * 0.046f);
-			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), phaseArea, currentPhaseText)));
-			DoaGraphicsFunctions.drawString(currentPhaseText, 1920 * 0.615f, 1080 * 0.993f);
+			DoaGraphicsFunctions.setFont(turnPhaseFont);
+			DoaGraphicsFunctions.drawString(
+				currentPhaseText,
+				nextPhaseButton.getContentArea().x + nextPhaseButton.getContentArea().width / 2f - 60,
+				1072
+			);
 
 			DoaGraphicsFunctions.drawImage(MIDDLE,
 				(1920 - MIDDLE.getWidth()) / 2f, 1080 - MIDDLE.getHeight(),
@@ -326,30 +389,45 @@ public class BottomPanel extends RoyMenu {
 				continentIcon.getWidth(), continentIcon.getHeight()
 			);
 
-			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 25f));
-			FontMetrics fm = DoaGraphicsFunctions.getFontMetrics();
-
+			DoaGraphicsFunctions.setFont(garrisonFont);
 			DoaGraphicsFunctions.drawString(garrisonText,
-				GARRISON_BG_POSITION.x + (garrisonBG.getWidth() - fm.stringWidth(garrisonText)) / 2f,
-				GARRISON_BG_POSITION.y * 1.031f
+				GARRISON_BG_POSITION.x + (garrisonBG.getWidth() - garrisonTextWidth) / 2f,
+				GARRISON_BG_POSITION.y + garrisonBG.getHeight() / 2f + garrisonTextHeight / 4f
 			);
-			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN, 30f));
-			fm = DoaGraphicsFunctions.getFontMetrics();
+			
+			DoaGraphicsFunctions.setFont(ownerFont);
 			if (clickedProvince != null) {
 				DoaGraphicsFunctions.setColor(clickedProvince.getOccupier().getColor());
 			}
-			DoaGraphicsFunctions.drawString(ownerText, OWNER_BG_POSITION.x + (ownerBG.getWidth() - fm.stringWidth(ownerText)) / 2f, OWNER_BG_POSITION.y * 1.03f);
-			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN,
-			        Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(provinceBG.getWidth() * 0.95f, provinceBG.getHeight()), nameText)));
+			DoaGraphicsFunctions.drawString(
+				ownerText,
+				OWNER_BG_POSITION.x + (ownerBG.getWidth() - ownerTextWidth) / 2f,
+				OWNER_BG_POSITION.y + ownerBG.getHeight() / 2f + ownerTextHeight / 4f
+			);
+			
+			DoaGraphicsFunctions.setFont(provinceNameFont);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
-			fm = DoaGraphicsFunctions.getFontMetrics();
-			DoaGraphicsFunctions.drawString(nameText, PROVINCE_BG_POSITION.x + (provinceBG.getWidth() - fm.stringWidth(nameText)) / 2f, PROVINCE_BG_POSITION.y * 1.03f);
-			DoaGraphicsFunctions.setFont(UIConstants.getFont().deriveFont(Font.PLAIN,
-			        Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), new DoaVector(continentBG.getWidth() * 0.95f, continentBG.getHeight()), continentText)));
-			fm = DoaGraphicsFunctions.getFontMetrics();
-			DoaGraphicsFunctions.drawString(continentText, CONTINENT_BG_POSITION.x + (continentBG.getWidth() - fm.stringWidth(continentText)) / 2f, CONTINENT_BG_POSITION.y * 1.03f);
+			DoaGraphicsFunctions.drawString(
+				nameText,
+				PROVINCE_BG_POSITION.x + (provinceBG.getWidth() - provinceTextWidth) / 2f,
+				PROVINCE_BG_POSITION.y + provinceBG.getHeight() / 2f + provinceTextHeight / 4f
+			);
+			
+			DoaGraphicsFunctions.setFont(continentNameFont);
+			DoaGraphicsFunctions.drawString(
+				continentText,
+				CONTINENT_BG_POSITION.x + (continentBG.getWidth() - continentTextWidth) / 2f,
+				CONTINENT_BG_POSITION.y + continentBG.getHeight() / 2f + continentTextHeight / 4f
+			);
 		}
 		
+		public void recalculateFonts() {
+			garrisonFont = null;
+			ownerFont = null;
+			provinceNameFont = null;
+			continentNameFont = null;
+			turnPhaseFont = null;
+		}
 	}
 
 	private void updateSpinnerValues() {

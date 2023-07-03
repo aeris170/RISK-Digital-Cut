@@ -197,8 +197,8 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 				emptyStringFont = UIUtils.adjustFontToFitInArea(emptyString, contentSize);
 				DoaVector area = UIUtils.textArea(emptyStringFont, emptyString);
 				emptyStringPos = new DoaVector(
-					saveMapContainer.getWidth() / 2f - area.x / 2f,
-					saveMapContainer.getHeight() / 2f + area.y / 4f
+					saveMapContainer.getWidth() / 2f - DoaGraphicsFunctions.unwarpX(area.x / 2f),
+					saveMapContainer.getHeight() / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 				);
 			}
 			if (dateStringFont == null) {
@@ -261,8 +261,8 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 					DoaVector area = UIUtils.textArea(font, mapName);
 					DoaGraphicsFunctions.drawString(
 						mapName,
-						scrollPos.x + mapNameOffset.x + mapNameSize.x / 2f - area.x / 2f,
-						scrollPos.y + mapNameOffset.y + mapNameSize.y / 2f + area.y / 4f
+						scrollPos.x + mapNameOffset.x + mapNameSize.x / 2f - DoaGraphicsFunctions.unwarpX(area.x / 2f),
+						scrollPos.y + mapNameOffset.y + mapNameSize.y / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 					);
 				}
 				
@@ -274,8 +274,8 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 					DoaVector area = UIUtils.textArea(dateStringFont, date);
 					DoaGraphicsFunctions.drawString(
 						date,
-						scrollPos.x + dateOffset.x + dateSize.x / 2f - area.x / 2f,
-						scrollPos.y + dateOffset.y + dateSize.y / 2f + area.y / 4f
+						scrollPos.x + dateOffset.x + dateSize.x / 2f - DoaGraphicsFunctions.unwarpX(area.x / 2f),
+						scrollPos.y + dateOffset.y + dateSize.y / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 					);
 				}
 				
@@ -286,8 +286,8 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 					DoaVector area = UIUtils.textArea(dateStringFont, time);
 					DoaGraphicsFunctions.drawString(
 						time,
-						scrollPos.x + timeOffset.x + timeSize.x / 2f - area.x / 2f, 
-						scrollPos.y + timeOffset.y + timeSize.y / 2f + area.y / 4f 
+						scrollPos.x + timeOffset.x + timeSize.x / 2f - DoaGraphicsFunctions.unwarpX(area.x / 2f),
+						scrollPos.y + timeOffset.y + timeSize.y / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 					);
 				}
 				
@@ -298,8 +298,8 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 					DoaVector area = UIUtils.textArea(versionStringFont, version);
 					DoaGraphicsFunctions.drawString(
 						version,
-						scrollPos.x + versionOffset.x + versionSize.x / 2f - area.x / 2f, 
-						scrollPos.y + versionOffset.y + versionSize.y / 2f + area.y / 4f 
+						scrollPos.x + versionOffset.x + versionSize.x / 2f - DoaGraphicsFunctions.unwarpX(area.x / 2f),
+						scrollPos.y + versionOffset.y + versionSize.y / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 					);
 				}
 			}
@@ -320,6 +320,6 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 	
 	@Override
 	public void onNotify(Observable b) {
-		getComponentByType(Renderer.class).ifPresent((r) -> r.refreshLocale(Translator.getInstance().getCurrentLanguage().getLocale()));
+		getComponentByType(Renderer.class).ifPresent(r -> r.refreshLocale(Translator.getInstance().getCurrentLanguage().getLocale()));
 	}
 }

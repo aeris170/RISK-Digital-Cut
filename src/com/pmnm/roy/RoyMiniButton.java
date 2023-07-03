@@ -67,6 +67,9 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 	private transient IRoyAction action = null;
 	
 	private transient BufferedImage currentImage;
+
+	private int width = 0;
+	private int height = 0;
 	
 	private DoaVector contentSize;
 	private DoaVector textPosition;
@@ -83,10 +86,16 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 		
 		currentImage = image;
 
+		width = image.getWidth();
+		height = image.getHeight();
+
+		Renderer r = new Renderer();
 		addComponent(new Script());
-		addComponent(new Renderer());
+		addComponent(r);
 		
 		Translator.getInstance().registerObserver(this);
+		
+		r.enableDebugRender = true;
 	}
 
 	@Override
@@ -97,13 +106,11 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 
 	@Override
 	public Rectangle getContentArea() {
-		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(image.getWidth(), image.getHeight());
 		return new Rectangle(
-			pos[0],
-			pos[1],
-			size[0],
-			size[1]
+			(int) transform.position.x,
+			(int) transform.position.y,
+			image.getWidth(),
+			image.getHeight()
 		);
 	}
 	
@@ -123,9 +130,10 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 				currentImage = disabledImage;
 				return;
 			}
-			
 			Rectangle area = getContentArea();
-			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
+			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			if (area.contains(new Point(mouseX, mouseY))) {
 				if(currentImage == pressImage && DoaMouse.MB1_RELEASE) {
 					action.execute(RoyMiniButton.this);
 				} else if(DoaMouse.MB1 || DoaMouse.MB1_HOLD) {
@@ -174,6 +182,13 @@ public final class RoyMiniButton extends DoaObject implements IRoyInteractableEl
 			);
 			
 			DoaGraphicsFunctions.popAll();
+		}
+
+		@Override
+		public void debugRender() {
+			if (!isVisible) { return; }
+			DoaGraphicsFunctions.setColor(Color.RED);
+			DoaGraphicsFunctions.drawRect(0, 0, width, height);
 		}
 	}
 }

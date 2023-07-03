@@ -65,9 +65,12 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 
 	@Setter
 	private transient IRoyAction action = null;
-	
+
 	private transient BufferedImage currentImage;
-	
+
+	private int width = 0;
+	private int height = 0;
+
 	private DoaVector contentSize;
 
 	@Builder
@@ -79,13 +82,19 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 		this.hoverImage = UIConstants.getButtonHoverSprite();
 		this.pressImage = UIConstants.getButtonPressedSprite();
 		this.disabledImage = image;
-		
+
 		currentImage = image;
 
+		width = image.getWidth();
+		height = image.getHeight();
+
+		Renderer r = new Renderer();
 		addComponent(new Script());
-		addComponent(new Renderer());
-		
+		addComponent(r);
+
 		Translator.getInstance().registerObserver(this);
+
+		r.enableDebugRender = true;
 	}
 
 	@Override
@@ -96,22 +105,20 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 
 	@Override
 	public Rectangle getContentArea() {
-		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(image.getWidth(), image.getHeight());
 		return new Rectangle(
-			pos[0],
-			pos[1],
-			size[0],
-			size[1]
+			(int) transform.position.x,
+			(int) transform.position.y,
+			image.getWidth(),
+			image.getHeight()
 		);
 	}
-	
+
 	@Override
 	public void onNotify(Observable b) {
 		this.text = Translator.getInstance().getTranslatedString(textKey);
 		font = null; /* make font null so on next frame it will be calculated again with appropriate size */
 	}
-	
+
 	private final class Script extends DoaScript {
 
 		@Override
@@ -124,7 +131,9 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			}
 			
 			Rectangle area = getContentArea();
-			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
+			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			if (area.contains(new Point(mouseX, mouseY))) {
 				if(currentImage == pressImage && DoaMouse.MB1_RELEASE) {
 					action.execute(RoyButton.this);
 				} else if(DoaMouse.MB1 || DoaMouse.MB1_HOLD) {
@@ -137,7 +146,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			}
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 		
 		private int textHeight;
@@ -166,6 +175,12 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			
 			DoaGraphicsFunctions.popAll();
 		}
+		
+		@Override
+		public void debugRender() {
+			if (!isVisible) { return; }
+			DoaGraphicsFunctions.setColor(Color.RED);
+			DoaGraphicsFunctions.drawRect(0, 0, width, height);
+		}
 	}
-
 }

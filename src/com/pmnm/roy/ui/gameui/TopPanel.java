@@ -1,8 +1,8 @@
 package com.pmnm.roy.ui.gameui;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 
@@ -139,7 +139,7 @@ public class TopPanel extends RoyMenu {
 				DoaGraphicsFunctions.fillRect(timer, 1080 * 0.027f, 1920 - timer * 2, 1080 * 0.021f);
 			}
 
-			Composite oldComposite = DoaGraphicsFunctions.getComposite();
+			DoaGraphicsFunctions.pushComposite();
 			DoaGraphicsFunctions.drawImage(topRing,
 				0, -6,
 				topRing.getWidth(), topRing.getHeight()
@@ -172,7 +172,13 @@ public class TopPanel extends RoyMenu {
 				(1920 - playerNameTextWidth) / 2f,
 				110
 			);
-			DoaGraphicsFunctions.setComposite(oldComposite);
+			DoaGraphicsFunctions.pushStroke();
+			DoaGraphicsFunctions.setStroke(new BasicStroke(1));
+			DoaGraphicsFunctions.drawLine(
+				(1920 - playerNameTextWidth) / 2f, 110 + playerNameTextHeight / 16f,
+				(1920 + playerNameTextWidth) / 2f, 110 + playerNameTextHeight / 16f);
+			DoaGraphicsFunctions.popStroke();
+			DoaGraphicsFunctions.popComposite();
 		}
 	}
 }

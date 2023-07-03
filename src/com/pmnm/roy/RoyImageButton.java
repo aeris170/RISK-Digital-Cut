@@ -89,6 +89,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 		renderer = new Renderer();
 		addComponent(new Script());
 		addComponent(renderer);
+
+		renderer.enableDebugRender = true;
 	}
 
 	@Override
@@ -109,13 +111,11 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 
 	@Override
 	public Rectangle getContentArea() {
-		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(width, height);
 		return new Rectangle(
-			pos[0],
-			pos[1],
-			size[0],
-			size[1]
+			(int) transform.position.x,
+			(int) transform.position.y,
+			width,
+			height
 		);
 	}
 	
@@ -131,7 +131,9 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			}
 			
 			Shape area = getContentArea();
-			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
+			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			if (area.contains(new Point(mouseX, mouseY))) {
 				if(currentImage == pressImage && DoaMouse.MB1_RELEASE) {
 					action.execute(RoyImageButton.this);
 				} else if(DoaMouse.MB1 || DoaMouse.MB1_HOLD) {
@@ -179,7 +181,13 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 				image.getWidth() / 2 - textWidth / 2f,
 				image.getHeight() / 2f + textHeight / 4f
 			);
-			
+		}
+		
+		@Override
+		public void debugRender() {
+			if (!isVisible) { return; }
+			DoaGraphicsFunctions.setColor(Color.RED);
+			DoaGraphicsFunctions.drawRect(0, 0, width, height);
 		}
 	}
 }
