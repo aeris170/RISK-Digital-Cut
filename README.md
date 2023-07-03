@@ -32,7 +32,7 @@ Shortly said, this will be an extended version of the traditional Risk game, des
 ## Private Moon Nobleman is:
 
   * [Doğa Oruç](https://github.com/aeris170)
-  * [Fazilet Simge Er](https://github.com/simge98)
+  * [Fazilet Simge Er](https://github.com/fsimgeer)
   * [Kaan Ünlü](https://github.com/Paledomain)
 
 [1]: http://www.cardboardrepublic.com/classics/risk-vs-diplomacy
