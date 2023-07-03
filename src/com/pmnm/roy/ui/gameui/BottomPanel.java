@@ -162,7 +162,7 @@ public class BottomPanel extends RoyMenu {
 		centerPieceButton.setTextColor(Color.BLACK);
 		centerPieceButton.setHoverTextColor(UIConstants.getTextColor());
 		addElement(centerPieceButton);
-	
+
 		updateSpinnerValues();
 		if (context.getCurrentPhase() == TurnPhase.SETUP) {
 			centerPieceButton.setEnabled(false);
@@ -170,7 +170,7 @@ public class BottomPanel extends RoyMenu {
 			centerPieceButton.setEnabled(true);
 		}
 		nextPhaseButton.setEnabled(false);
-	
+
 		setzOrder(ZOrders.GAME_UI_Z);
 	
 		addComponent(new Script());
@@ -178,7 +178,7 @@ public class BottomPanel extends RoyMenu {
 	}
 
 	private final class Script extends DoaScript {
-		
+
 		int counter = Globals.DEFAULT_TIME_SLICE;
 		private TurnPhase previousPhase;
 
@@ -244,7 +244,7 @@ public class BottomPanel extends RoyMenu {
 		private final BufferedImage MIDDLE	= DoaSprites.getSprite("gaugeBig");
 		private final BufferedImage LEFT	= DoaSprites.getSprite("gaugeLeft");
 		private final BufferedImage RIGHT 	= DoaSprites.getSprite("gaugeRight");
-		
+
 		private transient BufferedImage garrisonBG	= DoaSprites.getSprite("garrisonHolder");
 		private transient BufferedImage ownerBG		= DoaSprites.getSprite("ownerHolder");
 		private transient BufferedImage provinceBG	= DoaSprites.getSprite("provinceNameHolder");
