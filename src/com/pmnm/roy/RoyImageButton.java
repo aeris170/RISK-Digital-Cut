@@ -69,7 +69,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	private int height = 0;
 	
 	@Setter
-	private Shape interactionArea;
+	private transient Shape interactionArea;
 
 	private Renderer renderer;
 
