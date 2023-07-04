@@ -23,7 +23,7 @@ import pmnm.risk.map.board.ProvinceHitAreas;
 public class DicePanel extends RoyMenu {
 
 	private DoaVector panelPosition = new DoaVector(-160f, 258f);
-	
+
 	private DoaVector ONE_POSITION = new DoaVector(51f, 109f);
 	private DoaVector TWO_POSITION = new DoaVector(24f, 183f);
 	private DoaVector THREE_POSITION = new DoaVector(24f, 266f);
@@ -33,12 +33,12 @@ public class DicePanel extends RoyMenu {
 	private RoyImageButton two;
 	private RoyImageButton three;
 	private RoyImageButton blitz;
-	
+
 	private final RiskGameContext context;
 
 	public DicePanel(final RiskGameContext context) {
 		this.context = context;
-		
+
 		one = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("dice1Idle"))
 			.hoverImage(DoaSprites.getSprite("dice1Hover"))
@@ -48,7 +48,7 @@ public class DicePanel extends RoyMenu {
 			.build();
 		one.setPosition(DoaVector.add(panelPosition, ONE_POSITION));
 		addElement(one);
-		
+
 		two = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("dice2Idle"))
 			.hoverImage(DoaSprites.getSprite("dice2Hover"))
@@ -58,7 +58,7 @@ public class DicePanel extends RoyMenu {
 			.build();
 		two.setPosition(DoaVector.add(panelPosition, TWO_POSITION));
 		addElement(two);
-		
+
 		three = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("dice3Idle"))
 			.hoverImage(DoaSprites.getSprite("dice3Hover"))
@@ -68,7 +68,7 @@ public class DicePanel extends RoyMenu {
 			.build();
 		three.setPosition(DoaVector.add(panelPosition, THREE_POSITION));
 		addElement(three);
-		
+
 		blitz = RoyImageButton.builder()
 			.image(DoaSprites.getSprite("blitzIdle"))
 			.hoverImage(DoaSprites.getSprite("blitzHover"))
@@ -78,13 +78,13 @@ public class DicePanel extends RoyMenu {
 			.build();
 		blitz.setPosition(DoaVector.add(panelPosition, BLITZ_POSITION));
 		addElement(blitz);
-		
+
 		setzOrder(ZOrders.GAME_UI_Z);
-		
+
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
-	
+
 	private void doConflict(Dice dice) {
 		ProvinceHitAreas areas = context.getAreas();
 		ProvinceHitArea attackerArea = areas.getAttackerProvince();
@@ -102,12 +102,12 @@ public class DicePanel extends RoyMenu {
 
 		private final float MIN = -160f;
 		private final float MAX = 0f;
-		
+
 		private final float ACCELERATION = 0.064f;
-		
+
 		private float velocity = 0f;
 		private boolean moving = false;
-		
+
 		@Override
 		public void tick() {
 			if (!isVisible()) return;
@@ -150,31 +150,31 @@ public class DicePanel extends RoyMenu {
 				));
 			}
 		}
-		
+
 		private void show() {
 			if (moving) { return; }
-			
+
 			boolean canAttack = context.getAreas().getAttackerProvince().getProvince().canLaunchAttack();
 			int numOfTroops = context.getAreas().getAttackerProvince().getProvince().getNumberOfTroops();
 			one.setEnabled(canAttack);
 			two.setEnabled(canAttack && numOfTroops > 2);
 			three.setEnabled(canAttack && numOfTroops > 3);
 			blitz.setEnabled(canAttack);
-			
+
 			if (panelPosition.x != MAX) {
 				moving = true;
 				velocity = Float.MIN_VALUE;
 			}
 		}
-		
+
 		private void hide() {
 			if (moving) { return; }
-			
+
 			one.setEnabled(false);
 			two.setEnabled(false);
 			three.setEnabled(false);
 			blitz.setEnabled(false);
-			
+
 			if (panelPosition.x != MIN) {
 				moving = true;
 				velocity = -Float.MIN_VALUE;
@@ -185,7 +185,7 @@ public class DicePanel extends RoyMenu {
 	private final class Renderer extends DoaRenderer {
 
 		private final BufferedImage BG = DoaSprites.getSprite("diceScroll");
-		
+
 		@Override
 		public void render() {
 			if (!isVisible()) return;
