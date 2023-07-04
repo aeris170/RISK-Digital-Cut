@@ -99,7 +99,7 @@ public class DicePanel extends RoyMenu {
 		Conflict conflict = context.setUpConflict(
 			attackerArea.getProvince(),
 			defenderArea.getProvince(),
-			Dice.ATTACK_DICE_1);
+			dice);
 		Conflict.Result result = conflict.calculateResult();
 		context.applyConflictResult(result);
 	}
