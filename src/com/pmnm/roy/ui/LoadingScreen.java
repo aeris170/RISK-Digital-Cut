@@ -25,7 +25,7 @@ import pmnm.risk.game.databasedimpl.Player;
 import pmnm.risk.map.MapConfig;
 
 @SuppressWarnings("serial")
-public final class LoadingScreen extends RoyMenu{
+public final class LoadingScreen extends RoyMenu {
 
 	private BufferedImage selectedMapPreview;
 	private String selectedMapName;
@@ -79,7 +79,7 @@ public final class LoadingScreen extends RoyMenu{
 		loadingBarProgress = 0;
 		currentBarProgress = 0;
 	}
-	
+
 	private final class Script extends DoaScript {
 		private String[] hints = new String[] {"hint1", "hint2", "hint3 tehe ;P"};
 		private int hintIndex = 0;
@@ -100,10 +100,10 @@ public final class LoadingScreen extends RoyMenu{
 				currentBarProgress = DoaMath.clamp(currentBarProgress + 0.005f, 0, loadingBarProgress);
 			}
 			
-			if(timer >= timerMax) {
+			if (timer >= timerMax) {
 				timer = 0;
 
-				if(hintIndex >= hints.length - 1) {
+				if (hintIndex >= hints.length - 1) {
 					hintIndex = 0;
 				} else {
 					hintIndex++;
@@ -119,6 +119,8 @@ public final class LoadingScreen extends RoyMenu{
 		private Font mapNameFont;
 		private DoaVector mapNamePosition;
 		private DoaVector mapNameDimensions;
+		
+		private Font playerNameFont;
 
 		private Font hintFont;
 		private DoaVector hintPosition;
@@ -149,11 +151,11 @@ public final class LoadingScreen extends RoyMenu{
 			playerNameBg = UIConstants.getPlayerTypeBorderSprite();
 			colorBg = UIConstants.getColorBorderSprite();
 			pawnBg = UIConstants.getColorBorderSprite();
-			
+
 			loadingLeft = DoaSprites.getSprite("loadingProgressLeft");
 			loadingMiddle = DoaSprites.getSprite("loadingProgressMiddle");
 			loadingRight = DoaSprites.getSprite("loadingProgressRight");
-			
+
 			loadingLeftUnsaturated = DoaSprites.getSprite("loadingProgressLeftUnsaturated");
 			loadingMiddleUnsaturated = DoaSprites.getSprite("loadingProgressMiddleUnsaturated");
 			loadingRightUnsaturated = DoaSprites.getSprite("loadingProgressRightUnsaturated");
@@ -162,57 +164,65 @@ public final class LoadingScreen extends RoyMenu{
 		@Override
 		public void render() {
 			if (!isVisible()) { return; }
-			
+
 			DoaGraphicsFunctions.setColor(new Color(0, 0, 0));
 			DoaGraphicsFunctions.pushComposite();
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.60f));
 			DoaGraphicsFunctions.fillRect(0, 0, 1920, 1080);
 			DoaGraphicsFunctions.popComposite();
-			
 			if (mapNameFont == null) {
-				mapNameDimensions = new DoaVector(300f, 50f);
-				mapNameFont = UIConstants.getFont().deriveFont(
-					Font.PLAIN,
-					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), mapNameDimensions, "GAME OF THRONES"), 0)[0]
-				);
-
-				mapNameDimensions = new DoaVector(UIUtils.textWidth(mapNameFont, selectedMapName), UIUtils.textHeight(mapNameFont));
-				mapNamePosition = new DoaVector(195 + (mapBorder.getWidth() - mapNameDimensions.x) / 2f, 325);
-			}
-			
-			if (hintFont == null || hintTextChanged) {
-				hintTextDimensions = new DoaVector(1000f, 35f);
+				DoaVector contentSize = new DoaVector(300, 50);
+				mapNameFont = UIUtils.adjustFontToFitInArea(selectedMapName, contentSize);
 				
-				hintFont = UIConstants.getFont().deriveFont(
-					Font.PLAIN,
-					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), hintTextDimensions, hintText), 0)[0]
+				mapNameDimensions = new DoaVector(UIUtils.textWidth(mapNameFont, selectedMapName), UIUtils.textHeight(mapNameFont));
+				mapNameDimensions.x = DoaGraphicsFunctions.unwarpX(mapNameDimensions.x);
+				mapNameDimensions.y = DoaGraphicsFunctions.unwarpY(mapNameDimensions.y);
+				
+				mapNamePosition = new DoaVector(
+					153 + mapChooserBg.getWidth() / 2f - mapNameDimensions.x / 2f,
+					325
 				);
+			}
+			if (playerNameFont == null) {
+				DoaVector contentSize = new DoaVector(playerNameBg.getWidth(), playerNameBg.getHeight());
+				playerNameFont = UIUtils.adjustFontToFitInArea("PLAYERPLAYER", contentSize);
+			}
+			if (hintFont == null || hintTextChanged) {
+				DoaVector contentSize = new DoaVector(1000, 35);
+				hintFont = UIUtils.adjustFontToFitInArea(hintText, contentSize);
 
 				hintTextDimensions = new DoaVector(UIUtils.textWidth(hintFont, hintText), UIUtils.textHeight(hintFont));
-				hintPosition = new DoaVector((1920 - hintTextDimensions.x) / 2f, 950 - hintTextDimensions.y / 4f);
+				hintTextDimensions.x = DoaGraphicsFunctions.unwarpX(hintTextDimensions.x);
+				hintTextDimensions.y = DoaGraphicsFunctions.unwarpY(hintTextDimensions.y);
 				
-				hintTextChanged = false;
-			}
-
-			if (loadingFont == null || loadingTextChanged) {
-				loadingTextDimensions = new DoaVector(1000f, 50f);
-				
-				loadingFont = UIConstants.getFont().deriveFont(
-					Font.PLAIN,
-					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), loadingTextDimensions, loadingText), 0)[0]
+				hintPosition = new DoaVector(
+					(1920 - hintTextDimensions.x) / 2f,
+					950 - hintTextDimensions.y / 4f
 				);
 
-				loadingTextDimensions = new DoaVector(UIUtils.textWidth(loadingFont, loadingText), UIUtils.textHeight(loadingFont));
-				loadingPosition = new DoaVector((1920 - loadingTextDimensions.x) / 2f, 950 - loadingTextDimensions.y / 4f + 55);
+				hintTextChanged = false;
+			}
+			if (loadingFont == null || loadingTextChanged) {
+				DoaVector contentSize = new DoaVector(1000, 50);
+				loadingFont = UIUtils.adjustFontToFitInArea(loadingText, contentSize);
 				
+				loadingTextDimensions = new DoaVector(UIUtils.textWidth(loadingFont, loadingText), UIUtils.textHeight(loadingFont));
+				loadingTextDimensions.x = DoaGraphicsFunctions.unwarpX(loadingTextDimensions.x);
+				loadingTextDimensions.y = DoaGraphicsFunctions.unwarpY(loadingTextDimensions.y);
+				
+				loadingPosition = new DoaVector(
+					(1920 - loadingTextDimensions.x) / 2f,
+					950 + loadingTextDimensions.y  - loadingMiddle.getHeight() / 4f
+				);
+
 				loadingTextChanged = false;
 			}
 
 			// MAP SECTION
 			DoaGraphicsFunctions.drawImage(mapChooserBg, 153, 259, mapChooserBg.getWidth(), mapChooserBg.getHeight());
-			
+
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
-			
+
 			DoaGraphicsFunctions.setFont(mapNameFont);
 			DoaGraphicsFunctions.drawString(selectedMapName, mapNamePosition.x, mapNamePosition.y);
 
@@ -222,11 +232,12 @@ public final class LoadingScreen extends RoyMenu{
 				360,
 				mapBorder.getWidth() - 5f,
 				mapBorder.getHeight() - 3f);
-			DoaGraphicsFunctions.drawImage(mapBorder, 195, 357);
+			DoaGraphicsFunctions.drawImage(mapBorder, 195, 357, mapBorder.getWidth(), mapBorder.getHeight());
 
 			DoaGraphicsFunctions.drawImage(mainScroll, 600, 170, mainScroll.getWidth(), mainScroll.getHeight());
 
 			// names
+			DoaGraphicsFunctions.setFont(playerNameFont);
 			for (int i = 0; i < names.size(); i++) {
 				DoaGraphicsFunctions.drawImage(playerNameBg, 725, 282 + i * 55, playerNameBg.getWidth(), playerNameBg.getHeight());
 				
@@ -249,7 +260,7 @@ public final class LoadingScreen extends RoyMenu{
 			}
 
 			// HINT
-			DoaGraphicsFunctions.setColor(Color.DARK_GRAY);
+			DoaGraphicsFunctions.setColor(Color.WHITE.darker());
 			DoaGraphicsFunctions.setFont(hintFont);
 			DoaGraphicsFunctions.drawString(hintText, hintPosition.x, hintPosition.y);
 
@@ -287,9 +298,8 @@ public final class LoadingScreen extends RoyMenu{
 				loadingRight.getWidth(), 50
 			);
 			DoaGraphicsFunctions.setClip(0, 0, 1920, 1080);
-			
+
 			DoaGraphicsFunctions.setFont(loadingFont);
-			
 
 			/* outline */
 			DoaGraphicsFunctions.setColor(Color.BLACK);
