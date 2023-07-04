@@ -1,6 +1,6 @@
 package com.pmnm.roy;
 
-import java.awt.Rectangle;
+import java.awt.Shape;
 
 import doa.engine.maths.DoaVector;
 
@@ -10,5 +10,6 @@ public interface IRoyElement {
 	void setVisible(boolean value);
 	
 	void setPosition(DoaVector position);
-	Rectangle getContentArea();
+	Shape getContentArea();
+	default Shape getInteractionArea() { return getContentArea(); }
 }

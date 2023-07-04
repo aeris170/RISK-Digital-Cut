@@ -306,8 +306,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		public void render() {
 			if (!isVisible()) { return; }
 			if (font == null) {
-				Rectangle nextMapButton = NewGameMenu.this.nextMapButton.getContentArea();
-				Rectangle prevMapButton = NewGameMenu.this.prevMapButton.getContentArea();
+				Rectangle nextMapButton = NewGameMenu.this.nextMapButton.getContentArea().getBounds();
+				Rectangle prevMapButton = NewGameMenu.this.prevMapButton.getContentArea().getBounds();
 				textDimensions = new DoaVector(
 					nextMapButton.x - prevMapButton.x - prevMapButton.width,
 					prevMapButton.height

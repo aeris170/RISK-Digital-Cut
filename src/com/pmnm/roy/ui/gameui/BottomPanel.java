@@ -344,7 +344,7 @@ public class BottomPanel extends RoyMenu {
 			DoaGraphicsFunctions.setFont(turnPhaseFont);
 			DoaGraphicsFunctions.drawString(
 				currentPhaseText,
-				nextPhaseButton.getContentArea().x + nextPhaseButton.getContentArea().width / 2f - 60,
+				nextPhaseButton.getContentArea().getBounds().x + nextPhaseButton.getContentArea().getBounds().width / 2f - 60,
 				1072
 			);
 

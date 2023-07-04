@@ -1,5 +1,6 @@
 package com.pmnm.roy.ui.gameui;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.ZOrders;
@@ -76,6 +77,12 @@ public class DicePanel extends RoyMenu {
 			.action(source -> {})
 			.build();
 		blitz.setPosition(DoaVector.add(panelPosition, BLITZ_POSITION));
+		blitz.setInteractionArea(new Rectangle(
+			blitz.getContentArea().getBounds().x + 14,
+			blitz.getContentArea().getBounds().y + 85,
+			64,
+			64
+		));
 		addElement(blitz);
 		
 		setzOrder(ZOrders.GAME_UI_Z);

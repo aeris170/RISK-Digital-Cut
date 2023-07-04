@@ -68,6 +68,9 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	private int width = 0;
 	private int height = 0;
 	
+	@Setter
+	private Shape interactionArea;
+
 	private Renderer renderer;
 
 	@Builder
@@ -110,7 +113,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	}
 
 	@Override
-	public Rectangle getContentArea() {
+	public Shape getContentArea() {
 		return new Rectangle(
 			(int) transform.position.x,
 			(int) transform.position.y,
@@ -119,7 +122,13 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 		);
 	}
 	
-	private final class Script extends DoaScript {
+	@Override
+	public Shape getInteractionArea() {
+		if (interactionArea == null) { return getContentArea(); }
+		return interactionArea;
+	}
+
+	public final class Script extends DoaScript {
 
 		@Override
 		public void tick() {
@@ -129,8 +138,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 				currentImage = disabledImage;
 				return;
 			}
-			Shape area = getContentArea();
 
+			Shape area = getInteractionArea();
 			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
 			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			if (area.contains(new Point(mouseX, mouseY))) {
@@ -163,7 +172,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 
 			if (text == null || text.isEmpty()) { return; }
 			if (font == null) {
-				int[] size = DoaGraphicsFunctions.warp(image.getWidth() * textMargin.x, image.getHeight() * textMargin.y);
+				int[] size = DoaGraphicsFunctions.warp(width * textMargin.x, height * textMargin.y);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
 				font = UIUtils.adjustFontToFitInArea(text, contentSize);
 				textWidth = UIUtils.textWidth(font, text);
@@ -178,16 +187,21 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 
 			DoaGraphicsFunctions.drawString(
 				text,
-				image.getWidth() / 2 - textWidth / 2f,
-				image.getHeight() / 2f + textHeight / 4f
+				(width - textWidth) / 2f,
+				height / 2f + textHeight / 4f
 			);
 		}
 
 		@Override
 		public void debugRender() {
 			if (!isVisible) { return; }
+			DoaGraphicsFunctions.pushTransform();
+			DoaGraphicsFunctions.resetTransform();
+			DoaGraphicsFunctions.setColor(Color.YELLOW);
+			DoaGraphicsFunctions.draw(getContentArea());
 			DoaGraphicsFunctions.setColor(Color.RED);
-			DoaGraphicsFunctions.drawRect(0, 0, width, height);
+			DoaGraphicsFunctions.draw(getInteractionArea());
+			DoaGraphicsFunctions.popTransform();
 		}
 	}
 }
