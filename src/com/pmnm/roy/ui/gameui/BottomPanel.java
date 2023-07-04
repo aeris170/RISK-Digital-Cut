@@ -243,8 +243,8 @@ public class BottomPanel extends RoyMenu {
 	}
 
 	private final class Renderer extends DoaRenderer {
-		private float paddingMultiplier					= 0.99f;
 
+		private float paddingMultiplier					= 0.9f;
 
 		private transient BufferedImage bottomRing		= DoaSprites.getSprite("MainMenuBottomRing");
 
@@ -266,8 +266,8 @@ public class BottomPanel extends RoyMenu {
 		private final DoaVector OWNER_BG_POSITION		= new DoaVector(857, 932);
 		private final DoaVector PROVINCE_BG_POSITION	= new DoaVector(837, 974);
 		private final DoaVector CONTINENT_BG_POSITION	= new DoaVector(825, 1016);
-		private final DoaVector PHASE_AREA				= new DoaVector(170, 1400);
 
+		private  DoaVector PHASE_AREA				= new DoaVector(140, 1400);
 
 		private Font garrisonFont;
 		private int garrisonTextWidth;
@@ -291,37 +291,51 @@ public class BottomPanel extends RoyMenu {
 		public void render() {
 			if (!isVisible()) return;
 			if (garrisonFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(garrisonBG.getWidth() * paddingMultiplier, garrisonBG.getHeight() * paddingMultiplier);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(garrisonBG.getWidth() * paddingMultiplier, garrisonBG.getHeight() * paddingMultiplier);
 				garrisonFont = UIUtils.adjustFontToFitInArea(garrisonText, contentSize);
-				garrisonTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(garrisonFont, garrisonText));
-				garrisonTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(garrisonFont));
+
+				garrisonTextWidth = UIUtils.textWidth(garrisonFont, garrisonText);
+				garrisonTextHeight = UIUtils.textHeight(garrisonFont);
+
+				int[] strSize = DoaGraphicsFunctions.unwarp(garrisonTextWidth, garrisonTextHeight);
+				garrisonTextWidth = strSize[0];
+				garrisonTextHeight = strSize[1];
 			}
 			if (ownerFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(ownerBG.getWidth() * paddingMultiplier, ownerBG.getHeight() * paddingMultiplier);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(ownerBG.getWidth() * paddingMultiplier, ownerBG.getHeight() * paddingMultiplier);
 				ownerFont = UIUtils.adjustFontToFitInArea(ownerText, contentSize);
-				ownerTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(ownerFont, ownerText));
-				ownerTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(ownerFont));
+
+				ownerTextWidth = UIUtils.textWidth(ownerFont, ownerText);
+				ownerTextHeight = UIUtils.textHeight(ownerFont);
+
+				int[] strSize = DoaGraphicsFunctions.unwarp(ownerTextWidth, ownerTextHeight);
+				ownerTextWidth = strSize[0];
+				ownerTextHeight = strSize[1];
 			}
 			if (provinceNameFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(provinceBG.getWidth() * paddingMultiplier, provinceBG.getHeight() * paddingMultiplier);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(provinceBG.getWidth() * paddingMultiplier, provinceBG.getHeight() * paddingMultiplier);
 				provinceNameFont = UIUtils.adjustFontToFitInArea(nameText, contentSize);
-				provinceTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(provinceNameFont, nameText));
-				provinceTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(provinceNameFont));
+				
+				provinceTextWidth = UIUtils.textWidth(provinceNameFont, nameText);
+				provinceTextHeight = UIUtils.textHeight(provinceNameFont);
+
+				int[] strSize = DoaGraphicsFunctions.unwarp(provinceTextWidth, provinceTextHeight);
+				provinceTextWidth = strSize[0];
+				provinceTextHeight = strSize[1];
 			}
 			if (continentNameFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(continentBG.getWidth() * paddingMultiplier, continentBG.getHeight() * paddingMultiplier);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(continentBG.getWidth() * paddingMultiplier, continentBG.getHeight() * paddingMultiplier);
 				continentNameFont = UIUtils.adjustFontToFitInArea(continentText, contentSize);
-				continentTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(continentNameFont, continentText));
-				continentTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(continentNameFont));
+				
+				continentTextWidth = UIUtils.textWidth(continentNameFont, continentText);
+				continentTextHeight = UIUtils.textHeight(continentNameFont);
+
+				int[] strSize = DoaGraphicsFunctions.unwarp(continentTextWidth, continentTextHeight);
+				continentTextWidth = strSize[0];
+				continentTextHeight = strSize[1];
 			}
-			turnPhaseFont = null;
 			if (turnPhaseFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(PHASE_AREA.x, PHASE_AREA.y);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(PHASE_AREA.x, PHASE_AREA.y);
 				turnPhaseFont = UIUtils.adjustFontToFitInArea(currentPhaseText, contentSize);
 			}
 

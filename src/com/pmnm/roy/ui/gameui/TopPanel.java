@@ -113,21 +113,31 @@ public class TopPanel extends RoyMenu {
 		@Override
 		public void render() {
 			if (!isVisible()) return;
+			turnFont = null;
+			playerNameFont = null;
 			if (turnFont == null) {
 				turn = "TURN: " + turnCount;
-				int[] size = DoaGraphicsFunctions.warp(seasonCircle.getWidth() * .70f, seasonCircle.getHeight() * .70f);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(seasonCircle.getWidth() * 0.6f, seasonCircle.getHeight() * 0.6f);
 				turnFont = UIUtils.adjustFontToFitInArea(turn, contentSize);
-				turnTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(turnFont, turn));
-				turnTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(turnFont));
+
+				turnTextWidth = UIUtils.textWidth(turnFont, turn);
+				turnTextHeight = UIUtils.textHeight(turnFont);
+
+				int[] strSize = DoaGraphicsFunctions.unwarp(turnTextWidth, turnTextHeight);
+				turnTextWidth = strSize[0];
+				turnTextHeight = strSize[1];
 			}
 			if (playerNameFont == null) {
 				playerName = currentPlayerName;
-				int[] size = DoaGraphicsFunctions.warp(seasonCircle.getWidth()* .70f, seasonCircle.getHeight() * .70f);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(seasonCircle.getWidth() * 0.6f, seasonCircle.getHeight() * 0.6f);
 				playerNameFont = UIUtils.adjustFontToFitInArea(playerName, contentSize);
-				playerNameTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(playerNameFont, playerName));
-				playerNameTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(playerNameFont));
+				
+				playerNameTextWidth = UIUtils.textWidth(playerNameFont, playerName);
+				playerNameTextHeight = UIUtils.textHeight(playerNameFont);
+				
+				int[] strSize = DoaGraphicsFunctions.unwarp(playerNameTextWidth, playerNameTextHeight);
+				playerNameTextWidth = strSize[0];
+				playerNameTextHeight = strSize[1];
 			}
 			playerName = "DOA";
 			// timer block
