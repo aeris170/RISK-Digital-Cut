@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyMenu;
 
@@ -81,7 +82,12 @@ public final class LoadingScreen extends RoyMenu {
 	}
 
 	private final class Script extends DoaScript {
-		private String[] hints = new String[] {"hint1", "hint2", "hint3 tehe ;P"};
+		private String[] hints = new String[] {
+			"HINT0",  "HINT1",  "HINT2",  "HINT3",  "HINT4",
+			"HINT5",  "HINT6",  "HINT7",  "HINT8",  "HINT9",
+			"HINT10", "HINT11", "HINT12", "HINT13", "HINT14",
+			"HINT15", "HINT16", "HINT17", "HINT18", "HINT19",
+		};
 		private int hintIndex = 0;
 		private int timer = 0;
 		private int timerMax = 600;
@@ -122,6 +128,7 @@ public final class LoadingScreen extends RoyMenu {
 		
 		private Font playerNameFont;
 
+		private String hint;
 		private Font hintFont;
 		private DoaVector hintPosition;
 		private DoaVector hintTextDimensions;
@@ -170,6 +177,7 @@ public final class LoadingScreen extends RoyMenu {
 			DoaGraphicsFunctions.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.60f));
 			DoaGraphicsFunctions.fillRect(0, 0, 1920, 1080);
 			DoaGraphicsFunctions.popComposite();
+
 			if (mapNameFont == null) {
 				DoaVector contentSize = new DoaVector(300, 50);
 				mapNameFont = UIUtils.adjustFontToFitInArea(selectedMapName, contentSize);
@@ -188,13 +196,15 @@ public final class LoadingScreen extends RoyMenu {
 				playerNameFont = UIUtils.adjustFontToFitInArea("PLAYERPLAYER", contentSize);
 			}
 			if (hintFont == null || hintTextChanged) {
-				DoaVector contentSize = new DoaVector(1000, 35);
-				hintFont = UIUtils.adjustFontToFitInArea(hintText, contentSize);
+				hint = Translator.getInstance().getTranslatedString(hintText);
 
-				hintTextDimensions = new DoaVector(UIUtils.textWidth(hintFont, hintText), UIUtils.textHeight(hintFont));
+				DoaVector contentSize = new DoaVector(1000, 25);
+				hintFont = UIUtils.adjustFontToFitInArea(hint, contentSize);
+
+				hintTextDimensions = new DoaVector(UIUtils.textWidth(hintFont, hint), UIUtils.textHeight(hintFont));
 				hintTextDimensions.x = DoaGraphicsFunctions.unwarpX(hintTextDimensions.x);
 				hintTextDimensions.y = DoaGraphicsFunctions.unwarpY(hintTextDimensions.y);
-				
+
 				hintPosition = new DoaVector(
 					(1920 - hintTextDimensions.x) / 2f,
 					950 - hintTextDimensions.y / 4f
@@ -262,7 +272,7 @@ public final class LoadingScreen extends RoyMenu {
 			// HINT
 			DoaGraphicsFunctions.setColor(Color.WHITE.darker());
 			DoaGraphicsFunctions.setFont(hintFont);
-			DoaGraphicsFunctions.drawString(hintText, hintPosition.x, hintPosition.y);
+			DoaGraphicsFunctions.drawString(hint, hintPosition.x, hintPosition.y);
 
 			// LOADING BAR
 			DoaGraphicsFunctions.drawImage(
