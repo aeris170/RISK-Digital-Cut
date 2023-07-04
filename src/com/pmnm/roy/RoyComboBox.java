@@ -130,35 +130,29 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		transform.position.x = position.x;
 		transform.position.y = position.y;
 		
-		int[] pos, size, pos2, size2;
 		for(int i = 0; i < elements.length; i++) {
-			pos = DoaGraphicsFunctions.warp(position.x, position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i);
-			size = DoaGraphicsFunctions.warp(dropDownBg.getWidth(), dropDownBg.getHeight() / elements.length);
-			
-			pos2 = DoaGraphicsFunctions.warp(
-				position.x + ELEMENT_CONTENT_OFFSET.x,
-				position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i + ELEMENT_CONTENT_OFFSET.y
+			elements[i].elementArea = new Rectangle(
+				(int) position.x,
+				(int) (position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i),
+				dropDownBg.getWidth(),
+				dropDownBg.getHeight() / elements.length
 			);
-			size2 = DoaGraphicsFunctions.warp(
-				dropDownBg.getWidth() - ELEMENT_CONTENT_OFFSET.x * 2,
-				dropDownBg.getHeight() / elements.length - ELEMENT_CONTENT_OFFSET.y * 2
+			elements[i].contentArea = new Rectangle(
+				(int) (position.x + ELEMENT_CONTENT_OFFSET.x),
+				(int) (position.y + mainBg.getHeight() + dropDownBg.getHeight() / elements.length * i + ELEMENT_CONTENT_OFFSET.y),
+				(int) (dropDownBg.getWidth() - ELEMENT_CONTENT_OFFSET.x * 2),
+				(int) (dropDownBg.getHeight() / elements.length - ELEMENT_CONTENT_OFFSET.y * 2)
 			);
-
-			elements[i].contentArea = new Rectangle(pos2[0], pos2[1], size2[0], size2[1]);
-			elements[i].elementArea = new Rectangle(pos[0], pos[1], size[0], size[1]);
 		}
-		
 	}
 
 	@Override
 	public Rectangle getContentArea() {
-		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(mainBg.getWidth(), mainBg.getHeight());
 		return new Rectangle(
-			pos[0],
-			pos[1],
-			size[0],
-			size[1]
+			(int) transform.position.x,
+			(int) transform.position.y,
+			mainBg.getWidth(),
+			mainBg.getHeight()
 		);
 	}
 	
@@ -181,14 +175,18 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 	private final class Script extends DoaScript {
 
 		public Rectangle buttonArea() {
-			int[] pos = DoaGraphicsFunctions.warp(transform.position.x + mainBg.getWidth() - buttonIcon.getWidth() - 4, transform.position.y + 3);
-			int[] size = DoaGraphicsFunctions.warp(buttonIcon.getWidth(), buttonIcon.getHeight());
-
-			return new Rectangle(pos[0], pos[1], size[0], size[1]);
+			return new Rectangle(
+				(int) (transform.position.x + mainBg.getWidth() - buttonIcon.getWidth() - 4),
+				(int) (transform.position.y + 3),
+				buttonIcon.getWidth(),
+				buttonIcon.getHeight()
+			);
 		}
 
 		private boolean elementIsPressed(Rectangle pos) {
-			return pos.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y)) && DoaMouse.MB1_RELEASE;
+			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			return pos.contains(new Point(mouseX, mouseY)) && DoaMouse.MB1_RELEASE;
 		}
 		
 		private void setOpen(boolean open) {
@@ -199,11 +197,15 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		
 		@Override
 		public void tick() {
+			debugRender();
+			//RoyComboBox.this.setPosition(new DoaVector(RoyComboBox.this.transform.position.x, RoyComboBox.this.transform.position.y));
 			if (!isVisible) { return; }
 			if (!isEditable) { return; }
 			boolean isOpen = RoyComboBox.this.isOpen;
 			if (DoaMouse.MB1_RELEASE) {
-				if (buttonArea().contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
+				int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+				int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+				if (buttonArea().contains(new Point(mouseX, mouseY))) {
 					setOpen(!isOpen);
 				} else {
 					setOpen(false);
@@ -239,11 +241,11 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				DoaGraphicsFunctions.setColor(Color.BLUE);
 				DoaGraphicsFunctions.draw(elements[2].elementArea);
 				
-				DoaGraphicsFunctions.setColor(new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), 100));
+				DoaGraphicsFunctions.setColor(new Color(255, 0, 0, 100));
 				DoaGraphicsFunctions.fill(elements[0].contentArea);
-				DoaGraphicsFunctions.setColor(new Color(Color.GREEN.getRed(), Color.GREEN.getGreen(), Color.GREEN.getBlue(), 100));
+				DoaGraphicsFunctions.setColor(new Color(0, 255, 0, 100));
 				DoaGraphicsFunctions.fill(elements[1].contentArea);
-				DoaGraphicsFunctions.setColor(new Color(Color.BLUE.getRed(), Color.BLUE.getGreen(), Color.BLUE.getBlue(), 100));
+				DoaGraphicsFunctions.setColor(new Color(0, 0, 255, 100));
 				DoaGraphicsFunctions.fill(elements[2].contentArea);
 				
 				DoaGraphicsFunctions.popTransform();
@@ -294,7 +296,11 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 				DoaGraphicsFunctions.setColor(Color.WHITE);
 				for (int i = 0; i < elements.length; i++) {
 					String text = UIUtils.limitString(font, elements[i].name, dropDownBg.getWidth() * 0.9f);
-					DoaGraphicsFunctions.drawString(text, elements[i].contentArea.x, elements[i].contentArea.y + elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y);
+					DoaGraphicsFunctions.drawString(
+						text,
+						elements[i].contentArea.x,
+						elements[i].contentArea.y + elements[i].contentArea.height - ELEMENT_CONTENT_OFFSET.y
+					);
 				}
 				DoaGraphicsFunctions.popTransform();
 			} else {
