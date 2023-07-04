@@ -361,7 +361,7 @@ public class BottomPanel extends RoyMenu {
 				GARRISON_BG_POSITION.x + garrisonBG.getWidth() + 6, GARRISON_BG_POSITION.y + 8,
 				garrisonIcon.getWidth(), garrisonIcon.getHeight()
 			);
-			
+
 			DoaGraphicsFunctions.drawImage(ownerBG,
 				OWNER_BG_POSITION.x, OWNER_BG_POSITION.y,
 				ownerBG.getWidth(), ownerBG.getHeight()
@@ -370,7 +370,7 @@ public class BottomPanel extends RoyMenu {
 				OWNER_BG_POSITION.x + ownerBG.getWidth() + 6, OWNER_BG_POSITION.y + 8,
 				ownerIcon.getWidth(), ownerIcon.getHeight()
 			);
-			
+
 			DoaGraphicsFunctions.drawImage(provinceBG,
 				PROVINCE_BG_POSITION.x, PROVINCE_BG_POSITION.y,
 				provinceBG.getWidth(), provinceBG.getHeight()
@@ -379,7 +379,7 @@ public class BottomPanel extends RoyMenu {
 				PROVINCE_BG_POSITION.x + provinceBG.getWidth() + 6, PROVINCE_BG_POSITION.y + 8,
 				provinceIcon.getWidth(), provinceIcon.getHeight()
 			);
-			
+
 			DoaGraphicsFunctions.drawImage(continentBG,
 				CONTINENT_BG_POSITION.x, CONTINENT_BG_POSITION.y,
 				continentBG.getWidth(), continentBG.getHeight()
@@ -394,7 +394,7 @@ public class BottomPanel extends RoyMenu {
 				GARRISON_BG_POSITION.x + (garrisonBG.getWidth() - garrisonTextWidth) / 2f,
 				GARRISON_BG_POSITION.y + garrisonBG.getHeight() / 2f + garrisonTextHeight / 4f
 			);
-			
+
 			DoaGraphicsFunctions.setFont(ownerFont);
 			if (clickedProvince != null) {
 				DoaGraphicsFunctions.setColor(clickedProvince.getOccupier().getColor());
@@ -404,7 +404,7 @@ public class BottomPanel extends RoyMenu {
 				OWNER_BG_POSITION.x + (ownerBG.getWidth() - ownerTextWidth) / 2f,
 				OWNER_BG_POSITION.y + ownerBG.getHeight() / 2f + ownerTextHeight / 4f
 			);
-			
+
 			DoaGraphicsFunctions.setFont(provinceNameFont);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 			DoaGraphicsFunctions.drawString(
@@ -412,7 +412,7 @@ public class BottomPanel extends RoyMenu {
 				PROVINCE_BG_POSITION.x + (provinceBG.getWidth() - provinceTextWidth) / 2f,
 				PROVINCE_BG_POSITION.y + provinceBG.getHeight() / 2f + provinceTextHeight / 4f
 			);
-			
+
 			DoaGraphicsFunctions.setFont(continentNameFont);
 			DoaGraphicsFunctions.drawString(
 				continentText,
@@ -420,7 +420,7 @@ public class BottomPanel extends RoyMenu {
 				CONTINENT_BG_POSITION.y + continentBG.getHeight() / 2f + continentTextHeight / 4f
 			);
 		}
-		
+
 		public void recalculateFonts() {
 			garrisonFont = null;
 			ownerFont = null;
@@ -446,7 +446,7 @@ public class BottomPanel extends RoyMenu {
 			centerPieceButton.setText("");
 		}
 	}
-	
+
 	private void updateSpinnerValuesForReinfocing(IProvince reinforcer) {
 		if (reinforcer == null) {
 			maxTroopCount = Globals.UNKNOWN_TROOP_COUNT;
