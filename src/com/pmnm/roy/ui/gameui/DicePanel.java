@@ -77,12 +77,6 @@ public class DicePanel extends RoyMenu {
 			.action(source -> {})
 			.build();
 		blitz.setPosition(DoaVector.add(panelPosition, BLITZ_POSITION));
-		blitz.setInteractionArea(new Rectangle(
-			blitz.getContentArea().getBounds().x + 14,
-			blitz.getContentArea().getBounds().y + 85,
-			64,
-			64
-		));
 		addElement(blitz);
 		
 		setzOrder(ZOrders.GAME_UI_Z);
@@ -148,6 +142,12 @@ public class DicePanel extends RoyMenu {
 				two.setPosition(new DoaVector(panelPosition.x + TWO_POSITION.x, panelPosition.y + TWO_POSITION.y));
 				three.setPosition(new DoaVector(panelPosition.x + THREE_POSITION.x, panelPosition.y + THREE_POSITION.y));
 				blitz.setPosition(new DoaVector(panelPosition.x + BLITZ_POSITION.x, panelPosition.y + BLITZ_POSITION.y));
+				blitz.setInteractionArea(new Rectangle(
+					blitz.getContentArea().getBounds().x + 14,
+					blitz.getContentArea().getBounds().y + 85,
+					64,
+					64
+				));
 			}
 		}
 		
