@@ -23,7 +23,7 @@ import lombok.Setter;
 
 @SuppressWarnings("serial")
 public class RoyImageButton extends DoaObject implements IRoyInteractableElement, IRoyScaleableElement {
-	
+
 	@Getter
 	@Setter
 	private boolean isVisible;
@@ -31,21 +31,21 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	@Getter
 	@Setter
 	private boolean isEnabled = true;
-	
+
 	@NonNull
 	protected transient BufferedImage image;
 
 	@NonNull
 	protected transient BufferedImage hoverImage;
-	
+
 	@NonNull
 	protected transient BufferedImage pressImage;
-	
+
 	protected transient BufferedImage disabledImage = null;
-	
+
 	@Setter
 	protected transient IRoyAction action = null;
-	
+
 	@Getter
 	protected String text;
 
@@ -58,18 +58,18 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	@Setter
 	@NonNull
 	private Color hoverTextColor = UIConstants.getHoverTextColor();
-	
+
 	@Getter
 	@Setter
 	protected DoaVector textMargin = new DoaVector(0.60f, 0.60f);
-	
+
 	protected transient BufferedImage currentImage;
-	
+
 	private int width = 0;
 	private int height = 0;
 	
 	private Renderer renderer;
-	
+
 	@Builder
 	protected RoyImageButton(@NonNull BufferedImage image, @NonNull BufferedImage hoverImage, @NonNull BufferedImage pressImage, BufferedImage disabledImage, @NonNull IRoyAction action) {
 		this.image = image;
@@ -98,7 +98,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 		transform.position.x = position.x;
 		transform.position.y = position.y;
 	}
-	
+
 	public void setText(@NonNull String text) {
 		this.text = text;
 		renderer.font = null;
@@ -129,8 +129,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 				currentImage = disabledImage;
 				return;
 			}
-			
 			Shape area = getContentArea();
+
 			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
 			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			if (area.contains(new Point(mouseX, mouseY))) {
@@ -148,19 +148,19 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			if (!RoyImageButton.this.isEnabled()) { currentImage = disabledImage; }
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 
 		private Font font;
 		private int textWidth;
 		private int textHeight;
-		
+
 		@Override
 		public void render() {
 			if (!isVisible) return;
-			
+
 			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, width, height);
-			
+
 			if (text == null || text.isEmpty()) { return; }
 			if (font == null) {
 				int[] size = DoaGraphicsFunctions.warp(image.getWidth() * textMargin.x, image.getHeight() * textMargin.y);
@@ -169,20 +169,20 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 				textWidth = UIUtils.textWidth(font, text);
 				textHeight = UIUtils.textHeight(font);
 			}
-			
+
 			DoaGraphicsFunctions.setFont(font);
 			DoaGraphicsFunctions.setColor(textColor);
 			if (currentImage == hoverImage || currentImage == pressImage) {
 				DoaGraphicsFunctions.setColor(hoverTextColor);
 			}
-			
+
 			DoaGraphicsFunctions.drawString(
 				text,
 				image.getWidth() / 2 - textWidth / 2f,
 				image.getHeight() / 2f + textHeight / 4f
 			);
 		}
-		
+
 		@Override
 		public void debugRender() {
 			if (!isVisible) { return; }

@@ -243,8 +243,8 @@ public class BottomPanel extends RoyMenu {
 	}
 
 	private final class Renderer extends DoaRenderer {
-		
 		private float paddingMultiplier					= 0.99f;
+
 
 		private transient BufferedImage bottomRing		= DoaSprites.getSprite("MainMenuBottomRing");
 
@@ -261,13 +261,13 @@ public class BottomPanel extends RoyMenu {
 		private transient BufferedImage ownerIcon		= DoaSprites.getSprite("ownerHolderIcon");
 		private transient BufferedImage provinceIcon	= DoaSprites.getSprite("provinceNameHolderIcon");
 		private transient BufferedImage continentIcon	= DoaSprites.getSprite("continentHolderIcon");
-		
+
 		private final DoaVector GARRISON_BG_POSITION	= new DoaVector(870, 890);
 		private final DoaVector OWNER_BG_POSITION		= new DoaVector(857, 932);
 		private final DoaVector PROVINCE_BG_POSITION	= new DoaVector(837, 974);
 		private final DoaVector CONTINENT_BG_POSITION	= new DoaVector(825, 1016);
-		
 		private final DoaVector PHASE_AREA				= new DoaVector(170, 1400);
+
 
 		private Font garrisonFont;
 		private int garrisonTextWidth;
