@@ -9,6 +9,7 @@ import com.pmnm.risk.toolkit.Utils;
 
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.maths.DoaVector;
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -82,5 +83,22 @@ public final class UIUtils {
 			str.append(words[i]);
 		}
 		return str.toString();
+	}
+	public static String capitalizeOnlyFirstLetter(@NonNull String allcaps) {
+		allcaps = allcaps.trim().toLowerCase();
+		StringBuilder rv = new StringBuilder(allcaps.length());
+
+		int i = 0;
+		boolean capitalize = true;
+		while (i < allcaps.length()) {
+			if (capitalize) {
+				rv.append(Character.toUpperCase(allcaps.charAt(i)));
+			} else {
+				rv.append(allcaps.charAt(i));
+			}
+			capitalize = Character.isWhitespace(allcaps.charAt(i));
+			i++;
+		}
+		return rv.toString();
 	}
 }
