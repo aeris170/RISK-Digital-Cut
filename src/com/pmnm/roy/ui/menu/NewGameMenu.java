@@ -401,9 +401,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
 		private String getPawn() {
-			/* FIXME DoaSprites function */
-			return "p_Pawn".replace('_', (char)('1' + pawnBox.getSelectedIndex()));
-			// return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]);
+			return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]);
 		}
 		private boolean isLocalPlayer() { return type == GameType.SINGLE_PLAYER; } /* TODO  */
 	}
