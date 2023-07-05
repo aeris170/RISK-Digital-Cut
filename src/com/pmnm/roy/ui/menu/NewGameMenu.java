@@ -15,6 +15,7 @@ import com.pmnm.risk.globals.PlayerColorBank;
 import com.pmnm.risk.globals.Scenes;
 import com.pmnm.risk.globals.discordrichpresence.DiscordRichPresenceAdapter;
 import com.pmnm.risk.globals.discordrichpresence.IDiscordActivityMutator;
+import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.AIPlayer;
 import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
@@ -291,7 +292,10 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		private Font mapNameFont;
 		private DoaVector mapNamePosition;
 
+		private String randomPlacementText;
 		private Font randomPlacementTextFont;
+		private int randomPlacementTextWidth;
+		private int randomPlacementTextHeight;
 
 		private final DoaVector RANDOM_PLACEMENT_POSITION = new DoaVector(1362f, 630f);
 
@@ -308,7 +312,6 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			if (!isVisible()) { return; }
 			Rectangle nextMapButton = NewGameMenu.this.nextMapButton.getContentArea().getBounds();
 			Rectangle prevMapButton = NewGameMenu.this.prevMapButton.getContentArea().getBounds();
-			mapNameFont = null;
 			if (mapNameFont == null) {
 				if (selectedMapName.length() >= 18) {
 					mapName = selectedMapName.substring(0, 15) + "...";
@@ -327,6 +330,16 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 					prevMapButton.x + prevMapButton.width + (distanceX - mapNameWidth) / 2f,
 					prevMapButton.y + prevMapButton.height / 2f + mapNameHeight / 3f 
 				);
+			}
+			if (randomPlacementTextFont == null) {
+				randomPlacementText = Translator.getInstance().getTranslatedString("RANDOM_PLACEMENT");
+				randomPlacementText = UIUtils.capitalizeOnlyFirstLetter(randomPlacementText); 
+
+				DoaVector contentSize = new DoaVector(randomPlacementBg.getWidth() * 0.55f, randomPlacementBg.getHeight() * 0.95f);
+				randomPlacementTextFont = UIUtils.adjustFontToFitInArea(randomPlacementText, contentSize);
+
+				randomPlacementTextWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(randomPlacementTextFont, randomPlacementText));
+				randomPlacementTextHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(randomPlacementTextFont));
 			}
 
 			DoaGraphicsFunctions.drawImage(mainScroll, 24, 176, mainScroll.getWidth(), mainScroll.getHeight());
@@ -357,12 +370,18 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				randomPlacementBg.getHeight()
 			);
 
+			DoaGraphicsFunctions.setFont(randomPlacementTextFont);
 			DoaGraphicsFunctions.setColor(Color.WHITE);
-			DoaGraphicsFunctions.drawString("Random Placement", RANDOM_PLACEMENT_POSITION.x + 20, RANDOM_PLACEMENT_POSITION.y + 37);
+			DoaGraphicsFunctions.drawString(
+				randomPlacementText,
+				RANDOM_PLACEMENT_POSITION.x + 20,
+				RANDOM_PLACEMENT_POSITION.y + randomPlacementBg.getHeight() / 2f + randomPlacementTextHeight / 4f
+			);
 		}
-		
+
 		private void recalculateFonts() {
 			mapNameFont = null;
+			randomPlacementTextFont = null;
 		}
 	}
 
