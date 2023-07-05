@@ -444,6 +444,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				slot.colorBox.setVisible(slot.hasPlayer());
 				slot.pawnBox.setVisible(slot.hasPlayer());
 			}
+			getComponentByType(Renderer.class).ifPresent(Renderer::recalculateFonts);
 
 			applyCustomActivity();
 		}
