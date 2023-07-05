@@ -42,6 +42,7 @@ public final class UIUtils {
 		return limitString(font, string, width, "...");
 	}
 	public static final String limitString(Font font, String string, float width, String limiter) {
+		width = DoaGraphicsFunctions.warpX(width);
 		if (textWidth(font, string) < width) { return string; }
 		
 		int limiterWidth = textWidth(font, limiter);
