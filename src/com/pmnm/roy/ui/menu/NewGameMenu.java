@@ -23,6 +23,7 @@ import com.pmnm.roy.RoyComboBox;
 import com.pmnm.roy.RoyImageButton;
 import com.pmnm.roy.RoyMenu;
 import com.pmnm.roy.ui.UIConstants;
+import com.pmnm.roy.ui.UIUtils;
 import com.pmnm.roy.ui.gameui.RiskGameScreenUI;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
@@ -219,7 +220,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private void setSelectedMap(MapConfig config) {
 		selectedMapName = config.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = config.getBackgroundImagePreview();
-		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.font = null);
+		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.recalculateFonts());
 	}
 
 	private void startGame() {
@@ -278,17 +279,19 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			UIConstants.getEmbroidments().setVisible(true);
 		}).start();
 	}
+
 	private final class Renderer extends DoaRenderer {
 
 		private transient BufferedImage mainScroll;
 		private transient BufferedImage mapChooserBg;
 		private transient BufferedImage mapBorder;
 		private transient BufferedImage randomPlacementBg;
-		
-		private Font font;
-		private int stringWidth;
-		private DoaVector textDimensions;
-		private DoaVector textPosition;
+
+		private String mapName;
+		private Font mapNameFont;
+		private DoaVector mapNamePosition;
+
+		private Font randomPlacementTextFont;
 
 		private final DoaVector RANDOM_PLACEMENT_POSITION = new DoaVector(1362f, 630f);
 
@@ -303,50 +306,48 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		@Override
 		public void render() {
 			if (!isVisible()) { return; }
-			if (font == null) {
-				Rectangle nextMapButton = NewGameMenu.this.nextMapButton.getContentArea().getBounds();
-				Rectangle prevMapButton = NewGameMenu.this.prevMapButton.getContentArea().getBounds();
-				textDimensions = new DoaVector(
-					nextMapButton.x - prevMapButton.x - prevMapButton.width,
-					prevMapButton.height
-				);
-				textDimensions.x *= 0.9;
-				
-				font = UIConstants.getFont().deriveFont(
-					Font.PLAIN,
-					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, selectedMapName), 0)[0]
-				);
-				
-				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
-				stringWidth = fm.stringWidth(selectedMapName);
-				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
-				stringWidth = strSize[0];
+			Rectangle nextMapButton = NewGameMenu.this.nextMapButton.getContentArea().getBounds();
+			Rectangle prevMapButton = NewGameMenu.this.prevMapButton.getContentArea().getBounds();
+			mapNameFont = null;
+			if (mapNameFont == null) {
+				if (selectedMapName.length() >= 18) {
+					mapName = selectedMapName.substring(0, 15) + "...";
+				} else {
+					mapName = selectedMapName;
+				}
 
-				textPosition = new DoaVector(
-					prevMapButton.x + prevMapButton.width + (nextMapButton.x - prevMapButton.x - prevMapButton.width - textDimensions.x) / 2,
-					prevMapButton.y + prevMapButton.height / 2f + fm.getHeight() / 3f // why divide by 3??!?!?!?!?!?
+				int distanceX = nextMapButton.x - prevMapButton.x - prevMapButton.width;
+				DoaVector contentSize = new DoaVector(distanceX * 0.9f, (prevMapButton.height + nextMapButton.height) * 0.67f);
+				mapNameFont = UIUtils.adjustFontToFitInArea(mapName, contentSize);
+
+				int mapNameWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(mapNameFont, mapName));
+				int mapNameHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(mapNameFont));
+
+				mapNamePosition = new DoaVector(
+					prevMapButton.x + prevMapButton.width + (distanceX - mapNameWidth) / 2f,
+					prevMapButton.y + prevMapButton.height / 2f + mapNameHeight / 3f 
 				);
 			}
 
 			DoaGraphicsFunctions.drawImage(mainScroll, 24, 176, mainScroll.getWidth(), mainScroll.getHeight());
 			DoaGraphicsFunctions.drawImage(mapChooserBg, 1363, 259, mapChooserBg.getWidth(), mapChooserBg.getHeight());
-	
-			DoaGraphicsFunctions.setFont(font);
+
+			DoaGraphicsFunctions.setFont(mapNameFont);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 			DoaGraphicsFunctions.drawString(
-				selectedMapName,
-				textPosition.x + (textDimensions.x - stringWidth) / 2f,
-				textPosition.y
+				mapName,
+				mapNamePosition.x,
+				mapNamePosition.y
 			);
-		
+
 			DoaGraphicsFunctions.drawImage(
 				selectedMapPreview,
 				1410,
 				360,
 				mapBorder.getWidth() - 5f,
 				mapBorder.getHeight() - 3f);
-			DoaGraphicsFunctions.drawImage(mapBorder, 1405, 357);
-			
+			DoaGraphicsFunctions.drawImage(mapBorder, 1405, 357, mapBorder.getWidth(), mapBorder.getHeight());
+
 			// Random Placement
 			DoaGraphicsFunctions.drawImage(
 				randomPlacementBg,
@@ -359,8 +360,12 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			DoaGraphicsFunctions.setColor(Color.WHITE);
 			DoaGraphicsFunctions.drawString("Random Placement", RANDOM_PLACEMENT_POSITION.x + 20, RANDOM_PLACEMENT_POSITION.y + 37);
 		}
+		
+		private void recalculateFonts() {
+			mapNameFont = null;
+		}
 	}
-	
+
 	@Data
 	@ToString(includeFieldNames = true)
 	@EqualsAndHashCode(callSuper = true)
