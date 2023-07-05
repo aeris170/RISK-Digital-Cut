@@ -197,8 +197,6 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		
 		@Override
 		public void tick() {
-			debugRender();
-			//RoyComboBox.this.setPosition(new DoaVector(RoyComboBox.this.transform.position.x, RoyComboBox.this.transform.position.y));
 			if (!isVisible) { return; }
 			if (!isEditable) { return; }
 			boolean isOpen = RoyComboBox.this.isOpen;
@@ -263,10 +261,9 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		@Override
 		public void render() {
 			if (!isVisible) return;
-			
+			font = null;
 			if (font == null) {
-				int[] size = DoaGraphicsFunctions.warp(mainBg.getWidth() - 10, mainBg.getHeight() - 10);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(mainBg.getWidth() - 10, mainBg.getHeight() - 10);
 				font = UIUtils.adjustFontToFitInArea("COMBOBOXboxbox", contentSize);
 			}
 

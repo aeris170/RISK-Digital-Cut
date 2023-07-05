@@ -172,11 +172,11 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 
 			if (text == null || text.isEmpty()) { return; }
 			if (font == null) {
-				int[] size = DoaGraphicsFunctions.warp(width * textMargin.x, height * textMargin.y);
-				DoaVector contentSize = new DoaVector(size[0], size[1]);
+				DoaVector contentSize = new DoaVector(width * textMargin.x, height * textMargin.y);
 				font = UIUtils.adjustFontToFitInArea(text, contentSize);
-				textWidth = UIUtils.textWidth(font, text);
-				textHeight = UIUtils.textHeight(font);
+				
+				textWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(font, text));
+				textHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(font));
 			}
 
 			DoaGraphicsFunctions.setFont(font);
