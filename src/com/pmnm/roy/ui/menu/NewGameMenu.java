@@ -400,9 +400,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			} else { throw new IllegalStateException("wtf?"); }
 		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
-		private String getPawn() {
-			return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]);
-		}
+		private String getPawn() { return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]); }
 		private boolean isLocalPlayer() { return type == GameType.SINGLE_PLAYER; } /* TODO  */
 	}
 	
