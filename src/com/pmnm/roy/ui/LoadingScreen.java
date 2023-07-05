@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 
 import com.pmnm.risk.globals.localization.Translator;
-import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyMenu;
 
 import doa.engine.core.DoaGraphicsFunctions;

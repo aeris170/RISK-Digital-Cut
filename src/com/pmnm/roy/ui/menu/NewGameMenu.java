@@ -2,7 +2,6 @@ package com.pmnm.roy.ui.menu;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import com.pmnm.risk.globals.discordrichpresence.DiscordRichPresenceAdapter;
 import com.pmnm.risk.globals.discordrichpresence.IDiscordActivityMutator;
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.risk.main.AIPlayer;
-import com.pmnm.risk.toolkit.Utils;
 import com.pmnm.roy.RoyButton;
 import com.pmnm.roy.RoyCheckBox;
 import com.pmnm.roy.RoyComboBox;
