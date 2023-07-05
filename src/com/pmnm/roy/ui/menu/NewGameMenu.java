@@ -52,14 +52,14 @@ import pmnm.risk.map.MapLoader;
 
 @SuppressWarnings("serial")
 public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMutator {
-	
+
 	private static final String PLAY_KEY = "PLAY";
 	private static final String BACK_KEY = "BACK";
-	
+
 	private static final DoaVector RANDOM_PLACEMENT_CHECKBOX_POSITION = new DoaVector(1740f, 646f);
 	private static final DoaVector PLAY_POSITION = new DoaVector(1377f, 715f);
 	private static final DoaVector BACK_POSITION = new DoaVector(1377f, 803f);
-	
+
 	private static final DoaVector PREV_MAP_POSITION = new DoaVector(1400, 290);
 	private static final DoaVector NEXT_MAP_POSITION = new DoaVector(1700, 290);
 
@@ -83,7 +83,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private BufferedImage selectedMapPreview;
 	private String selectedMapName;
 	private int selectedMapIndex;
-	
+
 	private GameType type;
 
 	private Slot[] slots;
@@ -92,13 +92,13 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private List<RoyComboBox> playerComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> colorComboBoxes = new ArrayList<>();
 	private List<RoyComboBox> pawnComboBoxes = new ArrayList<>();
-	
+
 	private RoyButton playButton;
 	private RoyCheckBox randomPlacementButton;
-	
+
 	public NewGameMenu(GameType t) {
 		type = t;
-		
+
 		selectedMapIndex = 0;
 		setSelectedMap(MapConfig.getConfigs().get(selectedMapIndex));
 
@@ -119,13 +119,13 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			names[1] = "CLOSED";
 			names[2] = "AI";
 		} else { throw new IllegalArgumentException("wtf"); }
-		
+
 		Color[] colors = PlayerColorBank.COLORS;
 		BufferedImage[] pawns = UIConstants.getPlayerPawnSprites();
 		slots = new Slot[Globals.MAX_NUM_PLAYERS];
 		for(int i = 0; i < slots.length; i++) {
 			slots[i] = new Slot(i);
-			
+
 			RoyComboBox playerBox = new RoyComboBox(names);
 			playerBox.setPosition(new DoaVector(
 				COMBO_BOX_POSITION.x + (i * COMBO_BOX_OFFSET.x),
@@ -134,7 +134,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			playerBox.registerObserver(this);
 			addElement(playerBox);
 			playerComboBoxes.add(playerBox);
-			
+
 			RoyComboBox colorBox = new RoyComboBox(colors);
 			colorBox.setPosition(new DoaVector(
 				COLOR_COMBO_BOX_POSITION.x + (i * COLOR_COMBO_BOX_OFFSET.x),
@@ -144,7 +144,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			colorBox.registerObserver(this);
 			addElement(colorBox);
 			colorComboBoxes.add(colorBox);
-			
+
 			RoyComboBox pawnBox = new RoyComboBox(pawns);
 			pawnBox.setPosition(new DoaVector(
 				PAWN_COMBO_BOX_POSITION.x + (i * PAWN_COMBO_BOX_OFFSET.x),
@@ -154,24 +154,24 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			pawnBox.registerObserver(this);
 			addElement(pawnBox);
 			pawnComboBoxes.add(pawnBox);
-			
+
 			slots[i].playerBox = playerBox;
 			slots[i].colorBox = colorBox;
 			slots[i].pawnBox = pawnBox;
 		}
 		// COMBOBOXES END
-		
+
 		randomPlacementButton = new RoyCheckBox();
 		randomPlacementButton.setPosition(RANDOM_PLACEMENT_CHECKBOX_POSITION);
 		addElement(randomPlacementButton);
-		
+
 		playButton = RoyButton.builder()
 			.textKey(PLAY_KEY)
 			.action(source -> startGame())
 			.build();
 		playButton.setPosition(PLAY_POSITION);
 		addElement(playButton);
-		
+
 		RoyButton backButton = RoyButton.builder()
 			.textKey(BACK_KEY)
 			.action((source) -> {
@@ -181,7 +181,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			.build();
 		backButton.setPosition(BACK_POSITION);
 		addElement(backButton);
-		
+
 		prevMapButton = RoyImageButton.builder()
 			.image(UIConstants.getArrowLeftIdleSprite())
 			.hoverImage(UIConstants.getArrowLeftIdleSprite())
@@ -197,7 +197,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			.build();
 		prevMapButton.setPosition(PREV_MAP_POSITION);
 		addElement(prevMapButton);
-		
+
 		nextMapButton = RoyImageButton.builder()
 			.image(UIConstants.getArrowRightIdleSprite())
 			.hoverImage(UIConstants.getArrowRightIdleSprite())
@@ -215,13 +215,13 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 
 		addComponent(new Renderer());
 	}
-	
+
 	private void setSelectedMap(MapConfig config) {
 		selectedMapName = config.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = config.getBackgroundImagePreview();
 		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.font = null);
 	}
-	
+
 	private void startGame() {
 		List<Player.Data> playerDatas = new ArrayList<>(slots.length);
 		for (Slot slot : slots) {
@@ -232,14 +232,13 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				} else {
 					playerData = new AIPlayer.Data(slot.getPlayerName(), slot.getColor(), slot.getPawn(), slot.isLocalPlayer(), slot.isHuman(), 0); // TODO: AI difficulty
 				}
-				
 				playerDatas.add(playerData);
 			}
 		}
 		List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 		MapConfig selectedConfig = configs.get(selectedMapIndex);
 		GameConfig config = new GameConfig(playerDatas.toArray(Player.Data[]::new), randomPlacementButton.isChecked(), type, selectedConfig);
-		
+
 		UIConstants.getLoadingScreen().setGameConfig(config);
 		setVisible(false);
 		UIConstants.getEmbroidments().setVisible(false);
@@ -252,13 +251,13 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			DoaUtils.sleepFor(500L);
 			MapData data = MapLoader.loadMap(selectedConfig);
 			UIConstants.getLoadingScreen().setLoadingBarProgress(0.30f);
-			
+
 			UIConstants.getLoadingScreen().setLoadingText("Creating Game Context...");
 			DoaUtils.sleepFor(2500L);
 			UIConstants.getLoadingScreen().setLoadingBarProgress(0.40f);
 			RiskGameContext context = RiskGameContext.of(data);
 			UIConstants.getLoadingScreen().setLoadingBarProgress(0.60f);
-			
+
 			UIConstants.getLoadingScreen().setLoadingText("Initializing Game...");
 			DoaUtils.sleepFor(2500L);
 			UIConstants.getLoadingScreen().setLoadingBarProgress(0.70f);
@@ -266,7 +265,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			UIConstants.getLoadingScreen().setLoadingBarProgress(0.85f);
 			gameScene.clear();
 			context.initiliazeGame(config);
-			
+
 			UIConstants.getLoadingScreen().setLoadingText("Initializing UI...");
 			DoaUtils.sleepFor(2500L);
 			UIConstants.getLoadingScreen().setLoadingBarProgress(0.95f);
@@ -279,9 +278,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			UIConstants.getEmbroidments().setVisible(true);
 		}).start();
 	}
-	
 	private final class Renderer extends DoaRenderer {
-		
+
 		private transient BufferedImage mainScroll;
 		private transient BufferedImage mapChooserBg;
 		private transient BufferedImage mapBorder;
@@ -293,7 +291,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		private DoaVector textPosition;
 
 		private final DoaVector RANDOM_PLACEMENT_POSITION = new DoaVector(1362f, 630f);
-		
+
 		private Renderer() {
 			mainScroll = DoaSprites.getSprite("MainScroll");
 			mapChooserBg = DoaSprites.getSprite("MapChooserBackground");
