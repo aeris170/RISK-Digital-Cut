@@ -38,12 +38,12 @@ public class TopPanel extends RoyMenu {
 	private int turnCount;
 
 	private final RiskGameContext context;
-	
+
 	public TopPanel(final RiskGameContext context) {
 		this.context = context;
 
 		setzOrder(ZOrders.GAME_UI_Z);
-		
+
 		Renderer r = new Renderer();
 		addComponent(new Script(r));
 		addComponent(r);
@@ -51,15 +51,15 @@ public class TopPanel extends RoyMenu {
 
 	@RequiredArgsConstructor
 	private final class Script extends DoaScript {
-		
+
 		int counter = Globals.DEFAULT_TIME_SLICE;
-		
+
 		@NonNull private Renderer renderer;
-		
+
 		@Override
 		public void tick() {
-			if(!isVisible()) return;
-			
+			if(!isVisible()) { return; }
+
 			if (threeSecondGuard.get()) {
 				threeSecondGuard.set(false);
 				DoaTasker.executeLater(() -> {
@@ -75,7 +75,7 @@ public class TopPanel extends RoyMenu {
 				}
 			}
 			Season.updateSeason();
-			
+
 			if(counter < Globals.DEFAULT_TIME_SLICE) {
 				counter++;
 				return;
@@ -93,7 +93,7 @@ public class TopPanel extends RoyMenu {
 			counter = 0;
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 
 		private transient BufferedImage topRing = DoaSprites.getSprite("MainMenuTopRing");
@@ -104,17 +104,16 @@ public class TopPanel extends RoyMenu {
 		private String turn;
 		private int turnTextWidth;
 		private int turnTextHeight;
-		
+
 		private Font playerNameFont;
 		private String playerName;
 		private int playerNameTextWidth;
 		private int playerNameTextHeight;
-		
+
 		@Override
 		public void render() {
-			if (!isVisible()) return;
-			turnFont = null;
-			playerNameFont = null;
+			if(!isVisible()) { return; }
+
 			if (turnFont == null) {
 				turn = "TURN: " + turnCount;
 				DoaVector contentSize = new DoaVector(seasonCircle.getWidth() * 0.6f, seasonCircle.getHeight() * 0.6f);
@@ -131,15 +130,15 @@ public class TopPanel extends RoyMenu {
 				playerName = currentPlayerName;
 				DoaVector contentSize = new DoaVector(seasonCircle.getWidth() * 0.6f, seasonCircle.getHeight() * 0.6f);
 				playerNameFont = UIUtils.adjustFontToFitInArea(playerName, contentSize);
-				
+
 				playerNameTextWidth = UIUtils.textWidth(playerNameFont, playerName);
 				playerNameTextHeight = UIUtils.textHeight(playerNameFont);
-				
+
 				int[] strSize = DoaGraphicsFunctions.unwarp(playerNameTextWidth, playerNameTextHeight);
 				playerNameTextWidth = strSize[0];
 				playerNameTextHeight = strSize[1];
 			}
-			playerName = "DOA";
+
 			// timer block
 			if (currentPlayerColour != null) {
 				float timer = 0.0f;

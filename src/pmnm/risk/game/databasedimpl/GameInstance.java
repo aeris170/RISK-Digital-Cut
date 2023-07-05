@@ -34,7 +34,7 @@ import lombok.ToString;
 import pmnm.risk.game.GameConfig;
 
 public final class GameInstance {
-	
+
 	private static final String SAVE_FILE = "save";
 	private static final String METADATA_FILE = "metadata";
 	private static final File SAVE_LOC = Path.of(System.getProperty("user.home"), "Documents", "My Games", "Risk Digital Cut", "Saves").toFile();
@@ -48,7 +48,7 @@ public final class GameInstance {
 		for (int i = 0; i < count; i++) {
 			File saveFolder = new File(SAVE_LOC, Integer.toString(i));
 			if (!saveFolder.exists()) { continue; }
-			
+
 			File metaFile = new File(saveFolder, METADATA_FILE);
 			try (FileInputStream metaFIS = new FileInputStream(metaFile);
 				ObjectInputStream metaOIS = new ObjectInputStream(metaFIS);) {
@@ -77,7 +77,7 @@ public final class GameInstance {
 
 	public GameInstance(RiskGameContext context) {
 		this.context = context;
-		
+
 		BufferedImage snapshot = new BufferedImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		DoaWindow.dumpFrameBufferTo(snapshot);
 		metadata = new Metadata(
@@ -89,7 +89,7 @@ public final class GameInstance {
 			-1
 		);
 	}
-	
+
 	private GameInstance(ObjectInputStream ctxIn, ObjectInputStream metaIn) throws IOException {
 		try {
 			context = (RiskGameContext) ctxIn.readObject();
@@ -105,7 +105,7 @@ public final class GameInstance {
 			/* swallow */
 			ex.printStackTrace();
 		}
-		
+
 		try {
 			metadata = (Metadata) metaIn.readObject();
 		} catch(ClassCastException | StreamCorruptedException ex) {
@@ -121,23 +121,23 @@ public final class GameInstance {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public void saveToDisk(int order) {
 		/* STEP 0: Create the save folder if does not exist */
 		File saveFolder = new File(SAVE_LOC, Integer.toString(order));
 		saveFolder.mkdirs();
-		
+
 		/* STEP 1: Set-up files */
 		File ctxFile = new File(saveFolder, SAVE_FILE);
 		File metaFile = new File(saveFolder, METADATA_FILE);
-		
+
 		/* STEP 2: Delete old save data */
 		ctxFile.delete();
 		metaFile.delete();
-		
+
 		/* STEP 3: Set up streams */
 		try (
-			FileOutputStream ctxFOS = new FileOutputStream(ctxFile); 
+			FileOutputStream ctxFOS = new FileOutputStream(ctxFile);
 			ObjectOutputStream ctxOOS = new ObjectOutputStream(ctxFOS);
 			FileOutputStream metaFOS = new FileOutputStream(metaFile);
 			ObjectOutputStream metaOOS = new ObjectOutputStream(metaFOS);) {
@@ -149,7 +149,7 @@ public final class GameInstance {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public static GameInstance loadGame(int order) {
 		/* STEP 0: Check if save folder exists */
 		File saveFolder = new File(SAVE_LOC, Integer.toString(order));
@@ -163,11 +163,11 @@ public final class GameInstance {
 			);
 			return null;
 		}
-		
+
 		/* STEP 1: Find and verify files */
 		File ctxFile = new File(saveFolder, SAVE_FILE);
 		File metaFile = new File(saveFolder, METADATA_FILE);
-		if (!ctxFile.exists()) { 
+		if (!ctxFile.exists()) {
 			JOptionPane.showConfirmDialog(
 				null,
 				"CORRUPT SAVE DETECTED! Save file is absent order: " + order,
@@ -187,7 +187,7 @@ public final class GameInstance {
 			);
 			return null;
 		}
-		
+
 		try (
 			FileInputStream ctxFIS = new FileInputStream(ctxFile);
 			ObjectInputStream ctxOIS = new ObjectInputStream(ctxFIS);
@@ -195,7 +195,7 @@ public final class GameInstance {
 			ObjectInputStream metaOIS = new ObjectInputStream(metaFIS);) {
 			return new GameInstance(ctxOIS, metaOIS);
 		} catch (IOException ex) {
-			/* swallow */ 
+			/* swallow */
 			ex.printStackTrace();
 			return null;
 		}
@@ -230,7 +230,7 @@ public final class GameInstance {
 		private transient BufferedImage snapshotImage;
 
 		@Getter
-		private int order; 
+		private int order;
 
 		private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 			stream.writeObject(config);

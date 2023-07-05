@@ -14,13 +14,13 @@ import lombok.NonNull;
 
 @SuppressWarnings("serial")
 public class RoyLanguageButtonGroup extends DoaObject implements IRoyContainer {
-	
+
 	@Getter
 	private boolean isVisible;
 
 	private RoyLanguageButton selected;
 	private List<RoyLanguageButton> buttons = new ArrayList<>();
-	
+
 	public RoyLanguageButton createButton(Language language) {
 		RoyLanguageButton b = new RoyLanguageButton(this, language);
 		buttons.add(b);
@@ -28,31 +28,31 @@ public class RoyLanguageButtonGroup extends DoaObject implements IRoyContainer {
 	}
 
 	public RoyLanguageButton getSelected() { return selected; }
-	
+
 	public void setSelected(RoyLanguageButton button) {
 		if (buttons.contains(button)) {
 			selected = button;
 		}
 	}
-	
+
 	@Override
 	public void onAddToScene(DoaScene scene) {
 		super.onAddToScene(scene);
 		buttons.forEach(scene::add);
 	}
-	
+
 	@Override
 	public void onRemoveFromScene(DoaScene scene) {
 		super.onRemoveFromScene(scene);
 		buttons.forEach(scene::remove);
 	}
-	
+
 	@Override
 	public void setzOrder(int zOrder) {
 		super.setzOrder(zOrder);
 		buttons.forEach(b -> b.setzOrder(zOrder + 1));
 	}
-	
+
 	@Override
 	public void setVisible(boolean value) {
 		isVisible = value;
@@ -73,5 +73,5 @@ public class RoyLanguageButtonGroup extends DoaObject implements IRoyContainer {
 
 	@Override
 	public boolean removeElement(@NonNull IRoyElement element) { throw new UnsupportedOperationException(); }
-	
+
 }

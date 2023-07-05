@@ -35,12 +35,12 @@ public class Player extends DoaObject implements IPlayer {
 	private Deploy lastDeploy;
 	private Conflict lastConflict;
 	private Reinforce lastReinforce;
-	
+
 	public Player(@NonNull final RiskGameContext context, @NonNull final Player.Data data) {
 		this.context = context;
 		this.id = ID++;
 		this.data = data;
-		
+
 		if (data.isLocalPlayer && isHumanPlayer()) {
 			addComponent(new MouseController());
 		}
@@ -57,44 +57,44 @@ public class Player extends DoaObject implements IPlayer {
 
 	@Override
 	public void occupyProvince(final IProvince province) {
-		if (itIsNotMyTurn()) return;
+		if (itIsNotMyTurn()) { return; }
 		context.occupyProvince(this, province);
 		deployToProvince(province, 1);
 	}
-	
+
 	@Override
 	public Iterable<IProvince> getOccupiedProvinces() { return context.provincesOf(this); }
 
 	@Override
 	public void deployToProvince(IProvince province, int amount) {
-		if (itIsNotMyTurn()) return;
+		if (itIsNotMyTurn()) { return; }
 		lastDeploy = context.setUpDeploy(province, amount);
 		context.applyDeployResult(lastDeploy.calculateResult());
 	}
 
 	@Override
 	public void attackToProvince(IProvince source, IProvince destination, Dice method) {
-		if (itIsNotMyTurn()) return;
+		if (itIsNotMyTurn()) { return; }
 		lastConflict = context.setUpConflict(source, destination, method);
 		context.applyConflictResult(lastConflict.calculateResult());
 	}
-	
+
 	@Override
 	public void reinforceProvince(final IProvince source, final IProvince destination, final int amount) {
-		if (itIsNotMyTurn()) return;
+		if (itIsNotMyTurn()) { return; }
 		lastReinforce = context.setUpReinforce(source, destination, amount);
 		context.applyReinforceResult(lastReinforce.calculateResult());
 	}
 
 	@Override
 	public boolean isHumanPlayer() { return data.isHumanPlayer; }
-	
+
 	@Override
 	public void finishTurn() {
-		if (itIsNotMyTurn()) return;
+		if (itIsNotMyTurn()) { return; }
 		context.finishCurrentPlayerTurn();
 	}
-	
+
 	public class MouseController extends DoaScript {
 
 		private static final long serialVersionUID = 5822331332308267554L;
@@ -106,9 +106,9 @@ public class Player extends DoaObject implements IPlayer {
 
 		@Override
 		public void tick() {
-			if (context.isPaused()) return;
-			if (itIsNotMyTurn()) return;
-			
+			if (context.isPaused()) { return; }
+			if (itIsNotMyTurn()) { return; }
+
 			ProvinceHitAreas areas = context.getAreas();
 			ProvinceHitArea selected = areas.getSelectedProvince();
 			if(selected == null) {
@@ -175,21 +175,21 @@ public class Player extends DoaObject implements IPlayer {
 			}
 		}
 	}
-	
+
 	protected boolean itIsNotMyTurn() { return !equals(context.getCurrentPlayer()); }
-	
+
 	@RequiredArgsConstructor
 	public static class Data implements Serializable {
 
 		private static final long serialVersionUID = 8565091325727904597L;
-		
+
 		@Getter @NonNull private final String name;
 		@Getter @NonNull private final Color color;
 		@NonNull private final String pawnKey;
 		@Getter private final boolean isLocalPlayer;
 		@Getter private final boolean isHumanPlayer;
 		private transient BufferedImage pawn;
-		
+
 		public BufferedImage getPawn() {
 			if (pawn == null) {
 				pawn = DoaSprites.getSprite(pawnKey);

@@ -25,22 +25,22 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 	@Getter
 	@Setter
 	private boolean isVisible;
-	
+
 	private transient BufferedImage lens;
 	private transient BufferedImage lensHover;
 	private transient BufferedImage lensSelected;
 	private transient BufferedImage currentLensImage;
-	
+
 	private transient BufferedImage flagImage;
-	
+
 	private transient Composite composite;
 	private transient Composite compositeHover;
 	private transient Composite compositeSelected;
 	private transient Composite currentComposite;
-	
+
 	private RoyLanguageButtonGroup group;
 	private Language language;
-	
+
 	RoyLanguageButton(RoyLanguageButtonGroup group, Language language) {
 		this.group = group;
 		this.language = language;
@@ -48,28 +48,30 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 		lensHover = UIConstants.getLensHoverImage();
 		lensSelected = UIConstants.getLensSelectedImage();
 		currentLensImage = lens;
-		
+
 		flagImage = UIConstants.getLanguageImages().get(language);
-		
+
 		composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f);
 		compositeHover = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
 		compositeSelected = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
 		currentComposite = composite;
-		
+
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
-	
+
 	private class Script extends DoaScript {
 
 		@Override
 		public void tick() {
-			if (!isVisible) return;
-			
+			if (!isVisible) { return; }
+
+			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			if (group.getSelected() == RoyLanguageButton.this) {
 				currentLensImage = lensSelected;
 				currentComposite = compositeSelected;
-			} else if (getContentArea().contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
+			} else if (getContentArea().contains(new Point(mouseX, mouseY))) {
 				currentLensImage = lensHover;
 				currentComposite = compositeHover;
 				if (DoaMouse.MB1_RELEASE) {
@@ -82,13 +84,13 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 			}
 		}
 	}
-	
+
 	private class Renderer extends DoaRenderer {
 
 		@Override
 		public void render() {
-			if (!isVisible) return;
-			
+			if (!isVisible) { return; }
+
 			DoaGraphicsFunctions.drawImage(flagImage, 0, 0, 140, 140);
 			DoaGraphicsFunctions.pushComposite();
 			DoaGraphicsFunctions.setComposite(currentComposite);
@@ -96,7 +98,7 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 			DoaGraphicsFunctions.popComposite();
 		}
 	}
-		
+
 	@Override
 	public void setPosition(DoaVector position) {
 		transform.position.x = position.x;
@@ -105,13 +107,11 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 
 	@Override
 	public Rectangle getContentArea() {
-		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(flagImage.getWidth(), flagImage.getHeight());
 		return new Rectangle(
-			pos[0],
-			pos[1],
-			size[0],
-			size[1]
+			(int) transform.position.x,
+			(int) transform.position.y,
+			flagImage.getWidth(),
+			flagImage.getHeight()
 		);
 	}
 }

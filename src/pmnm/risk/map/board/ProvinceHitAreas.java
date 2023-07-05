@@ -40,14 +40,14 @@ public final class ProvinceHitAreas extends DoaObject {
 	public ProvinceHitAreas(IRiskGameContext context) {
 		this.context = context;
 		provinces = context.getProvinces();
-		
+
 		areas = new ArrayList<>();
 		for (IProvince p : provinces) {
 			areas.add(ProvinceHitArea.of(p));
 		}
-		
+
 		connector = new ProvinceConnector(context);
-		
+
 		addComponent(new ProvinceHitAreaHighlighter());
 		addComponent(new ProvinceHitAreaSelector());
 	}
@@ -142,17 +142,17 @@ public final class ProvinceHitAreas extends DoaObject {
 	}
 
 	public ProvinceHitArea findHitAreaOf(IProvince province) {
-		if (province == null) return null;
+		if (province == null) { return null; }
 		return areas.stream().filter(area -> area.getProvince().equals(province)).findFirst().orElseThrow();
 	}
 
 	// Functions regarding neighbor queries
 	private Iterable<ProvinceHitArea> findAllNeighborsWithSameOccupier(ProvinceHitArea province) {
-		if (province == null) return Collections.emptyList();
+		if (province == null) { return Collections.emptyList(); }
 		return connectedComponents(province, p -> p.isOccupiedBy(province.getProvince().getOccupier()));
 	}
 	private Iterable<ProvinceHitArea> findAllNeighborsWithDifferentOccupier(ProvinceHitArea province) {
-		if (province == null) return Collections.emptyList();
+		if (province == null) { return Collections.emptyList(); }
 		return connectedComponents(province, p -> !p.isOccupiedBy(province.getProvince().getOccupier()));
 	}
 	private Iterable<ProvinceHitArea> connectedComponents(ProvinceHitArea province, Predicate<IProvince> filter) {
@@ -180,7 +180,7 @@ public final class ProvinceHitAreas extends DoaObject {
 
 		@Override
 		public void tick() {
-			if (context.isPaused()) return;
+			if (context.isPaused()) { return; }
 
 			Vertex2D mousePoint = new Vertex2D(
 				DoaGraphicsFunctions.unwarpX(DoaMouse.X),
@@ -208,12 +208,12 @@ public final class ProvinceHitAreas extends DoaObject {
 
 	@SuppressWarnings("serial")
 	private final class ProvinceHitAreaSelector extends DoaScript {
-		
+
 		ProvinceHitArea candidate = null;
-		
+
 		@Override
 		public void tick() {
-			if (context.isPaused()) return;
+			if (context.isPaused()) { return; }
 			if (context.getCurrentPhase() == TurnPhase.ATTACK_DEPLOY) { return; }
 
 			if (DoaMouse.MB1) {

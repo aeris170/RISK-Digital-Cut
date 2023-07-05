@@ -105,7 +105,7 @@ public class RiskGameContext implements IRiskGameContext {
 			continentData.put(continent, cData);
 			dataContinent.put(cData, continent);
 		}
-		/* --------------------------------------------------------------------- */ 
+		/* --------------------------------------------------------------------- */
 
 		/* --------------- Step 2, do Step 1 but for IProvinces ---------------- */
 		provinceData = new HashMap<>();
@@ -119,8 +119,8 @@ public class RiskGameContext implements IRiskGameContext {
 				provinceData.put(province, pData);
 				dataProvince.put(pData, province);
 			}
-		}		
-		/* --------------------------------------------------------------------- */ 
+		}
+		/* --------------------------------------------------------------------- */
 
 		/* ------ Step 3, data are realized sort provinces into continents ----- */
 		continentProvinces = new HashMap<>();
@@ -136,19 +136,19 @@ public class RiskGameContext implements IRiskGameContext {
 
 			continentProvinces.put(objectOf(cData), ImmutableList.copyOf(provinces));
 		});
-		/* --------------------------------------------------------------------- */ 
+		/* --------------------------------------------------------------------- */
 
 		/* ------------------ Step 4, set player associations ------------------ */
 		playerProvinces = new HashMap<>();
 		provincePlayers = new HashMap<>();
 		provinceData.keySet().forEach(province -> provincePlayers.put(province, null));
-		/* --------------------------------------------------------------------- */ 
+		/* --------------------------------------------------------------------- */
 
 		/* ----------------- Step 5, set neigbors of provinces ----------------- */
 		neighbors = new HashMap<>();
 		dataProvince.keySet().forEach(pData -> {
 			List<IProvince> provinces = new ArrayList<>();
-			
+
 			Iterable<ProvinceData> neighborDatas = pData.getNeighbors();
 			for (@NonNull ProvinceData nData : neighborDatas) {
 				provinces.add(objectOf(nData));
@@ -156,14 +156,14 @@ public class RiskGameContext implements IRiskGameContext {
 
 			neighbors.put(objectOf(pData), ImmutableList.copyOf(provinces));
 		});
-		/* --------------------------------------------------------------------- */ 
+		/* --------------------------------------------------------------------- */
 
 		/* ----------------- Step 6, add provinces to this map ----------------- */
 		numberOfTroops = new HashMap<>();
 		provinceData
 			.keySet()
 			.forEach(province -> numberOfTroops.put(province, Globals.UNKNOWN_TROOP_COUNT));
-		/* --------------------------------------------------------------------- */ 
+		/* --------------------------------------------------------------------- */
 
 		currentTurnPhase = TurnPhase.SETUP;
 
@@ -179,7 +179,9 @@ public class RiskGameContext implements IRiskGameContext {
 	public String getMapName() { return map.getConfig().getName(); }
 	@Override
 	public void initiliazeGame(@NonNull final GameConfig gameConfig) {
-		if (isInitialized) return;
+		if (isInitialized) {
+			return;
+		}
 		DoaScene gameScene = Scenes.getGameScene();
 
 		config = gameConfig;
@@ -191,7 +193,7 @@ public class RiskGameContext implements IRiskGameContext {
 			}else {
 				p = new AIPlayer(this, data);
 			}
-			
+
 			players.add(p);
 			playerProvinces.put(p, new ArrayList<>());
 		}
@@ -199,16 +201,16 @@ public class RiskGameContext implements IRiskGameContext {
 		currentPlayingPlayer = players.getNext();
 
 		if (gameConfig.isRandomPlacementEnabled()) {
-			/* occupy all provinces */ { 
+			/* occupy all provinces */ {
 				List<IProvince> unoccupiedProvinces = new ArrayList<>(provinceData.keySet());
 				while (!unoccupiedProvinces.isEmpty()) {
 					int randomIndex = DoaMath.randomIntBetween(0, unoccupiedProvinces.size());
 					IProvince randomProvince = unoccupiedProvinces.get(randomIndex);
-					
+
 					occupyProvince(currentPlayingPlayer, randomProvince);
 					Deploy deploy = setUpDeploy(randomProvince, 1);
 					applyDeployResult(deploy.calculateResult());
-					
+
 					unoccupiedProvinces.remove(randomIndex);
 				}
 			}
@@ -234,7 +236,7 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public TurnPhase getCurrentPhase() { return currentTurnPhase; }
 	@Override
-	public void goToNextPhase() { 
+	public void goToNextPhase() {
 		switch (getCurrentPhase()) {
 			case DRAFT:
 				currentTurnPhase = TurnPhase.ATTACK;
@@ -316,25 +318,25 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public boolean applyConflictResult(@NonNull final Conflict.Result result) {
 		if (getCurrentPhase() != TurnPhase.ATTACK) { return false; }
-		
+
 		Conflict conflict = result.getConflict();
 
 		IProvince attacker = conflict.getAttacker();
 		if (!occupierOf(attacker).equals(currentPlayingPlayer)) { return false; }
 		numberOfTroops.put(attacker, result.getRemainingAttackerTroops());
-		
+
 		IProvince defender = conflict.getDefender();
 		numberOfTroops.put(defender, result.getRemainingDefenderTroops());
-		
+
 		if (numberOfTroops.get(defender) <= 0) {
 			IPlayer attackerPlayer = provincePlayers.get(attacker);
 			IPlayer defenderPlayer = provincePlayers.get(defender);
-			
+
 			playerProvinces.get(defenderPlayer).remove(defender);
 			provincePlayers.put(defender, attackerPlayer);
-			
+
 			numberOfTroops.put(defender, Globals.UNKNOWN_TROOP_COUNT);
-			
+
 			currentTurnPhase = TurnPhase.ATTACK_DEPLOY;
 			usedDeploys = 0;
 			remainingDeploys = result.getRemainingAttackerTroops() - 1;
@@ -359,7 +361,7 @@ public class RiskGameContext implements IRiskGameContext {
 				return false;
 			case ATTACK_DEPLOY:
 			case REINFORCE:
-				if (!occupierOf(reinforcer).equals(currentPlayingPlayer) || 
+				if (!occupierOf(reinforcer).equals(currentPlayingPlayer) ||
 					!occupierOf(reinforcee).equals(currentPlayingPlayer)) { return false; }
 				numberOfTroops.put(reinforcer, result.getRemainingSourceTroops());
 				numberOfTroops.put(reinforcee, result.getRemainingDestinationTroops());
@@ -375,7 +377,7 @@ public class RiskGameContext implements IRiskGameContext {
 	@Override
 	public int calculateTurnReinforcementsFor(@NonNull IPlayer player) {
 		if (getCurrentPhase() == TurnPhase.SETUP) { return 0; }
-		
+
 		List<@NonNull IProvince> playerProvincesList = StreamSupport.stream(provincesOf(player).spliterator(), false).toList();
 		int provinceCount = playerProvincesList.size();
 		int reinforcementsForThisTurn = Math.max(provinceCount / 3, 3);
@@ -398,7 +400,7 @@ public class RiskGameContext implements IRiskGameContext {
 			case REINFORCE:
 			default:
 				return 0;
-			
+
 		}
 	}
 	@Override
@@ -424,7 +426,7 @@ public class RiskGameContext implements IRiskGameContext {
 		}
 		return true;
 	}
-	
+
 	/* Player API */
 	@Override
 	public int getNumberOfPlayers() { return players.size(); }
@@ -439,7 +441,7 @@ public class RiskGameContext implements IRiskGameContext {
 		playerProvinces.get(player).add(province);
 		provincePlayers.put(province, player);
 	}
-	
+
 	/* Province API */
 	@Override
 	public Iterable<@NonNull IProvince> getProvinces() {
@@ -465,7 +467,7 @@ public class RiskGameContext implements IRiskGameContext {
 	public int numberOfTroopsOn(@NonNull final IProvince province) {
 		return numberOfTroops.get(province);
 	}
-	
+
 	/* Continent API */
 	@Override
 	public Iterable<@NonNull IContinent> getContinents() {
@@ -475,7 +477,7 @@ public class RiskGameContext implements IRiskGameContext {
 	public Iterable<IProvince> provincesOf(@NonNull final IContinent continent) {
 		return continentProvinces.get(continent);
 	}
-	
+
 	/* Private Getters */
 	@SuppressWarnings("unused")
 	private ProvinceData dataOf(@NonNull final IProvince province) {
@@ -491,14 +493,14 @@ public class RiskGameContext implements IRiskGameContext {
 	private IContinent objectOf(@NonNull final ContinentData data) {
 		return dataContinent.get(data);
 	}
-	
+
 	/* DoaScene interop */
 	public void addToScene(DoaScene scene) {
 		scene.add(areas);
 		scene.add(new GameBoard(map));
 		players.forEach(player -> scene.add((Player)player));
 	}
-	
+
 	/* Serialization */
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		boolean pause = isPaused;
@@ -506,7 +508,7 @@ public class RiskGameContext implements IRiskGameContext {
 		out.defaultWriteObject();
 		isPaused = pause;
 	}
-	
+
 	/* Deserialization */
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		in.defaultReadObject();

@@ -15,7 +15,7 @@ import doa.engine.utils.discordapi.DoaDiscordService;
 
 @SuppressWarnings("serial")
 public class MainMenu extends RoyMenu {
-	
+
 	private static final String PLAY_OFFLINE_KEY 	= "PLAY_OFFLINE";
 	private static final String PLAY_ONLINE_KEY 	= "PLAY_ONLINE";
 	private static final String SETTINGS_KEY 		= "SETTINGS";
@@ -31,19 +31,19 @@ public class MainMenu extends RoyMenu {
 	private ExitPopup ep;
 
 	public MainMenu() {
-		/* Play Offline Button */		
+		/* Play Offline Button */
 		RoyButton playOfflineButton = RoyButton
 			.builder()
 			.textKey(PLAY_OFFLINE_KEY)
 			.action(source -> {
 				setVisible(false);
-				UIConstants.getPlayOfflineMenu().setVisible(true);	
+				UIConstants.getPlayOfflineMenu().setVisible(true);
 			})
 			.build();
 		playOfflineButton.setPosition(PLAY_OFFLINE_LOCATION);
-		addElement(playOfflineButton); 
+		addElement(playOfflineButton);
 		/* --------------- */
-		
+
 		/* Play Online Button */
 		RoyButton playOnlineButton = RoyButton
 			.builder()
@@ -56,7 +56,7 @@ public class MainMenu extends RoyMenu {
 		playOnlineButton.setPosition(PLAY_ONLINE_LOCATION);
 		addElement(playOnlineButton);
 		/* --------------- */
-		
+
 		/* Settings Button */
 		RoyButton settingsButton = RoyButton
 			.builder()
@@ -69,7 +69,7 @@ public class MainMenu extends RoyMenu {
 		settingsButton.setPosition(SETTINGS_LOCATION);
 		addElement(settingsButton);
 		/* --------------- */
-			
+
 		/* Rules Button */
 		RoyButton rulesButton = RoyButton
 			.builder()
@@ -83,11 +83,11 @@ public class MainMenu extends RoyMenu {
 		rulesButton.setPosition(RULES_LOCATION);
 		addElement(rulesButton);
 		/* ------------ */
-		
+
 		/* Exit Button and related stuff */
 		ep = new ExitPopup();
 		addElement(ep);
-		
+
 		RoyButton exitButton = RoyButton
 			.builder()
 			.textKey(EXIT_KEY)
@@ -96,16 +96,16 @@ public class MainMenu extends RoyMenu {
 		exitButton.setPosition(EXIT_LOCATION);
 		addElement(exitButton);
 		/* ----------------------------- */
-		
+
 		addComponent(new Renderer());
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 
 		@Override
 		public void render() {
 			if (!isVisible()) { return; }
-			
+
 			DoaAnimation riskLogoAnim = DoaAnimations.getAnimation("RiskLogoAnim");
 			DoaGraphicsFunctions.drawAnimation(
 				riskLogoAnim,
@@ -122,7 +122,7 @@ public class MainMenu extends RoyMenu {
 		super.setVisible(isVisible);
 		/* popups should not be affected */
 		ep.setVisible(false);
-		
+
 		if (isVisible()) {
 			DoaDiscordActivity activity = DoaDiscordService.getCurrentActivity();
 			if (activity != null) {

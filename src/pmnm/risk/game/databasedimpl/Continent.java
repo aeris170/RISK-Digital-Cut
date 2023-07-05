@@ -18,7 +18,7 @@ public final class Continent implements IContinent  {
 	private static final long serialVersionUID = 4714708201174941610L;
 
 	private final RiskGameContext context;
-	
+
 	@NonNull
 	@Getter(value = AccessLevel.PACKAGE)
 	private final ContinentData data;

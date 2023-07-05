@@ -19,7 +19,7 @@ import pmnm.risk.game.databasedimpl.RiskGameContext;
 @Data
 @ToString(includeFieldNames = true)
 public final class Conflict implements Serializable {
-	
+
 	private static final long serialVersionUID = -4261217185340912826L;
 
 	@Value
@@ -34,47 +34,47 @@ public final class Conflict implements Serializable {
 
 		@Getter
 		private final int remainingAttackerTroops;
-		
+
 		@Getter
 		private final int remainingDefenderTroops;
-		
+
 		@Getter
 		private final boolean isDecisive;
-		
+
 		private final IProvince winner;
-		
+
 		public Optional<IProvince> tryGetWinner() {
-			if (!isDecisive) return Optional.empty();
+			if (!isDecisive) { return Optional.empty(); }
 			return Optional.of(winner);
 		}
 	}
-	
+
 	@NonNull
 	private final RiskGameContext context;
-	
+
 	@Getter
 	@NonNull
 	private final IProvince attacker;
-	
+
 	@Getter
 	@NonNull
 	private final IProvince defender;
-	
+
 	@Getter
 	@NonNull
 	private final Dice attackerDice;
-	
+
 	private Result result;
-	
+
 	public Result calculateResult() {
-		if (result != null) return result;
-		
+		if (result != null) { return result; }
+
 		Pair<Integer[], Integer[]> diceResult = rollAppropriateDice();
 		Pair<Integer, Integer> casualtyResult = calculateCasualties(diceResult.getValue0(), diceResult.getValue1());
-		
+
 		int attackerCasualties = casualtyResult.getValue0();
 		int defenderCasualties = casualtyResult.getValue1();
-		
+
 		int attackerTroopsAfterConflict = context.numberOfTroopsOn(attacker) - attackerCasualties;
 		int defenderTroopsAfterConflict = context.numberOfTroopsOn(defender) - defenderCasualties;
 		boolean isDecisive = attackerTroopsAfterConflict == 1 || defenderTroopsAfterConflict == 0;
@@ -86,9 +86,9 @@ public final class Conflict implements Serializable {
 			if (defenderTroopsAfterConflict == 0) {
 				winner = attacker;
 			}
-			if (winner == null) DoaLogger.getInstance().severe("something is horribly wrong! @conflict line:86");
+			if (winner == null) { DoaLogger.getInstance().severe("something is horribly wrong! @conflict line:89"); }
 		}
-		
+
 		Result rv = new Result(
 			this,
 			attackerTroopsAfterConflict,
@@ -99,7 +99,7 @@ public final class Conflict implements Serializable {
 		result = rv;
 		return rv;
 	}
-	
+
 	private Pair<Integer[], Integer[]> rollAppropriateDice() {
 		Dice defenderDice;
 		if (context.numberOfTroopsOn(defender) >= 2) {
@@ -112,14 +112,14 @@ public final class Conflict implements Serializable {
 
 		return new Pair<>(attackers, defenders);
 	}
-	
+
 	private Pair<Integer, Integer> calculateCasualties(Integer[] attackers, Integer[] defenders) {
 		Arrays.sort(attackers, Collections.reverseOrder());
 		Arrays.sort(defenders, Collections.reverseOrder());
-		
+
 		int attackerCasualties = 0;
 		int defenderCasualties = 0;
-		
+
 		int diceCount = Math.min(attackers.length, defenders.length);
 		for(int i = 0; i < diceCount; i++) {
 			if(attackers[i] > defenders[i]) {

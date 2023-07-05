@@ -20,18 +20,18 @@ public final class ContinentData implements Serializable {
 	@Getter
 	@NonNull
 	private final String name;
-	
+
 	@Getter
 	@NonNull
 	private final String abbreviation;
-	
+
 	@Getter
 	private final int captureBonus;
-	
+
 	@Getter
 	@NonNull
 	private final Color color;
-	
+
 	@NonNull
 	@EqualsAndHashCode.Exclude
 	private final ImmutableList<ProvinceData> provinces;

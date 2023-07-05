@@ -31,15 +31,15 @@ public class Translator implements Observable {
 		TR(Locale.forLanguageTag("tr-TR")),
 		FR(Locale.forLanguageTag("fr-FR")),
 		ES(Locale.forLanguageTag("es-ES"));
-		
+
 		@Getter private Locale locale;
 		private Language(Locale l) { locale = l; }
 	}
 
 	private static final String LANGUAGE_DATA_PATH = "res/languages/";
-	
+
 	private static Translator _this;
-	public static Translator getInstance() { return _this == null ? _this = new Translator() : _this; }	
+	public static Translator getInstance() { return _this == null ? _this = new Translator() : _this; }
 
 	private Language currentLanguage;
 	private Map<Language, Map<String, String>> languages = new EnumMap<>(Language.class);
@@ -84,7 +84,7 @@ public class Translator implements Observable {
 		}
 		return rv;
 	}
-	
+
 	public String getTranslatedStringAsIs(String key) {
 		String rv = languages.get(currentLanguage).get(key);
 		return (rv != null && rv.length() != 0) ? rv : "ROY::UNMAPPED_STR";

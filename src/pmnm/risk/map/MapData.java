@@ -20,15 +20,15 @@ import lombok.ToString;
 public final class MapData implements Serializable {
 
 	private static final long serialVersionUID = 3162242848938299845L;
-	
+
 	@Getter
 	@NonNull
 	private final MapConfig config;
-	
+
 	@Getter
 	@NonNull
 	private transient BufferedImage backgroundImage;
-	
+
 	@NonNull
 	private final ImmutableList<ContinentData> continents;
 	public Iterable<ContinentData> getContinents() {

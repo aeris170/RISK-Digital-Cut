@@ -10,23 +10,23 @@ import java.util.NoSuchElementException;
 public final class CircularQueue<E extends Serializable> implements Deque<E>, Serializable {
 
 	private static final long serialVersionUID = 341944174576430374L;
-	
+
 	private ArrayList<E> elements;
 	private int index;
-	
+
 	public CircularQueue() { this(6); }
-	
+
 	public CircularQueue(int capacity) {
 		super();
 		elements = new ArrayList<>(capacity);
 		index = -1;
 	}
-	
+
 	public E getNext() {
 		index = (index + 1) % elements.size();
 		return elements.get(index);
 	}
-	
+
 	@Override
 	public boolean isEmpty() { return elements.isEmpty(); }
 
@@ -67,14 +67,14 @@ public final class CircularQueue<E extends Serializable> implements Deque<E>, Se
 	public E removeLast() { return elements.remove(elements.size() - 1); }
 
 	@Override
-	public E pollFirst() { 
-		if (isEmpty()) return null;
+	public E pollFirst() {
+		if (isEmpty()) { return null; }
 		return removeFirst();
 	}
 
 	@Override
 	public E pollLast() {
-		if (isEmpty()) return null;
+		if (isEmpty()) { return null; }
 		return removeLast();
 	}
 
@@ -86,13 +86,13 @@ public final class CircularQueue<E extends Serializable> implements Deque<E>, Se
 
 	@Override
 	public E peekFirst() {
-		if (isEmpty()) return null;
+		if (isEmpty()) { return null; }
 		return getFirst();
 	}
 
 	@Override
 	public E peekLast() {
-		if (isEmpty()) return null;
+		if (isEmpty()) { return null; }
 		return getLast();
 	}
 
@@ -101,7 +101,7 @@ public final class CircularQueue<E extends Serializable> implements Deque<E>, Se
 
 	@Override
 	public boolean removeLastOccurrence(Object o) {
-		// TODO 
+		// TODO
 		return false;
 	}
 
@@ -151,17 +151,17 @@ public final class CircularQueue<E extends Serializable> implements Deque<E>, Se
 
 		private CircularQueue<E> q;
 		private int index;
-		
+
 		public ReverseIterator(CircularQueue<E> q) {
 			this.q = q;
 			index = q.elements.size() - 1;
 		}
-		
+
 		@Override
 		public boolean hasNext() { return index >= 0; }
 
 		@Override
-		public E next() { 
+		public E next() {
 			if(!hasNext()){
 				throw new NoSuchElementException();
 			}

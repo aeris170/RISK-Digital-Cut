@@ -21,32 +21,32 @@ import lombok.Setter;
 
 @SuppressWarnings("serial")
 public final class Popup extends DoaObject implements IRoyElement, Observer {
-	
+
 	@Getter
 	@Setter
 	private boolean isVisible;
-	
+
 	@Getter
 	@NonNull
 	private String textKey;
-	
+
 	private transient BufferedImage backgroundImage;
-	
+
 	public Popup(@NonNull String textKey) {
 		this.textKey = textKey;
 		backgroundImage = UIConstants.getPopupBackground();
 
 		transform.position = new DoaVector(960 - backgroundImage.getWidth() / 2f, 540 - backgroundImage.getHeight() / 2f);
-		
+
 		addComponent(new Renderer());
 	}
-	
+
 	public class Renderer extends DoaRenderer {
-		
+
 		private String text;
 		private Font font;
 		private DoaVector textPos;
-		
+
 		@Override
 		public void render() {
 			if (!isVisible) { return; }
@@ -54,7 +54,7 @@ public final class Popup extends DoaObject implements IRoyElement, Observer {
 				text = Translator.getInstance().getTranslatedString(textKey) + "...";
 				DoaVector textSize = new DoaVector(backgroundImage.getWidth() * 0.70f, backgroundImage.getHeight() * 0.70f);
 				font = UIUtils.adjustFontToFitInArea(text, textSize);
-				
+
 				DoaVector textOffset = new DoaVector(textSize.x / 4f, textSize.y / 4f);
 				DoaVector textArea = UIUtils.textArea(font, text);
 				textPos = new DoaVector(
@@ -62,18 +62,18 @@ public final class Popup extends DoaObject implements IRoyElement, Observer {
 					textOffset.y + textSize.y / 2f + textArea.y / 4f
 				);
 			}
-			
+
 			DoaGraphicsFunctions.drawImage(backgroundImage, 0, 0, backgroundImage.getWidth(), backgroundImage.getHeight());
 			DoaGraphicsFunctions.setFont(font);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 			DoaGraphicsFunctions.drawString(
-				text, 
+				text,
 				textPos.x,
 				textPos.y
 			);
 		}
 	}
-	
+
 	@Override
 	public void setPosition(DoaVector position) {
 		transform.position.x = position.x;
@@ -82,7 +82,6 @@ public final class Popup extends DoaObject implements IRoyElement, Observer {
 
 	@Override
 	public Rectangle getContentArea() { return null; }
-
 
 	@Override
 	public void onNotify(Observable b) {

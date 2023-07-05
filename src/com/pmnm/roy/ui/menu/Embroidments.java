@@ -23,7 +23,7 @@ public class Embroidments extends DoaObject {
 		this.fleurDeLis = UIConstants.getFleurDeLis();
 		this.topRing = UIConstants.getTopRing();
 		this.bottomRing = UIConstants.getBottomRing();
-		
+
 		addComponent(new Renderer());
 	}
 

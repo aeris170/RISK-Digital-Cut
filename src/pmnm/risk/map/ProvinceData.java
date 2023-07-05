@@ -29,11 +29,11 @@ public final class ProvinceData implements Serializable {
 	public Iterable<ProvinceData> getNeighbors() {
 		return neighbors;
 	}
-	
+
 	@Getter
 	@Setter(value = AccessLevel.PACKAGE)
 	private MeshCollection meshes;
-	
+
 	@Getter
 	@Setter(value = AccessLevel.PACKAGE)
 	@EqualsAndHashCode.Exclude

@@ -38,9 +38,9 @@ public final class LoadingScreen extends RoyMenu {
 	private float loadingBarProgress = 0f;
 	private float currentBarProgress = 0f;
 
-	private List<String> names = new ArrayList<String>();
-	private List<Color> colors = new ArrayList<Color>();
-	private List<BufferedImage> pawns = new ArrayList<BufferedImage>();
+	private List<String> names = new ArrayList<>();
+	private List<Color> colors = new ArrayList<>();
+	private List<BufferedImage> pawns = new ArrayList<>();
 
 	public LoadingScreen() {
 		addComponent(new Script());
@@ -57,7 +57,7 @@ public final class LoadingScreen extends RoyMenu {
 			colors.add(data.getColor());
 			pawns.add(data.getPawn());
 		}
-		
+
 		MapConfig mapConfig = config.getMapConfig();
 		selectedMapName = mapConfig.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = mapConfig.getBackgroundImagePreview();
@@ -98,13 +98,13 @@ public final class LoadingScreen extends RoyMenu {
 		@Override
 		public void tick() {
 			if (!isVisible()) { return; }
-			
+
 			timer++;
 
 			if (currentBarProgress < loadingBarProgress && DoaMath.randomBetween(0, 1) < 0.15f) {
 				currentBarProgress = DoaMath.clamp(currentBarProgress + 0.005f, 0, loadingBarProgress);
 			}
-			
+
 			if (timer >= timerMax) {
 				timer = 0;
 
@@ -124,7 +124,7 @@ public final class LoadingScreen extends RoyMenu {
 		private Font mapNameFont;
 		private DoaVector mapNamePosition;
 		private DoaVector mapNameDimensions;
-		
+
 		private Font playerNameFont;
 
 		private String hint;
@@ -180,11 +180,11 @@ public final class LoadingScreen extends RoyMenu {
 			if (mapNameFont == null) {
 				DoaVector contentSize = new DoaVector(300, 50);
 				mapNameFont = UIUtils.adjustFontToFitInArea(selectedMapName, contentSize);
-				
+
 				mapNameDimensions = new DoaVector(UIUtils.textWidth(mapNameFont, selectedMapName), UIUtils.textHeight(mapNameFont));
 				mapNameDimensions.x = DoaGraphicsFunctions.unwarpX(mapNameDimensions.x);
 				mapNameDimensions.y = DoaGraphicsFunctions.unwarpY(mapNameDimensions.y);
-				
+
 				mapNamePosition = new DoaVector(
 					153 + mapChooserBg.getWidth() / 2f - mapNameDimensions.x / 2f,
 					325
@@ -214,11 +214,11 @@ public final class LoadingScreen extends RoyMenu {
 			if (loadingFont == null || loadingTextChanged) {
 				DoaVector contentSize = new DoaVector(1000, 50);
 				loadingFont = UIUtils.adjustFontToFitInArea(loadingText, contentSize);
-				
+
 				loadingTextDimensions = new DoaVector(UIUtils.textWidth(loadingFont, loadingText), UIUtils.textHeight(loadingFont));
 				loadingTextDimensions.x = DoaGraphicsFunctions.unwarpX(loadingTextDimensions.x);
 				loadingTextDimensions.y = DoaGraphicsFunctions.unwarpY(loadingTextDimensions.y);
-				
+
 				loadingPosition = new DoaVector(
 					(1920 - loadingTextDimensions.x) / 2f,
 					950 + loadingTextDimensions.y  - loadingMiddle.getHeight() / 4f
@@ -249,7 +249,7 @@ public final class LoadingScreen extends RoyMenu {
 			DoaGraphicsFunctions.setFont(playerNameFont);
 			for (int i = 0; i < names.size(); i++) {
 				DoaGraphicsFunctions.drawImage(playerNameBg, 725, 282 + i * 55, playerNameBg.getWidth(), playerNameBg.getHeight());
-				
+
 				DoaGraphicsFunctions.drawString(names.get(i), 735, 314 + i * 55);
 			}
 
@@ -257,14 +257,14 @@ public final class LoadingScreen extends RoyMenu {
 			for (int i = 0; i < colors.size(); i++) {
 				DoaGraphicsFunctions.setColor(colors.get(i));
 				DoaGraphicsFunctions.fill(new Rectangle(983, 285 + 55 * i, colorBg.getWidth() - 6, colorBg.getHeight() - 6));
-				
+
 				DoaGraphicsFunctions.drawImage(colorBg, 980, 282 + 55 * i, colorBg.getWidth(), colorBg.getHeight());
 			}
 
 			// pawns
 			for (int i = 0; i < pawns.size(); i++) {
 				DoaGraphicsFunctions.drawImage(pawnBg, 1092, 282 + 55 * i, pawnBg.getWidth(), pawnBg.getHeight());
-				
+
 				DoaGraphicsFunctions.drawImage(pawns.get(i), 1122, 286 + 55 * i, pawnBg.getHeight() - 10, pawnBg.getHeight() - 10);
 			}
 
@@ -325,7 +325,7 @@ public final class LoadingScreen extends RoyMenu {
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x - 2, loadingPosition.y);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x + 2, loadingPosition.y);
 			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y - 2);
-			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);	
+			DoaGraphicsFunctions.drawString(loadingText, loadingPosition.x, loadingPosition.y + 2);
 
 			/* text itself */
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());

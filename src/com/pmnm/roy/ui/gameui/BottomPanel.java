@@ -187,13 +187,13 @@ public class BottomPanel extends RoyMenu {
 
 		@Override
 		public void tick() {
-			if (!isVisible()) return;
+			if(!isVisible()) { return; }
 
 			if (counter < Globals.DEFAULT_TIME_SLICE) {
 				counter++;
 				return;
 			}
-			
+
 			TurnPhase currentPhase = context.getCurrentPhase();
 			if (currentPhase != previousPhase) {
 				previousPhase = currentPhase;
@@ -212,7 +212,7 @@ public class BottomPanel extends RoyMenu {
 				ProvinceHitArea reinforceeProvinceHitArea = areas.getReinforceeProvince();
 				if (reinforcerProvinceHitArea != null &&
 					reinforceeProvinceHitArea != null &&
-					reinforcerProvinceHitArea.getProvince().canReinforceAnotherProvince()) { 
+					reinforcerProvinceHitArea.getProvince().canReinforceAnotherProvince()) {
 					reinforcer = reinforcerProvinceHitArea.getProvince();
 				}
 				updateSpinnerValuesForReinfocing(reinforcer);
@@ -289,7 +289,8 @@ public class BottomPanel extends RoyMenu {
 
 		@Override
 		public void render() {
-			if (!isVisible()) return;
+			if(!isVisible()) { return; }
+
 			if (garrisonFont == null) {
 				DoaVector contentSize = new DoaVector(garrisonBG.getWidth() * paddingMultiplier, garrisonBG.getHeight() * paddingMultiplier);
 				garrisonFont = UIUtils.adjustFontToFitInArea(garrisonText, contentSize);
@@ -315,7 +316,7 @@ public class BottomPanel extends RoyMenu {
 			if (provinceNameFont == null) {
 				DoaVector contentSize = new DoaVector(provinceBG.getWidth() * paddingMultiplier, provinceBG.getHeight() * paddingMultiplier);
 				provinceNameFont = UIUtils.adjustFontToFitInArea(nameText, contentSize);
-				
+
 				provinceTextWidth = UIUtils.textWidth(provinceNameFont, nameText);
 				provinceTextHeight = UIUtils.textHeight(provinceNameFont);
 
@@ -326,7 +327,7 @@ public class BottomPanel extends RoyMenu {
 			if (continentNameFont == null) {
 				DoaVector contentSize = new DoaVector(continentBG.getWidth() * paddingMultiplier, continentBG.getHeight() * paddingMultiplier);
 				continentNameFont = UIUtils.adjustFontToFitInArea(continentText, contentSize);
-				
+
 				continentTextWidth = UIUtils.textWidth(continentNameFont, continentText);
 				continentTextHeight = UIUtils.textHeight(continentNameFont);
 

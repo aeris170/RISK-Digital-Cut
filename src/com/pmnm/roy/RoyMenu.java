@@ -12,12 +12,12 @@ import lombok.NonNull;
 
 @SuppressWarnings("serial")
 public class RoyMenu extends DoaObject implements IRoyContainer {
-	
+
 	@Getter
 	private boolean isVisible;
-	
+
 	private List<IRoyElement> elements = new ArrayList<>();
-	
+
 	@Override
 	public void onAddToScene(DoaScene scene) {
 		super.onAddToScene(scene);
@@ -37,7 +37,7 @@ public class RoyMenu extends DoaObject implements IRoyContainer {
 			}
 		}
 	}
-	
+
 	@Override
 	public void setzOrder(int zOrder) {
 		super.setzOrder(zOrder);

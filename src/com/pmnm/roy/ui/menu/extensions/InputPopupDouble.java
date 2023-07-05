@@ -32,12 +32,12 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 
 	@Getter
 	private boolean isVisible;
-	
+
 	@Setter
 	private transient IRoyAction action = null;
 
 	private List<IRoyElement> elements;
-	
+
 	private String hostIDText = "Host ID:";
 	private String nameText = "Name:";
 
@@ -47,26 +47,26 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 
 	public InputPopupDouble() {
 		transform.position = new DoaVector(600, 420);
-		
+
 		elements = new ArrayList<>();
-		
+
 		idTextField.setPosition(new DoaVector(800, 450));
 		idTextField.registerObserver(this);
 		addElement(idTextField);
-		
+
 		nameTextField.setPosition(new DoaVector(800, 510));
 		nameTextField.setPlaceholder("max. 10 characters");
 		nameTextField.setMaxCharacters(10);
 		nameTextField.registerObserver(this);
 		addElement(nameTextField);
-		
+
 		RoyMiniButton noButton = RoyMiniButton.builder()
 			.textKey("BACK")
 			.action(source -> setVisible(false))
 			.build();
 		noButton.setPosition(new DoaVector(650, 570));
 		addElement(noButton);
-		
+
 		yesButton = RoyMiniButton.builder()
 			.textKey("YES")
 			.action(source -> {
@@ -79,17 +79,17 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		yesButton.setPosition(new DoaVector(1070, 570));
 		yesButton.setVisible(false);
 		addElement(yesButton);
-		
+
 		setzOrder(ZOrders.POPUP_Z);
 		addComponent(new Renderer());
 	}
-	
+
 	public class Renderer extends DoaRenderer {
-		
+
 		private Font font;
 		private int stringWidth;
 		private DoaVector textDimensions = new DoaVector(576, 40);
-		
+
 		@Override
 		public void render() {
 			if (!isVisible) { return; }
@@ -98,23 +98,23 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 					Font.BOLD,
 					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, hostIDText), 0)[0]
 				);
-				
+
 				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
 				stringWidth = fm.stringWidth(hostIDText);
 				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
 				stringWidth = strSize[0];
 			}
-			
+
 			DoaGraphicsFunctions.drawImage(UIConstants.getPopupBackground(), 0, 0, 712, 240);
-			
+
 			DoaGraphicsFunctions.setFont(font);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
-			
+
 			DoaGraphicsFunctions.drawString(hostIDText, 50, 70);
 			DoaGraphicsFunctions.drawString(nameText, 50, 130);
 		}
 	}
-	
+
 	@Override
 	public void onAddToScene(DoaScene scene) {
 		super.onAddToScene(scene);
@@ -124,7 +124,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 			}
 		}
 	}
-	
+
 	@Override
 	public void onRemoveFromScene(DoaScene scene) {
 		super.onRemoveFromScene(scene);
@@ -134,7 +134,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 			}
 		}
 	}
-	
+
 	@Override
 	public void setzOrder(int zOrder) {
 		super.setzOrder(zOrder);
@@ -144,7 +144,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 			}
 		}
 	}
-	
+
 	@Override
 	public void setVisible(boolean value) {
 		isVisible = value;
@@ -153,7 +153,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 		}
 		yesButton.setVisible(false);
 	}
-	
+
 	@Override
 	public void setPosition(DoaVector position) {
 		transform.position.x = position.x;
@@ -171,7 +171,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 
 	@Override
 	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
-	
+
 	@Override
 	public void onNotify(Observable b) {
 		if (b instanceof RoyTextField) {
@@ -179,7 +179,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 			yesButton.setVisible(textLength != 0);
 		}
 	}
-	
+
 	@Override
 	public boolean isEnabled() { return true; }
 	@Override

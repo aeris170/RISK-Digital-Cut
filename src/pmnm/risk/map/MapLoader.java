@@ -35,7 +35,7 @@ public final class MapLoader {
 		NAME_PROVINCE.clear();
 		CONTINENTS.clear();
 		BufferedImage bgImg = null;
-		
+
 		try {
 			createProvinces(map.getProvincesFile()); /* fetch all province names*/
 			connectProvinces(map.getNeighborsFile()); /* set up adjacencies */
@@ -61,7 +61,7 @@ public final class MapLoader {
 		provincesElement.getChildren().forEach(province -> {
 			String name = province.getText();
 			ProvinceData provinceData = new ProvinceData(name);
-			NAME_PROVINCE.put(name, provinceData);	
+			NAME_PROVINCE.put(name, provinceData);
 		});
 	}
 
@@ -72,7 +72,7 @@ public final class MapLoader {
 			final String provinceName = provinceElement.getChildText("name");
 
 			final ProvinceData province = NAME_PROVINCE.get(provinceName);
-			
+
 			List<ProvinceData> neighbors = new ArrayList<>();
 			provinceElement.getChildren("neighbour").forEach(neighborElement -> {
 				String neighborName = neighborElement.getText();
@@ -88,14 +88,14 @@ public final class MapLoader {
 		Element verticesElement = verticesDocument.getRootElement();
 		verticesElement.getChildren().forEach(provinceElement -> {
 			final String provinceName = provinceElement.getChildText("name");
-			
+
 			final ProvinceData province = NAME_PROVINCE.get(provinceName);
-						
+
 			MeshCollectionBuilder builder = MeshCollection.builder();
-			
+
 			Element centerVertex = provinceElement.getChild("center").getChild("vertex");
 			builder.center(new Vertex2D(Integer.parseInt(centerVertex.getChildText("x")), Integer.parseInt(centerVertex.getChildText("y"))));
-			
+
 			provinceElement.getChildren("mesh").forEach(meshElement -> {
 				Mesh2DBuilder mBuilder = Mesh2D.builder();
 				meshElement.getChildren("vertex").forEach(vertex -> {
@@ -105,13 +105,13 @@ public final class MapLoader {
 				});
 
 				builder.mesh(mBuilder.build());
-				
+
 			});
-			
+
 			province.setMeshes(builder.build());
 		});
 	}
-	
+
 	private static void groupProvinces(File continentsFile) throws JDOMException, IOException {
 		Document continentsDocument = createXMLDocumentFrom(continentsFile);
 		Element continentsElement = continentsDocument.getRootElement();
@@ -119,14 +119,14 @@ public final class MapLoader {
 			String name = continentElement.getChildText("name");
 			String abb = continentElement.getChildText("abbreviation");
 			int captureBonus = Integer.parseInt(continentElement.getChildText("capture-bonus"));
-			
+
 			String[] channels = continentElement.getChildText("color").split(",");
 			Color color = new Color(Integer.parseInt(channels[0].trim()), Integer.parseInt(channels[1].trim()), Integer.parseInt(channels[2].trim()));
-			
+
 			List<ProvinceData> provinces = new ArrayList<>();
 			continentElement.getChildren("province").forEach(child -> {
 				final String provinceName = child.getText();
-				
+
 				final ProvinceData province = NAME_PROVINCE.get(provinceName);
 
 				provinces.add(province);
@@ -134,17 +134,17 @@ public final class MapLoader {
 
 			ContinentData c = new ContinentData(name, abb, captureBonus, color, ImmutableList.copyOf(provinces));
 			CONTINENTS.add(c);
-			
+
 			provinces.forEach(province -> province.setContinent(c));
 		});
 	}
-	
+
 	private static BufferedImage loadBackgroundImage(String mapName, File backgroundImage) throws IOException {
 		String p = backgroundImage.getPath();
 		p = p.substring(p.indexOf(File.separator)).replace(File.separator, "/");
 		return DoaSprites.createSprite(mapName + "MapBackground", p);
 	}
-	
+
 	private static Document createXMLDocumentFrom(File file) throws JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();
 		builder.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");

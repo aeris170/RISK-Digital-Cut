@@ -9,11 +9,11 @@ import pmnm.risk.map.MapConfig;
 
 @UtilityClass
 public final class Globals {
-	
+
 	public static final String GAME_VERSION = "ALPHA1";
 	public static final int TICK_RATE = 240;
 	public static final int DEFAULT_TIME_SLICE = TICK_RATE / 10;
-	
+
 	public static final int UNKNOWN_TROOP_COUNT = -38145124;
 
 	public static final int MAX_NUM_PLAYERS = 6;
@@ -25,7 +25,7 @@ public final class Globals {
 		DiscordRichPresenceAdapter.initialize();
 		UIConstants.initUI();
 	}
-	
+
 	public static void destroyGlobals() {
 		DiscordRichPresenceAdapter.destroy();
 	}

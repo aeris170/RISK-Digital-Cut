@@ -34,10 +34,10 @@ public class FadingBackground extends DoaObject {
 
 	public FadingBackground() {
 		this.backgrounds = UIConstants.getBackgrounds();
-		
+
 		addComponent(new FadeScript());
 		addComponent(new Renderer());
-		
+
 		DoaTasker.guard(fadeGuard, TIME_BETWEEN_FADES);
 	}
 

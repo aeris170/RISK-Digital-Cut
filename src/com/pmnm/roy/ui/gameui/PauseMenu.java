@@ -38,15 +38,15 @@ public final class PauseMenu extends RoyMenu {
 	private DoaVector SETTINGS_LOCATION = new DoaVector();
 	private DoaVector RULES_LOCATION;
 	private DoaVector QUIT_LOCATION;
-	
+
 	public PauseMenu(RiskGameContext context, GameType type) {
 		float buttonsY = 0;
 		float distanceBetweenButtons = 0;
-		
+
 		if (type == GameType.SINGLE_PLAYER) {
 			buttonsY = 45f;
 			distanceBetweenButtons = 75f;
-			
+
 			SAVE_LOCATION 		= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY);
 			LOAD_LOCATION 		= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons);
 			SETTINGS_LOCATION 	= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons * 2);
@@ -55,14 +55,14 @@ public final class PauseMenu extends RoyMenu {
 		} else if (type == GameType.MULTI_PLAYER) {
 			buttonsY = 70f;
 			distanceBetweenButtons = 125f;
-			
+
 			SETTINGS_LOCATION 	= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY);
 			RULES_LOCATION 		= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons);
 			QUIT_LOCATION 		= new DoaVector(BG_LOCATION.x + 45, BG_LOCATION.y + buttonsY + distanceBetweenButtons * 2);
 		}
-		
+
 		addButtons(context, type);
-		
+
 		setzOrder(ZOrders.PAUSE_Z);
 		if (type == GameType.SINGLE_PLAYER) {
 			addComponent(new ScriptSinglePlayer(context));
@@ -74,7 +74,7 @@ public final class PauseMenu extends RoyMenu {
 
 	private void addButtons(RiskGameContext context, GameType type) {
 		if (type == GameType.SINGLE_PLAYER) {
-			/* Save Button */	
+			/* Save Button */
 			RoyButton saveButton = RoyButton
 				.builder()
 				.textKey(SAVE_KEY)
@@ -105,8 +105,8 @@ public final class PauseMenu extends RoyMenu {
 			addElement(loadButton);
 			/* --------------- */
 		}
-		
-		/* Settings Button */	
+
+		/* Settings Button */
 		RoyButton settingsButton = RoyButton
 			.builder()
 			.textKey(SETTINGS_KEY)
@@ -117,7 +117,7 @@ public final class PauseMenu extends RoyMenu {
 		settingsButton.setPosition(SETTINGS_LOCATION);
 		addElement(settingsButton);
 		/* --------------- */
-		
+
 		/* Rules Button */
 		RoyButton rulesButton = RoyButton
 			.builder()
@@ -141,18 +141,18 @@ public final class PauseMenu extends RoyMenu {
 			})
 			.build();
 		mainMenuButton.setPosition(QUIT_LOCATION);
-		addElement(mainMenuButton); 
+		addElement(mainMenuButton);
 		/* --------------- */
 	}
 
 	private final class ScriptSinglePlayer extends DoaScript {
-		
+
 		private final IRiskGameContext context;
-		
+
 		private ScriptSinglePlayer(final IRiskGameContext context) {
 			this.context = context;
 		}
-		
+
 		@Override
 		public void tick() {
 			List<Character> chars = DoaKeyboard.getTypedChars();
@@ -166,14 +166,14 @@ public final class PauseMenu extends RoyMenu {
 	}
 
 	private final class ScriptMultiPlayer extends DoaScript {
-		
+
 		@SuppressWarnings("unused")
 		private final IRiskGameContext context;
-		
+
 		private ScriptMultiPlayer(final IRiskGameContext context) {
 			this.context = context;
 		}
-		
+
 		@Override
 		public void tick() {
 			List<Character> chars = DoaKeyboard.getTypedChars();
@@ -188,16 +188,16 @@ public final class PauseMenu extends RoyMenu {
 	private final class Renderer extends DoaRenderer {
 		@Override
 		public void render() {
-			if(!isVisible()) return;
+			if(!isVisible()) { return; }
 
 			DoaGraphicsFunctions.setColor(new Color(0, 0, 0, 100));
 			DoaGraphicsFunctions.fillRect(0, 0, 1920, 1080);
-			
+
 			DoaGraphicsFunctions.drawImage(bg, BG_LOCATION.x, BG_LOCATION.y, bg.getWidth(), bg.getHeight());
-			
+
 			//DoaGraphicsFunctions.setColor(Color.WHITE);
 			//DoaGraphicsFunctions.drawString("PAUSE MENU", 840, 380);
 		}
-		
+
 	}
 }

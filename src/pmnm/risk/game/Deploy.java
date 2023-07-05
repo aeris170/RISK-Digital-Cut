@@ -19,7 +19,7 @@ public final class Deploy implements Serializable {
 	@Value
 	@ToString(includeFieldNames = true)
 	public static final class Result implements Serializable {
-		
+
 		private static final long serialVersionUID = -7679290613346465900L;
 
 		@Getter
@@ -29,22 +29,22 @@ public final class Deploy implements Serializable {
 		@Getter
 		private final int remainingTargetTroops;
 	}
-	
+
 	@NonNull
 	private final IRiskGameContext context;
-	
+
 	@Getter
 	@NonNull
 	private final IProvince target;
-		
+
 	@Getter
 	private final int amount;
-	
+
 	private Result result;
-	
+
 	public Result calculateResult() {
-		if (result != null) return result;
-		
+		if (result != null) { return result; }
+
 		int targetTroops = context.numberOfTroopsOn(target);
 		if (targetTroops == Globals.UNKNOWN_TROOP_COUNT) {
 			targetTroops = 0;

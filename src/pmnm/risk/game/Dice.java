@@ -47,5 +47,4 @@ public class Dice {
 		d.rollAll();
 		return d;
 	}
-
 }

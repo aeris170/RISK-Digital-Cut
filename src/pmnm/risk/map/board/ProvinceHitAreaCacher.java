@@ -21,7 +21,7 @@ import pmnm.risk.map.Mesh2D;
 
 @UtilityClass
 public final class ProvinceHitAreaCacher {
-	
+
 	private static final Map<RenderingHints.Key, Object> HINTS = Map.of(
 		RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
         RenderingHints.KEY_ANTIALIASING, 		RenderingHints.VALUE_ANTIALIAS_ON,
@@ -43,7 +43,7 @@ public final class ProvinceHitAreaCacher {
 		int height 	= bounds.maxY - bounds.minY + 8;
 		int translateX = -bounds.minX + 4;
 		int translateY = -bounds.minY + 4;
-		
+
 		pha.unoccupiedMesh 		= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		pha.selectedBorder 		= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		pha.selectedMesh 		= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);

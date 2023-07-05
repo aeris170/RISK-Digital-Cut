@@ -23,7 +23,7 @@ import pmnm.risk.map.Mesh2D;
 import pmnm.risk.map.Vertex2D;
 
 public class ProvinceHitArea extends DoaObject {
-	
+
 	static ProvinceHitArea of(IProvince province) {
 		return new ProvinceHitArea(province);
 	}
@@ -61,28 +61,28 @@ public class ProvinceHitArea extends DoaObject {
 
 	private float meshAlpha = 0f;
 	private float meshAlphaDelta = 0.005f;
-	
+
 	private ProvinceSymbol symbol;
 
 	private ProvinceHitArea(IProvince province) {
 		this.province = province;
 		name = province.getName() + " HitArea";
-		
+
 		bounds = ProvinceHitAreaBounds.of(this);
 		ProvinceHitAreaCacher.cache(this);
-		
+
 		addComponent(new ZOrderAndAlphaSetter());
 		addComponent(new Renderer());
-		
+
 		symbol = ProvinceSymbol.of(this);
 	}
-	
+
 	@Override
 	public void onAddToScene(DoaScene scene) {
 		super.onAddToScene(scene);
 		scene.add(symbol);
 	}
-	
+
 	@Override
 	public void onRemoveFromScene(DoaScene scene) {
 		super.onRemoveFromScene(scene);
@@ -90,7 +90,7 @@ public class ProvinceHitArea extends DoaObject {
 	}
 
 	public class ZOrderAndAlphaSetter extends DoaScript {
-		
+
 		private static final long serialVersionUID = -7463836870534187697L;
 
 		@Override
@@ -120,13 +120,13 @@ public class ProvinceHitArea extends DoaObject {
 					setzOrder(ZOrders.DEFAULT_PROVINCE_Z);
 				}
 			}
-		}		
+		}
 	}
-	
+
 	public class Renderer extends DoaRenderer {
-		
+
 		private static final long serialVersionUID = 3390229334254057350L;
-		
+
 		private float translateX = bounds.minX - 4f;
 		private float translateY = bounds.minY - 4f;
 

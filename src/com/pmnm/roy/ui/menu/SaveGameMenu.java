@@ -28,7 +28,7 @@ import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
 public class SaveGameMenu extends RoyMenu implements Observer {
-	
+
 	private static final DoaVector[] SAVE_BUTTON_LOCATIONS = {
 		new DoaVector(147f, 413f),
 		new DoaVector(787f, 413f),
@@ -51,7 +51,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 		new DoaVector(767f, 634f)
 	};
 	private static final DoaVector BACK_LOCATION = new DoaVector(1377f, 803f);
-	
+
 	private Popup savingPopup;
 	private Quintet<Metadata, Metadata, Metadata, Metadata, Metadata> metas = Quintet.with(null, null, null, null, null);
 
@@ -63,7 +63,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 			.build();
 		backButton.setPosition(BACK_LOCATION);
 		addElement(backButton);
-		
+
 		for(int i = 0; i < metas.getSize(); i++) {
 			final int order = i;
 			RoyMiniButton saveButton  = RoyMiniButton.builder()
@@ -79,10 +79,10 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 			saveButton.setVisible(false);
 			addElement(saveButton);
 		}
-		
+
 		savingPopup = new Popup("SAVING");
 		addElement(savingPopup);
-		
+
 		Translator.getInstance().registerObserver(this);
 
 		addComponent(new Renderer());
@@ -99,47 +99,47 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 		}
 		savingPopup.setVisible(false);
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
-		
-		private transient BufferedImage saveScroll;	
+
+		private transient BufferedImage saveScroll;
 		private transient BufferedImage saveMapContainer;
-		
+
 		private String emptyString = "???";
 		private Font emptyStringFont;
 		private DoaVector emptyStringPos;
 
 		private DoaVector mapNameOffset = new DoaVector(350, 90);
 		private DoaVector mapNameSize = new DoaVector(165, 50);
-		
+
 		private Font dateStringFont;
 		private DoaVector dateOffset = new DoaVector(350, 150);
 		private DoaVector dateSize = new DoaVector(165, 30);
-		
+
 		private Font timeStringFont;
 		private DoaVector timeOffset = new DoaVector(350, 190);
 		private DoaVector timeSize = new DoaVector(165, 30);
-		
+
 		private Font versionStringFont;
 		private DoaVector versionOffset = new DoaVector(350, 230);
 		private DoaVector versionSize = new DoaVector(165, 40);
-		
+
 		private String dateFormat = "dd MMM yyyy";
 		private String timeFormat = "HH:mm:ss";
 		private SimpleDateFormat dateFormatter;
 		private SimpleDateFormat timeFormatter;
-		
+
 		private Renderer() {
 			saveScroll = UIConstants.getSaveScrollSprite();
 			saveMapContainer = UIConstants.getSaveMapContainerSprite();
 			refreshLocale(Translator.getInstance().getCurrentLanguage().getLocale());
 		}
-		
+
 		public void refreshLocale(Locale l) {
 			dateFormatter = new SimpleDateFormat(dateFormat, l);
 			timeFormatter = new SimpleDateFormat(timeFormat, l);
 		}
-		
+
 		@Override
 		public void render() {
 			if (!isVisible()) { return; }
@@ -172,18 +172,18 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 				DoaVector pos = SAVE_SCROLL_LOCATIONS[i];
 				DoaGraphicsFunctions.drawImage(saveScroll, pos.x, pos.y, saveScroll.getWidth(), saveScroll.getHeight());
 			}
-			
+
 			for (int i = 0; i < SAVE_MAP_CONTAINER_LOCATIONS.length; i++) {
 				DoaVector pos = SAVE_MAP_CONTAINER_LOCATIONS[i];
 				DoaGraphicsFunctions.drawImage(saveMapContainer, pos.x, pos.y, saveMapContainer.getWidth(), saveMapContainer.getHeight());
 			}
-			
+
 			for (int i = 0; i < metas.getSize(); i++) {
 				Metadata m = (Metadata) metas.getValue(i);
 
 				DoaVector scrollPos = SAVE_SCROLL_LOCATIONS[i];
 				DoaVector imgPos = SAVE_MAP_CONTAINER_LOCATIONS[i];
-				if (m == null) { 
+				if (m == null) {
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(emptyStringFont);
 					DoaGraphicsFunctions.drawString(
@@ -193,17 +193,17 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 					);
 					continue;
 				}
-				
+
 				{ // snapshot
 					DoaGraphicsFunctions.drawImage(
 						m.getSnapshotImage(),
-						imgPos.x + 2, 
-						imgPos.y - 2, 
+						imgPos.x + 2,
+						imgPos.y - 2,
 						saveMapContainer.getWidth() - 4,
 						saveMapContainer.getHeight() - 1
 					);
 				}
-				
+
 				{ // map name
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					String mapName = m.getMapName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
@@ -217,8 +217,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 						scrollPos.y + mapNameOffset.y + mapNameSize.y / 2f + area.y / 4f
 					);
 				}
-				
-				
+
 				{ // date
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(dateStringFont);
@@ -230,7 +229,7 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 						scrollPos.y + dateOffset.y + dateSize.y / 2f + area.y / 4f
 					);
 				}
-				
+
 				{ // time
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(timeStringFont);
@@ -238,11 +237,11 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 					DoaVector area = UIUtils.textArea(dateStringFont, time);
 					DoaGraphicsFunctions.drawString(
 						time,
-						scrollPos.x + timeOffset.x + timeSize.x / 2f - area.x / 2f, 
-						scrollPos.y + timeOffset.y + timeSize.y / 2f + area.y / 4f 
+						scrollPos.x + timeOffset.x + timeSize.x / 2f - area.x / 2f,
+						scrollPos.y + timeOffset.y + timeSize.y / 2f + area.y / 4f
 					);
 				}
-				
+
 				{ // version
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(versionStringFont);
@@ -250,13 +249,13 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 					DoaVector area = UIUtils.textArea(versionStringFont, version);
 					DoaGraphicsFunctions.drawString(
 						version,
-						scrollPos.x + versionOffset.x + versionSize.x / 2f - area.x / 2f, 
-						scrollPos.y + versionOffset.y + versionSize.y / 2f + area.y / 4f 
+						scrollPos.x + versionOffset.x + versionSize.x / 2f - area.x / 2f,
+						scrollPos.y + versionOffset.y + versionSize.y / 2f + area.y / 4f
 					);
 				}
 			}
 		}
-	
+
 		@Override
 		public void debugRender() {
 			for (int i = 0; i < metas.getSize(); i++) {
@@ -272,6 +271,6 @@ public class SaveGameMenu extends RoyMenu implements Observer {
 
 	@Override
 	public void onNotify(Observable b) {
-		getComponentByType(Renderer.class).ifPresent((r) -> r.refreshLocale(Translator.getInstance().getCurrentLanguage().getLocale()));
+		getComponentByType(Renderer.class).ifPresent(r -> r.refreshLocale(Translator.getInstance().getCurrentLanguage().getLocale()));
 	}
 }

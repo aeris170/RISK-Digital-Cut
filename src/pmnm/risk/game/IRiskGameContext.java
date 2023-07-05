@@ -6,7 +6,7 @@ import java.util.Optional;
 import lombok.NonNull;
 
 public interface IRiskGameContext extends Serializable {
-	
+
 	/* Game API */
 	GameType getGameType();
 	String getMapName();
@@ -28,17 +28,17 @@ public interface IRiskGameContext extends Serializable {
 	int calculateStartingTroopCount();
 	int calculateTurnReinforcementsFor(@NonNull IPlayer player);
 	int calculateMaxDeployTroopsForAttackDeploy();
-	
+
 	boolean isInitialPlacementComplete();
 	boolean isEveryProvinceOccupied();
-	
+
 	/* Player API */
 	int getNumberOfPlayers();
 	Iterable<IProvince> provincesOf(@NonNull final IPlayer player);
 	void occupyProvince(@NonNull final IPlayer player, @NonNull IProvince province);
 	int getUsedDeploys();
 	int getRemainingDeploys();
-	
+
 	/* Province API */
 	Iterable<@NonNull IProvince> getProvinces();
 	IContinent continentOf(@NonNull final IProvince province);
@@ -46,18 +46,18 @@ public interface IRiskGameContext extends Serializable {
 	IPlayer occupierOf(@NonNull final IProvince province);
 	Iterable<@NonNull IProvince> neighborsOf(@NonNull final IProvince province);
 	int numberOfTroopsOn(@NonNull final IProvince province);
-	
+
 	/* Continent API */
 	Iterable<@NonNull IContinent> getContinents();
 	Iterable<@NonNull IProvince> provincesOf(@NonNull final IContinent continent);
-	
+
 	public enum TurnPhase {
 		SETUP,
 		DRAFT,
 		ATTACK,
 		ATTACK_DEPLOY("Attack -> Deploy"),
 		REINFORCE;
-		
+
 		private Optional<String> str;
 		private TurnPhase() { str = Optional.empty(); }
 		private TurnPhase(String str) { this.str = Optional.of(str); }
@@ -67,7 +67,6 @@ public interface IRiskGameContext extends Serializable {
 			else { return super.toString(); }
 		}
 	}
-	
-	public enum GameType { SINGLE_PLAYER, MULTI_PLAYER }
 
+	public enum GameType { SINGLE_PLAYER, MULTI_PLAYER }
 }

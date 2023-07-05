@@ -25,7 +25,7 @@ import pmnm.risk.game.databasedimpl.RiskGameContext;
 
 @SuppressWarnings("serial")
 public class Water extends DoaObject {
-	
+
 	private static final int SEG_X = 16;
 	private static final int SEG_Y = 9;
 
@@ -91,24 +91,24 @@ public class Water extends DoaObject {
 		bigSpringRenderer.dispose();
 		bigSummerRenderer.dispose();
 		bigFallRenderer.dispose();
-		
+
 		setzOrder(ZOrders.WATER_Z);
 		addComponent(new Script(context));
 		addComponent(new Renderer());
 	}
 
 	private final class Script extends DoaScript {
-		
+
 		private RiskGameContext context;
 		private long elapsedTime;
 		private long previousTime;
-		
+
 		private Script(RiskGameContext context) {
 			this.context = context;
 			elapsedTime = 0;
 			previousTime = System.nanoTime();
 		}
-		
+
 		@Override
 		public void tick() {
 			if (!context.isPaused()) {
@@ -121,12 +121,12 @@ public class Water extends DoaObject {
 						double py = y * Main.WINDOW_HEIGHT / (SEG_Y - 1f) + (intensity[x][y]) * Math.cos((startTime[x][y] + elapsedTime) * 0.00000000091);
 						p.setLocation(px, py);
 					}
-				}	
+				}
 			}
 			previousTime = System.nanoTime();
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 		@Override
 		public void render() {
@@ -164,7 +164,7 @@ public class Water extends DoaObject {
 			DoaGraphicsFunctions.drawImage(currentWaterTexCache, 0, 0);
 		}
 	}
-	
+
 	private class TriangularSurface {
 
 		private Point2D[] trianglePoints;

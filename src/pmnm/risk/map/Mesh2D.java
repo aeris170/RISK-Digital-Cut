@@ -17,7 +17,7 @@ import lombok.Value;
 @Builder
 @ToString(includeFieldNames = true)
 public final class Mesh2D implements Serializable {
-	
+
 	private static final long serialVersionUID = 2730238773326738438L;
 
 	@NonNull
@@ -26,10 +26,10 @@ public final class Mesh2D implements Serializable {
 	public Iterable<@NonNull Vertex2D> getVertices() {
 		return vertices;
 	}
-	
+
 	@Getter
 	private GeneralPath boundary = new GeneralPath();
-	
+
 	Mesh2D(@NonNull final ImmutableList<@NonNull Vertex2D> vertices) {
 		this.vertices = vertices;
 		calculateBoundary();
@@ -38,7 +38,7 @@ public final class Mesh2D implements Serializable {
 	public boolean encasesPoint(@NonNull Vertex2D point) {
 		return boundary.contains(new Point(point.getX(), point.getY()));
 	}
-	
+
 	private void calculateBoundary() {
 		Vertex2D startPoint = vertices.get(0);
 		boundary.moveTo(startPoint.getX(), startPoint.getY());
@@ -46,6 +46,6 @@ public final class Mesh2D implements Serializable {
 			Vertex2D nextPoint = vertices.get(i);
 			boundary.lineTo(nextPoint.getX(), nextPoint.getY());
 		}
-		boundary.closePath();		
+		boundary.closePath();
 	}
 }

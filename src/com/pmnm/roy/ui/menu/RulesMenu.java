@@ -15,14 +15,14 @@ import doa.engine.scene.elements.scripts.DoaScript;
 
 @SuppressWarnings("serial")
 public class RulesMenu extends RoyMenu {
-	
+
 	private int index = 0;
 	private transient BufferedImage[] pages;
-	private RoyButton backButton; 
-	
+	private RoyButton backButton;
+
 	public RulesMenu() {
 		pages = UIConstants.getRulesImages();
-		
+
 		backButton = RoyButton.builder()
 			.textKey("BACK")
 			.action(source -> {
@@ -68,13 +68,12 @@ public class RulesMenu extends RoyMenu {
 	}
 
 	public class Renderer extends DoaRenderer {
-		
+
 		@Override
 		public void render() {
 			if (!isVisible()) { return; }
-			
+
 			DoaGraphicsFunctions.drawImage(pages[index], 0, 0, 1920, 1080);
 		}
 	}
-
 }

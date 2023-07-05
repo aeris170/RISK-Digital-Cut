@@ -109,7 +109,7 @@ public final class AssetLoader {
 				DoaSprites.createSprite("fall", "/ui/gameScreenElements/topInfo/fall.png");
 				DoaSprites.createSprite("winter", "/ui/gameScreenElements/topInfo/winter.png");
 			}
-			
+
 			{// LOADING SCREEN
 				DoaSprites.createSprite("loadingButton", "/ui/loadingScreen/loadingButton.png");
 				DoaSprites.createSprite("loadingButtonLowContrast", "/ui/loadingScreen/loadingButtonLowContrast.png");

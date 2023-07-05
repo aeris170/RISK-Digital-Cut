@@ -32,14 +32,14 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 
 	private ExitFadeToBlack ef;
 	private List<IRoyElement> elements;
-	
+
 	private String areYouSureText;
 
 	public ExitPopup() {
 		transform.position = new DoaVector(600, 420);
-		
+
 		elements = new ArrayList<>();
-		
+
 		RoyMiniButton yesButton = RoyMiniButton.builder()
 			.textKey("YES")
 			.action(source -> {
@@ -49,17 +49,17 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 			.build();
 		yesButton.setPosition(new DoaVector(666, 560));
 		addElement(yesButton);
-		
+
 		RoyMiniButton noButton = RoyMiniButton.builder()
 			.textKey("NO")
 			.action(source -> setVisible(false))
 			.build();
 		noButton.setPosition(new DoaVector(1066, 560));
 		addElement(noButton);
-		
+
 		ef = new ExitFadeToBlack();
 		addElement(ef);
-		
+
 		setzOrder(ZOrders.POPUP_Z);
 		addComponent(new Renderer());
 		setVisible(false);
@@ -67,13 +67,13 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 		areYouSureText = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT");
 		Translator.getInstance().registerObserver(this);
 	}
-	
+
 	public class Renderer extends DoaRenderer {
-		
+
 		private Font font;
 		private int stringWidth;
 		private DoaVector textDimensions = new DoaVector(576, 40);
-		
+
 		@Override
 		public void render() {
 			if (!isVisible) { return; }
@@ -82,26 +82,26 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 					Font.BOLD,
 					DoaGraphicsFunctions.warp(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), textDimensions, areYouSureText), 0)[0]
 				);
-				
+
 				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
 				stringWidth = fm.stringWidth(areYouSureText);
 				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
 				stringWidth = strSize[0];
 			}
-			
+
 			DoaGraphicsFunctions.drawImage(UIConstants.getPopupBackground(), 0, 0, 712, 240);
-			
+
 			DoaGraphicsFunctions.setFont(font);
 			DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
-			
+
 			DoaGraphicsFunctions.drawString(
-				areYouSureText, 
+				areYouSureText,
 				72 + (textDimensions.x - stringWidth) / 2f,
 				100
 			);
 		}
 	}
-	
+
 	@Override
 	public void onAddToScene(DoaScene scene) {
 		super.onAddToScene(scene);
@@ -111,7 +111,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 			}
 		}
 	}
-	
+
 	@Override
 	public void onRemoveFromScene(DoaScene scene) {
 		super.onRemoveFromScene(scene);
@@ -121,7 +121,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 			}
 		}
 	}
-	
+
 	@Override
 	public void setzOrder(int zOrder) {
 		super.setzOrder(zOrder);
@@ -131,7 +131,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 			}
 		}
 	}
-	
+
 	@Override
 	public void setVisible(boolean value) {
 		isVisible = value;
@@ -140,7 +140,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 		}
 		ef.setVisible(false); /* ef should never be affected by this call, otherwise the game will close on its own */
 	}
-	
+
 	@Override
 	public void setPosition(DoaVector position) {
 		transform.position.x = position.x;
@@ -158,7 +158,7 @@ public final class ExitPopup extends DoaObject implements IRoyContainer, Observe
 
 	@Override
 	public boolean removeElement(@NonNull IRoyElement element) { return elements.remove(element); }
-	
+
 	@Override
 	public void onNotify(Observable b) {
 		areYouSureText = Translator.getInstance().getTranslatedString("ARE_YOU_SURE_WANT_TO_EXIT");

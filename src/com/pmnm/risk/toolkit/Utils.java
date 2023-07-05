@@ -26,7 +26,7 @@ import pmnm.risk.map.board.ProvinceHitAreas;
 
 @UtilityClass
 public final class Utils {
-	
+
 	// https://stackoverflow.com/questions/5803111/obtain-ordered-vertices-of-generalpath
 	// by finnw
 	public static Vertex2D[] getPointsOf(Path2D path) {
@@ -40,7 +40,7 @@ public final class Utils {
 					pointList.add(vertex);
 					++numSubPaths;
 					break;
-				case PathIterator.SEG_LINETO: 
+				case PathIterator.SEG_LINETO:
 					vertex = new Vertex2D((int)coords[0], (int)coords[1]);
 					pointList.add(vertex);
 					break;

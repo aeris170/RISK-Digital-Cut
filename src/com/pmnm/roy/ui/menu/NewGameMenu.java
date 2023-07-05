@@ -63,7 +63,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private static final DoaVector PREV_MAP_POSITION = new DoaVector(1400, 290);
 	private static final DoaVector NEXT_MAP_POSITION = new DoaVector(1700, 290);
 
-	private final RoyImageButton prevMapButton; 
+	private final RoyImageButton prevMapButton;
 	private final RoyImageButton nextMapButton;
 
 	private static final DoaVector COMBO_BOX_POSITION = new DoaVector(150, 290);
@@ -174,7 +174,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 
 		RoyButton backButton = RoyButton.builder()
 			.textKey(BACK_KEY)
-			.action((source) -> {
+			.action(source -> {
 				setVisible(false);
 				UIConstants.getPlayOfflineMenu().setVisible(true);
 			})
@@ -186,7 +186,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			.image(UIConstants.getArrowLeftIdleSprite())
 			.hoverImage(UIConstants.getArrowLeftIdleSprite())
 			.pressImage(UIConstants.getArrowLeftPressedSprite())
-			.action((source) -> {
+			.action(source -> {
 				List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 				selectedMapIndex--;
 				selectedMapIndex += configs.size();
@@ -202,7 +202,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			.image(UIConstants.getArrowRightIdleSprite())
 			.hoverImage(UIConstants.getArrowRightIdleSprite())
 			.pressImage(UIConstants.getArrowRightPressedSprite())
-			.action((source) -> {
+			.action(source -> {
 				List<@NonNull MapConfig> configs = MapConfig.getConfigs();
 				selectedMapIndex++;
 				selectedMapIndex %= MapConfig.getConfigs().size();
@@ -219,7 +219,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	private void setSelectedMap(MapConfig config) {
 		selectedMapName = config.getName().replace("_", " ").toUpperCase(Locale.ENGLISH); /* map names have _ instead of spaces */
 		selectedMapPreview = config.getBackgroundImagePreview();
-		getComponentByType(Renderer.class).ifPresent(renderer -> renderer.recalculateFonts());
+		getComponentByType(Renderer.class).ifPresent(Renderer::recalculateFonts);
 	}
 
 	private void startGame() {
@@ -301,7 +301,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			mainScroll = DoaSprites.getSprite("MainScroll");
 			mapChooserBg = DoaSprites.getSprite("MapChooserBackground");
 			mapBorder = DoaSprites.getSprite("MapBorder");
-			
+
 			randomPlacementBg = DoaSprites.getSprite("RandomPlacementBorder");
 		}
 
@@ -326,12 +326,12 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 
 				mapNamePosition = new DoaVector(
 					prevMapButton.x + prevMapButton.width + (distanceX - mapNameWidth) / 2f,
-					prevMapButton.y + prevMapButton.height / 2f + mapNameHeight / 3f 
+					prevMapButton.y + prevMapButton.height / 2f + mapNameHeight / 3f
 				);
 			}
 			if (randomPlacementTextFont == null) {
 				randomPlacementText = Translator.getInstance().getTranslatedString("RANDOM_PLACEMENT");
-				randomPlacementText = UIUtils.capitalizeOnlyFirstLetter(randomPlacementText); 
+				randomPlacementText = UIUtils.capitalizeOnlyFirstLetter(randomPlacementText);
 
 				DoaVector contentSize = new DoaVector(randomPlacementBg.getWidth() * 0.55f, randomPlacementBg.getHeight() * 0.95f);
 				randomPlacementTextFont = UIUtils.adjustFontToFitInArea(randomPlacementText, contentSize);
@@ -387,7 +387,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	@ToString(includeFieldNames = true)
 	@EqualsAndHashCode(callSuper = true)
 	private final class Slot extends DoaObject {
-		
+
 		private int index;
 		private RoyComboBox playerBox;
 		private RoyComboBox colorBox;
@@ -399,28 +399,28 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		@Getter
 		@Setter
 		private String playerName;
-		
+
 		private Slot(int index) {
 			this.index = index;
 		}
-		
+
 		private void updateSlotData(int selectedPlayerIndex) {
 			isHuman = selectedPlayerIndex != 2 ? true : false;
 			playerName = (isHuman ? "Player" : "AI") + index;
 		}
 
-		private boolean hasPlayer() { 
+		private boolean hasPlayer() {
 			if (type == GameType.SINGLE_PLAYER) {
-				return playerBox.getSelectedIndex() != 0;	
+				return playerBox.getSelectedIndex() != 0;
 			} else if (type == GameType.MULTI_PLAYER) {
-				return playerBox.getSelectedIndex() != 0 && playerBox.getSelectedIndex() != 1;	
+				return playerBox.getSelectedIndex() != 0 && playerBox.getSelectedIndex() != 1;
 			} else { throw new IllegalStateException("wtf?"); }
 		}
 		private Color getColor() { return PlayerColorBank.COLORS[colorBox.getSelectedIndex()]; }
 		private String getPawn() { return DoaSprites.getSpriteName(UIConstants.getPlayerPawnSprites()[pawnBox.getSelectedIndex()]); }
 		private boolean isLocalPlayer() { return type == GameType.SINGLE_PLAYER; } /* TODO  */
 	}
-	
+
 	public Slot findSlotOf(RoyComboBox box) {
 		for (Slot slot : slots) {
 			if (slot.playerBox == box
@@ -431,7 +431,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void setVisible(boolean value) {
 		super.setVisible(value);
@@ -453,7 +453,7 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 	public void onNotify(Observable b) {
 		if (b instanceof RoyComboBox) {
 			Slot changedSlot = findSlotOf((RoyComboBox)b);
-			
+
 			selectedColorIndices.clear();
 			selectedPawnIndices.clear();
 			for (int i = 0; i < slots.length; i++) {
@@ -468,16 +468,16 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 					slot.updateSlotData(selectedPlayerIndex);
 				}
 			}
-			
+
 			colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
 			pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
 
 			changedSlot.colorBox.setVisible(changedSlot.hasPlayer());
 			changedSlot.pawnBox.setVisible(changedSlot.hasPlayer());
-			
+
 			selectedColorIndices.add(changedSlot.colorBox.getSelectedIndex());
 			selectedPawnIndices.add(changedSlot.pawnBox.getSelectedIndex());
-			
+
 			colorComboBoxes.forEach(c -> c.setLockedIndices(selectedColorIndices));
 			pawnComboBoxes.forEach(c -> c.setLockedIndices(selectedPawnIndices));
 
@@ -490,11 +490,11 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 			} else {
 				applyCustomActivity();
 			}
-			
+
 			playButton.setVisible(playerCount >= 2);
 		}
 	}
-	
+
 	@Override
 	public void applyCustomActivity() {
 		DoaDiscordActivity customActivity = DiscordRichPresenceAdapter.getDefaultActivity();

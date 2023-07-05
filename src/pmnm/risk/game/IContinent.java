@@ -8,13 +8,13 @@ import lombok.NonNull;
 public interface IContinent extends Serializable {
 
 	String getName();
-	
+
 	String getAbbreviation();
-	
+
 	int getCaptureBonus();
-	
+
 	Color getColor();
-	
+
 	boolean containsProvince(@NonNull final IProvince province);
 	Iterable<IProvince> getProvinces();
 }

@@ -44,9 +44,9 @@ public class SeasonEffect extends DoaObject {
 				godrayAlpha = DoaMath.clamp(godrayAlpha, 0.5f, 1f);
 			}
 		}
-		
+
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 
 		@Override
@@ -107,6 +107,6 @@ public class SeasonEffect extends DoaObject {
 			DoaGraphicsFunctions.setTransform(oldTransform);
 			DoaGraphicsFunctions.setClip(0, 0, 1920, 1080);
 		}
-		
+
 	}
 }

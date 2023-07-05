@@ -33,7 +33,7 @@ public class SettingsMenu extends RoyMenu {
 		italianButton = group.createButton(Language.IT);
 		russianButton = group.createButton(Language.RU);
 		turkishButton = group.createButton(Language.TR);
-		
+
 		englishButton.setPosition(new DoaVector(100, 650));
 		deutchButton.setPosition(new DoaVector(240, 700));
 		espanolButton.setPosition(new DoaVector(380, 650));
@@ -41,7 +41,7 @@ public class SettingsMenu extends RoyMenu {
 		italianButton.setPosition(new DoaVector(660, 650));
 		russianButton.setPosition(new DoaVector(800, 700));
 		turkishButton.setPosition(new DoaVector(940, 650));
-		
+
 		switch (Translator.getInstance().getCurrentLanguage()) {
 			case EN: group.setSelected(englishButton); break;
 			case DE: group.setSelected(deutchButton); break;
@@ -49,10 +49,10 @@ public class SettingsMenu extends RoyMenu {
 			case FR: group.setSelected(franceButton); break;
 			case IT: group.setSelected(italianButton); break;
 			case RU: group.setSelected(russianButton); break;
-			case TR: group.setSelected(turkishButton); break;	
+			case TR: group.setSelected(turkishButton); break;
 		}
 		addElement(group);
-		
+
 		backButton = RoyButton.builder()
 			.textKey("BACK")
 			.action(source -> {

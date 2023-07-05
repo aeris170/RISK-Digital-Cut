@@ -30,24 +30,24 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	@Getter
 	@Setter
 	private boolean isVisible;
-	
+
 	@Getter
 	@Setter
 	private boolean isEnabled = true;
-	
+
 	private String textKey;
 	@NonNull
 	private String text = "";
-	
+
 	@NonNull
 	private transient BufferedImage image;
 
 	@NonNull
 	private transient BufferedImage hoverImage;
-	
+
 	@NonNull
 	private transient BufferedImage pressImage;
-	
+
 	@NonNull
 	private transient BufferedImage disabledImage;
 
@@ -129,7 +129,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 				currentImage = disabledImage;
 				return;
 			}
-			
+
 			Rectangle area = getContentArea();
 			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
 			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
@@ -148,34 +148,35 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	}
 
 	private final class Renderer extends DoaRenderer {
-		
+
 		private int textHeight;
-		
+
 		@Override
 		public void render() {
-			if (!isVisible) return;
+			if(!isVisible()) { return; }
+
 			if (font == null) {
 				int[] size = DoaGraphicsFunctions.warp(image.getWidth()* .70f, image.getHeight() * .70f);
 				contentSize = new DoaVector(size[0], size[1]);
 				font = UIUtils.adjustFontToFitInArea(text, contentSize);
 				textHeight = UIUtils.textHeight(font);
 			}
-			
+
 			DoaGraphicsFunctions.pushAll();
-			
+
 			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, image.getWidth(), image.getHeight());
-			
+
 			DoaGraphicsFunctions.setColor(textColor);
 			if (currentImage == hoverImage) {
 				DoaGraphicsFunctions.setColor(hoverTextColor);
 			}
 			DoaGraphicsFunctions.setFont(font);
-			
+
 			DoaGraphicsFunctions.drawString(text, image.getWidth() * 0.05f, image.getHeight() / 2f + textHeight / 4f);
-			
+
 			DoaGraphicsFunctions.popAll();
 		}
-		
+
 		@Override
 		public void debugRender() {
 			if (!isVisible) { return; }

@@ -31,7 +31,7 @@ import pmnm.risk.game.databasedimpl.GameInstance.Metadata;
 
 @SuppressWarnings("serial")
 public class LoadGameMenu extends RoyMenu implements Observer {
-	
+
 	private static final DoaVector[] LOAD_BUTTON_LOCATIONS = {
 		new DoaVector(147f, 413f),
 		new DoaVector(787f, 413f),
@@ -74,20 +74,20 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 			.build();
 		backButton.setPosition(BACK_LOCATION);
 		addElement(backButton);
-		
+
 		for(int i = 0; i < metas.getSize(); i++) {
 			final int order = i;
 			RoyMiniButton loadButton  = RoyMiniButton.builder()
 				.textKey("LOAD")
 				.action(source -> {
-					/* 
+					/*
 					 * this.setVisible(false) will null
 					 * metas, therefore we need to set the
 					 * config of loading screen before that.
 					 */
 					Metadata meta = (Metadata) metas.getValue(order);
 					UIConstants.getLoadingScreen().setGameConfig(meta.getConfig());
-					
+
 					DoaScene scene = DoaSceneHandler.getLoadedScene();
 					if (scene == Scenes.getMenuScene()) {
 						UIConstants.getLoadGameMenu().setVisible(false);
@@ -103,7 +103,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 						UIConstants.getLoadingScreen().setLoadingBarProgress(0.40f);
 						GameInstance instance = GameInstance.loadGame(order);
 						UIConstants.getLoadingScreen().setLoadingBarProgress(0.60f);
-						
+
 						UIConstants.getLoadingScreen().setLoadingText("Initializing UI...");
 						DoaUtils.sleepFor(2500L);
 						UIConstants.getLoadingScreen().setLoadingBarProgress(0.70f);
@@ -124,12 +124,12 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 			loadButton.setPosition(LOAD_BUTTON_LOCATIONS[i]);
 			loadButton.setVisible(false);
 			loadButtons.add(loadButton);
-			
+
 			addElement(loadButton);
 		}
-		
+
 		Translator.getInstance().registerObserver(this);
-		
+
 		addComponent(new Renderer());
 	}
 
@@ -147,47 +147,47 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 			loadButtons.get(i).setVisible(m != null);
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
-		
-		private transient BufferedImage saveScroll;	
+
+		private transient BufferedImage saveScroll;
 		private transient BufferedImage saveMapContainer;
-		
+
 		private String emptyString = "???";
 		private Font emptyStringFont;
 		private DoaVector emptyStringPos;
 
 		private DoaVector mapNameOffset = new DoaVector(350, 90);
 		private DoaVector mapNameSize = new DoaVector(165, 50);
-		
+
 		private Font dateStringFont;
 		private DoaVector dateOffset = new DoaVector(350, 150);
 		private DoaVector dateSize = new DoaVector(165, 30);
-		
+
 		private Font timeStringFont;
 		private DoaVector timeOffset = new DoaVector(350, 190);
 		private DoaVector timeSize = new DoaVector(165, 30);
-		
+
 		private Font versionStringFont;
 		private DoaVector versionOffset = new DoaVector(350, 230);
 		private DoaVector versionSize = new DoaVector(165, 40);
-		
+
 		private String dateFormat = "dd MMM yyyy";
 		private String timeFormat = "HH:mm:ss";
 		private SimpleDateFormat dateFormatter;
 		private SimpleDateFormat timeFormatter;
-		
+
 		private Renderer() {
 			saveScroll = UIConstants.getSaveScrollSprite();
 			saveMapContainer = UIConstants.getSaveMapContainerSprite();
 			refreshLocale(Translator.getInstance().getCurrentLanguage().getLocale());
 		}
-		
+
 		public void refreshLocale(Locale l) {
 			dateFormatter = new SimpleDateFormat(dateFormat, l);
 			timeFormatter = new SimpleDateFormat(timeFormat, l);
 		}
-		
+
 		@Override
 		public void render() {
 			if (!isVisible()) { return; }
@@ -220,18 +220,18 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 				DoaVector pos = SAVE_SCROLL_LOCATIONS[i];
 				DoaGraphicsFunctions.drawImage(saveScroll, pos.x, pos.y, saveScroll.getWidth(), saveScroll.getHeight());
 			}
-			
+
 			for(int i = 0; i < SAVE_MAP_CONTAINER_LOCATIONS.length; i++) {
 				DoaVector pos = SAVE_MAP_CONTAINER_LOCATIONS[i];
 				DoaGraphicsFunctions.drawImage(saveMapContainer, pos.x, pos.y, saveMapContainer.getWidth(), saveMapContainer.getHeight());
 			}
-			
+
 			for (int i = 0; i < metas.getSize(); i++) {
 				Metadata m = (Metadata) metas.getValue(i);
 
 				DoaVector scrollPos = SAVE_SCROLL_LOCATIONS[i];
 				DoaVector imgPos = SAVE_MAP_CONTAINER_LOCATIONS[i];
-				if (m == null) { 
+				if (m == null) {
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(emptyStringFont);
 					DoaGraphicsFunctions.drawString(
@@ -241,17 +241,17 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 					);
 					continue;
 				}
-				
+
 				{ // snapshot
 					DoaGraphicsFunctions.drawImage(
 						m.getSnapshotImage(),
-						imgPos.x + 2, 
-						imgPos.y - 2, 
+						imgPos.x + 2,
+						imgPos.y - 2,
 						saveMapContainer.getWidth() - 4,
 						saveMapContainer.getHeight() - 1
 					);
 				}
-				
+
 				{ // map name
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					String mapName = m.getMapName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
@@ -265,8 +265,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 						scrollPos.y + mapNameOffset.y + mapNameSize.y / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 					);
 				}
-				
-				
+
 				{ // date
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(dateStringFont);
@@ -278,7 +277,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 						scrollPos.y + dateOffset.y + dateSize.y / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 					);
 				}
-				
+
 				{ // time
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(timeStringFont);
@@ -290,7 +289,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 						scrollPos.y + timeOffset.y + timeSize.y / 2f + DoaGraphicsFunctions.unwarpY(area.y / 4f)
 					);
 				}
-				
+
 				{ // version
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					DoaGraphicsFunctions.setFont(versionStringFont);
@@ -304,7 +303,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 				}
 			}
 		}
-		
+
 		@Override
 		public void debugRender() {
 			for (int i = 0; i < metas.getSize(); i++) {
@@ -317,7 +316,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onNotify(Observable b) {
 		getComponentByType(Renderer.class).ifPresent(r -> r.refreshLocale(Translator.getInstance().getCurrentLanguage().getLocale()));

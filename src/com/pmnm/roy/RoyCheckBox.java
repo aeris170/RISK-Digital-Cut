@@ -31,7 +31,7 @@ public class RoyCheckBox extends DoaObject implements IRoyElement {
 	@Getter
 	@Setter
 	private String text;
-	
+
 	public RoyCheckBox() {
 		circle = UIConstants.getReadyCircleSprite();
 		blip = UIConstants.getReadyBlipSprite();
@@ -47,13 +47,11 @@ public class RoyCheckBox extends DoaObject implements IRoyElement {
 
 	@Override
 	public Rectangle getContentArea() {
-		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(circle.getWidth(), circle.getHeight());
 		return new Rectangle(
-			pos[0],
-			pos[1],
-			size[0],
-			size[1]
+			(int) transform.position.x,
+			(int) transform.position.y,
+			circle.getWidth(),
+			circle.getHeight()
 		);
 	}
 
@@ -61,25 +59,29 @@ public class RoyCheckBox extends DoaObject implements IRoyElement {
 
 		@Override
 		public void tick() {
-			if(!isVisible()) return;
+			if(!isVisible()) { return; }
+
 			if(!DoaMouse.MB1) { return; }
-			
+
+			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			Rectangle area = getContentArea();
-			if (area.contains(new Point((int) DoaMouse.X, (int) DoaMouse.Y))) {
+			if (area.contains(new Point(mouseX, mouseY))) {
 				isChecked = !isChecked;
 			}
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 		@Override
 		public void render() {
-			if(!isVisible()) return;
+			if(!isVisible()) { return; }
 
 			DoaGraphicsFunctions.drawImage(circle, 0, 0, circle.getWidth(), circle.getHeight());
 
-			if(isChecked)
+			if(isChecked) {
 				DoaGraphicsFunctions.drawImage(blip, 3, 3, blip.getWidth(), blip.getHeight());
+			}
 		}
 	}
 }

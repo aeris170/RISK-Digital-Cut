@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public final class ZOrders {
-	
+
 	public static final int WATER_Z = -2;
 	public static final int DESELECTED_PROVINCE_Z = 0;
 	public static final int DEFAULT_PROVINCE_Z = 1;
@@ -17,7 +17,7 @@ public final class ZOrders {
 	public static final int SEASON_EFFECT_Z = 99;
 	public static final int GAME_UI_Z = 100;
 	public static final int PAUSE_Z = 1000;
-	
+
 	public static final int RULES_Z = 2;
 	public static final int POPUP_Z = 5;
 	public static final int EXIT_FADE_TO_BLACK_Z = 10;

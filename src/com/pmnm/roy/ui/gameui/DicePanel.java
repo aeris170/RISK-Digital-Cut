@@ -110,7 +110,7 @@ public class DicePanel extends RoyMenu {
 
 		@Override
 		public void tick() {
-			if (!isVisible()) return;
+			if(!isVisible()) { return; }
 
 			if (context.getCurrentPhase() == TurnPhase.ATTACK
 				&& context.getAreas().getAttackerProvince() != null
@@ -188,8 +188,8 @@ public class DicePanel extends RoyMenu {
 
 		@Override
 		public void render() {
-			if (!isVisible()) return;
-			
+			if(!isVisible()) { return; }
+
 			DoaGraphicsFunctions.drawImage(BG, panelPosition.x, panelPosition.y, BG.getWidth(), BG.getHeight());
 		}
 	}

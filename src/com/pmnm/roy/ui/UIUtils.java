@@ -24,11 +24,11 @@ public final class UIUtils {
 	public static final DoaVector textArea(Font font, String string) {
 		return new DoaVector(textWidth(font, string), textHeight(font));
 	}
-	
+
 	public static final Font adjustFontToFitInArea(String text, float width, float height) {
 		return adjustFontToFitInArea(text, new DoaVector(width, height));
 	}
-	
+
 	public static final Font adjustFontToFitInArea(String text, Rectangle area) {
 		return adjustFontToFitInArea(text, new DoaVector(area.width, area.height));
 	}
@@ -38,14 +38,14 @@ public final class UIUtils {
 			DoaGraphicsFunctions.warpX(Utils.findMaxFontSizeToFitInArea(UIConstants.getFont(), area, text))
 		);
 	}
-	
+
 	public static final String limitString(Font font, String string, float width) {
 		return limitString(font, string, width, "...");
 	}
 	public static final String limitString(Font font, String string, float width, String limiter) {
 		width = DoaGraphicsFunctions.warpX(width);
 		if (textWidth(font, string) < width) { return string; }
-		
+
 		int limiterWidth = textWidth(font, limiter);
 		int len = string.length();
 		String sub;
@@ -55,14 +55,14 @@ public final class UIUtils {
 		} while(textWidth(font, sub) + limiterWidth > width);
 		return sub + limiter;
 	}
-	
+
 	public static final String[] wrapString(Font font, String string, float width) {
 		List<String> strings = new ArrayList<>();
-		
+
 		String[] words = string.split(" ");
 		int begin = 0;
 		int end = words.length - 1;
-		
+
 		while(begin != end) {
 			String currentStr = joinStrings(words, begin, end);
 			while(textWidth(font, currentStr) > width) {
@@ -72,10 +72,10 @@ public final class UIUtils {
 			begin = end;
 			end = words.length - 1;
 		}
-		
+
 		return strings.toArray(String[]::new);
 	}
-	
+
 	public static final String joinStrings(String[] words, int begin, int end) {
 		StringBuilder str = new StringBuilder(words[begin]);
 		for(int i = begin + 1; i < end; i++) {

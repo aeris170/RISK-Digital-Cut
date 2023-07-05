@@ -12,10 +12,10 @@ public final class Vertex2D implements Serializable {
 
 	@Getter
 	private final int x;
-	
+
 	@Getter
 	private final int y;
-	
+
 	public Vertex2D(final int x, final int y) {
 		this.x = x;
 		this.y = y;

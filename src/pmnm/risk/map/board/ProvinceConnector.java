@@ -18,20 +18,20 @@ public final class ProvinceConnector extends DoaObject {
 	public enum Mode {
 		ATTACK, REINFORCE;
 	}
-	
+
 	private IRiskGameContext context;
 	private ProvinceHitArea[] provinceHitAreas;
 	private float dashPhase = 0;
 	private float[] dashArray = new float[] { 9, 5 };
 	@Setter private Mode mode;
-	
+
 	ProvinceConnector(IRiskGameContext context) {
 		this.context = context;
 		setzOrder(ZOrders.PROVINCE_CONNECTOR_Z);
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
-	
+
 
 	public void setPath(ProvinceHitArea... provinceHitAreas) {
 		this.provinceHitAreas = provinceHitAreas;
@@ -42,15 +42,15 @@ public final class ProvinceConnector extends DoaObject {
 		@Override
 		public void tick() {
 			if (context.isPaused()) { return; }
-			
+
 			if (mode == Mode.ATTACK) {
 				dashPhase += 0.02f;
 			} else {
 				dashPhase += 0.09f;
 			}
-		}	
+		}
 	}
-	
+
 	private class Renderer extends DoaRenderer {
 		@Override
 		public void render() {

@@ -31,11 +31,11 @@ public class ExitFadeToBlack extends DoaObject implements IRoyElement {
 
 	public ExitFadeToBlack() {
 		setzOrder(ZOrders.EXIT_FADE_TO_BLACK_Z);
-		
+
 		addComponent(new Script());
 		addComponent(new Renderer());
 	}
-	
+
 	private final class Script extends DoaScript {
 
 		@Override
@@ -48,7 +48,7 @@ public class ExitFadeToBlack extends DoaObject implements IRoyElement {
 			}
 		}
 	}
-	
+
 	private final class Renderer extends DoaRenderer {
 
 		@Override

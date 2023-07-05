@@ -67,7 +67,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 
 	private int width = 0;
 	private int height = 0;
-	
+
 	@Setter
 	private transient Shape interactionArea;
 
@@ -83,12 +83,12 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			this.disabledImage = image;
 		}
 		this.action = action;
-		
+
 		currentImage = image;
-		
+
 		width = image.getWidth();
 		height = image.getHeight();
-		
+
 		renderer = new Renderer();
 		addComponent(new Script());
 		addComponent(renderer);
@@ -121,7 +121,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			height
 		);
 	}
-	
+
 	@Override
 	public Shape getInteractionArea() {
 		if (interactionArea == null) { return getContentArea(); }
@@ -133,7 +133,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 		@Override
 		public void tick() {
 			if (!isVisible) { return; }
-			
+
 			if (!RoyImageButton.this.isEnabled()) {
 				currentImage = disabledImage;
 				return;
@@ -166,7 +166,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 
 		@Override
 		public void render() {
-			if (!isVisible) return;
+			if(!isVisible()) { return; }
 
 			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, width, height);
 
@@ -174,7 +174,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			if (font == null) {
 				DoaVector contentSize = new DoaVector(width * textMargin.x, height * textMargin.y);
 				font = UIUtils.adjustFontToFitInArea(text, contentSize);
-				
+
 				textWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(font, text));
 				textHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(font));
 			}

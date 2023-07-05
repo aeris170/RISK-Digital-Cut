@@ -17,15 +17,15 @@ import pmnm.risk.map.ProvinceData;
 import pmnm.risk.map.Vertex2D;
 
 public final class Province implements IProvince {
-	
+
 	private static final long serialVersionUID = 9078321009537504009L;
 
 	private final RiskGameContext context;
-	
+
 	@NonNull
 	@Getter(value = AccessLevel.PACKAGE)
 	private final ProvinceData data;
-	
+
 	public Province(@NonNull final RiskGameContext context, @NonNull final ProvinceData data) {
 		this.context = context;
 		this.data = data;
@@ -56,7 +56,7 @@ public final class Province implements IProvince {
 
 	@Override
 	public boolean encasesPoint(@NonNull DoaVector point) { return encasesPoint(new Vertex2D((int)point.x, (int)point.y)); }
-	
+
 	@Override
 	public Iterable<@NonNull Mesh2D> getMeshes() {
 		List<@NonNull Mesh2D> paths = new ArrayList<>();

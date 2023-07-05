@@ -8,7 +8,7 @@ public interface IRoyElement {
 
 	boolean isVisible();
 	void setVisible(boolean value);
-	
+
 	void setPosition(DoaVector position);
 	Shape getContentArea();
 	default Shape getInteractionArea() { return getContentArea(); }
