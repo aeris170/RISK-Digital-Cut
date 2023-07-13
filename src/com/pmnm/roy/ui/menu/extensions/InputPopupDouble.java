@@ -87,7 +87,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 	public class Renderer extends DoaRenderer {
 
 		private Font font;
-		private int stringWidth;
+		private float stringWidth;
 		private DoaVector textDimensions = new DoaVector(576, 40);
 
 		@Override
@@ -101,7 +101,7 @@ public final class InputPopupDouble extends DoaObject implements IRoyContainer, 
 
 				FontMetrics fm = DoaGraphicsFunctions.getFontMetrics(font);
 				stringWidth = fm.stringWidth(hostIDText);
-				int[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
+				float[] strSize = DoaGraphicsFunctions.unwarp(stringWidth, 0);
 				stringWidth = strSize[0];
 			}
 

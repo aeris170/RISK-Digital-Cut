@@ -2,6 +2,7 @@ package com.pmnm.roy.ui;
 
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +16,23 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class UIUtils {
 
+	public static final Rectangle2D.Float preciseTextBounds(Font font, String string) {
+		Rectangle bounds = font.createGlyphVector(DoaGraphicsFunctions.getFontRenderContext(), string).getPixelBounds(null, 0, 0);
+		return new Rectangle2D.Float(
+			bounds.x,
+			bounds.y,
+			bounds.width,
+			bounds.height
+		);
+	}
 	public static final int textWidth(Font font, String string) {
 		return DoaGraphicsFunctions.getFontMetrics(font).stringWidth(string);
 	}
 	public static final int textHeight(Font font) {
 		return DoaGraphicsFunctions.getFontMetrics(font).getHeight();
+	}
+	public static final int textDescent(Font font) {
+		return DoaGraphicsFunctions.getFontMetrics(font).getDescent();
 	}
 	public static final DoaVector textArea(Font font, String string) {
 		return new DoaVector(textWidth(font, string), textHeight(font));

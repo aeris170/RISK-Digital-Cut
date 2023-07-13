@@ -292,8 +292,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 
 		private String randomPlacementText;
 		private Font randomPlacementTextFont;
-		private int randomPlacementTextWidth;
-		private int randomPlacementTextHeight;
+		private float randomPlacementTextWidth;
+		private float randomPlacementTextHeight;
 
 		private final DoaVector RANDOM_PLACEMENT_POSITION = new DoaVector(1362f, 630f);
 
@@ -321,8 +321,8 @@ public class NewGameMenu extends RoyMenu implements Observer, IDiscordActivityMu
 				DoaVector contentSize = new DoaVector(distanceX * 0.9f, (prevMapButton.height + nextMapButton.height) * 0.67f);
 				mapNameFont = UIUtils.adjustFontToFitInArea(mapName, contentSize);
 
-				int mapNameWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(mapNameFont, mapName));
-				int mapNameHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(mapNameFont));
+				float mapNameWidth = DoaGraphicsFunctions.unwarpX(UIUtils.textWidth(mapNameFont, mapName));
+				float mapNameHeight = DoaGraphicsFunctions.unwarpY(UIUtils.textHeight(mapNameFont));
 
 				mapNamePosition = new DoaVector(
 					prevMapButton.x + prevMapButton.width + (distanceX - mapNameWidth) / 2f,

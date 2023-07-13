@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import com.pmnm.risk.globals.ZOrders;
 import com.pmnm.roy.IRoyElement;
 
+import doa.engine.core.DoaGame;
 import doa.engine.core.DoaGraphicsFunctions;
 import doa.engine.maths.DoaMath;
 import doa.engine.maths.DoaVector;
@@ -44,6 +45,7 @@ public class ExitFadeToBlack extends DoaObject implements IRoyElement {
 			exitingFadeAlpha += exitingFadeAlphaDelta;
 			exitingFadeAlphaDelta += exitingFadeAlphaDeltaJerk;
 			if (exitingFadeAlpha > 1) {
+				DoaGame.exit();
 				System.exit(0);
 			}
 		}

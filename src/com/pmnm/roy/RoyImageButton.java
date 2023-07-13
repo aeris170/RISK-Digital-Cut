@@ -89,11 +89,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 		width = image.getWidth();
 		height = image.getHeight();
 
-		renderer = new Renderer();
 		addComponent(new Script());
-		addComponent(renderer);
-
-		renderer.enableDebugRender = true;
+		addComponent(new Renderer());
 	}
 
 	@Override
@@ -140,8 +137,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 			}
 
 			Shape area = getInteractionArea();
-			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
-			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			int mouseX = (int) DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = (int) DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			if (area.contains(new Point(mouseX, mouseY))) {
 				if(currentImage == pressImage && DoaMouse.MB1_RELEASE) {
 					action.execute(RoyImageButton.this);
@@ -161,8 +158,8 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 	private final class Renderer extends DoaRenderer {
 
 		private Font font;
-		private int textWidth;
-		private int textHeight;
+		private float textWidth;
+		private float textHeight;
 
 		@Override
 		public void render() {
@@ -195,6 +192,7 @@ public class RoyImageButton extends DoaObject implements IRoyInteractableElement
 		@Override
 		public void debugRender() {
 			if (!isVisible) { return; }
+
 			DoaGraphicsFunctions.pushTransform();
 			DoaGraphicsFunctions.resetTransform();
 			DoaGraphicsFunctions.setColor(Color.YELLOW);

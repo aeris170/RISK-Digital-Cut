@@ -1,6 +1,7 @@
 package com.pmnm.roy;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -41,6 +42,9 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 	private RoyLanguageButtonGroup group;
 	private Language language;
 
+	private int width = 140;
+	private int height = 140;
+
 	RoyLanguageButton(RoyLanguageButtonGroup group, Language language) {
 		this.group = group;
 		this.language = language;
@@ -66,8 +70,8 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 		public void tick() {
 			if (!isVisible) { return; }
 
-			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
-			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			int mouseX = (int) DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = (int) DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			if (group.getSelected() == RoyLanguageButton.this) {
 				currentLensImage = lensSelected;
 				currentComposite = compositeSelected;
@@ -91,11 +95,33 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 		public void render() {
 			if (!isVisible) { return; }
 
-			DoaGraphicsFunctions.drawImage(flagImage, 0, 0, 140, 140);
+			DoaGraphicsFunctions.drawImage(flagImage, 0, 0, width, height);
 			DoaGraphicsFunctions.pushComposite();
 			DoaGraphicsFunctions.setComposite(currentComposite);
-			DoaGraphicsFunctions.drawImage(currentLensImage, 0, 0, 140, 140);
+			DoaGraphicsFunctions.drawImage(currentLensImage, 0, 0, width, height);
 			DoaGraphicsFunctions.popComposite();
+		}
+
+		@Override
+		public void debugRender() {
+			if (!isVisible) { return; }
+
+			switch (language) {
+				case EN:
+				case FR:
+				case RU:
+					DoaGraphicsFunctions.setColor(Color.BLUE); break;
+				case DE:
+				case TR:
+					DoaGraphicsFunctions.setColor(Color.RED); break;
+				case ES:
+					DoaGraphicsFunctions.setColor(Color.ORANGE); break;
+				case IT:
+					DoaGraphicsFunctions.setColor(Color.GREEN); break;
+				default:
+					DoaGraphicsFunctions.setColor(Color.BLACK); break;
+			}
+			DoaGraphicsFunctions.drawRect(0, 0, width, height);
 		}
 	}
 
@@ -110,8 +136,8 @@ public class RoyLanguageButton extends DoaObject implements IRoyElement {
 		return new Rectangle(
 			(int) transform.position.x,
 			(int) transform.position.y,
-			flagImage.getWidth(),
-			flagImage.getHeight()
+			width,
+			height
 		);
 	}
 }

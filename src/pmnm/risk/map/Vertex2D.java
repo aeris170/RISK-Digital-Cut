@@ -20,4 +20,6 @@ public final class Vertex2D implements Serializable {
 		this.x = x;
 		this.y = y;
 	}
+
+	public Vertex2D(final float x, final float y) { this(Math.round(x), Math.round(y)); }
 }

@@ -82,13 +82,11 @@ public class RoyTextField extends DoaObject implements IRoyElement, Observable {
 
 	@Override
 	public Rectangle getContentArea() {
-		int[] pos = DoaGraphicsFunctions.warp(transform.position.x, transform.position.y);
-		int[] size = DoaGraphicsFunctions.warp(width, height);
 		return new Rectangle(
-			pos[0],
-			pos[1],
-			size[0],
-			size[1]
+			(int) transform.position.x,
+			(int) transform.position.y,
+			width,
+			height
 		);
 	}
 
@@ -166,8 +164,8 @@ public class RoyTextField extends DoaObject implements IRoyElement, Observable {
 	private final class Renderer extends DoaRenderer {
 
 		private Font font;
-		private int stringWidth;
-		private int stringHeight;
+		private float stringWidth;
+		private float stringHeight;
 		private boolean isMarkerVisible = true;
 
 		private Rectangle textArea;

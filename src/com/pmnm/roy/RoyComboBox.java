@@ -184,8 +184,8 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 		}
 
 		private boolean elementIsPressed(Rectangle pos) {
-			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
-			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			int mouseX = (int) DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = (int) DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			return pos.contains(new Point(mouseX, mouseY)) && DoaMouse.MB1_RELEASE;
 		}
 
@@ -202,8 +202,8 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 
 			boolean isOpen = RoyComboBox.this.isOpen;
 			if (DoaMouse.MB1_RELEASE) {
-				int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
-				int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+				int mouseX = (int) DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+				int mouseY = (int) DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 				if (buttonArea().contains(new Point(mouseX, mouseY))) {
 					setOpen(!isOpen);
 				} else {
@@ -229,26 +229,26 @@ public final class RoyComboBox extends DoaObject implements IRoyElement, Observa
 
 		@Override
 		public void debugRender() {
-			if(isVisible) {
-				DoaGraphicsFunctions.pushTransform();
-				DoaGraphicsFunctions.resetTransform();
+			if (!isVisible) { return; }
 
-				DoaGraphicsFunctions.setColor(Color.RED);
-				DoaGraphicsFunctions.draw(elements[0].elementArea);
-				DoaGraphicsFunctions.setColor(Color.GREEN);
-				DoaGraphicsFunctions.draw(elements[1].elementArea);
-				DoaGraphicsFunctions.setColor(Color.BLUE);
-				DoaGraphicsFunctions.draw(elements[2].elementArea);
+			DoaGraphicsFunctions.pushTransform();
+			DoaGraphicsFunctions.resetTransform();
 
-				DoaGraphicsFunctions.setColor(new Color(255, 0, 0, 100));
-				DoaGraphicsFunctions.fill(elements[0].contentArea);
-				DoaGraphicsFunctions.setColor(new Color(0, 255, 0, 100));
-				DoaGraphicsFunctions.fill(elements[1].contentArea);
-				DoaGraphicsFunctions.setColor(new Color(0, 0, 255, 100));
-				DoaGraphicsFunctions.fill(elements[2].contentArea);
+			DoaGraphicsFunctions.setColor(Color.RED);
+			DoaGraphicsFunctions.draw(elements[0].elementArea);
+			DoaGraphicsFunctions.setColor(Color.GREEN);
+			DoaGraphicsFunctions.draw(elements[1].elementArea);
+			DoaGraphicsFunctions.setColor(Color.BLUE);
+			DoaGraphicsFunctions.draw(elements[2].elementArea);
 
-				DoaGraphicsFunctions.popTransform();
-			}
+			DoaGraphicsFunctions.setColor(new Color(255, 0, 0, 100));
+			DoaGraphicsFunctions.fill(elements[0].contentArea);
+			DoaGraphicsFunctions.setColor(new Color(0, 255, 0, 100));
+			DoaGraphicsFunctions.fill(elements[1].contentArea);
+			DoaGraphicsFunctions.setColor(new Color(0, 0, 255, 100));
+			DoaGraphicsFunctions.fill(elements[2].contentArea);
+
+			DoaGraphicsFunctions.popTransform();
 		}
 	}
 

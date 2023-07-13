@@ -192,7 +192,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 		public void render() {
 			if (!isVisible()) { return; }
 			if (emptyStringFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(saveMapContainer.getWidth() * 0.70f, saveMapContainer.getHeight() * 0.70f);
+				float[] size = DoaGraphicsFunctions.warp(saveMapContainer.getWidth() * 0.70f, saveMapContainer.getHeight() * 0.70f);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
 				emptyStringFont = UIUtils.adjustFontToFitInArea(emptyString, contentSize);
 				DoaVector area = UIUtils.textArea(emptyStringFont, emptyString);
@@ -202,17 +202,17 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 				);
 			}
 			if (dateStringFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(dateSize.x, dateSize.y);
+				float[] size = DoaGraphicsFunctions.warp(dateSize.x, dateSize.y);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
 				dateStringFont = UIUtils.adjustFontToFitInArea(dateFormat, contentSize);
 			}
 			if (timeStringFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(timeSize.x, timeSize.y);
+				float[] size = DoaGraphicsFunctions.warp(timeSize.x, timeSize.y);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
 				timeStringFont = UIUtils.adjustFontToFitInArea(timeFormat, contentSize);
 			}
 			if (versionStringFont == null) {
-				int[] size = DoaGraphicsFunctions.warp(versionSize.x, versionSize.y);
+				float[] size = DoaGraphicsFunctions.warp(versionSize.x, versionSize.y);
 				DoaVector contentSize = new DoaVector(size[0], size[1]);
 				versionStringFont = UIUtils.adjustFontToFitInArea(Globals.GAME_VERSION, contentSize);
 			}
@@ -255,7 +255,7 @@ public class LoadGameMenu extends RoyMenu implements Observer {
 				{ // map name
 					DoaGraphicsFunctions.setColor(UIConstants.getTextColor());
 					String mapName = m.getMapName().toUpperCase(Translator.getInstance().getCurrentLanguage().getLocale());
-					int[] size = DoaGraphicsFunctions.warp(mapNameSize.x, mapNameSize.y);
+					float[] size = DoaGraphicsFunctions.warp(mapNameSize.x, mapNameSize.y);
 					Font font = UIUtils.adjustFontToFitInArea(mapName, new DoaVector(size[0], size[1]));
 					DoaGraphicsFunctions.setFont(font);
 					DoaVector area = UIUtils.textArea(font, mapName);

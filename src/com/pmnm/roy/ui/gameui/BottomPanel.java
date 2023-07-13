@@ -270,20 +270,20 @@ public class BottomPanel extends RoyMenu {
 		private  DoaVector PHASE_AREA				= new DoaVector(140, 1400);
 
 		private Font garrisonFont;
-		private int garrisonTextWidth;
-		private int garrisonTextHeight;
+		private float garrisonTextWidth;
+		private float garrisonTextHeight;
 
 		private Font ownerFont;
-		private int ownerTextWidth;
-		private int ownerTextHeight;
+		private float ownerTextWidth;
+		private float ownerTextHeight;
 
 		private Font provinceNameFont;
-		private int provinceTextWidth;
-		private int provinceTextHeight;
+		private float provinceTextWidth;
+		private float provinceTextHeight;
 
 		private Font continentNameFont;
-		private int continentTextWidth;
-		private int continentTextHeight;
+		private float continentTextWidth;
+		private float continentTextHeight;
 
 		private Font turnPhaseFont;
 
@@ -298,7 +298,7 @@ public class BottomPanel extends RoyMenu {
 				garrisonTextWidth = UIUtils.textWidth(garrisonFont, garrisonText);
 				garrisonTextHeight = UIUtils.textHeight(garrisonFont);
 
-				int[] strSize = DoaGraphicsFunctions.unwarp(garrisonTextWidth, garrisonTextHeight);
+				float[] strSize = DoaGraphicsFunctions.unwarp(garrisonTextWidth, garrisonTextHeight);
 				garrisonTextWidth = strSize[0];
 				garrisonTextHeight = strSize[1];
 			}
@@ -309,7 +309,7 @@ public class BottomPanel extends RoyMenu {
 				ownerTextWidth = UIUtils.textWidth(ownerFont, ownerText);
 				ownerTextHeight = UIUtils.textHeight(ownerFont);
 
-				int[] strSize = DoaGraphicsFunctions.unwarp(ownerTextWidth, ownerTextHeight);
+				float[] strSize = DoaGraphicsFunctions.unwarp(ownerTextWidth, ownerTextHeight);
 				ownerTextWidth = strSize[0];
 				ownerTextHeight = strSize[1];
 			}
@@ -320,7 +320,7 @@ public class BottomPanel extends RoyMenu {
 				provinceTextWidth = UIUtils.textWidth(provinceNameFont, nameText);
 				provinceTextHeight = UIUtils.textHeight(provinceNameFont);
 
-				int[] strSize = DoaGraphicsFunctions.unwarp(provinceTextWidth, provinceTextHeight);
+				float[] strSize = DoaGraphicsFunctions.unwarp(provinceTextWidth, provinceTextHeight);
 				provinceTextWidth = strSize[0];
 				provinceTextHeight = strSize[1];
 			}
@@ -331,7 +331,7 @@ public class BottomPanel extends RoyMenu {
 				continentTextWidth = UIUtils.textWidth(continentNameFont, continentText);
 				continentTextHeight = UIUtils.textHeight(continentNameFont);
 
-				int[] strSize = DoaGraphicsFunctions.unwarp(continentTextWidth, continentTextHeight);
+				float[] strSize = DoaGraphicsFunctions.unwarp(continentTextWidth, continentTextHeight);
 				continentTextWidth = strSize[0];
 				continentTextHeight = strSize[1];
 			}

@@ -63,8 +63,8 @@ public class RoyCheckBox extends DoaObject implements IRoyElement {
 
 			if(!DoaMouse.MB1) { return; }
 
-			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
-			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			int mouseX = (int) DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = (int) DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			Rectangle area = getContentArea();
 			if (area.contains(new Point(mouseX, mouseY))) {
 				isChecked = !isChecked;

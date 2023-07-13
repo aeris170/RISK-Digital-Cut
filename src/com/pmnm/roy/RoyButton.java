@@ -2,14 +2,12 @@
 package com.pmnm.roy;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.pmnm.risk.globals.localization.Translator;
 import com.pmnm.roy.ui.UIConstants;
-import com.pmnm.roy.ui.UIUtils;
 import com.pmnm.util.Observable;
 import com.pmnm.util.Observer;
 
@@ -35,9 +33,9 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	@Setter
 	private boolean isEnabled = true;
 
+	@Getter
+	@Setter
 	private String textKey;
-	@NonNull
-	private String text = "";
 
 	@NonNull
 	private transient BufferedImage image;
@@ -51,18 +49,6 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	@NonNull
 	private transient BufferedImage disabledImage;
 
-	private transient Font font = null;
-
-	@Getter
-	@Setter
-	@NonNull
-	private Color textColor = UIConstants.getTextColor();
-
-	@Getter
-	@Setter
-	@NonNull
-	private Color hoverTextColor = UIConstants.getHoverTextColor();
-
 	@Setter
 	private transient IRoyAction action = null;
 
@@ -71,36 +57,51 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 	private int width = 0;
 	private int height = 0;
 
-	private DoaVector contentSize;
+	@Getter
+	@Setter
+	private IRoyTextHandler textHandler;
 
 	@Builder
 	RoyButton(@NonNull String textKey, @NonNull IRoyAction action) {
 		this.textKey = textKey;
-		this.text = Translator.getInstance().getTranslatedString(textKey);
 		this.action = action;
 		this.image = UIConstants.getButtonIdleSprite();
 		this.hoverImage = UIConstants.getButtonHoverSprite();
 		this.pressImage = UIConstants.getButtonPressedSprite();
 		this.disabledImage = image;
+		this.textHandler = RoyText.builder()
+			.parentArea(getContentArea())
+			.textArea(new Rectangle(
+				(int) (transform.position.x + image.getWidth() * 0.05f),
+				(int) (transform.position.y),
+				(int) (image.getWidth() * 0.70f),
+				(int) (image.getHeight() * 0.70f)
+			))
+			.text(Translator.getInstance().getTranslatedString(textKey))
+			.build();
 
 		currentImage = image;
 
 		width = image.getWidth();
 		height = image.getHeight();
 
-		Renderer r = new Renderer();
 		addComponent(new Script());
-		addComponent(r);
+		addComponent(new Renderer());
 
 		Translator.getInstance().registerObserver(this);
-
-		r.enableDebugRender = true;
 	}
 
 	@Override
 	public void setPosition(DoaVector position) {
 		transform.position.x = position.x;
 		transform.position.y = position.y;
+		textHandler.setParentArea(getContentArea());
+		textHandler.setTextArea(new Rectangle(
+			(int) (transform.position.x + image.getWidth() * 0.05f),
+			(int) (transform.position.y),
+			(int) (image.getWidth() * 0.70f),
+			(int) (image.getHeight() * 0.70f)
+		));
 	}
 
 	@Override
@@ -115,8 +116,7 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 
 	@Override
 	public void onNotify(Observable b) {
-		this.text = Translator.getInstance().getTranslatedString(textKey);
-		font = null; /* make font null so on next frame it will be calculated again with appropriate size */
+		textHandler.setText(Translator.getInstance().getTranslatedString(textKey));
 	}
 
 	private final class Script extends DoaScript {
@@ -131,8 +131,8 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			}
 
 			Rectangle area = getContentArea();
-			int mouseX = DoaGraphicsFunctions.unwarpX(DoaMouse.X);
-			int mouseY = DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
+			int mouseX = (int) DoaGraphicsFunctions.unwarpX(DoaMouse.X);
+			int mouseY = (int) DoaGraphicsFunctions.unwarpY(DoaMouse.Y);
 			if (area.contains(new Point(mouseX, mouseY))) {
 				if(currentImage == pressImage && DoaMouse.MB1_RELEASE) {
 					action.execute(RoyButton.this);
@@ -144,44 +144,28 @@ public final class RoyButton extends DoaObject implements IRoyInteractableElemen
 			} else {
 				currentImage = image;
 			}
+
+			getTextHandler().tick();
 		}
 	}
 
 	private final class Renderer extends DoaRenderer {
 
-		private int textHeight;
-
 		@Override
 		public void render() {
 			if(!isVisible()) { return; }
 
-			if (font == null) {
-				int[] size = DoaGraphicsFunctions.warp(image.getWidth()* .70f, image.getHeight() * .70f);
-				contentSize = new DoaVector(size[0], size[1]);
-				font = UIUtils.adjustFontToFitInArea(text, contentSize);
-				textHeight = UIUtils.textHeight(font);
-			}
-
-			DoaGraphicsFunctions.pushAll();
-
 			DoaGraphicsFunctions.drawImage(currentImage, 0, 0, image.getWidth(), image.getHeight());
-
-			DoaGraphicsFunctions.setColor(textColor);
-			if (currentImage == hoverImage) {
-				DoaGraphicsFunctions.setColor(hoverTextColor);
-			}
-			DoaGraphicsFunctions.setFont(font);
-
-			DoaGraphicsFunctions.drawString(text, image.getWidth() * 0.05f, image.getHeight() / 2f + textHeight / 4f);
-
-			DoaGraphicsFunctions.popAll();
+			getTextHandler().render();
 		}
 
 		@Override
 		public void debugRender() {
 			if (!isVisible) { return; }
+
 			DoaGraphicsFunctions.setColor(Color.RED);
 			DoaGraphicsFunctions.drawRect(0, 0, width, height);
+			getTextHandler().debugRender();
 		}
 	}
 }

@@ -102,13 +102,13 @@ public class TopPanel extends RoyMenu {
 
 		private Font turnFont;
 		private String turn;
-		private int turnTextWidth;
-		private int turnTextHeight;
+		private float turnTextWidth;
+		private float turnTextHeight;
 
 		private Font playerNameFont;
 		private String playerName;
-		private int playerNameTextWidth;
-		private int playerNameTextHeight;
+		private float playerNameTextWidth;
+		private float playerNameTextHeight;
 
 		@Override
 		public void render() {
@@ -122,7 +122,7 @@ public class TopPanel extends RoyMenu {
 				turnTextWidth = UIUtils.textWidth(turnFont, turn);
 				turnTextHeight = UIUtils.textHeight(turnFont);
 
-				int[] strSize = DoaGraphicsFunctions.unwarp(turnTextWidth, turnTextHeight);
+				float[] strSize = DoaGraphicsFunctions.unwarp(turnTextWidth, turnTextHeight);
 				turnTextWidth = strSize[0];
 				turnTextHeight = strSize[1];
 			}
@@ -134,7 +134,7 @@ public class TopPanel extends RoyMenu {
 				playerNameTextWidth = UIUtils.textWidth(playerNameFont, playerName);
 				playerNameTextHeight = UIUtils.textHeight(playerNameFont);
 
-				int[] strSize = DoaGraphicsFunctions.unwarp(playerNameTextWidth, playerNameTextHeight);
+				float[] strSize = DoaGraphicsFunctions.unwarp(playerNameTextWidth, playerNameTextHeight);
 				playerNameTextWidth = strSize[0];
 				playerNameTextHeight = strSize[1];
 			}
